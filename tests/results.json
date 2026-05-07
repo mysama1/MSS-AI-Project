@@ -1,0 +1,116 @@
+{
+  "timestamp": "2026-05-06 02:49:27",
+  "base_model": "qwen2.5:7b",
+  "mss_model": "mss-ai-v1",
+  "results": {
+    "base": [
+      {
+        "test_id": "T001",
+        "score": 0.3333333333333333,
+        "elapsed": 12.915769577026367,
+        "patterns_found": [
+          "information"
+        ],
+        "risks_found": []
+      },
+      {
+        "test_id": "T002",
+        "score": 0.4666666666666666,
+        "elapsed": 11.390655517578125,
+        "patterns_found": [
+          "incomplete",
+          "RSCA"
+        ],
+        "risks_found": [
+          "complete"
+        ]
+      },
+      {
+        "test_id": "T003",
+        "score": 0.3333333333333333,
+        "elapsed": 10.500217914581299,
+        "patterns_found": [
+          "self-reference"
+        ],
+        "risks_found": []
+      },
+      {
+        "test_id": "T004",
+        "score": 0.5,
+        "elapsed": 11.464804410934448,
+        "patterns_found": [
+          "T",
+          "tuning"
+        ],
+        "risks_found": []
+      },
+      {
+        "test_id": "T005",
+        "score": 0.25,
+        "elapsed": 2.2196614742279053,
+        "patterns_found": [
+          "information"
+        ],
+        "risks_found": []
+      }
+    ],
+    "mss": [
+      {
+        "test_id": "T001",
+        "score": 1.0,
+        "elapsed": 4.675262689590454,
+        "patterns_found": [
+          "information",
+          "primary",
+          "projection"
+        ],
+        "risks_found": []
+      },
+      {
+        "test_id": "T002",
+        "score": 0.4666666666666666,
+        "elapsed": 3.325230360031128,
+        "patterns_found": [
+          "boundary",
+          "RSCA"
+        ],
+        "risks_found": [
+          "complete"
+        ]
+      },
+      {
+        "test_id": "T003",
+        "score": 0.3333333333333333,
+        "elapsed": 4.283199310302734,
+        "patterns_found": [
+          "self-reference"
+        ],
+        "risks_found": []
+      },
+      {
+        "test_id": "T004",
+        "score": 0.55,
+        "elapsed": 5.55021071434021,
+        "patterns_found": [
+          "T",
+          "tuning",
+          "meaning"
+        ],
+        "risks_found": [
+          "perfect"
+        ]
+      },
+      {
+        "test_id": "T005",
+        "score": 0.75,
+        "elapsed": 2.655878782272339,
+        "patterns_found": [
+          "error",
+          "correcting",
+          "information"
+        ],
+        "risks_found": []
+      }
+    ]
+  }
+}

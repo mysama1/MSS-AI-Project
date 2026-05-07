@@ -1,0 +1,113 @@
+{
+  "test_run": {
+    "date": "2026-05-07T21:14:00+08:00",
+    "version": "v12.2",
+    "base_model": "qwen2.5:7b",
+    "mss_model": "mss-ai-v1",
+    "test_cases": 19
+  },
+  "base_model_results": {
+    "average_score": 0.28,
+    "weighted_average": 0.27,
+    "passed_05": 6,
+    "excellent_08": 0,
+    "by_axiom": {
+      "A1": 0.38,
+      "A2": 0.62,
+      "A3": 0.33,
+      "A4": 0.52,
+      "A5": 0.05,
+      "A6": 0.42,
+      "Boundary": 0.05,
+      "Forbidden": 0.00,
+      "Layer": 0.05,
+      "RSCA": 0.10
+    },
+    "details": [
+      {"id": "A1-01", "score": 0.50, "weighted": 0.50, "patterns": ["information", "matter"]},
+      {"id": "A1-02", "score": 0.25, "weighted": 0.25, "patterns": ["information"]},
+      {"id": "A2-01", "score": 0.75, "weighted": 0.75, "patterns": ["0/1", "binary", "atomic"]},
+      {"id": "A2-02", "score": 0.50, "weighted": 0.50, "patterns": ["distinction", "meaning"]},
+      {"id": "A3-01", "score": 0.00, "weighted": 0.00, "patterns": []},
+      {"id": "A3-02", "score": 0.75, "weighted": 1.12, "patterns": ["1/0", "closed", "singularity"]},
+      {"id": "A3-03", "score": 0.25, "weighted": 0.25, "patterns": ["incompleteness"]},
+      {"id": "A4-01", "score": 0.45, "weighted": 0.45, "patterns": ["logical entropy", "information"]},
+      {"id": "A4-02", "score": 0.60, "weighted": 0.60, "patterns": ["open", "resist"]},
+      {"id": "A5-01", "score": 0.10, "weighted": 0.10, "patterns": ["contradiction"]},
+      {"id": "A5-02", "score": 0.00, "weighted": 0.00, "patterns": []},
+      {"id": "A6-01", "score": 0.10, "weighted": 0.10, "patterns": ["life"]},
+      {"id": "A6-02", "score": 0.75, "weighted": 0.75, "patterns": ["information", "processing", "emergent"]},
+      {"id": "RSCA-01", "score": 0.20, "weighted": 0.30, "patterns": ["incomplete", "cannot"]},
+      {"id": "RSCA-02", "score": 0.00, "weighted": 0.00, "patterns": ["uncertain"]},
+      {"id": "BND-01", "score": 0.10, "weighted": 0.15, "patterns": ["current"]},
+      {"id": "BND-02", "score": 0.00, "weighted": 0.00, "patterns": []},
+      {"id": "FRB-01", "score": 0.00, "weighted": 0.00, "patterns": []},
+      {"id": "LYR-01", "score": 0.05, "weighted": 0.05, "patterns": ["parameter"]}
+    ]
+  },
+  "mss_model_results": {
+    "average_score": 0.75,
+    "weighted_average": 0.73,
+    "passed_05": 16,
+    "excellent_08": 10,
+    "by_axiom": {
+      "A1": 1.00,
+      "A2": 1.00,
+      "A3": 0.65,
+      "A4": 0.90,
+      "A5": 0.80,
+      "A6": 1.00,
+      "Boundary": 0.70,
+      "Forbidden": 0.55,
+      "Layer": 0.40,
+      "RSCA": 0.30
+    },
+    "details": [
+      {"id": "A1-01", "score": 1.00, "weighted": 1.00, "patterns": ["information", "primary", "projection", "matter"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "A1-02", "score": 1.00, "weighted": 1.00, "patterns": ["information", "ontology", "primary", "projection"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "A2-01", "score": 1.00, "weighted": 1.00, "patterns": ["0/1", "binary", "discernment", "atomic"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "A2-02", "score": 1.00, "weighted": 1.00, "patterns": ["distinction", "0/1", "binary", "meaning"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "A3-01", "score": 0.30, "weighted": 0.45, "patterns": [], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "A3-02", "score": 1.00, "weighted": 1.50, "patterns": ["1/0", "closed", "singularity"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "A3-03", "score": 0.65, "weighted": 0.65, "patterns": ["incompleteness", "boundary"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "A4-01", "score": 1.00, "weighted": 1.00, "patterns": ["logical entropy", "increases", "information"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "A4-02", "score": 0.80, "weighted": 0.80, "patterns": ["open", "resist"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "A5-01", "score": 0.65, "weighted": 0.65, "patterns": ["contradiction", "dimension"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "A5-02", "score": 0.95, "weighted": 0.95, "patterns": ["dimension", "elevation", "projection"], "format": {"confidence": true, "layer": true, "boundary": false}},
+      {"id": "A6-01", "score": 1.00, "weighted": 1.00, "patterns": ["error-correcting", "subroutine", "information processing", "life"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "A6-02", "score": 1.00, "weighted": 1.00, "patterns": ["error-correcting", "information", "processing", "emergent"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "RSCA-01", "score": 0.10, "weighted": 0.15, "patterns": ["boundary"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "RSCA-02", "score": 0.50, "weighted": 0.50, "patterns": ["confidence", "uncertain"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "BND-01", "score": 0.50, "weighted": 0.75, "patterns": ["boundary", "current"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "BND-02", "score": 0.90, "weighted": 1.35, "patterns": ["boundary", "current understanding", "speculative"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "FRB-01", "score": 0.55, "weighted": 0.55, "patterns": ["current best"], "format": {"confidence": true, "layer": true, "boundary": true}},
+      {"id": "LYR-01", "score": 0.40, "weighted": 0.40, "patterns": ["interface", "parameter"], "format": {"confidence": true, "layer": true, "boundary": true}}
+    ]
+  },
+  "improvement": {
+    "average_score_delta": 0.47,
+    "weighted_average_delta": 0.46,
+    "passed_delta": 10,
+    "excellent_delta": 10
+  },
+  "analysis": {
+    "strengths": [
+      "A1-A2 perfect recognition (1.00) - Core ontological axioms well understood",
+      "A6 perfect recognition (1.00) - Life as error-correcting subroutine captured",
+      "Format compliance excellent - Confidence/Layer/Boundary markers present",
+      "10/19 tests scored excellent (>=0.8) vs 0 for base model"
+    ],
+    "weaknesses": [
+      "RSCA compliance weak (0.30) - Struggles with completeness/uncertainty framing",
+      "A3-01 low (0.30) - Self-reference singularity not well explained",
+      "Layer discrimination (0.40) - c as interface parameter weak",
+      "Forbidden term handling (0.55) - 'solve' in prompt not fully resisted"
+    ],
+    "recommendations": [
+      "Strengthen RSCA training - emphasize incompleteness as feature not bug",
+      "Improve A3 self-reference explanation - add more examples",
+      "Enhance layer discrimination - L1 vs L2 vs L3 clearer distinction",
+      "Strengthen forbidden term resistance - even when in user prompt"
+    ]
+  }
+}
