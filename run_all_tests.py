@@ -34,6 +34,8 @@ TEST_SUITES = [
     ("Web API", "test_web_api.py"),
     ("Simulation Framework", "test_simulation_framework.py"),
     ("Visualization Engine", "test_visualization_engine.py"),
+    ("Numba Simulation", "test_simulation_numba.py"),
+    ("WebSocket Server", "test_websocket_server.py"),
 ]
 
 
