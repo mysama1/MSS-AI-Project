@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  mss-ai-api:
+    build: .
+    container_name: mss-ai-api
+    ports:
+      - "8000:8000"
+    environment:
+      - MSS_API_HOST=0.0.0.0
+      - MSS_API_PORT=8000
+      - MSS_ENV=production
+    volumes:
+      - ./knowledge_base:/app/knowledge_base:ro
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  mss-ai-cli:
+    build: .
+    container_name: mss-ai-cli
+    environment:
+      - MSS_ENV=production
+    volumes:
+      - ./knowledge_base:/app/knowledge_base:ro
+      - ./logs:/app/logs
+    stdin_open: true
+    tty: true
+    command: python interactive_cli.py
+
+  # Optional: Monitoring dashboard
+  mss-ai-monitor:
+    build: .
+    container_name: mss-ai-monitor
+    environment:
+      - MSS_ENV=production
+    volumes:
+      - ./logs:/app/logs:ro
+    command: python monitoring_dashboard.py
+    profiles:
+      - monitoring
