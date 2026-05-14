@@ -119,4 +119,3 @@
 | Numba兼容性问题 | Medium | Medium | 纯Python fallback |
 | Docker镜像过大 | Low | Low | 多阶段构建优化 |
 | 7B模型能力瓶颈 | High | High | 后处理补偿+13B升级路径 |
-
