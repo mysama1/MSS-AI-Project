@@ -1,0 +1,13 @@
+2026-05-12 04:51:37,699 [INFO] 找到 OpenClaw CLI: C:\Program Files\QClaw\resources\openclaw\config\bin\openclaw.CMD
+2026-05-12 04:51:42,023 [WARNING] [2026-05-12 04:51:42] 网关异常 (1/3): 异常 (进程存活但HTTP无响应)
+2026-05-13 13:50:20,145 [INFO] 找到 OpenClaw CLI: C:\Program Files\QClaw\resources\openclaw\config\bin\openclaw.CMD
+2026-05-13 13:50:20,291 [INFO] [2026-05-13 13:50:20] 网关正常: 健康 (进程存活 + HTTP响应)
+2026-05-13 13:51:17,822 [INFO] 找到 OpenClaw CLI: C:\Program Files\QClaw\resources\openclaw\config\bin\openclaw.CMD
+2026-05-13 14:25:26,032 [INFO] 找到 OpenClaw CLI: C:\Program Files\QClaw\resources\openclaw\config\bin\openclaw.CMD
+2026-05-13 14:25:26,223 [INFO] [2026-05-13 14:25:26] 网关正常: 健康 (进程存活 + HTTP响应)
+2026-05-13 14:25:30,766 [INFO] 找到 OpenClaw CLI: C:\Program Files\QClaw\resources\openclaw\config\bin\openclaw.CMD
+2026-05-13 14:25:30,978 [INFO] [2026-05-13 14:25:30] 网关正常: 健康 (进程存活 + HTTP响应)
+2026-05-13 14:31:28,024 [INFO] 找到 OpenClaw CLI: C:\Program Files\QClaw\resources\openclaw\config\bin\openclaw.CMD
+2026-05-13 14:31:28,210 [INFO] [2026-05-13 14:31:28] 网关正常: 健康 (进程存活 + HTTP响应)
+2026-05-14 15:03:43,855 [INFO] 找到 OpenClaw CLI: C:\Program Files\QClaw\resources\openclaw\config\bin\openclaw.CMD
+2026-05-14 15:03:44,037 [INFO] [2026-05-14 15:03:44] 网关正常: 健康 (进程存活 + HTTP响应)

@@ -1,60 +1,231 @@
-# MSS-AI Project
+# MSS-AI: Meta-Self-Similarity System AI
 
-> **Meaning-Space Structure AI Prototype**
-> From philosophical framework to running reasoning system
+[![Tests](https://img.shields.io/badge/tests-308%2F308%20passing-brightgreen)]()
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue)]()
+[![License](https://img.shields.io/badge/license-MIT-green)]()
 
-## Status
-- **Phase**: Infrastructure (Week 1)
-- **Ollama**: Installing qwen2.5:7b
-- **GitHub**: Pending OAuth authorization
-- **IMA KB**: System config pending manual upload
+> **Symbolic reasoning engine based on the MSS (Meta-Self-Similarity System) theoretical framework**
 
-## What This Is
+## Overview
 
-A prototype implementation of the MSS framework as a working AI system. Unlike traditional LLMs:
-- Meaning is the ontology (not language)
-- Discrete graph reasoning (not continuous embeddings)
-- Topological invariants define stability (not probability distributions)
-- Zero alignment tax (not RLHF)
+MSS-AI is a deterministic symbolic reasoning system that implements the MSS theoretical framework for AI alignment and organizational resilience analysis. Unlike traditional LLM-based systems, MSS-AI operates on formal symbolic structures with guaranteed interpretability and zero hallucination.
 
-## Project Structure
+### Key Features
 
-```
-MSS-AI-Project/
-├── prompts/        # MSS prompt templates
-├── memory/         # Structured memory templates
-├── models/         # Ollama Modelfiles
-├── scripts/        # Inference and evaluation scripts
-├── docs/           # Project documentation
-├── tests/          # Test cases and benchmarks
-└── README.md
-```
+- **Symbolic Reasoning Engine**: Deterministic inference over MSS knowledge graph
+- **Ω-Level Arbitration**: 36 compliance rules (L1=17, L2=16, L3=13)
+- **Natural Language Bridge**: Intent recognition with symbolic query translation
+- **Organizational Resilience**: φ-score based structural analysis
+- **Numerical Simulation**: Percolation, ETA dynamics, heat tax, resilience modeling
+- **Interactive CLI**: Command-line interface for all operations
+- **Web API**: FastAPI-based HTTP interface
+- **Visualization Engine**: ASCII charts and system dashboards
 
 ## Quick Start
 
+### Installation
+
 ```bash
-# 1. Pull base model (in progress)
-ollama pull qwen2.5:7b
+# Clone repository
+git clone https://github.com/mysama1/MSS-AI-Project.git
+cd MSS-AI-Project
 
-# 2. Create MSS-AI model
-ollama create mss-ai-v1 -f models/Modelfile
+# Install dependencies
+pip install -r requirements.txt
 
-# 3. Run inference
-ollama run mss-ai-v1
+# Or install as package
+pip install -e .
 ```
 
-## Roadmap
+### Run Tests
 
-| Week | Phase | Goal |
-|------|-------|------|
-| 1-2 | Infrastructure | Ollama setup, prompt tuning, reasoning validation |
-| 3-6 | MVP | First working reasoning chain, knowledge base integration |
-| 7-10 | Commercialization | First paying customer, API packaging |
-| 11-12 | Operations | Automation, monitoring, scaling |
+```bash
+# Run all tests
+python run_all_tests.py
 
-## Key Constraints
+# Expected output:
+# Suites: 24/24 passed
+# Tests:  308/308 passed
+# Time:   ~4.5s total
+```
 
-- Running on: i5-10400F, 32GB RAM, RTX 2060 6GB
-- Target model size: 7B parameters (Q4 quantized)
-- Inference speed target: 20+ tokens/sec
-- No cloud dependency for core reasoning
+### Interactive CLI
+
+```bash
+python interactive_cli.py
+
+# Available commands:
+# /chat    - Natural language conversation
+# /analyze - Text compliance analysis
+# /reason  - Symbolic reasoning query
+# /scan    - Organizational resilience scan
+# /status  - System health status
+# /test    - Run diagnostics
+# /help    - Show help
+# /quit    - Exit
+```
+
+### Web API
+
+```bash
+# Start server
+python web_api.py
+
+# Server runs on http://localhost:8000
+# API documentation: http://localhost:8000/docs
+```
+
+Example API calls:
+```bash
+# Chat endpoint
+curl -X POST http://localhost:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Explain A1 axiom"}'
+
+# Analyze endpoint
+curl -X POST http://localhost:8000/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"text": "This is a test text"}'
+
+# Status endpoint
+curl http://localhost:8000/status
+```
+
+### Numerical Simulations
+
+```bash
+# Run simulation examples
+python simulation_framework.py
+
+# Output:
+# 1. Percolation Phase Transition
+#    Estimated critical point: p_c ≈ 0.584
+# 2. ETA Order Parameter Dynamics
+#    Final tuning degree: T = 1.000
+# 3. Heat Tax Accumulation
+#    Cumulative tax after 7 cuts: ...
+# 4. Organizational Resilience
+#    Critical threshold: φ_c = 0.0200
+```
+
+## Architecture
+
+```
+MSS-AI System Architecture
+==========================
+
+┌─────────────────────────────────────────┐
+│           Interface Layer               │
+│  ┌──────────┐  ┌──────────┐  ┌────────┐│
+│  │   CLI    │  │  Web API │  │  Tests ││
+│  └──────────┘  └──────────┘  └────────┘│
+└─────────────────────────────────────────┘
+                   │
+┌─────────────────────────────────────────┐
+│         Natural Language Bridge         │
+│    (Intent Recognition + Translation)   │
+└─────────────────────────────────────────┘
+                   │
+┌─────────────────────────────────────────┐
+│         Core Processing Layer           │
+│  ┌──────────┐  ┌──────────┐  ┌────────┐│
+│  │ Arbiter  │  │ Responder│  │ Omega  ││
+│  │  Agent   │  │  Agent   │  │Compliance│
+│  └──────────┘  └──────────┘  └────────┘│
+└─────────────────────────────────────────┘
+                   │
+┌─────────────────────────────────────────┐
+│         Symbolic Engine Layer           │
+│  ┌──────────┐  ┌──────────┐  ┌────────┐│
+│  │Knowledge │  │Transitive│  │  Cycle ││
+│  │  Graph   │  │ Reasoner │  │Detector││
+│  └──────────┘  └──────────┘  └────────┘│
+└─────────────────────────────────────────┘
+                   │
+┌─────────────────────────────────────────┐
+│         Simulation Layer                │
+│  ┌──────────┐  ┌──────────┐  ┌────────┐│
+│  │Percolation│  │  ETA     │  │ Heat  ││
+│  │   Model   │  │ Dynamics │  │  Tax  ││
+│  └──────────┘  └──────────┘  └────────┘│
+└─────────────────────────────────────────┘
+```
+
+## Core Modules
+
+| Module | File | Tests | Description |
+|--------|------|-------|-------------|
+| Symbolic Engine V3 | `symbolic_engine_v3.py` | 31 | Transitive reasoning, cycle detection |
+| NL Bridge V2 | `nl_bridge_v2.py` | 13 | Multi-turn context, complex queries |
+| Omega Rules | `symbolic_rules_omega.py` | 33 | 36 arbitration rules |
+| Post-Process V3 | `post_process_engine_v3.py` | 23 | 37-rule compliance checker |
+| KB Loader | `kb_loader.py` | 6 | Knowledge base management |
+| Stability Monitor | `mss_stability.py` | 7 | System health tracking |
+| Hybrid Reasoning | `hybrid_reasoning.py` | 8 | Symbolic/LLM fusion |
+| Topology Metrics | `topology_metrics.py` | 25 | Graph analysis |
+| Simulation Framework | `simulation_framework.py` | 15 | Numerical simulations |
+| Visualization Engine | `visualization_engine.py` | 14 | ASCII charts |
+| Interactive CLI | `interactive_cli.py` | 10 | Command-line interface |
+| Web API | `web_api.py` | 7 | HTTP API endpoints |
+
+## MSS Theoretical Framework
+
+MSS-AI implements the Meta-Self-Similarity System framework with:
+
+- **6 Hardcore Axioms (A1-A6)**: Information ontology, 0/1 mapping, entropy principles
+- **3-Layer Structure**: L1 (Hardcore), L2 (Protective Belt), L3 (Heuristic)
+- **RSCA Meta-Axiom**: Recursive self-consistency arbitration
+- **ETA Dynamics**: Emergence-Tuning-Alignment order parameter
+- **Heat Tax Formula**: γ(n,D) = γ₀ × D^(-n)
+
+## Development
+
+### Running Tests
+
+```bash
+# All tests
+python run_all_tests.py
+
+# Individual test
+python test_symbolic_engine_v3.py
+python test_simulation_framework.py
+```
+
+### Project Structure
+
+```
+MSS-AI-Project/
+├── *.py                    # Core modules
+├── test_*.py              # Test suites
+├── run_all_tests.py       # Master test runner
+├── knowledge_base/        # JSONL knowledge files
+│   ├── omega_evolution_v12.4.jsonl
+│   ├── anti_distillation_defense_v1.0.jsonl
+│   └── taoism_mss_correspondence_v1.0.jsonl
+├── logs/                  # Log files
+├── requirements.txt       # Dependencies
+├── setup.py              # Package setup
+└── README.md             # This file
+```
+
+## License
+
+MIT License - See LICENSE file for details
+
+## Citation
+
+If you use MSS-AI in research, please cite:
+
+```
+@software{mss_ai_2024,
+  title={MSS-AI: Meta-Self-Similarity System AI},
+  author={MSS Research Initiative},
+  year={2024},
+  url={https://github.com/mysama1/MSS-AI-Project}
+}
+```
+
+## Contact
+
+- GitHub Issues: [github.com/mysama1/MSS-AI-Project/issues](https://github.com/mysama1/MSS-AI-Project/issues)
+- Research Email: research@mss-ai.org

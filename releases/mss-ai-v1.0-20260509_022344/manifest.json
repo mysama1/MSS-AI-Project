@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "timestamp": "20260509_022344",
+  "files": [
+    "mss_tactic_integrated.py",
+    "mss_analyzer.py",
+    "mss_responder_v2.py",
+    "mss_model_manager.py",
+    "dialog_fork.py",
+    "test_integration_v1.py",
+    "skills/skill_loader.py",
+    "skills/catalog.yaml",
+    "README_v1.0.md",
+    "CHANGELOG_v1.0.md"
+  ],
+  "validation": {
+    "errors": 0,
+    "warnings": 0
+  }
+}
