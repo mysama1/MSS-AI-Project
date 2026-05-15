@@ -5,176 +5,30 @@ Combines: Arbiter + Analyzer + Generator + ModelManager + Post-processing
 
 import json
 import os
-import re
 import subprocess
 import time
-from dataclasses import dataclass, field
-from typing import List, Dict, Optional, Tuple
-from enum import Enum
+from typing import Dict, Optional
 
-# Import our three methods
-from mss_analyzer import MSSAnalyzer, AnalysisReport
+# Core types
+from mss_types import Layer, ComplianceStatus, ArbiterResult
+
+# Components
+from mss_analyzer import MSSAnalyzer
 from mss_responder_v2 import ResponderAgent
 from mss_model_manager import MSSModelManager as ModelManager
 from skills.skill_loader import SkillLoader
-from dialog_fork import DialogForkManager, RedteamForkManager, ForkReason
-from power_manager import PowerManager, PowerProfile, integrate_with_tactic
+from dialog_fork import DialogForkManager, RedteamForkManager
+from power_manager import PowerManager, integrate_with_tactic
 from post_process_engine import PostProcessEngine
 from post_process_engine_v3 import create_topology_aware_engine
 from topology_metrics import TopologyMetricsEngine
-from kb_loader import KBLoader, load_default_kb
+from kb_loader import KBLoader
 from mss_checkpoint import CheckpointManager, SessionSnapshot, AutoSaver
-from mss_stability import SystemHealthMonitor, AdaptiveTaskScheduler, TaskPriority
-from symbolic_rules_omega import OmegaComplianceChecker, RuleLayer, check_compliance
+from mss_stability import SystemHealthMonitor, AdaptiveTaskScheduler
+from symbolic_rules_omega import OmegaComplianceChecker, check_compliance
 from symbolic_engine_v3 import create_mss_v12_engine, HeatTaxMonitor
 from organizational_resilience import OrganizationalResilienceScanner, create_demo_organization
-
-class Layer(Enum):
-    L1 = "L1"
-    L2 = "L2"
-    L3 = "L3"
-    UNKNOWN = "UNKNOWN"
-
-class ComplianceStatus(Enum):
-    PASS = "PASS"
-    FAIL = "FAIL"
-    WARNING = "WARNING"
-
-@dataclass
-class ArbiterResult:
-    """Output from Arbiter Agent"""
-    layer: Layer
-    compliance: ComplianceStatus
-    forbidden_words: List[str] = field(default_factory=list)
-    rsca_check: bool = False
-    boundary_note: Optional[str] = None
-    rewrite_needed: bool = False
-    rewrite_prompt: Optional[str] = None
-    analysis_report: Optional[Dict] = None  # Full analyzer report
-
-@dataclass
-class Dialog:
-    """Per-agent conversation state"""
-    messages: List[Dict[str, str]] = field(default_factory=list)
-    
-    def add(self, role: str, content: str):
-        self.messages.append({"role": role, "content": content})
-    
-    def fork(self) -> 'Dialog':
-        return Dialog(messages=self.messages.copy())
-    
-    def to_ollama_format(self) -> List[Dict[str, str]]:
-        return self.messages
-
-class ArbiterAgent:
-    """
-    Enhanced Arbiter using MSSAnalyzer for deep compliance checking
-    """
-    
-    FORBIDDEN_MAP = {
-        r'\bsolve\b': 'address',
-        r'\bsolved\b': 'addressed',
-        r'\bsolving\b': 'addressing',
-        r'\bultimate\b': 'current best',
-        r'\bultimately\b': 'in the current framework',
-        r'\bperfect\b': 'high-fidelity',
-        r'\bperfectly\b': 'with high fidelity',
-        r'\bcomplete\b': 'partial',
-        r'\bcompletely\b': 'partially',
-        r'\bbreakthrough\b': 'advance',
-        r'\bfinal\b': 'current',
-        r'\bfinally\b': 'currently',
-        r'\babsolute\b': 'context-dependent',
-        r'\babsolutely\b': 'in this context',
-        r'\btranscend\b': 'expand beyond',
-        r'\btranscended\b': 'expanded beyond',
-        r'\btranscending\b': 'expanding beyond',
-    }
-    
-    L1_KEYWORDS = [
-        'information ontology', '0/1 critical', 'connected meaning network',
-        'tuning degree', 'phi-crystal', 'phi crystal', 'o=s=u',
-        'recursive self-consistency', 'axiom a1', 'axiom a2',
-        'axiom a3', 'axiom a4', 'axiom a5', 'axiom a6'
-    ]
-    
-    L2_KEYWORDS = [
-        'BCT', 'bekenstein', 'church-turing', 'AI alignment',
-        'falsification', 'predictive tracking', 'quantum MSS',
-        'organizational resilience framework', 'weber-entropy',
-        'protective belt', 'heuristic', 'metaphor'
-    ]
-    
-    def __init__(self, model: str = "qwen2.5:7b"):
-        self.model = model
-        self.dialog = Dialog()
-        self.analyzer = MSSAnalyzer()  # Use full analyzer
-        self._init_system_prompt()
-    
-    def _init_system_prompt(self):
-        system_prompt = """You are the MSS Arbiter Agent. Your job is to analyze user queries and classify them according to the MSS framework."""
-        self.dialog.add("system", system_prompt)
-    
-    def check(self, user_input: str) -> ArbiterResult:
-        """Run full compliance check using analyzer"""
-        # Use MSSAnalyzer for deep analysis
-        analysis = self.analyzer.analyze(user_input, claimed_layer=None)
-        
-        # Convert analyzer result to ArbiterResult
-        layer = self._map_layer(analysis.detected_layer)
-        
-        # Check forbidden words
-        forbidden_found = self._detect_forbidden(user_input)
-        
-        # Determine compliance
-        if forbidden_found or analysis.overall_score < 0.5:
-            compliance = ComplianceStatus.FAIL
-            rewrite_needed = True
-        elif analysis.overall_score < 0.8:
-            compliance = ComplianceStatus.WARNING
-            rewrite_needed = False
-        else:
-            compliance = ComplianceStatus.PASS
-            rewrite_needed = False
-        
-        return ArbiterResult(
-            layer=layer,
-            compliance=compliance,
-            forbidden_words=forbidden_found,
-            rsca_check=analysis.rsca_compliance > 0.7,
-            boundary_note=f"Layer {analysis.detected_layer}. Score: {analysis.overall_score}",
-            rewrite_needed=rewrite_needed,
-            rewrite_prompt=self._generate_rewrite_prompt(user_input, forbidden_found) if forbidden_found else None,
-            analysis_report=analysis.to_dict()
-        )
-    
-    def _map_layer(self, detected: str) -> Layer:
-        """Map analyzer layer to Arbiter layer"""
-        layer_map = {
-            "L1": Layer.L1,
-            "L2": Layer.L2,
-            "L3": Layer.L3
-        }
-        return layer_map.get(detected, Layer.UNKNOWN)
-    
-    def _detect_forbidden(self, text: str) -> List[str]:
-        """Rule-based forbidden word detection"""
-        found = []
-        text_lower = text.lower()
-        for pattern, replacement in self.FORBIDDEN_MAP.items():
-            matches = re.findall(pattern, text_lower)
-            found.extend(matches)
-        return list(set(found))
-    
-    def _generate_rewrite_prompt(self, original: str, forbidden: List[str]) -> str:
-        """Generate rewrite instruction"""
-        replacements = []
-        for word in forbidden:
-            for pattern, replacement in self.FORBIDDEN_MAP.items():
-                if re.search(pattern, word.lower()):
-                    replacements.append(f"'{word}' -> '{replacement}'")
-                    break
-        return f"Rewrite avoiding: {', '.join(replacements)}"
+from arbiter_agent import ArbiterAgent
 
 
 class MSSTactic:
@@ -943,62 +797,4 @@ Please rephrase using MSS terminology."""
 
 
 # Test interface
-if __name__ == "__main__":
-    print("MSS-Tactic v1.0 - Integrated Orchestrator")
-    print("=" * 60)
-    
-    tactic = MSSTactic()
-    
-    # Test analyze()
-    print("\n1. Testing analyze():")
-    test_text = "MSS框架是终极的解决方案，可以完美解决AI对齐问题"
-    result = tactic.analyze(test_text, claimed_layer="L1")
-    print(f"   Score: {result['overall_score']}")
-    print(f"   Layer: {result['layer']['detected']}")
-    
-    # Test generate()
-    print("\n2. Testing generate():")
-    result = tactic.generate("Explain Axiom A1 about information ontology")
-    print(f"   Success: {result['success']}")
-    print(f"   Layer: {result['arbiter_result'].layer.value}")
-    print(f"   Response preview: {result['response'][:100]}...")
-    
-    # Test switch_model()
-    print("\n3. Testing switch_model():")
-    result = tactic.switch_model("qwen2.5:7b")
-    print(f"   Success: {result.get('success', False)}")
-    print(f"   Model: {result.get('model', 'N/A')}")
-    
-    # Test topology metrics (lazy init)
-    print("\n4. Testing topology metrics:")
-    try:
-        from symbolic_engine_v2 import MSSKnowledgeGraph, ConceptNode, NodeType
-        graph = MSSKnowledgeGraph()
-        graph.add_node(ConceptNode(id="test_l1", name="Test L1", node_type=NodeType.AXIOM, layer="L1"))
-        graph.add_node(ConceptNode(id="test_l2", name="Test L2", node_type=NodeType.THEOREM, layer="L2"))
-        tactic.topology_engine = TopologyMetricsEngine(graph)
-        health = tactic.topology_engine.get_graph_health()
-        print(f"   Graph health: {health['overall_score']:.2f}")
-        print(f"   Nodes: {health['node_count']}")
-    except Exception as e:
-        print(f"   Skipped: {e}")
-    
-    # Test organizational resilience scan
-    print("\n5. Testing organizational resilience scan:")
-    try:
-        result = tactic.scan_organization()
-        print(f"   Organization: {result['org_name']}")
-        print(f"   Resilience Grade: {result['global_metrics']['resilience_grade']}")
-        print(f"   Resilience Score: {result['global_metrics']['resilience_score']}")
-        print(f"   O_d: {result['global_metrics']['O_d']}")
-        print(f"   phi: {result['global_metrics']['phi']}")
-        print(f"   Departments: {len(result['departments'])}")
-        print(f"   Diagnosis items: {len(result['diagnosis'])}")
-        print(f"   Recommendations: {len(result['recommendations'])}")
-    except Exception as e:
-        print(f"   Error: {e}")
-    except Exception as e:
-        print(f"   Skipped: {e}")
-    
-    print("\n" + "=" * 60)
-    print("Stats:", tactic.get_stats())
+# Test code moved to test_mss_tactic_integration.py
