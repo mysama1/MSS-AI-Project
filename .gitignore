@@ -1,0 +1,28 @@
+# MSS-AI Gitignore
+# Models (too large for git)
+*.gguf
+*.bin
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE
+.vscode/
+.idea/
+
+# Temp/workspace
+*.tmp
+*.temp
+.DS_Store
+
+# Sensitive
+*.env
+credentials.json
+openclaw.json
+
+# Large binary
+*.npy
+*.pkl
+*.h5
