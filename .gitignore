@@ -8,6 +8,10 @@ __pycache__/
 *.pyc
 *.pyo
 
+# Numba JIT cache
+*.nbc
+*.nbi
+
 # IDE
 .vscode/
 .idea/
@@ -26,3 +30,18 @@ openclaw.json
 *.npy
 *.pkl
 *.h5
+
+# Build artifacts
+*.prof
+checkpoints/
+gateway_monitor.log
+resilience_history/
+resilience_reports/
+reports/
+test_metrics/
+task_system_data.json
+system_status_log.jsonl
+ai_content_compliant.json
+omega_content_compliant.json
+demo_v3_result.txt
+mem_boundary_report.json
