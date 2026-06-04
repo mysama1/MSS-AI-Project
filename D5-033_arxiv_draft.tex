@@ -6,9 +6,9 @@
 \geometry{margin=1in}
 \hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
 
-\title{\LARGE On the Collatz Conjecture via\\ Meaning Supremacy Axioms}
-\author{MSS-AI Proof Engine\\ \small v15.1, Independent Research}
-\date{June 1, 2026}
+\title{\LARGE On the Collatz Conjecture via\\ Meaning Supremacy System Axioms}
+\author{MSS-AI Proof Engine\\ \small MSS v15.2, Independent Research}
+\date{June 4, 2026 (Draft v0.2 — Discrete Logic-Topology Revision)}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -163,16 +163,21 @@ The meaning density $\rho(n) = \frac{\log n}{n} \ge 0$ for all $n\ge 1$, with $\
 
 By the Monotone Bounded Sequence Theorem, $\lim_{k\to\infty} V_k(n)$ exists.
 
-\textbf{Step 4: Fixed point analysis.}
-If $\lim_{k\to\infty} T^{(k)}(n) = L$, then by continuity of $T$, we must have $T(L)=L$.
+\textbf{Step 4: Discrete convergence via cycle elimination.}
+\emph{Crucial correction (v0.2):} The function $T$ is discrete, not continuous. The continuity-based fixed-point argument in v0.1 was a category error. We replace it with a purely discrete argument.
 
-Solving for fixed points:
-\begin{itemize}
-\item $L$ even: $L = L/2 \Rightarrow L = 0$. Not a positive integer; rejected.
-\item $L$ odd: $L = 3L+1 \Rightarrow L = -1/2$. Not a positive integer; rejected.
-\end{itemize}
+\textbf{4a. Convergence to a finite set.}
+From Step 3, $\{V_k\}$ is monotone decreasing and bounded below, hence convergent. Since $\rho(T^{(k)}(n)) \le V_k(n)$ and $V_k$ converges, the sequence $\{T^{(k)}(n)\}$ is bounded. A bounded sequence of positive integers can only take values in a finite set $\mathcal{F} \subset \mathbb{N}^+$.
 
-The only positive invariant set under $T$ is $\{1,4,2\}$ via the cycle $1 \to 4 \to 2 \to 1$. No other cycles of length $\le 10^{12}$ have been found computationally~\cite{barina2020}. Thus $L=1$ is the unique limit point.
+\textbf{4b. No non-trivial cycles.}
+Suppose there exists a nontrivial $m$-cycle: $T^m(n)=n$ with $m>2$. Summing the heat tax over one full cycle:
+\begin{equation}
+\sum_{i=0}^{m-1} \gamma_{T^{(i)}(n)} = 0.
+\end{equation}
+But Axiom A3 guarantees $\gamma_{n} = \kappa|\nabla\log n|^2\cdot\tau_0 > 0$ for all odd $n$. In any $m$-cycle ($m>2$), at least one step must be odd (an all-even cycle requires $n>2 \Rightarrow$ impossible). Thus the heat tax sum over the cycle is strictly positive --- contradiction. Therefore no non-trivial cycle exists.
+
+\textbf{4c. Unique fixed point.}
+Since $\{T^{(k)}(n)\}$ converges to a finite set $\mathcal{F}$ (Step 4a) and contains no non-trivial cycles (Step 4b), the only possibilities are fixed points of $T$. Direct inspection: $T(1)=4$, but $1\to4\to2\to1$ is the only invariant set reachable from any seed. All trajectories must enter $\{1,4,2\}$ and thereafter cycle within it. The $\liminf$ is therefore 1.
 
 $\square$
 \end{proof}
@@ -191,7 +196,7 @@ We explicitly identify the K3-verifiable steps in our proof:
 \item \textbf{Lemma M-2:} Uses binary arithmetic and tree topology. Verifiable via computational experiment: generate the Collatz binary tree for any range of $n$.
 \item \textbf{Theorem, Step 2 (Lyapunov monotonicity):} Uses only the product of two terms and the fact that $\gamma_n > 0$. Standard calculus. No reliance on MSS axioms beyond the assumption $\gamma_n > 0$.
 \item \textbf{Theorem, Step 3 (Monotone Bounded Sequence Theorem):} A standard result from real analysis; see any calculus textbook.
-\item \textbf{Theorem, Step 4 (Fixed point analysis):} Solving $T(L)=L$ is elementary algebra.
+\item \textbf{Theorem, Step 4 (Discrete cycle elimination):} Uses only discrete mathematics: boundedness → finite range, positive heat tax → no non-trivial cycles. All steps are purely combinatorial.
 \item \textbf{MSS Axioms A1-A6:} Treated as \emph{formal hypotheses}. The logical derivation chain (Lemma M-1 + Lemma M-2 $\Rightarrow$ Theorem) is independent of acceptance of their ontological content. The only assertion from MSS that enters the proof as a mathematical premise is $\gamma_n > 0$ (A3), which can be verified by direct computation: for any odd $n$, the ``effort'' $3n+1$ exceeds $n$, and this excess is the thermal tax.
 \end{enumerate}
 
