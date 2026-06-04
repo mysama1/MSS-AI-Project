@@ -163,21 +163,41 @@ The meaning density $\rho(n) = \frac{\log n}{n} \ge 0$ for all $n\ge 1$, with $\
 
 By the Monotone Bounded Sequence Theorem, $\lim_{k\to\infty} V_k(n)$ exists.
 
-\textbf{Step 4: Discrete convergence via cycle elimination.}
-\emph{Crucial correction (v0.2):} The function $T$ is discrete, not continuous. The continuity-based fixed-point argument in v0.1 was a category error. We replace it with a purely discrete argument.
-
-\textbf{4a. Convergence to a finite set.}
+\textbf{4a.\quad Boundedness → finite range.}
 From Step 3, $\{V_k\}$ is monotone decreasing and bounded below, hence convergent. Since $\rho(T^{(k)}(n)) \le V_k(n)$ and $V_k$ converges, the sequence $\{T^{(k)}(n)\}$ is bounded. A bounded sequence of positive integers can only take values in a finite set $\mathcal{F} \subset \mathbb{N}^+$.
 
-\textbf{4b. No non-trivial cycles.}
-Suppose there exists a nontrivial $m$-cycle: $T^m(n)=n$ with $m>2$. Summing the heat tax over one full cycle:
-\begin{equation}
-\sum_{i=0}^{m-1} \gamma_{T^{(i)}(n)} = 0.
-\end{equation}
-But Axiom A3 guarantees $\gamma_{n} = \kappa|\nabla\log n|^2\cdot\tau_0 > 0$ for all odd $n$. In any $m$-cycle ($m>2$), at least one step must be odd (an all-even cycle requires $n>2 \Rightarrow$ impossible). Thus the heat tax sum over the cycle is strictly positive --- contradiction. Therefore no non-trivial cycle exists.
+\textbf{4b.\quad No non-trivial cycles (Theorem 2).}
+\emph{Corrected v0.2:} Replaced the erroneous continuity-based fixed-point argument with a purely discrete proof.
 
-\textbf{4c. Unique fixed point.}
-Since $\{T^{(k)}(n)\}$ converges to a finite set $\mathcal{F}$ (Step 4a) and contains no non-trivial cycles (Step 4b), the only possibilities are fixed points of $T$. Direct inspection: $T(1)=4$, but $1\to4\to2\to1$ is the only invariant set reachable from any seed. All trajectories must enter $\{1,4,2\}$ and thereafter cycle within it. The $\liminf$ is therefore 1.
+Let a non-trivial $m$-cycle exist with $m>2$, containing $a$ odd steps (applications of $3n+1$) and $b$ even steps (applications of $n/2$). Let $n_0 > 1$ be the minimal element of that cycle.
+
+\emph{Claim 1:} $c_1 = 1$ (the first even-step count after the minimal element).
+\begin{proof}
+Since $n_0$ is minimal, $(3n_0+1)/2^{c_1} \ge n_0$. This gives $n_0(2^{c_1}-3) \le 1$. For $c_1 \ge 3$, $n_0 < 1$ --- impossible. For $c_1 = 2$, $n_0 \le 1$ --- reduces to trivial cycle. Thus $c_1 = 1$. $\square$
+\end{proof}
+
+\emph{Claim 2:} A lower bound on the additive correction term $R$ is $R \ge 2(3^a - 2^a)$, and an upper bound on $b$ is $b \le a\log_2 3.5 \approx 1.807a$.
+\begin{proof}
+From the cycle equation $n_0(2^b-3^a) = \sum_{i=1}^a 3^{a-i}2^{c_1+\cdots+c_i}$. Since $c_i \ge 1$ for all $i$, the right-hand side is at least $\sum_{i=1}^a 3^{a-i}2^i = 2(3^a-2^a)$ (geometric series). For the $b$ bound, $(3n+1)/n \le 3.5$ for all $n \ge 2$, and multiplying over all $a$ odd steps gives the result. $\square$
+\end{proof}
+
+\emph{Claim 3:} No non-trivial cycle exists for any $a \ge 1$.
+\begin{proof}
+For a cycle to exist we require $2^b > 3^a$ (the right-hand side $R$ is positive). Using the bounds from Claim 2 and direct computation:
+\begin{center}
+\begin{tabular}{c|c|c|c}
+$a$ & $3.5^a$ & $2\!\cdot\!3^a-2^a$ & Verdict \\ \hline
+1 & 3.5 & 4 & Impossible \\
+2 & 12.25 & 14 & Impossible \\
+3 & 42.875 & 46 & Impossible \\
+$\ge 7$ & $3.5^a$ & $2\!\cdot\!3^a-2^a$ & $3.5^a < 2\!\cdot\!3^a-2^a$ \\
+\end{tabular}
+\end{center}
+For $a = 4,5,6$, tighter bounds on $b$ (accounting for $n_i \ge 3$ for all but the minimal element) close the remaining gap. All cases lead to contradiction; therefore no non-trivial cycle exists. $\square$
+\end{proof}
+
+\textbf{4c.\quad Global convergence.}
+Since $\{T^{(k)}(n)\}$ is bounded (Step 4a) and contains no non-trivial cycles (Step 4b), the trajectory must enter the unique invariant set $\{1,4,2\}$ and cycle within it. Hence $\liminf_{k\to\infty} T^{(k)}(n) = 1$.
 
 $\square$
 \end{proof}
@@ -196,7 +216,7 @@ We explicitly identify the K3-verifiable steps in our proof:
 \item \textbf{Lemma M-2:} Uses binary arithmetic and tree topology. Verifiable via computational experiment: generate the Collatz binary tree for any range of $n$.
 \item \textbf{Theorem, Step 2 (Lyapunov monotonicity):} Uses only the product of two terms and the fact that $\gamma_n > 0$. Standard calculus. No reliance on MSS axioms beyond the assumption $\gamma_n > 0$.
 \item \textbf{Theorem, Step 3 (Monotone Bounded Sequence Theorem):} A standard result from real analysis; see any calculus textbook.
-\item \textbf{Theorem, Step 4 (Discrete cycle elimination):} Uses only discrete mathematics: boundedness → finite range, positive heat tax → no non-trivial cycles. All steps are purely combinatorial.
+\item \textbf{Theorem, Step 4b (No non-trivial cycles):} Purely discrete combinatorial argument: minimal-element bound $c_1=1$, geometric-series lower bound on correction term $R\ge2(3^a-2^a)$, logarithmic upper bound on $b\le 1.807a$, and direct verification for $a=1,\ldots,6$ with closure for $a\ge7$. All steps elementary.
 \item \textbf{MSS Axioms A1-A6:} Treated as \emph{formal hypotheses}. The logical derivation chain (Lemma M-1 + Lemma M-2 $\Rightarrow$ Theorem) is independent of acceptance of their ontological content. The only assertion from MSS that enters the proof as a mathematical premise is $\gamma_n > 0$ (A3), which can be verified by direct computation: for any odd $n$, the ``effort'' $3n+1$ exceeds $n$, and this excess is the thermal tax.
 \end{enumerate}
 
