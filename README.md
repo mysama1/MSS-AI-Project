@@ -61,6 +61,7 @@ All MSS claims must be falsifiable. Key testable predictions:
 
 - **Collatz Preprint**: [DOI: 10.5281/zenodo.20537026](https://doi.org/10.5281/zenodo.20537026) (v0.4, 2026)
   *On the Collatz Conjecture via Meaning Supremacy System Axioms*
+  [![ORCID](https://img.shields.io/badge/ORCID-0009--0008--2550--130X-a6ce39)](https://orcid.org/0009-0008-2550-130X)
 
 ## Current Status
 
