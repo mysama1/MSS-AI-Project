@@ -1,4 +1,4 @@
-# MSS L1 Hard Core Axioms (v12.2)
+# MSS L1 Hard Core Axioms (v15.1)
 # Condition: always | Priority: 1 | Est.tokens: 800
 
 ## Immutable Base Axioms (A1-A6)

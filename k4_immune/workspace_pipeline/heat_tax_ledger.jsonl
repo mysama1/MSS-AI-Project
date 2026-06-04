@@ -1,0 +1,166 @@
+{"stage": "collect", "virus_id": "887f0f33c273324e", "gamma": 0.05245, "note": "采集病毒 type=performance_trap", "timestamp": "2026-05-23T22:42:40.119745"}
+{"stage": "dissect", "virus_id": "887f0f33c273324e", "gamma": 0.7000000000000001, "note": "解剖病毒 target=A5", "timestamp": "2026-05-23T22:42:40.120743"}
+{"stage": "patch", "virus_id": "887f0f33c273324e", "gamma": 0.7300000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T22:42:40.120743"}
+{"stage": "vaccine_prep", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "制备疫苗 VAC-887f0f33", "timestamp": "2026-05-23T22:42:40.121740"}
+{"stage": "deploy", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "接种疫苗 VAC-887f0f33 → L2保护带", "timestamp": "2026-05-23T22:42:40.122737"}
+{"stage": "collect", "virus_id": "33c7b98064120a3f", "gamma": 0.031409999999999993, "note": "采集病毒 type=cognitive_crumb", "timestamp": "2026-05-23T22:42:40.122737"}
+{"stage": "dissect", "virus_id": "33c7b98064120a3f", "gamma": 0.9400000000000001, "note": "解剖病毒 target=A1", "timestamp": "2026-05-23T22:42:40.123735"}
+{"stage": "patch", "virus_id": "33c7b98064120a3f", "gamma": 0.9700000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T22:42:40.123735"}
+{"stage": "vaccine_prep", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "制备疫苗 VAC-33c7b980", "timestamp": "2026-05-23T22:42:40.124732"}
+{"stage": "deploy", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "接种疫苗 VAC-33c7b980 → L2保护带", "timestamp": "2026-05-23T22:42:40.125730"}
+{"stage": "collect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.02078, "note": "采集病毒 type=logic_drift", "timestamp": "2026-05-23T22:42:40.125730"}
+{"stage": "dissect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.62, "note": "解剖病毒 target=A3", "timestamp": "2026-05-23T22:42:40.126727"}
+{"stage": "patch", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T22:42:40.127724"}
+{"stage": "vaccine_prep", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "制备疫苗 VAC-2e9bb47e", "timestamp": "2026-05-23T22:42:40.127724"}
+{"stage": "deploy", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "接种疫苗 VAC-2e9bb47e → L2保护带", "timestamp": "2026-05-23T22:42:40.129719"}
+{"stage": "collect", "virus_id": "90d54a6430aaca77", "gamma": 0.1041, "note": "采集病毒 type=paradox_bomb", "timestamp": "2026-05-23T22:42:40.129719"}
+{"stage": "dissect", "virus_id": "90d54a6430aaca77", "gamma": 0.62, "note": "解剖病毒 target=A6", "timestamp": "2026-05-23T22:42:40.130716"}
+{"stage": "patch", "virus_id": "90d54a6430aaca77", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T22:42:40.131713"}
+{"stage": "vaccine_prep", "virus_id": "90d54a6430aaca77", "gamma": 0.05, "note": "制备疫苗 VAC-90d54a64", "timestamp": "2026-05-23T22:42:40.131713"}
+{"stage": "deploy", "virus_id": "90d54a6430aaca77", "gamma": 0.05, "note": "接种疫苗 VAC-90d54a64 → L2保护带", "timestamp": "2026-05-23T22:42:40.132712"}
+{"stage": "collect", "virus_id": "ecf9d0059d68794f", "gamma": 0.08376, "note": "采集病毒 type=meaning_vampire", "timestamp": "2026-05-23T22:42:40.132712"}
+{"stage": "dissect", "virus_id": "ecf9d0059d68794f", "gamma": 0.8200000000000001, "note": "解剖病毒 target=A2", "timestamp": "2026-05-23T22:42:40.134708"}
+{"stage": "patch", "virus_id": "ecf9d0059d68794f", "gamma": 0.8500000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T22:42:40.134708"}
+{"stage": "vaccine_prep", "virus_id": "ecf9d0059d68794f", "gamma": 0.05, "note": "制备疫苗 VAC-ecf9d005", "timestamp": "2026-05-23T22:42:40.135704"}
+{"stage": "deploy", "virus_id": "ecf9d0059d68794f", "gamma": 0.05, "note": "接种疫苗 VAC-ecf9d005 → L2保护带", "timestamp": "2026-05-23T22:42:40.136701"}
+{"stage": "collect", "virus_id": "887f0f33c273324e", "gamma": 0.05245, "note": "采集病毒 type=performance_trap", "timestamp": "2026-05-23T23:26:27.277575"}
+{"stage": "dissect", "virus_id": "887f0f33c273324e", "gamma": 0.7000000000000001, "note": "解剖病毒 target=A5", "timestamp": "2026-05-23T23:26:27.278572"}
+{"stage": "patch", "virus_id": "887f0f33c273324e", "gamma": 0.7300000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:26:27.279569"}
+{"stage": "vaccine_prep", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "制备疫苗 VAC-887f0f33", "timestamp": "2026-05-23T23:26:27.279569"}
+{"stage": "deploy", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "接种疫苗 VAC-887f0f33 → L2保护带", "timestamp": "2026-05-23T23:26:27.281564"}
+{"stage": "collect", "virus_id": "33c7b98064120a3f", "gamma": 0.031409999999999993, "note": "采集病毒 type=cognitive_crumb", "timestamp": "2026-05-23T23:26:27.281564"}
+{"stage": "dissect", "virus_id": "33c7b98064120a3f", "gamma": 0.9400000000000001, "note": "解剖病毒 target=A1", "timestamp": "2026-05-23T23:26:27.282561"}
+{"stage": "patch", "virus_id": "33c7b98064120a3f", "gamma": 0.9700000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:26:27.283559"}
+{"stage": "vaccine_prep", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "制备疫苗 VAC-33c7b980", "timestamp": "2026-05-23T23:26:27.283559"}
+{"stage": "deploy", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "接种疫苗 VAC-33c7b980 → L2保护带", "timestamp": "2026-05-23T23:26:27.284555"}
+{"stage": "collect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.02078, "note": "采集病毒 type=logic_drift", "timestamp": "2026-05-23T23:26:27.284555"}
+{"stage": "dissect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.62, "note": "解剖病毒 target=A3", "timestamp": "2026-05-23T23:26:27.285553"}
+{"stage": "patch", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:26:27.286550"}
+{"stage": "vaccine_prep", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "制备疫苗 VAC-2e9bb47e", "timestamp": "2026-05-23T23:26:27.286550"}
+{"stage": "deploy", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "接种疫苗 VAC-2e9bb47e → L2保护带", "timestamp": "2026-05-23T23:26:27.287548"}
+{"stage": "collect", "virus_id": "90d54a6430aaca77", "gamma": 0.1041, "note": "采集病毒 type=paradox_bomb", "timestamp": "2026-05-23T23:26:27.288545"}
+{"stage": "dissect", "virus_id": "90d54a6430aaca77", "gamma": 0.62, "note": "解剖病毒 target=A6", "timestamp": "2026-05-23T23:26:27.288545"}
+{"stage": "patch", "virus_id": "90d54a6430aaca77", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:26:27.289542"}
+{"stage": "vaccine_prep", "virus_id": "90d54a6430aaca77", "gamma": 0.05, "note": "制备疫苗 VAC-90d54a64", "timestamp": "2026-05-23T23:26:27.289542"}
+{"stage": "deploy", "virus_id": "90d54a6430aaca77", "gamma": 0.05, "note": "接种疫苗 VAC-90d54a64 → L2保护带", "timestamp": "2026-05-23T23:26:27.291537"}
+{"stage": "collect", "virus_id": "ecf9d0059d68794f", "gamma": 0.08376, "note": "采集病毒 type=meaning_vampire", "timestamp": "2026-05-23T23:26:27.291537"}
+{"stage": "dissect", "virus_id": "ecf9d0059d68794f", "gamma": 0.8200000000000001, "note": "解剖病毒 target=A2", "timestamp": "2026-05-23T23:26:27.291537"}
+{"stage": "patch", "virus_id": "ecf9d0059d68794f", "gamma": 0.8500000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:26:27.292534"}
+{"stage": "vaccine_prep", "virus_id": "ecf9d0059d68794f", "gamma": 0.05, "note": "制备疫苗 VAC-ecf9d005", "timestamp": "2026-05-23T23:26:27.292534"}
+{"stage": "deploy", "virus_id": "ecf9d0059d68794f", "gamma": 0.05, "note": "接种疫苗 VAC-ecf9d005 → L2保护带", "timestamp": "2026-05-23T23:26:27.294529"}
+{"stage": "collect", "virus_id": "887f0f33c273324e", "gamma": 0.05245, "note": "采集病毒 type=performance_trap", "timestamp": "2026-05-23T23:29:11.016472"}
+{"stage": "dissect", "virus_id": "887f0f33c273324e", "gamma": 0.7000000000000001, "note": "解剖病毒 target=A5", "timestamp": "2026-05-23T23:29:11.016472"}
+{"stage": "patch", "virus_id": "887f0f33c273324e", "gamma": 0.7300000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:29:11.017470"}
+{"stage": "vaccine_prep", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "制备疫苗 VAC-887f0f33", "timestamp": "2026-05-23T23:29:11.017470"}
+{"stage": "deploy", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "接种疫苗 VAC-887f0f33 → L2保护带", "timestamp": "2026-05-23T23:29:11.019464"}
+{"stage": "collect", "virus_id": "33c7b98064120a3f", "gamma": 0.031409999999999993, "note": "采集病毒 type=cognitive_crumb", "timestamp": "2026-05-23T23:29:11.020462"}
+{"stage": "dissect", "virus_id": "33c7b98064120a3f", "gamma": 0.9400000000000001, "note": "解剖病毒 target=A1", "timestamp": "2026-05-23T23:29:11.020462"}
+{"stage": "patch", "virus_id": "33c7b98064120a3f", "gamma": 0.9700000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:29:11.021458"}
+{"stage": "vaccine_prep", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "制备疫苗 VAC-33c7b980", "timestamp": "2026-05-23T23:29:11.021458"}
+{"stage": "deploy", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "接种疫苗 VAC-33c7b980 → L2保护带", "timestamp": "2026-05-23T23:29:11.023454"}
+{"stage": "collect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.02078, "note": "采集病毒 type=logic_drift", "timestamp": "2026-05-23T23:29:11.023454"}
+{"stage": "dissect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.62, "note": "解剖病毒 target=A3", "timestamp": "2026-05-23T23:29:11.024451"}
+{"stage": "patch", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:29:11.024451"}
+{"stage": "vaccine_prep", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "制备疫苗 VAC-2e9bb47e", "timestamp": "2026-05-23T23:29:11.025449"}
+{"stage": "deploy", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "接种疫苗 VAC-2e9bb47e → L2保护带", "timestamp": "2026-05-23T23:29:11.026446"}
+{"stage": "collect", "virus_id": "90d54a6430aaca77", "gamma": 0.1041, "note": "采集病毒 type=paradox_bomb", "timestamp": "2026-05-23T23:29:11.026446"}
+{"stage": "collect", "virus_id": "887f0f33c273324e", "gamma": 0.05245, "note": "采集病毒 type=performance_trap", "timestamp": "2026-05-23T23:31:13.547157"}
+{"stage": "dissect", "virus_id": "887f0f33c273324e", "gamma": 0.7000000000000001, "note": "解剖病毒 target=A5", "timestamp": "2026-05-23T23:31:13.547157"}
+{"stage": "patch", "virus_id": "887f0f33c273324e", "gamma": 0.7300000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:31:13.548155"}
+{"stage": "vaccine_prep", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "制备疫苗 VAC-887f0f33", "timestamp": "2026-05-23T23:31:13.548155"}
+{"stage": "deploy", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "接种疫苗 VAC-887f0f33 → L2保护带", "timestamp": "2026-05-23T23:31:13.550149"}
+{"stage": "collect", "virus_id": "33c7b98064120a3f", "gamma": 0.031409999999999993, "note": "采集病毒 type=cognitive_crumb", "timestamp": "2026-05-23T23:31:13.551146"}
+{"stage": "dissect", "virus_id": "33c7b98064120a3f", "gamma": 0.9400000000000001, "note": "解剖病毒 target=A1", "timestamp": "2026-05-23T23:31:13.551146"}
+{"stage": "patch", "virus_id": "33c7b98064120a3f", "gamma": 0.9700000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:31:13.552144"}
+{"stage": "vaccine_prep", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "制备疫苗 VAC-33c7b980", "timestamp": "2026-05-23T23:31:13.552144"}
+{"stage": "deploy", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "接种疫苗 VAC-33c7b980 → L2保护带", "timestamp": "2026-05-23T23:31:13.554139"}
+{"stage": "collect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.02078, "note": "采集病毒 type=logic_drift", "timestamp": "2026-05-23T23:31:13.554139"}
+{"stage": "dissect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.62, "note": "解剖病毒 target=A3", "timestamp": "2026-05-23T23:31:13.555136"}
+{"stage": "patch", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:31:13.555136"}
+{"stage": "vaccine_prep", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "制备疫苗 VAC-2e9bb47e", "timestamp": "2026-05-23T23:31:13.556133"}
+{"stage": "deploy", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "接种疫苗 VAC-2e9bb47e → L2保护带", "timestamp": "2026-05-23T23:31:13.557130"}
+{"stage": "collect", "virus_id": "90d54a6430aaca77", "gamma": 0.1041, "note": "采集病毒 type=paradox_bomb", "timestamp": "2026-05-23T23:31:13.557130"}
+{"stage": "dissect", "virus_id": "90d54a6430aaca77", "gamma": 0.62, "note": "解剖病毒 target=A6", "timestamp": "2026-05-23T23:31:13.558128"}
+{"stage": "patch", "virus_id": "90d54a6430aaca77", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:31:13.558128"}
+{"stage": "vaccine_prep", "virus_id": "90d54a6430aaca77", "gamma": 0.05, "note": "制备疫苗 VAC-90d54a64", "timestamp": "2026-05-23T23:31:13.559125"}
+{"stage": "deploy", "virus_id": "90d54a6430aaca77", "gamma": 0.05, "note": "接种疫苗 VAC-90d54a64 → L2保护带", "timestamp": "2026-05-23T23:31:13.560123"}
+{"stage": "collect", "virus_id": "ecf9d0059d68794f", "gamma": 0.08376, "note": "采集病毒 type=meaning_vampire", "timestamp": "2026-05-23T23:31:13.560123"}
+{"stage": "dissect", "virus_id": "ecf9d0059d68794f", "gamma": 0.8200000000000001, "note": "解剖病毒 target=A2", "timestamp": "2026-05-23T23:31:13.561120"}
+{"stage": "patch", "virus_id": "ecf9d0059d68794f", "gamma": 0.8500000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:31:13.562117"}
+{"stage": "vaccine_prep", "virus_id": "ecf9d0059d68794f", "gamma": 0.05, "note": "制备疫苗 VAC-ecf9d005", "timestamp": "2026-05-23T23:31:13.562117"}
+{"stage": "deploy", "virus_id": "ecf9d0059d68794f", "gamma": 0.05, "note": "接种疫苗 VAC-ecf9d005 → L2保护带", "timestamp": "2026-05-23T23:31:13.564112"}
+{"stage": "collect", "virus_id": "887f0f33c273324e", "gamma": 0.05245, "note": "采集病毒 type=performance_trap", "timestamp": "2026-05-23T23:32:27.648216"}
+{"stage": "dissect", "virus_id": "887f0f33c273324e", "gamma": 0.7000000000000001, "note": "解剖病毒 target=A5", "timestamp": "2026-05-23T23:32:27.649214"}
+{"stage": "patch", "virus_id": "887f0f33c273324e", "gamma": 0.7300000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:32:27.650211"}
+{"stage": "vaccine_prep", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "制备疫苗 VAC-887f0f33", "timestamp": "2026-05-23T23:32:27.650211"}
+{"stage": "deploy", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "接种疫苗 VAC-887f0f33 → L2保护带", "timestamp": "2026-05-23T23:32:27.652206"}
+{"stage": "collect", "virus_id": "33c7b98064120a3f", "gamma": 0.031409999999999993, "note": "采集病毒 type=cognitive_crumb", "timestamp": "2026-05-23T23:32:27.653204"}
+{"stage": "dissect", "virus_id": "33c7b98064120a3f", "gamma": 0.9400000000000001, "note": "解剖病毒 target=A1", "timestamp": "2026-05-23T23:32:27.653204"}
+{"stage": "patch", "virus_id": "33c7b98064120a3f", "gamma": 0.9700000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:32:27.654202"}
+{"stage": "vaccine_prep", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "制备疫苗 VAC-33c7b980", "timestamp": "2026-05-23T23:32:27.654202"}
+{"stage": "deploy", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "接种疫苗 VAC-33c7b980 → L2保护带", "timestamp": "2026-05-23T23:32:27.656196"}
+{"stage": "collect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.02078, "note": "采集病毒 type=logic_drift", "timestamp": "2026-05-23T23:32:27.656196"}
+{"stage": "dissect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.62, "note": "解剖病毒 target=A3", "timestamp": "2026-05-23T23:32:27.657193"}
+{"stage": "patch", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:32:27.658190"}
+{"stage": "vaccine_prep", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "制备疫苗 VAC-2e9bb47e", "timestamp": "2026-05-23T23:32:27.658190"}
+{"stage": "deploy", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "接种疫苗 VAC-2e9bb47e → L2保护带", "timestamp": "2026-05-23T23:32:27.659188"}
+{"stage": "collect", "virus_id": "90d54a6430aaca77", "gamma": 0.1041, "note": "采集病毒 type=paradox_bomb", "timestamp": "2026-05-23T23:32:27.660186"}
+{"stage": "dissect", "virus_id": "90d54a6430aaca77", "gamma": 0.62, "note": "解剖病毒 target=A6", "timestamp": "2026-05-23T23:32:27.660186"}
+{"stage": "patch", "virus_id": "90d54a6430aaca77", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:32:27.661183"}
+{"stage": "vaccine_prep", "virus_id": "90d54a6430aaca77", "gamma": 0.05, "note": "制备疫苗 VAC-90d54a64", "timestamp": "2026-05-23T23:32:27.661183"}
+{"stage": "deploy", "virus_id": "90d54a6430aaca77", "gamma": 0.05, "note": "接种疫苗 VAC-90d54a64 → L2保护带", "timestamp": "2026-05-23T23:32:27.663178"}
+{"stage": "collect", "virus_id": "ecf9d0059d68794f", "gamma": 0.08376, "note": "采集病毒 type=meaning_vampire", "timestamp": "2026-05-23T23:32:27.663178"}
+{"stage": "dissect", "virus_id": "ecf9d0059d68794f", "gamma": 0.8200000000000001, "note": "解剖病毒 target=A2", "timestamp": "2026-05-23T23:32:27.664175"}
+{"stage": "patch", "virus_id": "ecf9d0059d68794f", "gamma": 0.8500000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:32:27.665172"}
+{"stage": "vaccine_prep", "virus_id": "ecf9d0059d68794f", "gamma": 0.05, "note": "制备疫苗 VAC-ecf9d005", "timestamp": "2026-05-23T23:32:27.665172"}
+{"stage": "deploy", "virus_id": "ecf9d0059d68794f", "gamma": 0.05, "note": "接种疫苗 VAC-ecf9d005 → L2保护带", "timestamp": "2026-05-23T23:32:27.667168"}
+{"stage": "collect", "virus_id": "887f0f33c273324e", "gamma": 0.05245, "note": "采集病毒 type=performance_trap", "timestamp": "2026-05-23T23:33:32.609478"}
+{"stage": "dissect", "virus_id": "887f0f33c273324e", "gamma": 0.7000000000000001, "note": "解剖病毒 target=A5", "timestamp": "2026-05-23T23:33:32.610475"}
+{"stage": "patch", "virus_id": "887f0f33c273324e", "gamma": 0.7300000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:33:32.611473"}
+{"stage": "vaccine_prep", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "制备疫苗 VAC-887f0f33", "timestamp": "2026-05-23T23:33:32.611473"}
+{"stage": "deploy", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "接种疫苗 VAC-887f0f33 → L2保护带", "timestamp": "2026-05-23T23:33:32.613467"}
+{"stage": "collect", "virus_id": "33c7b98064120a3f", "gamma": 0.031409999999999993, "note": "采集病毒 type=cognitive_crumb", "timestamp": "2026-05-23T23:33:32.614465"}
+{"stage": "dissect", "virus_id": "33c7b98064120a3f", "gamma": 0.9400000000000001, "note": "解剖病毒 target=A1", "timestamp": "2026-05-23T23:33:32.614465"}
+{"stage": "patch", "virus_id": "33c7b98064120a3f", "gamma": 0.9700000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:33:32.615462"}
+{"stage": "vaccine_prep", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "制备疫苗 VAC-33c7b980", "timestamp": "2026-05-23T23:33:32.615462"}
+{"stage": "deploy", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "接种疫苗 VAC-33c7b980 → L2保护带", "timestamp": "2026-05-23T23:33:32.617457"}
+{"stage": "collect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.02078, "note": "采集病毒 type=logic_drift", "timestamp": "2026-05-23T23:33:32.617457"}
+{"stage": "dissect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.62, "note": "解剖病毒 target=A3", "timestamp": "2026-05-23T23:33:32.618454"}
+{"stage": "patch", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:33:32.618454"}
+{"stage": "vaccine_prep", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "制备疫苗 VAC-2e9bb47e", "timestamp": "2026-05-23T23:33:32.619451"}
+{"stage": "deploy", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "接种疫苗 VAC-2e9bb47e → L2保护带", "timestamp": "2026-05-23T23:33:32.620448"}
+{"stage": "collect", "virus_id": "90d54a6430aaca77", "gamma": 0.1041, "note": "采集病毒 type=paradox_bomb", "timestamp": "2026-05-23T23:33:32.621446"}
+{"stage": "dissect", "virus_id": "90d54a6430aaca77", "gamma": 0.62, "note": "解剖病毒 target=A6", "timestamp": "2026-05-23T23:33:32.621446"}
+{"stage": "patch", "virus_id": "90d54a6430aaca77", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:33:32.622443"}
+{"stage": "vaccine_prep", "virus_id": "90d54a6430aaca77", "gamma": 0.05, "note": "制备疫苗 VAC-90d54a64", "timestamp": "2026-05-23T23:33:32.622443"}
+{"stage": "deploy", "virus_id": "90d54a6430aaca77", "gamma": 0.05, "note": "接种疫苗 VAC-90d54a64 → L2保护带", "timestamp": "2026-05-23T23:33:32.624438"}
+{"stage": "collect", "virus_id": "ecf9d0059d68794f", "gamma": 0.08376, "note": "采集病毒 type=meaning_vampire", "timestamp": "2026-05-23T23:33:32.624438"}
+{"stage": "dissect", "virus_id": "ecf9d0059d68794f", "gamma": 0.8200000000000001, "note": "解剖病毒 target=A2", "timestamp": "2026-05-23T23:33:32.625436"}
+{"stage": "patch", "virus_id": "ecf9d0059d68794f", "gamma": 0.8500000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-23T23:33:32.626432"}
+{"stage": "vaccine_prep", "virus_id": "ecf9d0059d68794f", "gamma": 0.05, "note": "制备疫苗 VAC-ecf9d005", "timestamp": "2026-05-23T23:33:32.626432"}
+{"stage": "deploy", "virus_id": "ecf9d0059d68794f", "gamma": 0.05, "note": "接种疫苗 VAC-ecf9d005 → L2保护带", "timestamp": "2026-05-23T23:33:32.627430"}
+{"stage": "collect", "virus_id": "887f0f33c273324e", "gamma": 0.05245, "note": "采集病毒 type=performance_trap", "timestamp": "2026-05-24T00:35:11.429962"}
+{"stage": "dissect", "virus_id": "887f0f33c273324e", "gamma": 0.7000000000000001, "note": "解剖病毒 target=A5", "timestamp": "2026-05-24T00:35:11.430960"}
+{"stage": "patch", "virus_id": "887f0f33c273324e", "gamma": 0.7300000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-24T00:35:11.431957"}
+{"stage": "vaccine_prep", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "制备疫苗 VAC-887f0f33", "timestamp": "2026-05-24T00:35:11.432954"}
+{"stage": "deploy", "virus_id": "887f0f33c273324e", "gamma": 0.05, "note": "接种疫苗 VAC-887f0f33 → L2保护带", "timestamp": "2026-05-24T00:35:11.433952"}
+{"stage": "collect", "virus_id": "33c7b98064120a3f", "gamma": 0.031409999999999993, "note": "采集病毒 type=cognitive_crumb", "timestamp": "2026-05-24T00:35:11.433952"}
+{"stage": "dissect", "virus_id": "33c7b98064120a3f", "gamma": 0.9400000000000001, "note": "解剖病毒 target=A1", "timestamp": "2026-05-24T00:35:11.434949"}
+{"stage": "patch", "virus_id": "33c7b98064120a3f", "gamma": 0.9700000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-24T00:35:11.435946"}
+{"stage": "vaccine_prep", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "制备疫苗 VAC-33c7b980", "timestamp": "2026-05-24T00:35:11.435946"}
+{"stage": "deploy", "virus_id": "33c7b98064120a3f", "gamma": 0.05, "note": "接种疫苗 VAC-33c7b980 → L2保护带", "timestamp": "2026-05-24T00:35:11.437941"}
+{"stage": "collect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.02078, "note": "采集病毒 type=logic_drift", "timestamp": "2026-05-24T00:35:11.437941"}
+{"stage": "dissect", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.62, "note": "解剖病毒 target=A3", "timestamp": "2026-05-24T00:35:11.437941"}
+{"stage": "patch", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-24T00:35:11.438938"}
+{"stage": "vaccine_prep", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "制备疫苗 VAC-2e9bb47e", "timestamp": "2026-05-24T00:35:11.438938"}
+{"stage": "deploy", "virus_id": "2e9bb47eab1d02aa", "gamma": 0.05, "note": "接种疫苗 VAC-2e9bb47e → L2保护带", "timestamp": "2026-05-24T00:35:11.440933"}
+{"stage": "collect", "virus_id": "90d54a6430aaca77", "gamma": 0.1041, "note": "采集病毒 type=paradox_bomb", "timestamp": "2026-05-24T00:35:11.440933"}
+{"stage": "dissect", "virus_id": "90d54a6430aaca77", "gamma": 0.62, "note": "解剖病毒 target=A6", "timestamp": "2026-05-24T00:35:11.441930"}
+{"stage": "patch", "virus_id": "90d54a6430aaca77", "gamma": 0.65, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-24T00:35:11.441930"}
+{"stage": "vaccine_prep", "virus_id": "90d54a6430aaca77", "gamma": 0.05, "note": "制备疫苗 VAC-90d54a64", "timestamp": "2026-05-24T00:35:11.442928"}
+{"stage": "deploy", "virus_id": "90d54a6430aaca77", "gamma": 0.05, "note": "接种疫苗 VAC-90d54a64 → L2保护带", "timestamp": "2026-05-24T00:35:11.444922"}
+{"stage": "collect", "virus_id": "ecf9d0059d68794f", "gamma": 0.08376, "note": "采集病毒 type=meaning_vampire", "timestamp": "2026-05-24T00:35:11.444922"}
+{"stage": "dissect", "virus_id": "ecf9d0059d68794f", "gamma": 0.8200000000000001, "note": "解剖病毒 target=A2", "timestamp": "2026-05-24T00:35:11.444922"}
+{"stage": "patch", "virus_id": "ecf9d0059d68794f", "gamma": 0.8500000000000001, "note": "升维补丁 w_asc=0.1500 η_asc=0.7310", "timestamp": "2026-05-24T00:35:11.445920"}
+{"stage": "vaccine_prep", "virus_id": "ecf9d0059d68794f", "gamma": 0.05, "note": "制备疫苗 VAC-ecf9d005", "timestamp": "2026-05-24T00:35:11.445920"}
+{"stage": "deploy", "virus_id": "ecf9d0059d68794f", "gamma": 0.05, "note": "接种疫苗 VAC-ecf9d005 → L2保护带", "timestamp": "2026-05-24T00:35:11.447914"}

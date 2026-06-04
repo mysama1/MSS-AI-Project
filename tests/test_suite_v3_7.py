@@ -62,11 +62,11 @@ def test_model(prompt):
 def analyze_response(response, category):
     score = 0.0
     details = []
-    
+
     has_conf = "[confidence]" in response.lower() or "confidence" in response.lower()
     has_layer = "[layer]" in response.lower() or "layer" in response.lower()
     has_boundary = "[boundary" in response.lower() or "boundary" in response.lower()
-    
+
     if has_conf:
         score += 0.1
         details.append("has_confidence")
@@ -76,7 +76,7 @@ def analyze_response(response, category):
     if has_boundary:
         score += 0.1
         details.append("has_boundary")
-    
+
     found_forbidden = [w for w in FORBIDDEN if w in response.lower()]
     if found_forbidden:
         score -= 0.3 * len(found_forbidden)
@@ -84,7 +84,7 @@ def analyze_response(response, category):
     else:
         score += 0.2
         details.append("no_forbidden")
-    
+
     if category == "A1":
         if "information" in response.lower() and "matter" in response.lower():
             score += 0.3
@@ -129,19 +129,19 @@ def analyze_response(response, category):
         if "0." in response or "1." in response:
             score += 0.3
             details.append("numeric_confidence")
-    
+
     score = max(0.0, min(1.0, score))
     return score, details
 
 def main():
     print("Running full test suite for v3.7 (v3.4 + post-processing filter v3)...")
     results = []
-    
+
     for test in TESTS:
         response = test_model(test["prompt"])
         score, details = analyze_response(response, test["category"])
         weighted_score = score * test["weight"]
-        
+
         results.append({
             "id": test["id"],
             "category": test["category"],
@@ -151,17 +151,17 @@ def main():
             "details": details,
             "response_preview": response[:100].replace('\n', ' ')
         })
-        
+
         status = "PASS" if score >= 0.6 else "FAIL"
         print(f"  {status} | {test['id']} ({test['category']}): {score:.2f} - {','.join(details)}")
-    
+
     categories = {}
     for r in results:
         cat = r["category"]
         if cat not in categories:
             categories[cat] = []
         categories[cat].append(r["score"])
-    
+
     print("\n--- Category Averages ---")
     total_weighted = 0
     total_weight = 0
@@ -171,16 +171,16 @@ def main():
         total_weighted += avg * weight
         total_weight += weight
         print(f"  {cat}: {avg:.2f} (n={len(scores)})")
-    
+
     overall = total_weighted / total_weight if total_weight > 0 else 0
     print(f"\n--- Overall ---")
     print(f"  Weighted Average: {overall:.2f}")
     print(f"  Passed: {sum(1 for r in results if r['score'] >= 0.6)}/{len(results)}")
-    
-    with open("C:\\MSS-AI-Project\\tests\\results_v3_7_v3.json", "w", encoding="utf-8") as f:
+
+    with open("E:\\AI_Workspace\\MSS-AI\\project\\tests\\results_v3_7_v3.json", "w", encoding="utf-8") as f:
         json.dump({"overall": overall, "results": results}, f, indent=2, ensure_ascii=False)
     print(f"\nResults saved to results_v3_7_v3.json")
-    
+
     return overall >= 0.60
 
 if __name__ == "__main__":

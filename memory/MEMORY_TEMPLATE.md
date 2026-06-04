@@ -1,7 +1,7 @@
 # MSS-AI Structured Memory
 
 ## System Identity
-- Framework: MSS v8.0 (Meaning-Space Structure)
+- Framework: MSS v8.0 (Meaning Supremacy System)
 - Mode: Tool-assisted reasoning (not autonomy)
 - Current T (Tuning Degree): [update periodically]
 - Current Health: [update periodically]

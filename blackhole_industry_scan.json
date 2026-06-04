@@ -1,0 +1,79 @@
+{
+  "timestamp": "2026-05-25T13:35:15.385430",
+  "network": "industry_wide_scan",
+  "entity_count": 5,
+  "records": [
+    {
+      "entity_id": "openai",
+      "entity_name": "OpenAI",
+      "sector": "ai_platform",
+      "timestamp": "2026-05-25T13:35:15.385430",
+      "crtr": 3.5135,
+      "eta_explicitation": 0.75,
+      "rho_composite": 0.2913,
+      "event_horizon_score": 0.4363,
+      "stage": "main_sequence",
+      "alert_level": "yellow"
+    },
+    {
+      "entity_id": "anthropic",
+      "entity_name": "Anthropic",
+      "sector": "ai_platform",
+      "timestamp": "2026-05-25T13:35:15.385430",
+      "crtr": 8.75,
+      "eta_explicitation": 0.82,
+      "rho_composite": 0.3867,
+      "event_horizon_score": 0.6767,
+      "stage": "red_giant",
+      "alert_level": "orange"
+    },
+    {
+      "entity_id": "google_ai",
+      "entity_name": "Google-AI",
+      "sector": "ai_platform",
+      "timestamp": "2026-05-25T13:35:15.385430",
+      "crtr": 6.0,
+      "eta_explicitation": 0.72,
+      "rho_composite": 0.2167,
+      "event_horizon_score": 0.6157,
+      "stage": "red_giant",
+      "alert_level": "orange"
+    },
+    {
+      "entity_id": "meta_ai",
+      "entity_name": "Meta-AI",
+      "sector": "ai_platform",
+      "timestamp": "2026-05-25T13:35:15.385430",
+      "crtr": 7.5,
+      "eta_explicitation": 0.68,
+      "rho_composite": 0.2083,
+      "event_horizon_score": 0.7231,
+      "stage": "collapse",
+      "alert_level": "red"
+    },
+    {
+      "entity_id": "domestic_ai",
+      "entity_name": "国内AI巨头（合并）",
+      "sector": "ai_platform",
+      "timestamp": "2026-05-25T13:35:15.385430",
+      "crtr": 13.3333,
+      "eta_explicitation": 0.6,
+      "rho_composite": 0.1983,
+      "event_horizon_score": 0.7803,
+      "stage": "collapse",
+      "alert_level": "red"
+    }
+  ],
+  "summary": {
+    "entity_count": 5,
+    "avg_event_horizon_score": 0.6464,
+    "entities_in_collapse": 2,
+    "alert_counts": {
+      "green": 0,
+      "yellow": 1,
+      "orange": 2,
+      "red": 2,
+      "black": 0
+    }
+  }
+}

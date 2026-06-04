@@ -25,7 +25,7 @@ for tc in test_cases:
     print(f"\n{'='*60}")
     print(f"Input: {tc['prompt']}")
     print(f"Layer Hint: {tc['layer_hint']}")
-    
+
     try:
         result = generate_text(tc['prompt'], layer_hint=tc['layer_hint'])
         print(f"Success: {result['success']}")

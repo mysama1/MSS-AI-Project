@@ -1,0 +1,11 @@
+{
+  "patch_id": "PATCH-887f0f33",
+  "content": {
+    "type": "L2_protective_belt_extension",
+    "target_axiom": "A5",
+    "content": "针对A5的L2防护规则（升维生成）",
+    "ascension_mechanism": "A6_contradiction_elevation",
+    "w_asc": 0.15
+  },
+  "target_axiom": "A5"
+}

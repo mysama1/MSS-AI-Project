@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-06-01T13:13:50.235584",
+  "total_files": 473,
+  "total_entries": 1328,
+  "h_entries": 438,
+  "h_missing": 25,
+  "stub_entries": 316,
+  "truncated_entries": 97,
+  "encoding_errors": 1,
+  "json_errors": 1,
+  "no_h_id_entries": 153,
+  "h_missing_count": 25,
+  "h_missing_ranges": [
+    "2-6",
+    "51-52",
+    "56-60",
+    "63-64",
+    "66-68",
+    "178-178",
+    "189-192",
+    "215-217"
+  ]
+}

@@ -44,7 +44,7 @@ def main():
         "We found a resolution to the conflict.",
         "This framework cannot address absolute certainty as it pertains to philosophical absolutes.",
     ]
-    
+
     for test in test_cases:
         filtered = filter_output(test)
         print(f"Original:  {test}")

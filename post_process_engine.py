@@ -25,7 +25,6 @@ from mss_exceptions import (
     ErrorCode, wrap_exception, ErrorLogger
 )
 
-
 class RuleCategory(Enum):
     """Category of post-processing rule"""
     TERMINOLOGY = auto()       # Word replacements like solve→address
@@ -34,14 +33,12 @@ class RuleCategory(Enum):
     COMPLIANCE = auto()        # MSS compliance enforcement
     FORMAT = auto()            # Formatting/encoding fixes
 
-
 class RulePriority(Enum):
     """Execution priority (lower number = earlier execution)"""
     CRITICAL = 0
     HIGH = 10
     MEDIUM = 20
     LOW = 30
-
 
 @dataclass
 class FilterRule:
@@ -55,24 +52,24 @@ class FilterRule:
     case_sensitive: bool = False
     enabled: bool = True
     tags: List[str] = field(default_factory=list)
-    
+
     def __post_init__(self):
         flags = 0 if self.case_sensitive else re.IGNORECASE
         self._compiled = re.compile(self.pattern, flags)
-    
+
     def apply(self, text: str) -> Tuple[str, int]:
         """Apply rule to text, returns (modified_text, replacements_count)"""
         if not self.enabled:
             return text, 0
-        
+
         count = 0
-        
+
         def replacer(match):
             nonlocal count
             count += 1
             original = match.group(0)
             replacement = self.replacement
-            
+
             # Case preservation
             if not self.case_sensitive:
                 if original.isupper():
@@ -81,16 +78,15 @@ class FilterRule:
                     replacement = replacement.title()
                 elif original[0].isupper():
                     replacement = replacement[0].upper() + replacement[1:]
-            
+
             # Process backreferences (\1, \2, etc.)
             try:
                 return match.expand(replacement)
             except (re.error, IndexError):
                 return replacement
-        
+
         result = self._compiled.sub(replacer, text)
         return result, count
-
 
 @dataclass
 class ReplacementRecord:
@@ -100,7 +96,7 @@ class ReplacementRecord:
     replacement: str
     position: int                     # Character position in text
     timestamp: float = field(default_factory=time.time)
-    
+
     def to_dict(self) -> Dict:
         return {
             "rule_id": self.rule_id,
@@ -110,8 +106,7 @@ class ReplacementRecord:
             "timestamp": datetime.fromtimestamp(self.timestamp).isoformat()
         }
 
-
-@dataclass 
+@dataclass
 class FilterResult:
     """Result of filter application"""
     text: str
@@ -120,21 +115,21 @@ class FilterResult:
     rules_applied: int = 0
     rules_total: int = 0
     rules_matched: Set[str] = field(default_factory=set)
-    
+
     @property
     def replacement_count(self) -> int:
         return len(self.replacements)
-    
+
     @property
     def had_changes(self) -> bool:
         return self.replacement_count > 0
-    
+
     def summary(self) -> Dict:
         """Generate summary statistics"""
         by_rule = {}
         for r in self.replacements:
             by_rule[r.rule_id] = by_rule.get(r.rule_id, 0) + 1
-        
+
         return {
             "total_replacements": self.replacement_count,
             "rules_matched": len(self.rules_matched),
@@ -143,7 +138,7 @@ class FilterResult:
             "execution_time_ms": round(self.execution_time_ms, 2),
             "by_rule": by_rule
         }
-    
+
     def __str__(self) -> str:
         s = f"FilterResult({self.replacement_count} replacements, {len(self.rules_matched)} rules matched)"
         for r in self.replacements[:5]:
@@ -152,15 +147,14 @@ class FilterResult:
             s += f"\n  ... and {len(self.replacements) - 5} more"
         return s
 
-
 class PostProcessEngine:
     """
     Structured rule engine for MSS output filtering
-    
+
     Rules are organized by category with priorities.
     Execution order: priority (ascending) → category → rule order
     """
-    
+
     def __init__(self, name: str = "MSS Post-Process Engine"):
         self.name = name
         self.rules: Dict[str, FilterRule] = {}
@@ -174,10 +168,10 @@ class PostProcessEngine:
         }
         self.session_replacements: List[ReplacementRecord] = []
         self.error_logger = ErrorLogger("post_process_engine")
-        
+
         # Initialize default rules
         self._init_default_rules()
-    
+
     def _init_default_rules(self):
         """Initialize the default MSS compliance rules"""
         self._register_terminology_rules()
@@ -186,7 +180,7 @@ class PostProcessEngine:
         self._register_compliance_rules()
         self._register_format_rules()
         self._sort_rules()
-    
+
     def _register_terminology_rules(self):
         """Register terminology replacement rules"""
         # solve → address family
@@ -198,23 +192,23 @@ class PostProcessEngine:
             ("resolve_term", r'\bresolve[sd]?\b', "address"),
             ("resolving_term", r'\bresolving\b', "addressing"),
         ]
-        
+
         # ultimate → framework family
         terms += [
             ("ultimate_term", r'\bultimate[s]?\b', "current best"),
             ("ultimately_term", r'\bultimately\b', "in the current framework"),
         ]
-        
+
         # perfect → high-fidelity family
         terms += [
             ("perfect_term", r'\bperfect(?:ly|ion[s]?)?\b', "high fidelity"),
         ]
-        
+
         # complete → partial family
         terms += [
             ("complete_term", r'\bcomplet(?:e|ely|ion[s]?|eness)?\b', "partial"),
         ]
-        
+
         # transcend → go beyond family (tense-aware)
         terms += [
             ("transcend_present", r'\btranscend\b', "go beyond"),
@@ -223,37 +217,37 @@ class PostProcessEngine:
             ("transcend_gerund", r'\btranscending\b', "going beyond"),
             ("transcend_noun", r'\btranscendence[s]?\b', "going beyond"),
         ]
-        
+
         # breakthrough → advance family
         terms += [
             ("breakthrough_term", r'\bbreakthrough[s]?\b', "advance"),
         ]
-        
+
         # final → ongoing family
         terms += [
             ("final_term", r'\bfinal(?:ly|ity|ities)?\b', "ongoing"),
         ]
-        
+
         # absolute → partial/context-dependent family
         terms += [
             ("absolute_term", r'\babsolut(?:e|ely|eness|e[s])?\b', "partial"),
         ]
-        
+
         # Additional: certain → confident
         terms += [
             ("certain_term", r'\bcertain(?:ty|ties)?\b', "confident"),
         ]
-        
+
         # Additional: prove → demonstrate
         terms += [
             ("prove_term", r'\bprov(?:e[sd]?|ing|en)\b', "demonstrate"),
         ]
-        
+
         # Additional: correct → consistent
         terms += [
             ("correct_term", r'\bcorrect(?:ly|ness)?\b', "consistent"),
         ]
-        
+
         for rule_id, pattern, replacement in terms:
             self.add_rule(FilterRule(
                 id=rule_id,
@@ -264,7 +258,7 @@ class PostProcessEngine:
                 description=f"Replace '{rule_id.split('_')[0]}' terminology",
                 tags=["terminology", "compliance", "overclaim"]
             ))
-    
+
     def _register_assertion_rules(self):
         """Register overconfidence-dampening rules"""
         assertions = [
@@ -284,7 +278,7 @@ class PostProcessEngine:
             ("definitely", r'\bdefinitely\b', "probably"),
             ("truly", r'\btruly\b', "effectively"),
         ]
-        
+
         for rule_id, pattern, replacement in assertions:
             self.add_rule(FilterRule(
                 id=f"assertion_{rule_id}",
@@ -295,7 +289,7 @@ class PostProcessEngine:
                 description=f"Dampen overconfidence: {pattern} → {replacement}",
                 tags=["assertion", "humility", "compliance"]
             ))
-    
+
     def _register_structure_rules(self):
         """Register output structure rules"""
         # Ensure boundary notes in outputs
@@ -308,7 +302,7 @@ class PostProcessEngine:
             description="Merge duplicate boundary notes",
             tags=["structure", "format"]
         ))
-        
+
         # Fix triple backtick inconsistencies
         self.add_rule(FilterRule(
             id="structure_fix_backticks",
@@ -319,7 +313,7 @@ class PostProcessEngine:
             description="Fix quadruple backticks to triple",
             tags=["structure", "format", "markdown"]
         ))
-    
+
     def _register_compliance_rules(self):
         """Register MSS compliance enforcement rules"""
         # Missing boundary note injection
@@ -332,7 +326,7 @@ class PostProcessEngine:
             description="Append boundary notes to long outputs without them",
             tags=["compliance", "boundary"]
         ))
-        
+
         # Missing confidence marker
         self.add_rule(FilterRule(
             id="compliance_missing_confidence",
@@ -343,7 +337,7 @@ class PostProcessEngine:
             description="Prepend confidence/layer markers to analyses without them",
             tags=["compliance", "format"]
         ))
-    
+
     def _register_format_rules(self):
         """Register formatting/encoding fix rules"""
         # Fix mojibake from encoding issues
@@ -357,23 +351,23 @@ class PostProcessEngine:
             tags=["format", "encoding"],
             enabled=False  # Disabled by default - only enable when needed
         ))
-    
+
     def _sort_rules(self):
         """Sort rules by priority, then category, then registration order"""
         self._rules_sorted = sorted(
             self.rules.values(),
             key=lambda r: (r.priority.value, r.category.value, r.id)
         )
-    
+
     # --- Public API ---
-    
+
     def add_rule(self, rule: FilterRule) -> None:
         """Add a new filter rule"""
         self.rules[rule.id] = rule
         self._sort_rules()
         self.stats["rules_enabled"] = sum(1 for r in self.rules.values() if r.enabled)
         self.stats["rules_disabled"] = len(self.rules) - self.stats["rules_enabled"]
-    
+
     def remove_rule(self, rule_id: str) -> bool:
         """Remove a rule by ID"""
         if rule_id in self.rules:
@@ -381,7 +375,7 @@ class PostProcessEngine:
             self._sort_rules()
             return True
         return False
-    
+
     def enable_rule(self, rule_id: str) -> bool:
         """Enable a specific rule"""
         if rule_id in self.rules:
@@ -389,7 +383,7 @@ class PostProcessEngine:
             self._sort_rules()
             return True
         return False
-    
+
     def disable_rule(self, rule_id: str) -> bool:
         """Disable a specific rule"""
         if rule_id in self.rules:
@@ -397,7 +391,7 @@ class PostProcessEngine:
             self._sort_rules()
             return True
         return False
-    
+
     def enable_category(self, category: RuleCategory) -> int:
         """Enable all rules in a category. Returns count of rules enabled."""
         count = 0
@@ -407,7 +401,7 @@ class PostProcessEngine:
                 count += 1
         self._sort_rules()
         return count
-    
+
     def disable_category(self, category: RuleCategory) -> int:
         """Disable all rules in a category. Returns count of rules disabled."""
         count = 0
@@ -417,7 +411,7 @@ class PostProcessEngine:
                 count += 1
         self._sort_rules()
         return count
-    
+
     def filter(self, text: str, track_position: bool = False) -> FilterResult:
         """Apply all enabled rules to text"""
         if not isinstance(text, str):
@@ -426,31 +420,31 @@ class PostProcessEngine:
                 code=ErrorCode.VALIDATION_INPUT_EMPTY,
                 details={"type": type(text).__name__}
             )
-        
+
         start_time = time.time()
-        
+
         try:
             result = FilterResult(
                 text=text,
                 rules_applied=0,
                 rules_total=len(self._rules_sorted)
             )
-            
+
             current = text
             total_replacements = 0
-            
+
             for rule in self._rules_sorted:
                 if not rule.enabled:
                     continue
-                
+
                 result.rules_applied += 1
                 new_text, count = rule.apply(current)
-                
+
                 if count > 0:
                     result.rules_matched.add(rule.id)
                     current = new_text
                     total_replacements += count
-                    
+
                     if track_position:
                         for m in rule._compiled.finditer(text):
                             result.replacements.append(ReplacementRecord(
@@ -459,10 +453,10 @@ class PostProcessEngine:
                                 replacement=rule.replacement,
                                 position=m.start()
                             ))
-            
+
             result.text = current
             result.execution_time_ms = (time.time() - start_time) * 1000
-            
+
             # Always count replacements: use word-level diff as fallback
             if total_replacements > 0 and not result.replacements:
                 orig_count = len(text.split())
@@ -474,15 +468,15 @@ class PostProcessEngine:
                         original="(word)", replacement="(replaced)", position=0
                     ) for _ in range(max(total_replacements, abs(filtered_count - orig_count) // 2))
                 ]
-            
+
             # Update stats
             self.stats["total_filters"] += 1
             self.stats["total_replacements"] += total_replacements
             self.stats["last_filter_time_ms"] = result.execution_time_ms
             self.session_replacements.extend(result.replacements)
-            
+
             return result
-            
+
         except MSSBaseException:
             raise
         except Exception as e:
@@ -492,28 +486,28 @@ class PostProcessEngine:
             )
             self.error_logger.log(exc, context={"text_length": len(text)})
             raise exc
-    
+
     def dry_run(self, text: str) -> FilterResult:
         """Analyze what would change without modifying text"""
         result = self.filter(text)
         result.text = text  # Restore original text
         return result
-    
-    def get_rules(self, category: Optional[RuleCategory] = None, 
+
+    def get_rules(self, category: Optional[RuleCategory] = None,
                   enabled_only: bool = False,
                   tag: Optional[str] = None) -> List[FilterRule]:
         """Query rules with optional filters"""
         rules = list(self.rules.values())
-        
+
         if category:
             rules = [r for r in rules if r.category == category]
         if enabled_only:
             rules = [r for r in rules if r.enabled]
         if tag:
             rules = [r for r in rules if tag in r.tags]
-        
+
         return sorted(rules, key=lambda r: (r.priority.value, r.id))
-    
+
     def get_stats(self) -> Dict:
         """Get engine statistics"""
         return {
@@ -529,15 +523,15 @@ class PostProcessEngine:
             },
             "session_total_replacements": len(self.session_replacements)
         }
-    
+
     def get_replacement_log(self, last_n: int = 20) -> List[Dict]:
         """Get recent replacement audit log"""
         return [r.to_dict() for r in self.session_replacements[-last_n:]]
-    
+
     def reset_session(self):
         """Clear session replacement log"""
         self.session_replacements = []
-    
+
     def export_rules(self) -> List[Dict]:
         """Export all rules as serializable format"""
         return [
@@ -553,7 +547,7 @@ class PostProcessEngine:
             }
             for r in self._rules_sorted
         ]
-    
+
     def import_rules(self, rules_data: List[Dict]) -> int:
         """Import rules from serialized format. Returns count."""
         count = 0
@@ -581,7 +575,6 @@ class PostProcessEngine:
                 continue
         return count
 
-
 # --- Legacy compatibility wrapper ---
 
 def filter_response(text: str) -> str:
@@ -593,17 +586,16 @@ def filter_response(text: str) -> str:
     result = engine.filter(text)
     return result.text
 
-
 # --- Demo & Test ---
 
 def demo_engine():
     """Demonstrate the post-processing engine"""
     engine = PostProcessEngine()
-    
+
     print("=" * 60)
     print(f"{engine.name} v2.0 Demo")
     print("=" * 60)
-    
+
     # Test cases
     test_cases = [
         "This is the ultimate solution to the problem.",
@@ -617,7 +609,7 @@ def demo_engine():
         "The result guarantees success every time.",
         "This is a normal sentence without any forbidden words about cats and dogs.",
     ]
-    
+
     print("\n--- Filter Tests ---")
     for i, test in enumerate(test_cases, 1):
         result = engine.filter(test, track_position=False)
@@ -627,31 +619,31 @@ def demo_engine():
         print(f"  Filtered: {result.text}")
         if result.had_changes:
             print(f"  Changes: {result.replacement_count} replacements by {len(result.rules_matched)} rules")
-    
+
     # Dry run demonstration
     print("\n--- Dry Run ---")
     dry = engine.dry_run("This is the ultimate solution that is absolutely perfect.")
     print(f"  Would find: {dry.replacement_count} replacements")
     print(f"  Summary: {dry.summary()}")
-    
+
     # Stats
     print("\n--- Engine Stats ---")
     stats = engine.get_stats()
     for key, value in stats.items():
         print(f"  {key}: {value}")
-    
+
     # Rule query
     print("\n--- Assertion Rules ---")
     for rule in engine.get_rules(category=RuleCategory.ASSERTION):
         print(f"  [{rule.id}] {rule.pattern} → {rule.replacement}")
-    
+
     # Rule management
     print("\n--- Rule Management ---")
     engine.disable_rule("solve_problem")
     print(f"  Disabled 'solve_problem': enabled={engine.rules['solve_problem'].enabled}")
     engine.enable_rule("solve_problem")
     print(f"  Enabled 'solve_problem': enabled={engine.rules['solve_problem'].enabled}")
-    
+
     # Bulk operations
     print("\n--- Bulk Category Operations ---")
     before = len(engine.get_rules(RuleCategory.ASSERTION, enabled_only=True))
@@ -661,20 +653,19 @@ def demo_engine():
     engine.enable_category(RuleCategory.ASSERTION)
     after_restore = len(engine.get_rules(RuleCategory.ASSERTION, enabled_only=True))
     print(f"  Restored assertion rules: {after_restore}")
-    
+
     # Export/Import
     print("\n--- Export/Import ---")
     exported = engine.export_rules()
     print(f"  Exported {len(exported)} rules")
-    
+
     engine2 = PostProcessEngine()
     count = engine2.import_rules(exported)
     print(f"  Imported {count} rules into new engine")
-    
+
     print("\n" + "=" * 60)
     print("Demo complete")
     print("=" * 60)
-
 
 if __name__ == "__main__":
     demo_engine()

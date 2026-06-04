@@ -1,6 +1,6 @@
 """
 MSS Symbolic Engine v3.0 演示脚本
-展示传递推理、环检测、MSS v12.2公理体系和热税监测
+展示传递推理、环检测、MSS v15.1公理体系和热税监测
 """
 
 from symbolic_engine_v3 import create_mss_v12_engine, HeatTaxMonitor
@@ -46,7 +46,7 @@ for name, O_d, phi in scenarios:
     trend = health['report']['trend']
     risk = trend.get('risk_level', 'N/A')
     print(f"风险等级: {risk}")
-    
+
     if health['report']['alerts']:
         print("告警:")
         for alert in health['report']['alerts']:
@@ -54,14 +54,14 @@ for name, O_d, phi in scenarios:
             print(f"    建议: {alert['action']}")
     else:
         print("告警: 无")
-    
+
     print("建议:")
     for rec in health['report']['recommendations']:
         print(f"  - {rec}")
 
 # 演示3: 导出公理体系
 print("\n" + "=" * 60)
-print("演示3: 导出MSS v12.2公理体系")
+print("演示3: 导出MSS v15.1公理体系")
 print("=" * 60)
 
 output_file = "mss_v12_axioms.json"

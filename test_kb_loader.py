@@ -16,7 +16,7 @@ def test_entry_conversion():
     print("Test 2: Entry to Node conversion")
     loader = KBLoader()
     loader.load_all()
-    
+
     for entry in loader.entries.values():
         node = entry.to_node()
         assert node.id == entry.id
@@ -25,7 +25,7 @@ def test_entry_conversion():
             assert node.node_type == NodeType.AXIOM
             assert node.confidence == 1.0
         print(f"  [OK] {node.id} -> {node.node_type.name}")
-    
+
     print("  PASSED\n")
     return True
 
@@ -34,7 +34,7 @@ def test_graph_conversion():
     loader = KBLoader()
     loader.load_all()
     graph = loader.to_graph()
-    
+
     # Note: to_graph() filters out inactive entries by default
     active_count = sum(1 for e in loader.entries.values() if e.is_active)
     # Allow for nodes that failed to convert (missing required fields)
@@ -50,7 +50,7 @@ def test_layer_query():
     print("Test 4: Layer query")
     loader = KBLoader()
     loader.load_all()
-    
+
     l2_entries = loader.get_by_layer("L2")
     assert len(l2_entries) > 0
     print(f"  [OK] Found {len(l2_entries)} L2 entries")
@@ -61,12 +61,12 @@ def test_tag_query():
     print("Test 5: Tag query")
     loader = KBLoader()
     loader.load_all()
-    
+
     # Find a tag that exists
     all_tags = set()
     for entry in loader.entries.values():
         all_tags.update(entry.tags)
-    
+
     if all_tags:
         tag = list(all_tags)[0]
         entries = loader.get_by_tag(tag)
@@ -74,7 +74,7 @@ def test_tag_query():
         print(f"  [OK] Found {len(entries)} entries with tag '{tag}'")
     else:
         print("  [SKIP] No tags found")
-    
+
     print("  PASSED\n")
     return True
 
@@ -83,7 +83,7 @@ def test_stats():
     loader = KBLoader()
     loader.load_all()
     stats = loader.get_stats()
-    
+
     assert stats["total_entries"] > 0
     assert stats["files_loaded"] > 0
     print(f"  [OK] Stats: {stats}")
@@ -95,21 +95,21 @@ def run_all_tests():
     print("KB Loader Test Suite")
     print("=" * 60)
     print()
-    
+
     tests = [
         test_load_file, test_entry_conversion, test_graph_conversion,
         test_layer_query, test_tag_query, test_stats
     ]
     passed = 0
     failed = 0
-    
+
     for test in tests:
         try:
             if test(): passed += 1
         except Exception as e:
             print(f"  FAILED: {e}")
             failed += 1
-    
+
     print("=" * 60)
     print(f"Results: {passed} passed, {failed} failed")
     print("=" * 60)

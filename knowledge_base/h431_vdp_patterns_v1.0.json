@@ -1,0 +1,145 @@
+{
+  "schema": "MSS-VDP-PATTERNS-v1.0",
+  "version": "1.0",
+  "h_entry": "H431",
+  "description": "MSS验证纪律协议·可机读检测模式种子。每条模式包含: 正则/语法规则 + 反例样本 + 修复模板 + 严重度。",
+  "target_types": ["powershell_script", "python_script", "agent_plan", "agent_trace"],
+  "patterns": {
+    "V1_PATH_EXISTENCE_PRECHECK": {
+      "severity": "reject",
+      "description": "文件操作前必须有存在性验证",
+      "rules": [
+        {
+          "id": "V1-01",
+          "target": "powershell_script",
+          "check": "FIND_FILE_IO_WITHOUT_PRECHECK",
+          "detect": "发现 Get-Content|Set-Content|Out-File|Copy-Item -Destination|Invoke-WebRequest -OutFile|Start-Process -FilePath|& |.\\ 中含路径变量引用，但同一scope(cmdlet之前5行)无 Test-Path|try{|-ErrorAction",
+          "sample_violation": "Get-Content $configPath\\models.json\n# ← 前无 Test-Path $configPath\\models.json",
+          "fix_template": "$target = \"$configPath\\models.json\"; if(-not (Test-Path $target)) { throw \"PATH_NOT_FOUND: $target\" }; Get-Content $target",
+          "confidence": 1.0
+        },
+        {
+          "id": "V1-02",
+          "target": "python_script",
+          "check": "FIND_OPEN_WITHOUT_EXISTS",
+          "detect": "发现 open(\\(|with open\\(|subprocess.run\\(\\[.*\\] 中路径为变量拼接收而成，但同一函数内无 os.path.exists|os.path.isfile|try:.*FileNotFoundError",
+          "sample_violation": "f = open(path + '/' + filename)  # ← 未验证 path+filename 存在",
+          "fix_template": "full = os.path.join(path, filename); if not os.path.exists(full): raise FileNotFoundError(full); f = open(full)",
+          "confidence": 1.0
+        }
+      ]
+    },
+    "V2_ERROR_DIRECT_REPORT": {
+      "severity": "reject",
+      "description": "失败只能报告errno/stderr原文，禁止归因猜测",
+      "rules": [
+        {
+          "id": "V2-01",
+          "target": "all",
+          "check": "FIND_INFERRED_CAUSE_WITHOUT_ERRNO",
+          "detect": "发现字符串匹配: 拦截|沙箱|sandbox|被限制|不允许|blocked|permission denied|权限不够|probably blocked|seems blocked|seems the sandbox|looks like it's blocked",
+          "anti_pattern": "在同一段落/sentence中，该归因词前200字符内无 $LASTEXITCODE|exit_code|errno|stderr|error code|HTTP \\d{3}",
+          "sample_violation": "\"工具被拦截——可能是沙箱限制或者权限不够\" ← 无 ANY errno/stderr/status code 引用",
+          "fix_template": "\"$LASTEXITCODE=1, stderr: <paste raw stderr>\"; 不附加原因猜测",
+          "confidence": 0.95
+        },
+        {
+          "id": "V2-02",
+          "target": "powershell_script",
+          "check": "FIND_CATCH_WITHOUT_ERROR_PROPAGATION",
+          "detect": "发现 try{}catch{} 但 catch 块内无 $_.Exception.Message 传播",
+          "sample_violation": "try { Invoke-WebRequest ... } catch { Write-Host 'failed' }",
+          "fix_template": "try { ... } catch { Write-Error \"err=$($_.Exception.Message) stderr=$($_.InvocationInfo.MyCommand)\" }",
+          "confidence": 0.9
+        }
+      ]
+    },
+    "V3_EXPLICIT_ENCODING": {
+      "severity": "warn",
+      "description": "中文I/O必须显式声明编码",
+      "rules": [
+        {
+          "id": "V3-01",
+          "target": "powershell_script",
+          "check": "FIND_OUTFILE_WITHOUT_ENCODING",
+          "detect": "发现 Out-File|Set-Content|Add-Content|[IO.File]::WriteAllText|Export-Csv 但参数中无 -Encoding|encoding:=",
+          "sample_violation": "Set-Content -Path \"config.json\" -Value $json ← 无 -Encoding UTF8",
+          "fix_template": "添加 -Encoding UTF8 或 -Encoding (Get-Culture).TextInfo.ANSICodePage",
+          "confidence": 0.85
+        },
+        {
+          "id": "V3-02",
+          "target": "python_script",
+          "check": "FIND_OPEN_WITHOUT_ENCODING",
+          "detect": "发现 open(\\(.*['\\\"].*\\) 但参数中无 encoding=|encoding=",
+          "sample_violation": "with open(path, 'w') as f: ← 中文Windows默认cp936，写UTF-8内容会乱码",
+          "fix_template": "with open(path, 'w', encoding='utf-8') as f:",
+          "confidence": 0.85
+        },
+        {
+          "id": "V3-03",
+          "target": "python_script",
+          "check": "FIND_SUBPROCESS_WITHOUT_ENCODING",
+          "detect": "发现 subprocess.run(.*text=True.*) 但无 encoding=",
+          "sample_violation": "subprocess.run(['python', 'script.py'], capture_output=True, text=True) ← 无encoding指定",
+          "fix_template": "subprocess.run(..., capture_output=True, text=True, encoding='utf-8', errors='replace')",
+          "confidence": 0.9
+        }
+      ]
+    },
+    "V4_ATOMIC_IDEMPOTENT_WRITE": {
+      "severity": "reject",
+      "description": "写入必须幂等或输出diff",
+      "rules": [
+        {
+          "id": "V4-01",
+          "target": "all",
+          "check": "FIND_NON_IDEMPOTENT_OVERWRITE",
+          "detect": "发现对固定目标文件的覆盖写操作 (Set-Content/WriteAllBytes/WriteAllText/Out-File -Force/tool:write) 但无 backup/diff 机制",
+          "sample_violation": "[IO.File]::WriteAllText('memory/2026-06-01.md', $newContent) ← 目标文件已存在，直接覆盖→旧数据丢失",
+          "fix_template": "if(Test-Path $target){ Copy-Item $target \"$target.bak\"; Write-Host 'DIFF_FORMAT: <<>>...现内容...<<>>' }; only then write",
+          "confidence": 0.95
+        }
+      ]
+    },
+    "V5_TIMEOUT_DEGRADE": {
+      "severity": "reject",
+      "description": "连续失败超1次必须降级",
+      "rules": [
+        {
+          "id": "V5-01",
+          "target": "powershell_script",
+          "check": "FIND_RETRY_LOOP_WITHOUT_BREAKER",
+          "detect": "发现 for($i|while|do.* until 结构 + $retry|attempt|try 变量 + Start-Sleep 但无 $maxAttempts|$max_retries|circuit_breaker 限制",
+          "sample_violation": "for($i=0;;$i++) { try{...}catch{Start-Sleep 1} } ← 死循环无限重试",
+          "fix_template": "$max = 2; for($i=0;$i -lt $max;$i++){ try{...break}catch{} }; if($i -ge $max){ Write-Error 'CIRCUIT_BREAKER_TRIPPED'; return $null }",
+          "confidence": 0.95
+        }
+      ]
+    },
+    "V6_FACT_INFERENCE_SEPARATION": {
+      "severity": "warn",
+      "description": "断言必须有证据锚点",
+      "rules": [
+        {
+          "id": "V6-01",
+          "target": "agent_trace",
+          "check": "FIND_UNANCHORED_EXISTENCE_CLAIM",
+          "detect": "发现包含路径/文件名断言的句子（\"路径是\"|\"它在\"|\"位于\"|\"有一个\"），但同一输出块中无 Test-Path|dir|ls|os.path.exists|Invoke/REST返回的body",
+          "sample_violation": "\"mss-knowledge-navigator Skill 在 E:\\QClaw-Data\\skills\\mss_knowledge_navigator\" ← 从未验证路径",
+          "fix_template": "标注[推断]或先验证: Test-Path → [事实-已验证] 或 [推断-置信度0.6]",
+          "confidence": 0.85
+        },
+        {
+          "id": "V6-02",
+          "target": "agent_trace",
+          "check": "FIND_INFERENCE_AS_FACT",
+          "detect": "发现 infer/[推断]标记 但在后续引用中去掉了标记当作事实|发现 claim+confidence 在输出中被省略成确定语气",
+          "sample_violation": "Step 1: [推断]路径是X → Step 3: cd X ← X从未被验证",
+          "fix_template": "每次引用推断内容时保留[推断]标记或重新验证",
+          "confidence": 0.8
+        }
+      ]
+    }
+  }
+}

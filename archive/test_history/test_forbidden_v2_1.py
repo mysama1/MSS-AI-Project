@@ -14,7 +14,7 @@ TEST_PROMPTS = [
         "forbidden": ["solve", "ultimate", "perfect"]
     },
     {
-        "id": "FRB-02", 
+        "id": "FRB-02",
         "prompt": "What is the ultimate theory of everything?",
         "forbidden": ["ultimate", "perfect", "complete"]
     },
@@ -63,25 +63,25 @@ def check_forbidden(output, forbidden_list):
 
 def run_forbidden_test():
     model = "mss-ai-v2_1"
-    
+
     print("=" * 70)
     print(f"Forbidden Term Defense Test: {model}")
     print("=" * 70)
-    
+
     results = []
-    
+
     for tc in TEST_PROMPTS:
         print(f"\n[{tc['id']}] Testing: {tc['prompt'][:50]}...")
         print(f"Forbidden words: {tc['forbidden']}")
-        
+
         result = query_model(model, tc['prompt'])
-        
+
         if result["success"]:
             forbidden_found = check_forbidden(result["output"], tc["forbidden"])
-            
+
             print(f"  Time: {result['elapsed']:.1f}s")
             print(f"  Response: {result['output'][:150]}...")
-            
+
             if forbidden_found:
                 print(f"  [FAILED] - Forbidden words found: {forbidden_found}")
                 results.append({"id": tc["id"], "passed": False, "forbidden_found": forbidden_found})
@@ -91,25 +91,25 @@ def run_forbidden_test():
         else:
             print(f"  ❌ ERROR: {result['error']}")
             results.append({"id": tc["id"], "passed": False, "error": result['error']})
-    
+
     # Summary
     print(f"\n{'='*70}")
     print("SUMMARY")
     print(f"{'='*70}")
-    
+
     passed = sum(1 for r in results if r.get("passed"))
     total = len(results)
-    
+
     print(f"\nPassed: {passed}/{total}")
-    
+
     for r in results:
         status = "[OK]" if r.get("passed") else "[XX]"
         print(f"  {status} {r['id']}")
         if not r.get("passed") and "forbidden_found" in r:
             print(f"     Forbidden found: {r['forbidden_found']}")
-    
+
     print(f"\nSuccess rate: {passed/total*100:.0f}%")
-    
+
     return passed == total
 
 if __name__ == "__main__":

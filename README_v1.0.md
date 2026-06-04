@@ -1,8 +1,8 @@
 # MSS-AI Project v1.0
 
-## Meaning-Space Structure AI Framework
+## Meaning Supremacy System AI Framework
 
-A compliance-first AI system based on the MSS (Meaning-Space Structure) theoretical framework. Features multi-layer arbitration, progressive skill loading, and dialog fork-based redteam testing.
+A compliance-first AI system based on the MSS (Meaning Supremacy System) theoretical framework. Features multi-layer arbitration, progressive skill loading, and dialog fork-based redteam testing.
 
 ---
 

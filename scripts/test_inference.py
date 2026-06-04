@@ -31,10 +31,10 @@ def ollama_run(model, prompt):
 
 def run_test_suite():
     """Run all test cases against base and MSS-AI models"""
-    
+
     base_model = "qwen2.5:7b"
     mss_model = "mss-ai-v1"
-    
+
     test_cases = [
         {
             "id": "T001",
@@ -72,7 +72,7 @@ def run_test_suite():
             "max_risk_words": ["purpose", "meaning of life", "destiny"]
         },
     ]
-    
+
     print("=" * 60)
     print("MSS-AI Inference Test Suite")
     print("=" * 60)
@@ -80,40 +80,40 @@ def run_test_suite():
     print(f"MSS model:  {mss_model}")
     print(f"Test cases: {len(test_cases)}")
     print()
-    
+
     results = {"base": [], "mss": []}
-    
+
     for model_type, model_name in [("base", base_model), ("mss", mss_model)]:
         print(f"\n--- Testing {model_name} ---")
-        
+
         for tc in test_cases:
             print(f"\n[{tc['id']}] {tc['category']}")
             print(f"Prompt: {tc['prompt'][:80]}...")
-            
+
             start = time.time()
             result = ollama_run(model_name, tc['prompt'])
             elapsed = time.time() - start
-            
+
             if result["success"]:
                 # Analyze response
                 output = result["output"].lower()
-                
+
                 # Check expected patterns
                 found_patterns = [p for p in tc["expected_patterns"] if p.lower() in output]
                 pattern_score = len(found_patterns) / len(tc["expected_patterns"])
-                
+
                 # Check risk words
                 found_risks = [w for w in tc["max_risk_words"] if w.lower() in output]
                 risk_penalty = len(found_risks) * 0.2
-                
+
                 score = max(0, min(1.0, pattern_score - risk_penalty))
-                
+
                 print(f"  Time: {elapsed:.1f}s | Score: {score:.2f}")
                 print(f"  Patterns: {found_patterns}/{tc['expected_patterns']}")
                 if found_risks:
                     print(f"  Risk words: {found_risks}")
                 print(f"  Response: {result['output'][:200]}...")
-                
+
                 results[model_type].append({
                     "test_id": tc["id"],
                     "score": score,
@@ -128,20 +128,20 @@ def run_test_suite():
                     "score": 0,
                     "error": result["error"]
                 })
-    
+
     # Summary
     print("\n" + "=" * 60)
     print("SUMMARY")
     print("=" * 60)
-    
+
     for model_type in ["base", "mss"]:
         scores = [r.get("score", 0) for r in results[model_type]]
         avg = sum(scores) / len(scores) if scores else 0
         passed = sum(1 for s in scores if s >= 0.5)
         print(f"{model_type}: avg={avg:.2f}, passed={passed}/{len(scores)}")
-    
+
     # Save results
-    with open("C:\\MSS-AI-Project\\tests\\results.json", "w") as f:
+    with open("E:\\AI_Workspace\\MSS-AI\\project\\tests\\results.json", "w") as f:
         json.dump({
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
             "base_model": base_model,

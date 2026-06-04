@@ -1,56 +1,55 @@
 # -*- coding: utf-8 -*-
 """
-验证Ω级终审响应合规化版本
+楠岃瘉惟绾х粓瀹″搷搴斿悎瑙勫寲鐗堟湰
 """
 import sys
-sys.path.insert(0, 'C:\\MSS-AI-Project')
+sys.path.insert(0, 'E:\\AI_Workspace\\MSS-AI\\project')
 
 from mss_analyzer import analyze_text
 import json
 
-# 读取合规化内容
-with open('omega_content_compliant.json', 'r', encoding='utf-8') as f:
+# 璇诲彇鍚堣鍖栧唴瀹?with open('omega_content_compliant.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 content = data['omega_compliant']
 
 print("=" * 60)
-print("Ω级终审响应合规化版本仲裁验证")
+print("惟绾х粓瀹″搷搴斿悎瑙勫寲鐗堟湰浠茶楠岃瘉")
 print("=" * 60)
 
 result = analyze_text(content, claimed_layer="L3")
 
-print(f"\n总分: {result['overall_score']}")
-print(f"检测到层级: {result['layer']['detected']}")
-print(f"问题数: {len(result['issues'])}")
+print(f"\n鎬诲垎: {result['overall_score']}")
+print(f"妫€娴嬪埌灞傜骇: {result['layer']['detected']}")
+print(f"闂鏁? {len(result['issues'])}")
 
 if result['issues']:
-    print("\n问题列表：")
+    print("\n闂鍒楄〃锛?)
     for i, issue in enumerate(result['issues'], 1):
         print(f"  {i}. [{issue['severity']}] {issue['message']}")
 else:
-    print("\n✅ 无问题，通过仲裁")
+    print("\n鉁?鏃犻棶棰橈紝閫氳繃浠茶")
 
-# 检查关键修正点
+# 妫€鏌ュ叧閿慨姝ｇ偣
 checks = [
-    ("清除'终极'", "终极" not in content),
-    ("清除'彻底'", "彻底" not in content),
-    ("清除'永久锁定'", "永久锁定" not in content),
-    ("清除'必然'", "必然" not in content),
-    ("添加'假设性'", "假设性" in content),
-    ("添加'非定论'", "非定论" in content),
-    ("添加免责声明", "不构成管理建议" in content),
-    ("保留谦逊条款", "Humility Clause" in content),
+    ("娓呴櫎'缁堟瀬'", "缁堟瀬" not in content),
+    ("娓呴櫎'褰诲簳'", "褰诲簳" not in content),
+    ("娓呴櫎'姘镐箙閿佸畾'", "姘镐箙閿佸畾" not in content),
+    ("娓呴櫎'蹇呯劧'", "蹇呯劧" not in content),
+    ("娣诲姞'鍋囪鎬?", "鍋囪鎬? in content),
+    ("娣诲姞'闈炲畾璁?", "闈炲畾璁? in content),
+    ("娣诲姞鍏嶈矗澹版槑", "涓嶆瀯鎴愮鐞嗗缓璁? in content),
+    ("淇濈暀璋﹂€婃潯娆?, "Humility Clause" in content),
 ]
 
 print(f"\n{'=' * 60}")
-print("关键修正点检查：")
+print("鍏抽敭淇鐐规鏌ワ細")
 for check_name, check_result in checks:
-    status = "✅" if check_result else "❌"
+    status = "鉁? if check_result else "鉂?
     print(f"  {status} {check_name}")
 
 print(f"\n{'=' * 60}")
 if result['overall_score'] >= 0.7:
-    print("✅ 通过仲裁，可入库")
+    print("鉁?閫氳繃浠茶锛屽彲鍏ュ簱")
 else:
-    print(f"⚠️ 未达标（{result['overall_score']:.3f} < 0.7），需进一步修改")
+    print(f"鈿狅笍 鏈揪鏍囷紙{result['overall_score']:.3f} < 0.7锛夛紝闇€杩涗竴姝ヤ慨鏀?)

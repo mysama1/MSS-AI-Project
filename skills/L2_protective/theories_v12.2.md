@@ -1,4 +1,4 @@
-# MSS L2 Protective Belt Theories (v12.2)
+# MSS L2 Protective Belt Theories (v15.1)
 # 激活条件: complexity>0.5 OR mode=theory | 优先级: 2 | 预估tokens: 1200
 
 ## BCT耦合 (T1)

@@ -23,10 +23,10 @@ try:
     count = loader.load_all()
     graph = loader.to_graph()
     stats = graph.stats()
-    
+
     reasoner = SymbolicReasoner()
     reasoner.load_from_kb_loader(graph)
-    
+
     results.append(f"[PASS] KB integration: {stats['total_nodes']} nodes, {stats['total_edges']} edges")
 except Exception as e:
     results.append(f"[FAIL] KB integration: {e}")

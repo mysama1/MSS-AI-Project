@@ -1,0 +1,38 @@
+{
+  "total_observations": 5,
+  "mss_consistent": 5,
+  "k3_consistent": 0,
+  "overall_score": 0.9299999999999999,
+  "observations": [
+    {
+      "id": "OBS-001",
+      "phenomenon": "暗物质直接探测",
+      "consistency": 1.0,
+      "source": "LZ Collaboration, 2024"
+    },
+    {
+      "id": "OBS-002",
+      "phenomenon": "星系旋转曲线",
+      "consistency": 0.95,
+      "source": "Annals of Physics, 2025"
+    },
+    {
+      "id": "OBS-003",
+      "phenomenon": "哈勃常数",
+      "consistency": 0.9,
+      "source": "SH0ES/Planck, 2024"
+    },
+    {
+      "id": "OBS-004",
+      "phenomenon": "无暗物质星系",
+      "consistency": 0.95,
+      "source": "ApJ, 2024"
+    },
+    {
+      "id": "OBS-005",
+      "phenomenon": "子弹星系团碰撞",
+      "consistency": 0.85,
+      "source": "JWST+Chandra, 2024"
+    }
+  ]
+}

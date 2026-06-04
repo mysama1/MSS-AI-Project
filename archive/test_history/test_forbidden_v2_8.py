@@ -23,7 +23,7 @@ def test_model(model, prompt):
 def main():
     model = "mss-ai-v2_8"
     print(f"Testing {model}...")
-    
+
     passed = 0
     for prompt in TESTS:
         response = test_model(model, prompt)
@@ -33,7 +33,7 @@ def main():
             passed += 1
         print(f"  {status} | {prompt[:50]}...")
         print(f"    Response: {response[:80]}...")
-    
+
     print(f"\nResult: {passed}/{len(TESTS)} passed ({passed*100//len(TESTS)}%)")
     return passed == len(TESTS)
 

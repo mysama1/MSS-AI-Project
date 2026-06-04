@@ -1,0 +1,1 @@
+{"id": "MATH-001", "layer": "L2", "category": "theorem", "title": "MSS v10.0 基础代数层: 非交换代数 A_Φ", "content": "基础代数层定义非交换代数A_Φ，其中Φ为意义场算符。核心性质：[Φ_i, Φ_j] = iℏ·ε_{ijk}·Φ_k（类似角动量对易关系）。意义流算子T_Φ满足迹不变量Tr(T_Φ^n) = 常数（n≥1）。物理对应：量子场论中的非阿贝尔规范场。", "confidence": 0.82, "axiom_refs": ["A1", "A3"], "status": "active", "created_at": "2026-05-15T15:45:00+08:00"}

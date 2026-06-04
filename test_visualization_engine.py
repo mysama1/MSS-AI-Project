@@ -15,10 +15,9 @@ from visualization_engine import (
     create_dashboard
 )
 
-
 class TestChartConfig(unittest.TestCase):
     """Test chart configuration"""
-    
+
     def test_default_config(self):
         """Test default configuration"""
         config = ChartConfig(chart_type=ChartType.LINE)
@@ -26,7 +25,7 @@ class TestChartConfig(unittest.TestCase):
         self.assertEqual(config.height, 600)
         self.assertTrue(config.show_legend)
         self.assertTrue(config.show_grid)
-    
+
     def test_custom_config(self):
         """Test custom configuration"""
         config = ChartConfig(
@@ -40,10 +39,9 @@ class TestChartConfig(unittest.TestCase):
         self.assertEqual(config.width, 400)
         self.assertFalse(config.show_legend)
 
-
 class TestASCIIChartRenderer(unittest.TestCase):
     """Test ASCII chart renderer"""
-    
+
     def test_line_chart_basic(self):
         """Test basic line chart rendering"""
         data = ChartData(
@@ -54,23 +52,23 @@ class TestASCIIChartRenderer(unittest.TestCase):
             chart_type=ChartType.LINE,
             title="Test Line Chart"
         )
-        
+
         renderer = ASCIIChartRenderer()
         result = renderer.render_line_chart(data, config)
-        
+
         self.assertIn("Test Line Chart", result)
         self.assertIn("Legend:", result)
-    
+
     def test_line_chart_empty(self):
         """Test line chart with empty data"""
         data = ChartData()
         config = ChartConfig(chart_type=ChartType.LINE)
-        
+
         renderer = ASCIIChartRenderer()
         result = renderer.render_line_chart(data, config)
-        
+
         self.assertIn("[No data]", result)
-    
+
     def test_bar_chart(self):
         """Test bar chart rendering"""
         data = ChartData(
@@ -81,14 +79,14 @@ class TestASCIIChartRenderer(unittest.TestCase):
             chart_type=ChartType.BAR,
             title="Test Bar Chart"
         )
-        
+
         renderer = ASCIIChartRenderer()
         result = renderer.render_bar_chart(data, config)
-        
+
         self.assertIn("Test Bar Chart", result)
         self.assertIn("10.000", result)
         self.assertIn("30.000", result)
-    
+
     def test_radar_chart(self):
         """Test radar chart rendering"""
         data = ChartData(
@@ -99,13 +97,13 @@ class TestASCIIChartRenderer(unittest.TestCase):
             chart_type=ChartType.RADAR,
             title="Test Radar"
         )
-        
+
         renderer = ASCIIChartRenderer()
         result = renderer.render_radar_chart(data, config)
-        
+
         self.assertIn("Test Radar", result)
         self.assertIn("Average:", result)
-    
+
     def test_heatmap(self):
         """Test heatmap rendering"""
         data = ChartData(
@@ -120,13 +118,13 @@ class TestASCIIChartRenderer(unittest.TestCase):
             chart_type=ChartType.HEATMAP,
             title="Test Heatmap"
         )
-        
+
         renderer = ASCIIChartRenderer()
         result = renderer.render_heatmap(data, config)
-        
+
         self.assertIn("Test Heatmap", result)
         self.assertIn("Scale:", result)
-    
+
     def test_table(self):
         """Test table rendering"""
         data = ChartData(
@@ -139,29 +137,28 @@ class TestASCIIChartRenderer(unittest.TestCase):
             chart_type=ChartType.TABLE,
             title="Test Table"
         )
-        
+
         renderer = ASCIIChartRenderer()
         result = renderer.render_table(data, config)
-        
+
         self.assertIn("Test Table", result)
         self.assertIn("Col1", result)
         self.assertIn("Col2", result)
 
-
 class TestVisualizationEngine(unittest.TestCase):
     """Test visualization engine"""
-    
+
     def setUp(self):
         self.engine = VisualizationEngine()
-    
+
     def test_render_line(self):
         """Test render line chart"""
         data = ChartData(series={'Test': [0, 1, 2]})
         config = ChartConfig(chart_type=ChartType.LINE)
-        
+
         result = self.engine.render(data, config)
         self.assertIn("Legend:", result)
-    
+
     def test_render_simulation_result(self):
         """Test render simulation result"""
         sim_result = {
@@ -170,10 +167,10 @@ class TestVisualizationEngine(unittest.TestCase):
             'converged': True,
             'iterations': 100
         }
-        
+
         result = self.engine.render_simulation_result(sim_result)
         self.assertIn("eta_dynamics", result)
-    
+
     def test_render_resilience_scan(self):
         """Test render resilience scan"""
         scan_result = {
@@ -183,11 +180,11 @@ class TestVisualizationEngine(unittest.TestCase):
                 {'name': 'Marketing', 'phi': 0.72}
             ]
         }
-        
+
         result = self.engine.render_resilience_scan(scan_result)
         self.assertIn("TestOrg", result)
         self.assertIn("R&D", result)
-    
+
     def test_render_kb_summary(self):
         """Test render KB summary"""
         kb_data = {
@@ -197,11 +194,11 @@ class TestVisualizationEngine(unittest.TestCase):
                 'L3': 17
             }
         }
-        
+
         result = self.engine.render_knowledge_base_summary(kb_data)
         self.assertIn("Knowledge Base", result)
         self.assertIn("L1", result)
-    
+
     def test_render_compliance_report(self):
         """Test render compliance report"""
         analysis = {
@@ -209,14 +206,13 @@ class TestVisualizationEngine(unittest.TestCase):
             'rsca_compliance': 0.92,
             'layer': 'L2'
         }
-        
+
         result = self.engine.render_compliance_report(analysis)
         self.assertIn("Compliance", result)
 
-
 class TestDashboard(unittest.TestCase):
     """Test dashboard creation"""
-    
+
     def test_create_dashboard(self):
         """Test dashboard generation"""
         status = {
@@ -227,14 +223,13 @@ class TestDashboard(unittest.TestCase):
             'tests_passed': 294,
             'tests_total': 294
         }
-        
+
         result = create_dashboard(status)
-        
+
         self.assertIn("MSS-AI SYSTEM DASHBOARD", result)
         self.assertIn("operational", result)
         self.assertIn("312", result)
         self.assertIn("294/294", result)
-
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

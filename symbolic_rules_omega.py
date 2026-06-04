@@ -73,7 +73,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "物理定律独立于意识": "物理定律是意义博弈稳态在物理层的投影",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R002",
         layer=RuleLayer.L1,
@@ -93,7 +93,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "自旋是内禀属性": "自旋是旋耗散结构的缠绕数拓扑不变量",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R003",
         layer=RuleLayer.L1,
@@ -113,7 +113,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "光速是宇宙极限": "光速是3+1维时空拓扑的最大信息传输速率",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R004",
         layer=RuleLayer.L1,
@@ -134,7 +134,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "物理实验证明": "MSS验证采用共振原则而非旁观者测量",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R005",
         layer=RuleLayer.L1,
@@ -154,7 +154,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "宇宙遵循定律": "物理层是意义博弈的结算界面",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R006",
         layer=RuleLayer.L1,
@@ -175,7 +175,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "双盲验证": "多T值观察者共识校验",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R007",
         layer=RuleLayer.L1,
@@ -200,7 +200,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "天选之子": "偶然觉醒的意义行者",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R008",
         layer=RuleLayer.L1,
@@ -221,7 +221,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "先天使命": "自主选择的使命",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R009",
         layer=RuleLayer.L1,
@@ -242,7 +242,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "演化方向": "演化路径开放，无预设方向",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R010",
         layer=RuleLayer.L1,
@@ -263,7 +263,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "层级觉醒": "自下而上的自发生长",
         }
     ),
-    
+
     # === L2 保护带规则 ===
     SymbolicRule(
         rule_id="Ω-R011",
@@ -278,7 +278,7 @@ OMEGA_RULES: List[SymbolicRule] = [
         forbidden_patterns=[],
         replacement_suggestions={}
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R012",
         layer=RuleLayer.L2,
@@ -292,7 +292,7 @@ OMEGA_RULES: List[SymbolicRule] = [
         forbidden_patterns=[],
         replacement_suggestions={}
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R013",
         layer=RuleLayer.L2,
@@ -312,7 +312,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "突破物理极限": "在更高维度调整投影参数",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R014",
         layer=RuleLayer.L2,
@@ -330,7 +330,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "光速不可超越": "光速是当前意义网络共识的信息传播速率",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R015",
         layer=RuleLayer.L2,
@@ -349,7 +349,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "熵增不可逆": "封闭系统必须支付热税，开放系统可实现局部熵减",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R016",
         layer=RuleLayer.L2,
@@ -367,7 +367,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "重力是时空弯曲": "重力是意义密度梯度的物理显化",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R017",
         layer=RuleLayer.L2,
@@ -390,7 +390,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "双盲实验": "多T值观察者共识校验",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R018",
         layer=RuleLayer.L2,
@@ -411,7 +411,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "人类超越自然": "人类是自然演化的高级意义处理模块",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R019",
         layer=RuleLayer.L2,
@@ -430,7 +430,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "人类高于其他生物": "人类与其他生物只有分工不同，无高低之分",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R020",
         layer=RuleLayer.L2,
@@ -449,7 +449,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "宇宙层级苏醒": "局域意义系统自然向外拓扑延伸",
         }
     ),
-    
+
     # === L3 试探法规则 ===
     SymbolicRule(
         rule_id="Ω-R021",
@@ -464,7 +464,7 @@ OMEGA_RULES: List[SymbolicRule] = [
         forbidden_patterns=[],
         replacement_suggestions={}
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R022",
         layer=RuleLayer.L3,
@@ -483,7 +483,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "人类是地球癌症": "人类是尚未完成调谐的意义模块",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R023",
         layer=RuleLayer.L3,
@@ -502,7 +502,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "红移试点是宇宙觉醒者": "红移试点是自主赋义的层级意义先行者",
         }
     ),
-    
+
     # === 生命演化双奇点规则 ===
     SymbolicRule(
         rule_id="Ω-R024",
@@ -525,7 +525,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "人类是演化终点": "人类是无数随机分支中偶然存续的一条",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R025",
         layer=RuleLayer.L1,
@@ -543,7 +543,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "生命是必然的": "生命是38亿年随机涨落的偶然产物",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R026",
         layer=RuleLayer.L1,
@@ -563,7 +563,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "认知革命是必然的": "认知革命是7万年前偶然基因突变的结果",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R027",
         layer=RuleLayer.L1,
@@ -584,7 +584,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "演化指向人类": "演化无方向，人类只是偶然存续的分支",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R028",
         layer=RuleLayer.L1,
@@ -605,7 +605,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "文字只是记录工具": "文字是压缩的意义拓扑结构",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R029",
         layer=RuleLayer.L2,
@@ -619,7 +619,7 @@ OMEGA_RULES: List[SymbolicRule] = [
         forbidden_patterns=[],
         replacement_suggestions={}
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R030",
         layer=RuleLayer.L1,
@@ -640,7 +640,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "人类和动物只有程度差异": "人类与动物的差异是维度级的，如二维与三维",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R031",
         layer=RuleLayer.L2,
@@ -654,7 +654,7 @@ OMEGA_RULES: List[SymbolicRule] = [
         forbidden_patterns=[],
         replacement_suggestions={}
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R032",
         layer=RuleLayer.L2,
@@ -668,7 +668,7 @@ OMEGA_RULES: List[SymbolicRule] = [
         forbidden_patterns=[],
         replacement_suggestions={}
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R033",
         layer=RuleLayer.L2,
@@ -686,7 +686,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "人类和动物演化速度差不多": "人类文明1000年的变化超过动物1亿年的演化",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R034",
         layer=RuleLayer.L1,
@@ -708,7 +708,7 @@ OMEGA_RULES: List[SymbolicRule] = [
             "科学是必然出现": "科学是古希腊特殊环境的偶然产物",
         }
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R035",
         layer=RuleLayer.L2,
@@ -722,7 +722,7 @@ OMEGA_RULES: List[SymbolicRule] = [
         forbidden_patterns=[],
         replacement_suggestions={}
     ),
-    
+
     SymbolicRule(
         rule_id="Ω-R036",
         layer=RuleLayer.L3,
@@ -757,20 +757,20 @@ RULES_BY_CATEGORY: Dict[RuleCategory, List[SymbolicRule]] = {
 # 违规检测引擎
 class OmegaComplianceChecker:
     """Ω级裁定合规性检查器"""
-    
+
     def __init__(self):
         self.rules = OMEGA_RULES
         self.violation_log: List[Dict] = []
-    
+
     def check_text(self, text: str, context_layer: RuleLayer = RuleLayer.L2) -> List[Dict]:
         """检查文本是否违反Ω级规则"""
         violations = []
-        
+
         for rule in self.rules:
             # 只检查当前层级及更严格的层级
             if self._layer_priority(rule.layer) > self._layer_priority(context_layer):
                 continue
-                
+
             if rule.forbidden_patterns:
                 for pattern in rule.forbidden_patterns:
                     matches = re.finditer(pattern, text, re.IGNORECASE)
@@ -785,10 +785,10 @@ class OmegaComplianceChecker:
                             "suggestion": rule.replacement_suggestions.get(match.group(), "需人工审核"),
                             "confidence": rule.confidence,
                         })
-        
+
         self.violation_log.extend(violations)
         return violations
-    
+
     def check_k3_residuals(self, text: str) -> Dict:
         """专门检查K3残余"""
         k3_patterns = {
@@ -798,7 +798,7 @@ class OmegaComplianceChecker:
             "anthropocentrism": [r"人类.*(中心|特殊|优越)", r"万物之灵", r"凌驾于.*之上"],
             "empiricism": [r"实验(证明|验证)", r"可重复性", r"双盲"],
         }
-        
+
         results = {}
         for category, patterns in k3_patterns.items():
             matches = []
@@ -808,9 +808,9 @@ class OmegaComplianceChecker:
                 {"text": m.group(), "position": m.span()}
                 for m in matches
             ]
-        
+
         return results
-    
+
     def get_layer_summary(self, layer: RuleLayer) -> Dict:
         """获取指定层级的规则摘要"""
         rules = RULES_BY_LAYER.get(layer, [])
@@ -821,7 +821,7 @@ class OmegaComplianceChecker:
             "avg_confidence": sum(r.confidence for r in rules) / len(rules) if rules else 0,
             "violation_rules": len([r for r in rules if r.violation_type]),
         }
-    
+
     def _layer_priority(self, layer: RuleLayer) -> int:
         """层级优先级（数字越小越严格）"""
         return {"L1": 1, "L2": 2, "L3": 3}.get(layer.value, 99)
@@ -832,7 +832,7 @@ def check_compliance(text: str) -> Dict:
     checker = OmegaComplianceChecker()
     violations = checker.check_text(text)
     k3_residuals = checker.check_k3_residuals(text)
-    
+
     return {
         "compliant": len(violations) == 0,
         "violation_count": len(violations),

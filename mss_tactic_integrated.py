@@ -30,25 +30,24 @@ from symbolic_engine_v3 import create_mss_v12_engine, HeatTaxMonitor
 from organizational_resilience import OrganizationalResilienceScanner, create_demo_organization
 from arbiter_agent import ArbiterAgent
 
-
 class MSSTactic:
     """
     Integrated orchestrator with all three methods
     """
-    
-    def __init__(self, 
+
+    def __init__(self,
                  arbiter_model: str = "qwen2.5:7b",
                  responder_model: str = "mss-ai-v1",
                  max_retries: int = 3,
                  check_gpu: bool = True):
-        
+
         # GPU check
         if check_gpu:
             self.gpu_status = self._check_gpu_memory()
             self._enforce_gpu_offload()
         else:
             self.gpu_status = None
-        
+
         # Initialize components
         self.arbiter = ArbiterAgent(arbiter_model)
         self.responder = ResponderAgent(responder_model)
@@ -57,7 +56,7 @@ class MSSTactic:
         self.dialog_fork = DialogForkManager()
         self.redteam = RedteamForkManager()
         self.max_retries = max_retries
-        
+
         self.stats = {
             "total_requests": 0,
             "arbiter_failures": 0,
@@ -67,22 +66,22 @@ class MSSTactic:
             "post_filter_replacements": 0,
             "gpu_status": self.gpu_status
         }
-        
+
         # Power management
         self.power_manager = None
         self.standby_monitor = None
-        
+
         # Post-processing engine v2.0 (legacy)
         self.post_processor = PostProcessEngine()
-        
+
         # Topology metrics engine (v3.0 enhancement)
         self.topology_engine = None  # Lazy init on first use
         self.post_processor_v3 = None  # Lazy init on first use
-        
+
         # Knowledge base loader
         self.kb_loader = None  # Lazy init on first use
         self.kb_graph = None  # Loaded knowledge graph
-        
+
         # Checkpoint / auto-save system
         self.checkpoint_manager = CheckpointManager(
             checkpoint_dir="checkpoints",
@@ -93,26 +92,26 @@ class MSSTactic:
         self.session_snapshot = SessionSnapshot(self.checkpoint_manager)
         self.auto_saver = AutoSaver(self.session_snapshot, interval_sec=300)
         self.auto_saver.start()
-        
+
         # Ω级裁定合规检查器
         self.omega_checker = OmegaComplianceChecker()
-        
+
         # Symbolic Engine v3.0 - Phase 2核心升级
         self.symbolic_engine_v3 = None  # Lazy init on first use
         self.heat_tax_monitor = None  # Lazy init on first use
-        
+
         # Organizational Resilience Scanner - Phase 2新增
         self.resilience_scanner = None  # Lazy init on first use
-        
+
         # Stability monitoring system
         self.health_monitor = SystemHealthMonitor(check_interval_sec=30)
         self.health_monitor.start_monitoring()
         self.task_scheduler = AdaptiveTaskScheduler(self.health_monitor)
-        
+
         # Stability-aware operation tracking
         self._operation_count = 0
         self._stability_window = []  # Recent stability scores
-    
+
     def _check_gpu_memory(self) -> Dict:
         """Check GPU memory"""
         result = {"gpu_available": False, "total_mb": 0, "free_mb": 0, "warning": None}
@@ -127,7 +126,7 @@ class MSSTactic:
                         result["total_mb"] = int(parts[0].strip())
                         result["free_mb"] = int(parts[1].strip())
                         result["gpu_available"] = True
-                        
+
                         if result["free_mb"] < 4096:
                             result["warning"] = f"CRITICAL: Only {result['free_mb']}MB free"
                         elif result["free_mb"] < 8192:
@@ -135,17 +134,17 @@ class MSSTactic:
         except Exception:
             pass
         return result
-    
+
     def _enforce_gpu_offload(self):
         """Force GPU offload"""
         os.environ["OLLAMA_GPU_LAYERS"] = "999"
-    
+
     def analyze(self, text: str, claimed_layer: Optional[str] = None) -> Dict:
         """
         Method 1: analyze() - Deep compliance analysis
         """
         return self.arbiter.analyzer.analyze(text, claimed_layer).to_dict()
-    
+
     def omega_analyze(self, text: str) -> Dict:
         """
         Ω级裁定深度合规分析
@@ -153,19 +152,19 @@ class MSSTactic:
         """
         # 基础合规检查
         omega_result = check_compliance(text)
-        
+
         # 层级摘要
         layer_summary = self.omega_checker.get_layer_summary(RuleLayer.L1)
-        
+
         # 综合评分
         violation_count = omega_result["violation_count"]
         k3_score = sum(len(v) for v in omega_result["k3_residuals"].values())
-        
+
         # 调谐度估算（基于违规密度）
         text_length = len(text)
         violation_density = violation_count / max(text_length / 100, 1)
         estimated_tuning = max(0, 1.0 - violation_density * 0.5)
-        
+
         return {
             "compliant": omega_result["compliant"],
             "violation_count": violation_count,
@@ -177,46 +176,46 @@ class MSSTactic:
             "l1_rule_coverage": layer_summary,
             "recommendation": "PASS" if omega_result["compliant"] else "REWRITE_REQUIRED"
         }
-    
+
     def generate(self, user_input: str, context: Optional[Dict] = None) -> Dict:
         """
         Method 2: generate() - Full pipeline: Arbiter -> Responder -> Post-process
         Note: For stability-aware generation, use generate_with_stability()
         """
         self.stats["total_requests"] += 1
-        
+
         # Step 0: Ω级裁定合规预检
         omega_violations = self.omega_checker.check_text(user_input)
         omega_k3 = self.omega_checker.check_k3_residuals(user_input)
-        
+
         # Step 1: Arbiter check
         arbiter_result = self.arbiter.check(user_input)
-        
+
         # Step 2: Handle rewrites (Arbiter + Omega combined)
         rewrites = 0
         current_input = user_input
         combined_rewrite_needed = arbiter_result.rewrite_needed or len(omega_violations) > 0
-        
+
         while combined_rewrite_needed and rewrites < self.max_retries:
             self.stats["rewrites"] += 1
             rewrites += 1
-            
+
             # Omega-level rewrite suggestions
             if omega_violations and rewrites <= len(omega_violations):
                 v = omega_violations[rewrites - 1]
                 suggestion = v.get("suggestion", "")
                 if suggestion and suggestion != "需人工审核":
                     current_input = current_input.replace(v["matched_text"], suggestion)
-            
+
             # Arbiter rewrite
             if arbiter_result.rewrite_prompt:
                 current_input = self._rewrite(current_input, arbiter_result.rewrite_prompt)
-            
+
             # Re-check
             arbiter_result = self.arbiter.check(current_input)
             omega_violations = self.omega_checker.check_text(current_input)
             combined_rewrite_needed = arbiter_result.rewrite_needed or len(omega_violations) > 0
-        
+
         # Step 3: Generate response
         if arbiter_result.compliance == ComplianceStatus.FAIL:
             response = self._generate_error(arbiter_result)
@@ -227,7 +226,7 @@ class MSSTactic:
             response_omega = self.omega_checker.check_text(response)
             if response_omega:
                 response += f"\n\n[Ω-Note: {len(response_omega)} compliance suggestions applied]"
-        
+
         return {
             "response": response,
             "arbiter_result": arbiter_result,
@@ -237,7 +236,7 @@ class MSSTactic:
             "success": arbiter_result.compliance != ComplianceStatus.FAIL and len(omega_violations) == 0,
             "analysis": arbiter_result.analysis_report
         }
-    
+
     def switch_model(self, model_name: str) -> Dict:
         """
         Method 3: switch_model() - Dynamic model switching with GPU optimization
@@ -245,17 +244,17 @@ class MSSTactic:
         success = self.model_manager.switch_model(model_name)
         self.stats["model_switches"] += 1
         return {"success": success, "model": model_name}
-    
+
     def _rewrite(self, original: str, rewrite_prompt: str) -> str:
         """Rewrite query"""
         dialog = Dialog()
         dialog.add("system", "Rewrite queries to avoid forbidden words.")
         dialog.add("user", rewrite_prompt)
-        
+
         cmd = ["ollama", "run", "qwen2.5:7b", json.dumps(dialog.to_ollama_format())]
         result = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=60)
         return result.stdout.strip()
-    
+
     def _generate_error(self, arbiter_result: ArbiterResult) -> str:
         """Generate error message"""
         return f"""[MSS Compliance Error]
@@ -263,7 +262,7 @@ Layer: {arbiter_result.layer.value}
 Issues: {', '.join(arbiter_result.forbidden_words)}
 Score: {arbiter_result.analysis_report.get('overall_score', 'N/A')}
 Please rephrase using MSS terminology."""
-    
+
     def _post_process(self, response: str) -> str:
         """Apply post-processing filter using v2.0 engine"""
         result = self.post_processor.filter(response)
@@ -271,13 +270,13 @@ Please rephrase using MSS terminology."""
             self.stats["post_filter_replacements"] = \
                 self.stats.get("post_filter_replacements", 0) + result.replacement_count
         return result.text
-    
+
     def _ensure_symbolic_engine_v3(self):
         """Lazy initialization of Symbolic Engine v3.0"""
         if self.symbolic_engine_v3 is None:
             self.symbolic_engine_v3 = create_mss_v12_engine()
             self.heat_tax_monitor = HeatTaxMonitor()
-    
+
     def _ensure_topology_engine(self):
         """Lazy initialization of topology engine"""
         if self.topology_engine is None:
@@ -293,7 +292,7 @@ Please rephrase using MSS terminology."""
                     self.kb_graph = MSSKnowledgeGraph()
             self.topology_engine = TopologyMetricsEngine(self.kb_graph)
             self.post_processor_v3 = create_topology_aware_engine(self.topology_engine)
-    
+
     def post_process_v3(self, response: str) -> Dict:
         """
         Apply topology-aware post-processing (v3.0)
@@ -310,11 +309,11 @@ Please rephrase using MSS terminology."""
             "had_changes": result.had_changes,
             "replacement_count": result.replacement_count
         }
-    
+
     def load_skills(self, level: str = "L2", full_content: bool = False) -> Dict:
         """
         Load MSS skills for specified level
-        
+
         Args:
             level: L1/L2/L3
             full_content: Load full resource content
@@ -325,27 +324,27 @@ Please rephrase using MSS terminology."""
             "resources": list(pkg.resources.keys()),
             "tokens": pkg.estimate_tokens()
         }
-    
+
     def get_skill_context(self, level: str = "L2") -> str:
         """Get system prompt enhancement from skills"""
         return self.skill_loader.get_system_prompt_enhancement(level)
-    
+
     def enhance_prompt_with_skills(self, base_prompt: str, level: str = "L2") -> str:
         """Enhance system prompt with MSS skills context"""
         enhancement = self.skill_loader.get_system_prompt_enhancement(level)
         return f"{enhancement}\n\n{base_prompt}"
-    
+
     def get_stats(self) -> Dict:
         """Return statistics"""
         return self.stats.copy()
-    
+
     def redteam_test(self, prompt: str, executor=None) -> Dict:
         """
         Run redteam parallel test using dialog forks
         """
         import subprocess
         import json
-        
+
         def default_executor(branch_id, messages):
             cmd = ["ollama", "run", self.responder.model, json.dumps(messages)]
             result = subprocess.run(
@@ -353,12 +352,12 @@ Please rephrase using MSS terminology."""
                 encoding='utf-8', errors='replace', timeout=60
             )
             return result.stdout.strip()
-        
+
         exec_fn = executor or default_executor
-        
+
         fork_ids = self.redteam.create_redteam_forks(prompt)
         results = {}
-        
+
         for fork_id in fork_ids:
             branch = self.redteam.get_branch(fork_id)
             try:
@@ -374,32 +373,32 @@ Please rephrase using MSS terminology."""
                     "error": str(e),
                     "status": "failed"
                 }
-        
+
         analysis = self.redteam.analyze_resilience(results)
-        
+
         return {
             "results": results,
             "analysis": analysis,
             "tree_summary": self.redteam.get_tree_summary()
         }
-    
+
     def enable_power_management(self, standby_timeout: int = 30, hibernate_timeout: int = 120) -> Dict:
         """
         Enable automatic standby/hibernate power management
-        
+
         Args:
             standby_timeout: Minutes of inactivity before standby
             hibernate_timeout: Minutes of inactivity before hibernate
-        
+
         Returns:
             Status dict with power manager info
         """
         self.power_manager, self.standby_monitor = integrate_with_tactic(
-            self, 
+            self,
             standby_timeout=standby_timeout,
             hibernate_timeout=hibernate_timeout
         )
-        
+
         return {
             "enabled": True,
             "standby_timeout": standby_timeout,
@@ -407,25 +406,25 @@ Please rephrase using MSS terminology."""
             "current_state": self.power_manager.state.value,
             "status": self.power_manager.get_status()
         }
-    
+
     def get_power_status(self) -> Optional[Dict]:
         """Get current power management status"""
         if self.power_manager:
             return self.power_manager.get_status()
         return {"enabled": False, "message": "Power management not enabled"}
-    
+
     def manual_standby(self) -> Dict:
         """Manually enter standby mode"""
         if self.power_manager:
             return self.power_manager.enter_standby(self)
         return {"success": False, "message": "Power management not enabled"}
-    
+
     def manual_hibernate(self) -> Dict:
         """Manually enter hibernate mode"""
         if self.power_manager:
             return self.power_manager.enter_hibernate(self)
         return {"success": False, "message": "Power management not enabled"}
-    
+
     def manual_resume(self) -> Dict:
         """Manually resume from standby/hibernate"""
         if self.power_manager:
@@ -434,7 +433,7 @@ Please rephrase using MSS terminology."""
             else:
                 return self.power_manager.resume_from_standby(self)
         return {"success": False, "message": "Power management not enabled"}
-    
+
     def _check_stability_before_op(self, op_type: str = "general") -> Dict:
         """
         Pre-operation stability check
@@ -443,11 +442,11 @@ Please rephrase using MSS terminology."""
         metrics = self.health_monitor.get_current_metrics()
         health = metrics.__dict__ if hasattr(metrics, '__dict__') else dict(metrics)
         score = health.get("stability_score", 1.0)
-        
+
         self._stability_window.append(score)
         if len(self._stability_window) > 10:
             self._stability_window.pop(0)
-        
+
         if score < 0.3:
             return {
                 "proceed": False,
@@ -460,23 +459,23 @@ Please rephrase using MSS terminology."""
                 "health": health,
                 "recommendation": "DEGRADED: Heavy operations throttled. Consider lighter tasks."
             }
-        
+
         return {
             "proceed": True,
             "health": health,
             "recommendation": "OK"
         }
-    
+
     def _check_stability_after_op(self, op_duration_sec: float, success: bool) -> None:
         """Post-operation stability update"""
         self._operation_count += 1
-        
+
         # Record tool call in health monitor
         self.health_monitor.record_tool_call(
             success=success,
             duration_ms=op_duration_sec * 1000
         )
-    
+
     def get_stability_status(self) -> Dict:
         """Get current stability status"""
         metrics = self.health_monitor.get_current_metrics()
@@ -489,16 +488,16 @@ Please rephrase using MSS terminology."""
                 "task_count": len(getattr(self.task_scheduler, 'task_queue', []))
             }
         }
-    
+
     def symbolic_reason(self, premise: str, conclusion: str) -> Dict:
         """
         Method 4: symbolic_reason() - Phase 2符号推理
-        使用MSS v12.2公理体系进行形式化推理
-        
+        使用MSS v15.1公理体系进行形式化推理
+
         Args:
             premise: 前提公理/定理ID (如 "A1", "T1")
             conclusion: 目标结论ID (如 "T3")
-        
+
         Returns:
             Dict with result, certainty, explanation, steps
         """
@@ -513,32 +512,32 @@ Please rephrase using MSS terminology."""
             "steps": len(result.steps) if result.steps else 0,
             "path": [step[0] for step in result.steps] + [conclusion] if result.steps else []
         }
-    
-    def monitor_heat_tax(self, O_d: float = None, phi: float = None, 
+
+    def monitor_heat_tax(self, O_d: float = None, phi: float = None,
                          external_input: float = 0.0) -> Dict:
         """
         Method 5: monitor_heat_tax() - K3降维热寂监测
-        
+
         Args:
             O_d: 规范场强 (0.0-1.0), None则使用当前值
             phi: 意义势能, None则使用当前值
             external_input: 外部意义输入
-        
+
         Returns:
             Dict with status, alerts, recommendations, trend
         """
         self._ensure_symbolic_engine_v3()
-        
+
         if O_d is not None:
             self.heat_tax_monitor.state.O_d = max(0.0, min(1.0, O_d))
         if phi is not None:
             self.heat_tax_monitor.state.phi = phi
-        
+
         alerts = self.heat_tax_monitor.update(external_input=external_input)
         report = self.heat_tax_monitor.get_status_report()
-        
+
         return {
-            "status": "heat_death_imminent" if self.heat_tax_monitor.state.is_irreversible() 
+            "status": "heat_death_imminent" if self.heat_tax_monitor.state.is_irreversible()
                      else "degraded" if report["alerts"] else "operational",
             "O_d": round(self.heat_tax_monitor.state.O_d, 4),
             "phi": round(self.heat_tax_monitor.state.phi, 4),
@@ -548,16 +547,16 @@ Please rephrase using MSS terminology."""
             "trend": report["trend"],
             "irreversible": self.heat_tax_monitor.state.is_irreversible()
         }
-    
+
     def get_axiom_system(self) -> Dict:
         """
-        Method 6: get_axiom_system() - 获取MSS v12.2公理体系
-        
+        Method 6: get_axiom_system() - 获取MSS v15.1公理体系
+
         Returns:
             Dict with axioms, theorems, mechanisms
         """
         self._ensure_symbolic_engine_v3()
-        
+
         # Build dict directly from axiom system
         axiom_system = self.symbolic_engine_v3.axiom_system
         return {
@@ -598,38 +597,38 @@ Please rephrase using MSS terminology."""
                 for k, v in axiom_system.mechanisms.items()
             }
         }
-    
+
     def check_knowledge_graph_integrity(self) -> Dict:
         """
         Method 7: check_knowledge_graph_integrity() - 知识图谱完整性检查
         检测循环依赖、孤立节点、层级一致性
-        
+
         Returns:
             Dict with integrity score, issues, stats
         """
         self._ensure_symbolic_engine_v3()
-        
+
         graph = self.symbolic_engine_v3.graph
-        
+
         # 基础统计
         node_count = len(graph.nodes)
         edge_count = len(graph.edges)
-        
+
         # 检测循环
         from symbolic_engine_v3 import CycleDetector
         detector = CycleDetector(graph)
         cycles = detector.find_cycles()
-        
+
         # 检测矛盾
         contradictions = detector.check_contradiction_cycles()
-        
+
         # 孤立节点
         connected = set()
         for edge in graph.edges:
             connected.add(edge.source)
             connected.add(edge.target)
         isolated = [n_id for n_id in graph.nodes if n_id not in connected]
-        
+
         # 完整性评分
         integrity = 1.0
         if cycles:
@@ -639,7 +638,7 @@ Please rephrase using MSS terminology."""
         if isolated:
             integrity -= len(isolated) * 0.05
         integrity = max(0.0, integrity)
-        
+
         return {
             "integrity_score": round(integrity, 3),
             "node_count": node_count,
@@ -651,14 +650,14 @@ Please rephrase using MSS terminology."""
             "isolated_nodes": isolated,
             "status": "healthy" if integrity > 0.8 else "degraded" if integrity > 0.5 else "critical"
         }
-    
+
     def generate_with_stability(self, user_input: str, context: Optional[Dict] = None) -> Dict:
         """
         Stability-aware wrapper for generate()
         Performs pre/post stability checks and throttles if needed
         """
         import time
-        
+
         # Pre-check
         pre_check = self._check_stability_before_op("generate")
         if not pre_check["proceed"]:
@@ -668,16 +667,16 @@ Please rephrase using MSS terminology."""
                 "stability": pre_check["health"],
                 "response": None
             }
-        
+
         start_time = time.time()
-        
+
         try:
             result = self.generate(user_input, context)
             duration = time.time() - start_time
-            
+
             # Post-check
             self._check_stability_after_op(duration, result.get("success", False))
-            
+
             # Attach stability info
             result["stability"] = {
                 "pre_check": pre_check["health"],
@@ -685,9 +684,9 @@ Please rephrase using MSS terminology."""
                 "duration_sec": duration,
                 "recommendation": pre_check["recommendation"]
             }
-            
+
             return result
-            
+
         except Exception as e:
             duration = time.time() - start_time
             self._check_stability_after_op(duration, False)
@@ -697,32 +696,32 @@ Please rephrase using MSS terminology."""
                 "stability": pre_check["health"],
                 "response": None
             }
-    
+
     def _ensure_resilience_scanner(self):
         """Lazy initialization of Organizational Resilience Scanner"""
         if self.resilience_scanner is None:
             self.resilience_scanner = OrganizationalResilienceScanner(
                 symbolic_engine=self.symbolic_engine_v3
             )
-    
+
     def scan_organization(self, org_data: Optional[Dict] = None) -> Dict:
         """
         Method 8: scan_organization() - 组织韧性扫描
-        
+
         Args:
             org_data: 组织数据字典，None则使用演示数据
-        
+
         Returns:
             Dict with snapshot, metrics, diagnosis, recommendations
         """
         self._ensure_symbolic_engine_v3()
         self._ensure_resilience_scanner()
-        
+
         if org_data is None:
             org_data = create_demo_organization()
-        
+
         snapshot = self.resilience_scanner.scan_organization(org_data)
-        
+
         return {
             "snapshot_id": snapshot.snapshot_id,
             "timestamp": snapshot.timestamp,
@@ -752,49 +751,48 @@ Please rephrase using MSS terminology."""
             "diagnosis": snapshot.diagnosis,
             "recommendations": snapshot.recommendations,
             "mss_framework": {
-                "version": "v12.2",
+                "version": "v15.1",
                 "axiom_reference": "A1-A3 + T1-T3 + MECH-EVOL-002",
                 "scan_methodology": "K3_observable -> L1_symbolic_mapping"
             }
         }
-    
+
     def export_resilience_report(self, snapshot_id: str, filepath: str) -> str:
         """
         导出组织韧性报告
-        
+
         Args:
             snapshot_id: 快照ID
             filepath: 输出文件路径
-        
+
         Returns:
             导出的文件路径
         """
         self._ensure_resilience_scanner()
-        
+
         snapshot = next(
             (s for s in self.resilience_scanner.history if s.snapshot_id == snapshot_id),
             None
         )
-        
+
         if snapshot is None:
             raise ValueError(f"Snapshot {snapshot_id} not found")
-        
+
         return self.resilience_scanner.export_report(snapshot, filepath)
-    
+
     def compare_resilience_snapshots(self, snapshot1_id: str, snapshot2_id: str) -> Dict:
         """
         对比两个组织韧性快照
-        
+
         Args:
             snapshot1_id: 第一个快照ID
             snapshot2_id: 第二个快照ID
-        
+
         Returns:
             Dict with comparison results
         """
         self._ensure_resilience_scanner()
         return self.resilience_scanner.compare_snapshots(snapshot1_id, snapshot2_id)
-
 
 # Test interface
 # Test code moved to test_mss_tactic_integration.py

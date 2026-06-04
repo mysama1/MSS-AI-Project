@@ -21,7 +21,6 @@ from pydantic import BaseModel, Field
 from mss_tactic_integrated import MSSTactic
 from nl_bridge_v2 import NLBridgeV2, ResponseFormat
 
-
 # ============================================================================
 # Pydantic Models
 # ============================================================================
@@ -33,7 +32,6 @@ class ChatRequest(BaseModel):
     format: str = Field("markdown", description="Response format: plain/markdown/json")
     include_metadata: bool = Field(True, description="Include reasoning metadata")
 
-
 class ChatResponse(BaseModel):
     """Chat response model"""
     response: str = Field(..., description="Generated response")
@@ -43,12 +41,10 @@ class ChatResponse(BaseModel):
     processing_time: float = Field(..., description="Processing time in seconds")
     session_id: Optional[str] = Field(None, description="Session ID")
 
-
 class AnalyzeRequest(BaseModel):
     """Text analysis request"""
     text: str = Field(..., min_length=1, max_length=50000, description="Text to analyze")
     claimed_layer: Optional[str] = Field(None, description="Claimed layer if known")
-
 
 class AnalyzeResponse(BaseModel):
     """Analysis response model"""
@@ -59,14 +55,12 @@ class AnalyzeResponse(BaseModel):
     boundary_note: Optional[str] = Field(None, description="Boundary annotation")
     rewrite_needed: bool = Field(False, description="Whether rewrite is needed")
 
-
 class ReasonRequest(BaseModel):
     """Symbolic reasoning request"""
     query: str = Field(..., min_length=1, description="Reasoning query")
     start_node: Optional[str] = Field(None, description="Starting concept node")
     end_node: Optional[str] = Field(None, description="Target concept node")
     max_depth: int = Field(5, ge=1, le=10, description="Maximum search depth")
-
 
 class ReasonResponse(BaseModel):
     """Reasoning response model"""
@@ -76,13 +70,11 @@ class ReasonResponse(BaseModel):
     confidence: float = Field(0, description="Path confidence")
     processing_time: float = Field(..., description="Processing time")
 
-
 class ScanRequest(BaseModel):
     """Organizational scan request"""
     organization_name: str = Field(..., description="Organization name")
     departments: Optional[List[Dict[str, Any]]] = Field(None, description="Department data")
     use_demo: bool = Field(False, description="Use demo data")
-
 
 class ScanResponse(BaseModel):
     """Scan response model"""
@@ -94,7 +86,6 @@ class ScanResponse(BaseModel):
     recommendations: List[str] = Field(default_factory=list, description="Recommendations")
     processing_time: float = Field(..., description="Processing time")
 
-
 class StatusResponse(BaseModel):
     """System status response"""
     status: str = Field(..., description="System status")
@@ -105,11 +96,9 @@ class StatusResponse(BaseModel):
     tests_passed: int = Field(..., description="Tests passed")
     tests_total: int = Field(..., description="Total tests")
 
-
 class ModelSwitchRequest(BaseModel):
     """Model switch request"""
     model_name: str = Field(..., description="Model name to switch to")
-
 
 class ModelSwitchResponse(BaseModel):
     """Model switch response"""
@@ -117,7 +106,6 @@ class ModelSwitchResponse(BaseModel):
     previous_model: str = Field(..., description="Previous model")
     current_model: str = Field(..., description="Current model")
     message: str = Field(..., description="Status message")
-
 
 # ============================================================================
 # FastAPI Application
@@ -151,25 +139,23 @@ class AppState:
 
 state = AppState()
 
-
 @app.on_event("startup")
 async def startup_event():
     """Initialize MSS-AI on startup"""
     print("Initializing MSS-AI Web API...")
-    
+
     try:
         state.tactic = MSSTactic()
         print("✓ Tactic engine loaded")
-        
+
         state.bridge = NLBridgeV2()
         print("✓ NL Bridge V2 loaded")
-        
+
         print("MSS-AI Web API ready!")
-        
+
     except Exception as e:
         print(f"Initialization error: {e}")
         raise
-
 
 @app.get("/", response_model=Dict[str, str])
 async def root():
@@ -181,7 +167,6 @@ async def root():
         "docs": "/docs"
     }
 
-
 @app.get("/health", response_model=Dict[str, Any])
 async def health_check():
     """Health check endpoint"""
@@ -190,27 +175,26 @@ async def health_check():
         "timestamp": time.time(),
         "uptime": time.time() - state.start_time
     }
-    
+
     if state.tactic and hasattr(state.tactic, 'health_monitor') and state.tactic.health_monitor:
         try:
             h = state.tactic.health_monitor.get_health()
             health["health_score"] = h.get('overall', 0)
         except:
             health["health_score"] = 0.5
-    
-    return health
 
+    return health
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     """
     Chat with MSS-AI
-    
+
     Natural language conversation with intent recognition and symbolic reasoning.
     """
     start_time = time.time()
     state.request_count += 1
-    
+
     try:
         # Determine response format
         fmt_map = {
@@ -219,14 +203,14 @@ async def chat(request: ChatRequest):
             "json": ResponseFormat.JSON
         }
         fmt = fmt_map.get(request.format.lower(), ResponseFormat.MARKDOWN)
-        
+
         # Process through NL Bridge
         if state.bridge:
             result = state.bridge.execute_v2(
                 request.message,
                 format=fmt
             )
-            
+
             return ChatResponse(
                 response=result.get('response', ''),
                 intent=result.get('intent', 'unknown'),
@@ -246,24 +230,23 @@ async def chat(request: ChatRequest):
                 processing_time=time.time() - start_time,
                 session_id=request.session_id
             )
-            
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
 
 @app.post("/analyze", response_model=AnalyzeResponse)
 async def analyze(request: AnalyzeRequest):
     """
     Analyze text for MSS compliance
-    
+
     Detects layer, forbidden words, RSCA compliance, and rewrite needs.
     """
     try:
         if not state.tactic or not hasattr(state.tactic, 'analyze'):
             raise HTTPException(status_code=503, detail="Analyzer not available")
-        
+
         result = state.tactic.analyze(request.text, claimed_layer=request.claimed_layer)
-        
+
         return AnalyzeResponse(
             layer=result.get('layer', 'UNKNOWN'),
             confidence=result.get('confidence', 0),
@@ -272,28 +255,27 @@ async def analyze(request: AnalyzeRequest):
             boundary_note=result.get('boundary_note'),
             rewrite_needed=result.get('rewrite_needed', False)
         )
-        
+
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
 @app.post("/reason", response_model=ReasonResponse)
 async def reason(request: ReasonRequest):
     """
     Symbolic reasoning
-    
+
     Execute deterministic symbolic reasoning over MSS knowledge graph.
     """
     start_time = time.time()
-    
+
     try:
         if not state.tactic or not hasattr(state.tactic, 'symbolic_reason'):
             raise HTTPException(status_code=503, detail="Symbolic reasoner not available")
-        
+
         result = state.tactic.symbolic_reason(request.query)
-        
+
         return ReasonResponse(
             status=result.get('status', 'UNKNOWN'),
             path_length=result.get('path_length', 0),
@@ -301,28 +283,27 @@ async def reason(request: ReasonRequest):
             confidence=result.get('confidence', 0),
             processing_time=time.time() - start_time
         )
-        
+
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
 @app.post("/scan", response_model=ScanResponse)
 async def scan(request: ScanRequest):
     """
     Organizational resilience scan
-    
+
     Analyze organizational structure for resilience metrics.
     """
     start_time = time.time()
-    
+
     try:
         if not state.tactic or not hasattr(state.tactic, 'organizational_resilience_scan'):
             raise HTTPException(status_code=503, detail="Resilience scanner not available")
-        
+
         result = state.tactic.organizational_resilience_scan()
-        
+
         return ScanResponse(
             organization=request.organization_name,
             overall_level=result.get('level', 'UNKNOWN'),
@@ -332,25 +313,24 @@ async def scan(request: ScanRequest):
             recommendations=result.get('recommendations', []),
             processing_time=time.time() - start_time
         )
-        
+
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
 @app.get("/status", response_model=StatusResponse)
 async def status():
     """
     System status
-    
+
     Returns current system health, KB stats, and test status.
     """
     try:
         kb_entries = 0
         if state.tactic and hasattr(state.tactic, 'kb_loader') and state.tactic.kb_loader:
             kb_entries = len(state.tactic.kb_loader.entries)
-        
+
         health_score = 0.5
         if state.tactic and hasattr(state.tactic, 'health_monitor') and state.tactic.health_monitor:
             try:
@@ -358,7 +338,7 @@ async def status():
                 health_score = h.get('overall', 0.5)
             except:
                 pass
-        
+
         return StatusResponse(
             status="operational",
             version="1.0",
@@ -368,69 +348,66 @@ async def status():
             tests_passed=272,
             tests_total=272
         )
-        
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
 
 @app.post("/model/switch", response_model=ModelSwitchResponse)
 async def switch_model(request: ModelSwitchRequest):
     """
     Switch AI model
-    
+
     Dynamically switch between available models.
     """
     try:
         if not state.tactic or not hasattr(state.tactic, 'switch_model'):
             raise HTTPException(status_code=503, detail="Model manager not available")
-        
+
         previous = getattr(state.tactic, 'current_model', 'unknown')
         result = state.tactic.switch_model(request.model_name)
         current = getattr(state.tactic, 'current_model', request.model_name)
-        
+
         return ModelSwitchResponse(
             success=True,
             previous_model=previous,
             current_model=current,
             message=f"Model switched from {previous} to {current}"
         )
-        
+
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
 
 @app.get("/knowledge-base")
 async def knowledge_base():
     """
     Knowledge base summary
-    
+
     Returns summary of loaded knowledge base entries.
     """
     try:
         if not state.tactic or not hasattr(state.tactic, 'kb_loader') or not state.tactic.kb_loader:
             raise HTTPException(status_code=503, detail="Knowledge base not available")
-        
+
         entries = state.tactic.kb_loader.entries
-        
+
         # Count by layer
         layer_counts = {}
         for entry in entries.values():
             layer = getattr(entry, 'layer', 'UNKNOWN')
             layer_counts[layer] = layer_counts.get(layer, 0) + 1
-        
+
         return {
             "total_entries": len(entries),
             "layer_distribution": layer_counts,
             "entry_ids": list(entries.keys())[:50]  # First 50 IDs
         }
-        
+
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
 
 # ============================================================================
 # Main Entry Point
@@ -438,9 +415,9 @@ async def knowledge_base():
 
 if __name__ == "__main__":
     import uvicorn
-    
+
     host = os.getenv("MSS_API_HOST", "0.0.0.0")
     port = int(os.getenv("MSS_API_PORT", "8000"))
-    
+
     print(f"Starting MSS-AI Web API on {host}:{port}")
     uvicorn.run(app, host=host, port=port)

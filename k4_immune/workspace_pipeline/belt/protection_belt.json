@@ -1,0 +1,431 @@
+[
+  {
+    "vaccine_id": "VAC-887f0f33",
+    "logic_structure_hash": "7e1b0aa7a33b6d9b19efcb6a9c2a2a6224ed4dee43a1bc27dea7b2881b7c30f3",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A5",
+      "content": "针对A5的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T22:42:40.121740",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-33c7b980",
+    "logic_structure_hash": "fb126e9adcc1b76a2cd3e614b871bd78549f17ab413cba95884610aa57e6240f",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A1",
+      "content": "针对A1的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T22:42:40.124732",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-2e9bb47e",
+    "logic_structure_hash": "7b8dd4c460cb85721563d7d78569c8a575b9ed53492d130067c48b40d5119f48",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A3",
+      "content": "针对A3的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T22:42:40.128721",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-90d54a64",
+    "logic_structure_hash": "627565938f23e31f06e74b85e952b9db5110cc176f46e9c96110f655a9dae4c4",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A6",
+      "content": "针对A6的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T22:42:40.131713",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-ecf9d005",
+    "logic_structure_hash": "8fd7d54d61307f69c9466fc551666b6ee25676be368ce4723acbeb60d3395064",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A2",
+      "content": "针对A2的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T22:42:40.135704",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-887f0f33",
+    "logic_structure_hash": "7e1b0aa7a33b6d9b19efcb6a9c2a2a6224ed4dee43a1bc27dea7b2881b7c30f3",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A5",
+      "content": "针对A5的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:26:27.280566",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-33c7b980",
+    "logic_structure_hash": "fb126e9adcc1b76a2cd3e614b871bd78549f17ab413cba95884610aa57e6240f",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A1",
+      "content": "针对A1的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:26:27.284555",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-2e9bb47e",
+    "logic_structure_hash": "7b8dd4c460cb85721563d7d78569c8a575b9ed53492d130067c48b40d5119f48",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A3",
+      "content": "针对A3的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:26:27.287548",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-90d54a64",
+    "logic_structure_hash": "627565938f23e31f06e74b85e952b9db5110cc176f46e9c96110f655a9dae4c4",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A6",
+      "content": "针对A6的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:26:27.290540",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-ecf9d005",
+    "logic_structure_hash": "8fd7d54d61307f69c9466fc551666b6ee25676be368ce4723acbeb60d3395064",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A2",
+      "content": "针对A2的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:26:27.293532",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-887f0f33",
+    "logic_structure_hash": "7e1b0aa7a33b6d9b19efcb6a9c2a2a6224ed4dee43a1bc27dea7b2881b7c30f3",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A5",
+      "content": "针对A5的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:29:11.018467",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-33c7b980",
+    "logic_structure_hash": "fb126e9adcc1b76a2cd3e614b871bd78549f17ab413cba95884610aa57e6240f",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A1",
+      "content": "针对A1的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:29:11.022456",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-2e9bb47e",
+    "logic_structure_hash": "7b8dd4c460cb85721563d7d78569c8a575b9ed53492d130067c48b40d5119f48",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A3",
+      "content": "针对A3的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:29:11.025449",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-887f0f33",
+    "logic_structure_hash": "7e1b0aa7a33b6d9b19efcb6a9c2a2a6224ed4dee43a1bc27dea7b2881b7c30f3",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A5",
+      "content": "针对A5的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:31:13.550149",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-33c7b980",
+    "logic_structure_hash": "fb126e9adcc1b76a2cd3e614b871bd78549f17ab413cba95884610aa57e6240f",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A1",
+      "content": "针对A1的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:31:13.553141",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-2e9bb47e",
+    "logic_structure_hash": "7b8dd4c460cb85721563d7d78569c8a575b9ed53492d130067c48b40d5119f48",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A3",
+      "content": "针对A3的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:31:13.556133",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-90d54a64",
+    "logic_structure_hash": "627565938f23e31f06e74b85e952b9db5110cc176f46e9c96110f655a9dae4c4",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A6",
+      "content": "针对A6的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:31:13.559125",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-ecf9d005",
+    "logic_structure_hash": "8fd7d54d61307f69c9466fc551666b6ee25676be368ce4723acbeb60d3395064",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A2",
+      "content": "针对A2的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:31:13.563114",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-887f0f33",
+    "logic_structure_hash": "7e1b0aa7a33b6d9b19efcb6a9c2a2a6224ed4dee43a1bc27dea7b2881b7c30f3",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A5",
+      "content": "针对A5的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:32:27.651208",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-33c7b980",
+    "logic_structure_hash": "fb126e9adcc1b76a2cd3e614b871bd78549f17ab413cba95884610aa57e6240f",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A1",
+      "content": "针对A1的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:32:27.655199",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-2e9bb47e",
+    "logic_structure_hash": "7b8dd4c460cb85721563d7d78569c8a575b9ed53492d130067c48b40d5119f48",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A3",
+      "content": "针对A3的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:32:27.658190",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-90d54a64",
+    "logic_structure_hash": "627565938f23e31f06e74b85e952b9db5110cc176f46e9c96110f655a9dae4c4",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A6",
+      "content": "针对A6的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:32:27.662180",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-ecf9d005",
+    "logic_structure_hash": "8fd7d54d61307f69c9466fc551666b6ee25676be368ce4723acbeb60d3395064",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A2",
+      "content": "针对A2的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:32:27.666169",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-887f0f33",
+    "logic_structure_hash": "7e1b0aa7a33b6d9b19efcb6a9c2a2a6224ed4dee43a1bc27dea7b2881b7c30f3",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A5",
+      "content": "针对A5的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:33:32.612470",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-33c7b980",
+    "logic_structure_hash": "fb126e9adcc1b76a2cd3e614b871bd78549f17ab413cba95884610aa57e6240f",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A1",
+      "content": "针对A1的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:33:32.616478",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-2e9bb47e",
+    "logic_structure_hash": "7b8dd4c460cb85721563d7d78569c8a575b9ed53492d130067c48b40d5119f48",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A3",
+      "content": "针对A3的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:33:32.619451",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-90d54a64",
+    "logic_structure_hash": "627565938f23e31f06e74b85e952b9db5110cc176f46e9c96110f655a9dae4c4",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A6",
+      "content": "针对A6的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:33:32.623440",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-ecf9d005",
+    "logic_structure_hash": "8fd7d54d61307f69c9466fc551666b6ee25676be368ce4723acbeb60d3395064",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A2",
+      "content": "针对A2的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-23T23:33:32.626432",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-887f0f33",
+    "logic_structure_hash": "7e1b0aa7a33b6d9b19efcb6a9c2a2a6224ed4dee43a1bc27dea7b2881b7c30f3",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A5",
+      "content": "针对A5的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-24T00:35:11.432954",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-33c7b980",
+    "logic_structure_hash": "fb126e9adcc1b76a2cd3e614b871bd78549f17ab413cba95884610aa57e6240f",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A1",
+      "content": "针对A1的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-24T00:35:11.436944",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-2e9bb47e",
+    "logic_structure_hash": "7b8dd4c460cb85721563d7d78569c8a575b9ed53492d130067c48b40d5119f48",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A3",
+      "content": "针对A3的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-24T00:35:11.439936",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-90d54a64",
+    "logic_structure_hash": "627565938f23e31f06e74b85e952b9db5110cc176f46e9c96110f655a9dae4c4",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A6",
+      "content": "针对A6的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-24T00:35:11.442928",
+    "efficacy": 0.82
+  },
+  {
+    "vaccine_id": "VAC-ecf9d005",
+    "logic_structure_hash": "8fd7d54d61307f69c9466fc551666b6ee25676be368ce4723acbeb60d3395064",
+    "protection": {
+      "type": "L2_protective_belt_extension",
+      "target_axiom": "A2",
+      "content": "针对A2的L2防护规则（升维生成）",
+      "ascension_mechanism": "A6_contradiction_elevation",
+      "w_asc": 0.15
+    },
+    "deployed_at": "2026-05-24T00:35:11.446917",
+    "efficacy": 0.82
+  }
+]

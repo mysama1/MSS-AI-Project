@@ -17,11 +17,11 @@ def test_env_configs():
     dev = load_config(Environment.DEVELOPMENT)
     assert dev.logging.level == "DEBUG"
     assert dev.model.check_gpu == False
-    
+
     test = load_config(Environment.TESTING)
     assert test.logging.file_enabled == False
     assert test.symbolic.cache_enabled == False
-    
+
     prod = load_config(Environment.PRODUCTION)
     assert prod.logging.level == "INFO"
     assert prod.security.content_filter_enabled == True
@@ -34,7 +34,7 @@ def test_dot_notation():
     c = MSSConfig()
     assert c.get("model.arbiter_model") == "qwen2.5:7b"
     assert c.get("nonexistent", "default") == "default"
-    
+
     c.set("model.temperature", 0.1)
     assert c.model.temperature == 0.1
     print("  [OK] Dot notation works")
@@ -45,7 +45,7 @@ def test_validation():
     print("Test 4: Validation")
     c = MSSConfig()
     assert c.validate() == []
-    
+
     c.model.temperature = 3.0
     issues = c.validate()
     assert len(issues) > 0
@@ -59,13 +59,13 @@ def test_save_load():
     c = MSSConfig()
     c.version = "1.2.3"
     c.set("model.arbiter_model", "test-model")
-    
+
     c.save("test_config.json")
     loaded = MSSConfig.load("test_config.json")
-    
+
     assert loaded.version == "1.2.3"
     assert loaded.model.arbiter_model == "test-model"
-    
+
     os.remove("test_config.json")
     print("  [OK] Save/load roundtrip")
     print("  PASSED\n")
@@ -76,7 +76,7 @@ def test_global_config():
     c = MSSConfig()
     c.version = "global-test"
     set_config(c)
-    
+
     g = get_config()
     assert g.version == "global-test"
     print("  [OK] Global config works")
@@ -88,19 +88,19 @@ def run_all_tests():
     print("MSS Config Test Suite")
     print("=" * 60)
     print()
-    
-    tests = [test_default_config, test_env_configs, test_dot_notation, 
+
+    tests = [test_default_config, test_env_configs, test_dot_notation,
              test_validation, test_save_load, test_global_config]
     passed = 0
     failed = 0
-    
+
     for test in tests:
         try:
             if test(): passed += 1
         except Exception as e:
             print(f"  FAILED: {e}")
             failed += 1
-    
+
     print("=" * 60)
     print(f"Results: {passed} passed, {failed} failed")
     print("=" * 60)

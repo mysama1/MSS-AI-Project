@@ -1,0 +1,1 @@
+{"id": "ARCH-001", "layer": "L2", "category": "definition", "title": "MSS-AI原生架构: 意义是本体", "content": "MSS-AI核心特征1：意义是本体(vs语言是本体)。传统LLM以语言符号为处理对象，MSS-AI以意义结构为原生对象。语言只是意义的投影载体，意义网络才是本体。这决定了MSS-AI的符号引擎直接操作意义节点和关系，而非文本token。", "confidence": 0.85, "axiom_refs": ["A1", "v5.3"], "status": "active", "created_at": "2026-05-15T15:45:00+08:00"}

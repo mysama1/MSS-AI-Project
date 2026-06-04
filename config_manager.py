@@ -11,7 +11,6 @@ from pathlib import Path
 from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, field, asdict
 
-
 # 尝试导入 TOML 支持
 try:
     import tomllib  # Python 3.11+
@@ -30,7 +29,6 @@ try:
 except ImportError:
     HAS_YAML = False
 
-
 @dataclass
 class ModelConfig:
     """模型配置"""
@@ -41,7 +39,6 @@ class ModelConfig:
     context_window: int = 8192
     system_prompt: str = ''
 
-
 @dataclass
 class ArbiterConfig:
     """仲裁引擎配置"""
@@ -50,7 +47,7 @@ class ArbiterConfig:
     max_retries: int = 3
     score_threshold: float = 0.7
     forbidden_words: List[str] = field(default_factory=lambda: [
-        'ultimate', 'perfect', 'complete', 'breakthrough', 
+        'ultimate', 'perfect', 'complete', 'breakthrough',
         'solve', 'transcend', '解决', '终极', '完美', '突破'
     ])
     layer_weights: Dict[str, float] = field(default_factory=lambda: {
@@ -60,7 +57,6 @@ class ArbiterConfig:
         'overclaim_index': 0.2
     })
 
-
 @dataclass
 class ResponderConfig:
     """响应代理配置"""
@@ -69,7 +65,6 @@ class ResponderConfig:
     auto_add_defaults: bool = True
     max_response_tokens: int = 4096
     persona_template: str = 'default'
-
 
 @dataclass
 class SkillsConfig:
@@ -84,7 +79,6 @@ class SkillsConfig:
         './skills/L3_heuristic'
     ])
 
-
 @dataclass
 class MonitoringConfig:
     """监控配置"""
@@ -96,69 +90,67 @@ class MonitoringConfig:
     response_time_threshold: float = 10.0
     export_interval_minutes: int = 60
 
-
 @dataclass
 class MSSConfig:
     """MSS-AI 主配置"""
     version: str = '1.1.0'
     debug: bool = False
     log_level: str = 'INFO'
-    
+
     model: ModelConfig = field(default_factory=ModelConfig)
     arbiter: ArbiterConfig = field(default_factory=ArbiterConfig)
     responder: ResponderConfig = field(default_factory=ResponderConfig)
     skills: SkillsConfig = field(default_factory=SkillsConfig)
     monitoring: MonitoringConfig = field(default_factory=MonitoringConfig)
-    
+
     # 扩展配置
     custom_settings: Dict[str, Any] = field(default_factory=dict)
 
-
 class ConfigManager:
     """配置管理器"""
-    
+
     DEFAULT_CONFIG_PATH = './mss_config.toml'
-    
+
     def __init__(self, config_path: Optional[str] = None):
         """
         初始化配置管理器
-        
+
         Args:
             config_path: 配置文件路径，默认 ./mss_config.toml
         """
         self.config_path = config_path or self.DEFAULT_CONFIG_PATH
         self.config = MSSConfig()
         self._load_config()
-    
+
     def _load_config(self):
         """加载配置文件"""
         if not os.path.exists(self.config_path):
             # 使用默认配置
             return
-        
+
         # 根据扩展名选择解析器
         ext = Path(self.config_path).suffix.lower()
-        
+
         try:
             if ext == '.toml' and HAS_TOML:
                 with open(self.config_path, 'rb') as f:
                     data = tomllib.load(f)
                 self._apply_dict(data)
-                
+
             elif ext in ('.yaml', '.yml') and HAS_YAML:
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     data = yaml.safe_load(f)
                 self._apply_dict(data)
-                
+
             elif ext == '.json':
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                 self._apply_dict(data)
-                
+
         except Exception as e:
             print(f'Warning: Failed to load config from {self.config_path}: {e}')
             print('Using default configuration')
-    
+
     def _apply_dict(self, data: Dict):
         """从字典应用配置"""
         if 'model' in data:
@@ -173,25 +165,25 @@ class ConfigManager:
             self.config.monitoring = MonitoringConfig(**data['monitoring'])
         if 'custom_settings' in data:
             self.config.custom_settings = data['custom_settings']
-        
+
         # 顶层字段
         for key in ['version', 'debug', 'log_level']:
             if key in data:
                 setattr(self.config, key, data[key])
-    
+
     def save(self, path: Optional[str] = None):
         """
         保存配置到文件
-        
+
         Args:
             path: 保存路径，默认覆盖原文件
         """
         save_path = path or self.config_path
         ext = Path(save_path).suffix.lower()
-        
+
         # 转换为字典
         data = self.to_dict()
-        
+
         try:
             if ext == '.toml':
                 self._save_toml(save_path, data)
@@ -202,36 +194,36 @@ class ConfigManager:
             else:
                 # 默认 JSON
                 self._save_json(save_path + '.json', data)
-                
+
         except Exception as e:
             raise IOError(f'Failed to save config: {e}')
-    
+
     def _save_json(self, path: str, data: Dict):
         """保存为 JSON"""
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-    
+
     def _save_yaml(self, path: str, data: Dict):
         """保存为 YAML"""
         if not HAS_YAML:
             raise ImportError('PyYAML not installed, cannot save as YAML')
         with open(path, 'w', encoding='utf-8') as f:
             yaml.dump(data, f, allow_unicode=True, default_flow_style=False)
-    
+
     def _save_toml(self, path: str, data: Dict):
         """保存为 TOML（简化实现，避免重复键）"""
         lines = ['# MSS-AI Configuration File\n']
-        
+
         # 顶层标量字段
         top_scalars = {}
         sections = {}
-        
+
         for key, value in data.items():
             if isinstance(value, dict):
                 sections[key] = value
             else:
                 top_scalars[key] = value
-        
+
         # 写入顶层标量
         for key, value in top_scalars.items():
             if isinstance(value, str):
@@ -242,7 +234,7 @@ class ConfigManager:
                 lines.append(f'{key} = {json.dumps(value, ensure_ascii=False)}\n')
             else:
                 lines.append(f'{key} = {value}\n')
-        
+
         # 写入各个 section
         for section_name, section_data in sections.items():
             lines.append(f'\n[{section_name}]\n')
@@ -261,13 +253,13 @@ class ConfigManager:
                             pairs.append(f'{dk} = "{dv}"')
                         else:
                             pairs.append(f'{dk} = {dv}')
-                    lines.append(f'{k} = {{ {', '.join(pairs)} }}\n')
+                    lines.append(k + ' = { ' + ', '.join(pairs) + ' }\n')
                 else:
                     lines.append(f'{k} = {v}\n')
-        
+
         with open(path, 'w', encoding='utf-8') as f:
             f.writelines(lines)
-    
+
     def to_dict(self) -> Dict:
         """转换为字典"""
         return {
@@ -281,109 +273,106 @@ class ConfigManager:
             'monitoring': asdict(self.config.monitoring),
             'custom_settings': self.config.custom_settings
         }
-    
+
     def get(self, key: str, default: Any = None) -> Any:
         """
         获取配置项（支持点号路径）
-        
+
         Args:
             key: 配置键，如 'model.temperature' 或 'arbiter.max_retries'
             default: 默认值
-            
+
         Returns:
             配置值
         """
         keys = key.split('.')
         value = self.to_dict()
-        
+
         for k in keys:
             if isinstance(value, dict) and k in value:
                 value = value[k]
             else:
                 return default
-        
+
         return value
-    
+
     def set(self, key: str, value: Any):
         """
         设置配置项
-        
+
         Args:
             key: 配置键
             value: 配置值
         """
         keys = key.split('.')
         target = self.config
-        
+
         for k in keys[:-1]:
             if hasattr(target, k):
                 target = getattr(target, k)
             else:
                 return
-        
+
         final_key = keys[-1]
         if hasattr(target, final_key):
             setattr(target, final_key, value)
-    
+
     def create_default_config(self, path: Optional[str] = None):
         """创建默认配置文件"""
         save_path = path or self.DEFAULT_CONFIG_PATH
-        
+
         # 确保目录存在
         Path(save_path).parent.mkdir(parents=True, exist_ok=True)
-        
+
         self.save(save_path)
         print(f'Default configuration created at: {save_path}')
         return save_path
-    
+
     def validate(self) -> List[str]:
         """验证配置有效性，返回错误列表"""
         errors = []
-        
+
         # 检查模型配置
         if self.config.model.temperature < 0 or self.config.model.temperature > 2:
             errors.append('model.temperature must be between 0 and 2')
-        
+
         if self.config.model.max_tokens < 1:
             errors.append('model.max_tokens must be positive')
-        
+
         # 检查仲裁配置
         if self.config.arbiter.score_threshold < 0 or self.config.arbiter.score_threshold > 1:
             errors.append('arbiter.score_threshold must be between 0 and 1')
-        
+
         if self.config.arbiter.max_retries < 0:
             errors.append('arbiter.max_retries must be non-negative')
-        
+
         # 检查层级权重和
         weights = self.config.arbiter.layer_weights
         if abs(sum(weights.values()) - 1.0) > 0.01:
             errors.append(f'arbiter.layer_weights must sum to 1.0 (current: {sum(weights.values())})')
-        
+
         # 检查监控配置
         if self.config.monitoring.success_threshold < 0 or self.config.monitoring.success_threshold > 1:
             errors.append('monitoring.success_threshold must be between 0 and 1')
-        
-        return errors
 
+        return errors
 
 # 便捷函数
 def load_config(path: Optional[str] = None) -> ConfigManager:
     """加载配置"""
     return ConfigManager(path)
 
-
 def create_default_config(path: str = './mss_config.toml'):
     """创建默认配置文件"""
     manager = ConfigManager()
     return manager.create_default_config(path)
-
 
 if __name__ == '__main__':
     # 演示
     print('Config Manager v1.0')
     print(f'TOML support: {HAS_TOML}')
     print(f'YAML support: {HAS_YAML}')
-    
+
     # 创建默认配置
     mgr = ConfigManager()
     print('\nDefault config:')

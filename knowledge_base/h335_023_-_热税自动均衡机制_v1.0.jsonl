@@ -1,0 +1,1 @@
+{"h_id": "H335", "title": "H335: 023 - 热税自动均衡机制", "layer": "L2", "category": "extract", "orig_source": "k4_civilization_steady_state_v1.0.jsonl", "orig_id": "K4", "t_value": 8, "version": "1.0", "date": "2026-05-31", "summary": "从v12.2归档提取。023 - 热税自动均衡机制", "content": "*层级: L3* D-MAN网络自动将热税负载均衡到所有节点，避免单节点过载。均衡算法基于意义权重W_Φ动态分配，高权重节点承担更多热税。 ", "status": "imported_from_v12.2"}

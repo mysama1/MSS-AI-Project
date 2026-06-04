@@ -13,7 +13,7 @@ def test_symbolic_only():
         knowledge_graph=graph,
         mode=ReasoningMode.SYMBOLIC_ONLY
     )
-    
+
     result = engine.reason("Prove A1 implies T1")
     assert result.mode == ReasoningMode.SYMBOLIC_ONLY
     assert result.symbolic_result is not None
@@ -29,7 +29,7 @@ def test_llm_only():
         knowledge_graph=graph,
         mode=ReasoningMode.LLM_ONLY
     )
-    
+
     result = engine.reason("What is meaning?")
     assert result.mode == ReasoningMode.LLM_ONLY
     assert result.symbolic_result is None
@@ -46,7 +46,7 @@ def test_hybrid_symbolic_first():
         mode=ReasoningMode.HYBRID_SYMBOLIC_FIRST,
         strategy=FusionStrategy.CASCADE
     )
-    
+
     # Query with known path
     result = engine.reason("Prove T1 derives T2")
     assert result.mode == ReasoningMode.HYBRID_SYMBOLIC_FIRST
@@ -64,12 +64,12 @@ def test_cascade_strategy():
         mode=ReasoningMode.HYBRID_SYMBOLIC_FIRST,
         strategy=FusionStrategy.CASCADE
     )
-    
+
     # Known path - should use symbolic
     result1 = engine.reason("Prove A1 implies T1")
     # Unknown path - should fallback to LLM
     result2 = engine.reason("Explain quantum physics")
-    
+
     assert result1.symbolic_result.proven or "fallback" not in str(result1.fusion_notes)
     print(f"  [OK] Cascade: known_path={result1.symbolic_result.proven}, unknown_fallback={'fallback' in str(result2.fusion_notes)}")
     print("  PASSED\n")
@@ -85,7 +85,7 @@ def test_weighted_strategy():
         symbolic_weight=0.7,
         llm_weight=0.3
     )
-    
+
     result = engine.reason("Prove A1 implies T1")
     assert result.strategy == FusionStrategy.WEIGHTED
     print(f"  [OK] Weighted: confidence={result.final_confidence:.2f}")
@@ -100,7 +100,7 @@ def test_consensus_strategy():
         mode=ReasoningMode.HYBRID_SYMBOLIC_FIRST,
         strategy=FusionStrategy.CONSENSUS
     )
-    
+
     result = engine.reason("Prove A1 implies T1")
     assert result.strategy == FusionStrategy.CONSENSUS
     print(f"  [OK] Consensus: layer={result.final_layer}")
@@ -114,12 +114,12 @@ def test_adaptive_mode():
         knowledge_graph=graph,
         mode=ReasoningMode.ADAPTIVE
     )
-    
+
     # Structured query - should use symbolic
     result1 = engine.reason("Prove A1 implies T1")
     # Unstructured query - should use LLM
     result2 = engine.reason("What is the meaning of life?")
-    
+
     assert result1.mode == ReasoningMode.ADAPTIVE
     assert result2.mode == ReasoningMode.ADAPTIVE
     print(f"  [OK] Adaptive: structured_notes={result1.fusion_notes}, unstructured_notes={result2.fusion_notes}")
@@ -133,11 +133,11 @@ def test_stats():
         knowledge_graph=graph,
         mode=ReasoningMode.HYBRID_SYMBOLIC_FIRST
     )
-    
+
     # Run multiple queries
     for _ in range(3):
         engine.reason("Prove A1 implies T1")
-    
+
     stats = engine.get_stats()
     assert stats["symbolic_calls"] == 3
     assert stats["llm_calls"] == 3
@@ -151,7 +151,7 @@ def run_all_tests():
     print("Hybrid Reasoning Engine Test Suite")
     print("=" * 60)
     print()
-    
+
     tests = [
         test_symbolic_only, test_llm_only,
         test_hybrid_symbolic_first, test_cascade_strategy,
@@ -160,14 +160,14 @@ def run_all_tests():
     ]
     passed = 0
     failed = 0
-    
+
     for test in tests:
         try:
             if test(): passed += 1
         except Exception as e:
             print(f"  FAILED: {e}")
             failed += 1
-    
+
     print("=" * 60)
     print(f"Results: {passed} passed, {failed} failed")
     print("=" * 60)

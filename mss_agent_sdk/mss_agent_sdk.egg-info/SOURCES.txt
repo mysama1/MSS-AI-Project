@@ -1,0 +1,9 @@
+MANIFEST.in
+README.md
+setup.py
+mss_agent_sdk.egg-info/PKG-INFO
+mss_agent_sdk.egg-info/SOURCES.txt
+mss_agent_sdk.egg-info/dependency_links.txt
+mss_agent_sdk.egg-info/entry_points.txt
+mss_agent_sdk.egg-info/requires.txt
+mss_agent_sdk.egg-info/top_level.txt

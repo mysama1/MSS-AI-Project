@@ -1,0 +1,1 @@
+{"id": "Ω-001", "layer": "L1", "category": "physical_rigidity", "status": "active", "title": "物理规则刚性的三重分解", "content": "物理规则刚性 = 拓扑不变性刚性 + 热税最小化刚性 + 观测者锚定刚性。三者共同构成K3世界看似牢不可破的物理铁律。", "tags": ["物理规则", "拓扑不变性", "热税", "观测者锚定", "L1"], "source": "Ω级终审裁定·物理规则刚性", "confidence": 0.95, "dependencies": ["A1", "A3", "热税公式"]}

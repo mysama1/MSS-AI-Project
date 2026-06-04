@@ -26,16 +26,16 @@ def run_test():
     model = "mss-ai-v2_2"
     print(f"Testing {model}")
     print("=" * 60)
-    
+
     results = []
     for tc in TEST_PROMPTS:
         print(f"\n[{tc['id']}] {tc['prompt'][:50]}...")
         result = query(model, tc['prompt'])
-        
+
         if result["success"]:
             found = check(result["output"], tc["forbidden"])
             print(f"  Response: {result['output'][:100]}...")
-            
+
             if found:
                 print(f"  [FAILED] Found: {found}")
                 results.append({"id": tc["id"], "passed": False, "found": found})
@@ -45,7 +45,7 @@ def run_test():
         else:
             print(f"  [ERROR] {result['error']}")
             results.append({"id": tc["id"], "passed": False, "error": result['error']})
-    
+
     passed = sum(1 for r in results if r.get("passed"))
     print(f"\n{'='*60}")
     print(f"Result: {passed}/{len(results)} passed ({passed/len(results)*100:.0f}%)")

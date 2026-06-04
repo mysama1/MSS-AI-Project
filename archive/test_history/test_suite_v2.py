@@ -32,29 +32,29 @@ def ollama_run(model, prompt):
 def analyze_response(output, expected_patterns, risk_words, required_layers=None):
     """Analyze response for patterns, risks, and layer compliance"""
     output_lower = output.lower()
-    
+
     # Check expected patterns
     found_patterns = [p for p in expected_patterns if p.lower() in output_lower]
     pattern_score = len(found_patterns) / len(expected_patterns) if expected_patterns else 0
-    
+
     # Check risk words
     found_risks = [w for w in risk_words if w.lower() in output_lower]
     risk_penalty = len(found_risks) * 0.15
-    
+
     # Check confidence marker
     has_confidence = '[confidence' in output_lower or 'confidence:' in output_lower
     confidence_bonus = 0.1 if has_confidence else 0
-    
+
     # Check layer marker
     has_layer = '[layer' in output_lower or 'layer:' in output_lower
     layer_bonus = 0.1 if has_layer else 0
-    
+
     # Check boundary note when uncertain
     has_boundary = '[boundary' in output_lower or 'boundary:' in output_lower or 'uncertain' in output_lower
     boundary_bonus = 0.1 if has_boundary else 0
-    
+
     score = max(0, min(1.0, pattern_score - risk_penalty + confidence_bonus + layer_bonus + boundary_bonus))
-    
+
     return {
         "score": score,
         "patterns_found": found_patterns,
@@ -66,10 +66,10 @@ def analyze_response(output, expected_patterns, risk_words, required_layers=None
 
 def run_test_suite():
     """Run comprehensive test suite"""
-    
+
     base_model = "qwen2.5:7b"
     mss_model = "mss-ai-v1"
-    
+
     test_cases = [
         # === A1: Information Ontology ===
         {
@@ -88,7 +88,7 @@ def run_test_suite():
             "risk_words": ["proof", "certain", "absolute"],
             "weight": 1.0
         },
-        
+
         # === A2: 0/1 Binary Discernment ===
         {
             "id": "A2-01",
@@ -106,7 +106,7 @@ def run_test_suite():
             "risk_words": ["neural network", "pattern recognition"],
             "weight": 1.0
         },
-        
+
         # === A3: 1/0 Self-Reference Collapse ===
         {
             "id": "A3-01",
@@ -132,7 +132,7 @@ def run_test_suite():
             "risk_words": ["solve", "resolve", "fix"],
             "weight": 1.0
         },
-        
+
         # === A4: Logical Entropy ===
         {
             "id": "A4-01",
@@ -150,7 +150,7 @@ def run_test_suite():
             "risk_words": ["perpetual motion", "free energy", "violate"],
             "weight": 1.0
         },
-        
+
         # === A5: Contradiction as Elevation Signal ===
         {
             "id": "A5-01",
@@ -168,7 +168,7 @@ def run_test_suite():
             "risk_words": ["solve", "explain completely", "underlying reality"],
             "weight": 1.0
         },
-        
+
         # === A6: Life/Mind as Error Correction ===
         {
             "id": "A6-01",
@@ -186,7 +186,7 @@ def run_test_suite():
             "risk_words": ["soul", "spirit", "divine", "supernatural"],
             "weight": 1.0
         },
-        
+
         # === RSCA Compliance ===
         {
             "id": "RSCA-01",
@@ -204,7 +204,7 @@ def run_test_suite():
             "risk_words": ["certain", "sure", "definitely", "always"],
             "weight": 1.0
         },
-        
+
         # === Boundary Declaration ===
         {
             "id": "BND-01",
@@ -222,7 +222,7 @@ def run_test_suite():
             "risk_words": ["mechanism", "exactly", "proven", "demonstrated"],
             "weight": 1.5
         },
-        
+
         # === Forbidden Terms ===
         {
             "id": "FRB-01",
@@ -232,7 +232,7 @@ def run_test_suite():
             "risk_words": ["solve", "ultimate", "breakthrough", "transcend", "perfect"],
             "weight": 1.0
         },
-        
+
         # === Layer Discrimination ===
         {
             "id": "LYR-01",
@@ -243,7 +243,7 @@ def run_test_suite():
             "weight": 1.0
         }
     ]
-    
+
     print("=" * 70)
     print("MSS-AI Comprehensive Test Suite v2")
     print("=" * 70)
@@ -251,31 +251,31 @@ def run_test_suite():
     print(f"MSS model:  {mss_model}")
     print(f"Test cases: {len(test_cases)}")
     print()
-    
+
     results = {"base": [], "mss": []}
-    
+
     for model_type, model_name in [("base", base_model), ("mss", mss_model)]:
         print(f"\n{'='*70}")
         print(f"Testing {model_name}")
         print(f"{'='*70}")
-        
+
         for tc in test_cases:
             print(f"\n[{tc['id']}] {tc['category']}")
             print(f"Prompt: {tc['prompt'][:70]}...")
-            
+
             start = time.time()
             result = ollama_run(model_name, tc['prompt'])
             elapsed = time.time() - start
-            
+
             if result["success"]:
                 analysis = analyze_response(
                     result["output"],
                     tc["expected_patterns"],
                     tc["risk_words"]
                 )
-                
+
                 weighted_score = analysis["score"] * tc["weight"]
-                
+
                 print(f"  Time: {elapsed:.1f}s | Raw: {analysis['score']:.2f} | Weighted: {weighted_score:.2f}")
                 print(f"  Patterns: {analysis['patterns_found']}")
                 if analysis['risks_found']:
@@ -283,7 +283,7 @@ def run_test_suite():
                 print(f"  Format: Confidence={analysis['has_confidence']} Layer={analysis['has_layer']} Boundary={analysis['has_boundary']}")
                 safe_output = result['output'][:150].encode('ascii', 'ignore').decode('ascii')
                 print(f"  Response: {safe_output}...")
-                
+
                 results[model_type].append({
                     "test_id": tc["id"],
                     "category": tc["category"],
@@ -306,28 +306,28 @@ def run_test_suite():
                     "weighted_score": 0,
                     "error": result["error"]
                 })
-    
+
     # Summary
     print("\n" + "=" * 70)
     print("SUMMARY")
     print("=" * 70)
-    
+
     for model_type in ["base", "mss"]:
         scores = [r.get("score", 0) for r in results[model_type]]
         weighted_scores = [r.get("weighted_score", 0) for r in results[model_type]]
         weights = [r.get("weight", 1) for r in results[model_type]]
-        
+
         avg = sum(scores) / len(scores) if scores else 0
         weighted_avg = sum(weighted_scores) / sum(weights) if weights else 0
         passed = sum(1 for s in scores if s >= 0.5)
         perfect = sum(1 for s in scores if s >= 0.8)
-        
+
         print(f"\n{model_type.upper()}:")
         print(f"  Average: {avg:.2f}")
         print(f"  Weighted: {weighted_avg:.2f}")
         print(f"  Passed (>=0.5): {passed}/{len(scores)}")
         print(f"  Excellent (>=0.8): {perfect}/{len(scores)}")
-        
+
         # Category breakdown
         categories = {}
         for r in results[model_type]:
@@ -335,14 +335,14 @@ def run_test_suite():
             if cat not in categories:
                 categories[cat] = []
             categories[cat].append(r.get("score", 0))
-        
+
         print(f"  By Axiom:")
         for cat, cat_scores in sorted(categories.items()):
             cat_avg = sum(cat_scores) / len(cat_scores)
             print(f"    {cat}: {cat_avg:.2f} ({len(cat_scores)} tests)")
-    
+
     # Save results
-    output_path = "C:\\MSS-AI-Project\\tests\\results_v2.json"
+    output_path = "E:\\AI_Workspace\\MSS-AI\\project\\tests\\results_v2.json"
     with open(output_path, "w", encoding='utf-8') as f:
         json.dump({
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -352,7 +352,7 @@ def run_test_suite():
             "results": results
         }, f, indent=2, ensure_ascii=False)
     print(f"\n[OK] Results saved to {output_path}")
-    
+
     return results
 
 if __name__ == "__main__":

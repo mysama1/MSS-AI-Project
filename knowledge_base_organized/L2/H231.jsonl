@@ -1,0 +1,1 @@
+{"h_id": "H231", "title": "H231: 004 - AMFI-T1: 分形维度守恒", "layer": "L2", "category": "theorem", "orig_source": "amfi_iteration_v1.0.jsonl", "orig_id": "AMFI", "t_value": 8, "version": "1.0", "date": "2026-05-31", "summary": "从v12.2归档提取。004 - AMFI-T1: 分形维度守恒", "content": "在AMFI迭代过程中，分形维度D_f保持守恒。D_f(L_n) = D_f(L_{n+1})。这意味着信息维度在层级跃迁中不丢失，仅发生投影变换。 ", "status": "imported_from_v12.2"}

@@ -9,12 +9,11 @@ from typing import List, Dict, Optional
 from mss_types import Layer, ComplianceStatus, ArbiterResult, Dialog
 from mss_analyzer import MSSAnalyzer
 
-
 class ArbiterAgent:
     """
     Enhanced Arbiter using MSSAnalyzer for deep compliance checking
     """
-    
+
     FORBIDDEN_MAP = {
         r'\bsolve\b': 'address',
         r'\bsolved\b': 'addressed',
@@ -34,37 +33,37 @@ class ArbiterAgent:
         r'\btranscended\b': 'expanded beyond',
         r'\btranscending\b': 'expanding beyond',
     }
-    
+
     L1_KEYWORDS = [
         'information ontology', '0/1 critical', 'connected meaning network',
         'tuning degree', 'phi-crystal', 'phi crystal', 'o=s=u',
         'recursive self-consistency', 'axiom a1', 'axiom a2',
         'axiom a3', 'axiom a4', 'axiom a5', 'axiom a6'
     ]
-    
+
     L2_KEYWORDS = [
         'BCT', 'bekenstein', 'church-turing', 'AI alignment',
         'falsification', 'predictive tracking', 'quantum MSS',
         'organizational resilience framework', 'weber-entropy',
         'protective belt', 'heuristic', 'metaphor'
     ]
-    
+
     def __init__(self, model: str = "qwen2.5:7b"):
         self.model = model
         self.dialog = Dialog()
         self.analyzer = MSSAnalyzer()
         self._init_system_prompt()
-    
+
     def _init_system_prompt(self):
         system_prompt = """You are the MSS Arbiter Agent. Your job is to analyze user queries and classify them according to the MSS framework."""
         self.dialog.add("system", system_prompt)
-    
+
     def check(self, user_input: str) -> ArbiterResult:
         """Run full compliance check using analyzer"""
         analysis = self.analyzer.analyze(user_input, claimed_layer=None)
         layer = self._map_layer(analysis.detected_layer)
         forbidden_found = self._detect_forbidden(user_input)
-        
+
         if forbidden_found or analysis.overall_score < 0.5:
             compliance = ComplianceStatus.FAIL
             rewrite_needed = True
@@ -74,7 +73,7 @@ class ArbiterAgent:
         else:
             compliance = ComplianceStatus.PASS
             rewrite_needed = False
-        
+
         return ArbiterResult(
             layer=layer,
             compliance=compliance,
@@ -85,7 +84,7 @@ class ArbiterAgent:
             rewrite_prompt=self._generate_rewrite_prompt(user_input, forbidden_found) if forbidden_found else None,
             analysis_report=analysis.to_dict()
         )
-    
+
     def _map_layer(self, detected: str) -> Layer:
         """Map analyzer layer to Arbiter layer"""
         layer_map = {
@@ -94,7 +93,7 @@ class ArbiterAgent:
             "L3": Layer.L3
         }
         return layer_map.get(detected, Layer.UNKNOWN)
-    
+
     def _detect_forbidden(self, text: str) -> List[str]:
         """Rule-based forbidden word detection"""
         found = []
@@ -103,7 +102,7 @@ class ArbiterAgent:
             matches = re.findall(pattern, text_lower)
             found.extend(matches)
         return list(set(found))
-    
+
     def _generate_rewrite_prompt(self, original: str, forbidden: List[str]) -> str:
         """Generate rewrite instruction"""
         replacements = []

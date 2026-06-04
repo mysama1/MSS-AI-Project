@@ -1,4 +1,4 @@
-# MSS L3 Heuristics (v12.2)
+# MSS L3 Heuristics (v15.1)
 # 激活条件: mode=creative OR topic=organization|application|practice | 优先级: 3 | 预估tokens: 600
 
 ## 组织韧性扫描 (H1)

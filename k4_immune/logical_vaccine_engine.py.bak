@@ -1,0 +1,438 @@
+"""K4 Logical Vaccine Engine (encoding recovered)"""
+
+import json
+import hashlib
+import os
+import sys
+import time
+from datetime import datetime
+from typing import Dict, List, Optional, Tuple, Any
+from dataclasses import dataclass, field
+from enum import Enum
+
+# K4 Logical Vaccine Engine v1.0
+_OMEGA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+if _OMEGA_PATH not in sys.path:
+    sys.path.insert(0, _OMEGA_PATH)
+
+try:
+    from symbolic_rules_omega import OmegaComplianceChecker
+    _HAS_RSCA = True
+except ImportError:
+    OmegaComplianceChecker = None
+    _HAS_RSCA = False
+
+
+# ============================================================
+# 鏋氫妇涓庡父閲?
+# ============================================================
+
+class VirusType(str, Enum):
+    """K4 Logical Vaccine Engine (encoding recovered)"""鐤嫍鐘舵€佹満"""K4 Logical Vaccine Engine (encoding recovered)"""鍙屽３绫诲瀷"""K4 Logical Vaccine Engine (encoding recovered)"""鐥呮瘨閲囬泦鎶ュ憡"""K4 Logical Vaccine Engine (encoding recovered)"""瑙ｅ墫鎶ュ憡"""K4 Logical Vaccine Engine (encoding recovered)"""閫昏緫鐤嫍锛圠2淇濇姢甯︽墿灞曞寘锛?""
+    vaccine_id: str
+    virus_id: str
+    target_axiom: str
+# (encoding recovered)
+# (encoding recovered)
+    efficacy_score: float        # 棰勬湡鏈夋晥鎬?0-1
+# (encoding recovered)
+    status: VaccineStatus = VaccineStatus.VACCINE_READY
+    deployed_at: Optional[str] = None
+    timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
+
+
+# ============================================================
+# 鏍稿績寮曟搸
+# ============================================================
+
+class LogicalVaccineEngine:
+    """K4 Logical Vaccine Engine (encoding recovered)"""
+    
+    def __init__(self, workspace: str = "E:\\AI_Workspace\\MSS-AI\\project\\k4_immune"):
+        self.workspace = workspace
+        self.viruses: Dict[str, VirusReport] = {}
+        self.dissections: Dict[str, DissectionReport] = {}
+        self.vaccines: Dict[str, Vaccine] = {}
+# (encoding recovered)
+        self.protection_belt: List[Dict] = []     # L2淇濇姢甯﹀綋鍓嶇姸鎬?
+        
+# K4 Logical Vaccine Engine v1.0
+        import os
+        for sub in ["viruses", "dissections", "vaccines", "sandbox", "belt"]:
+            path = os.path.join(workspace, sub)
+            os.makedirs(path, exist_ok=True)
+        
+        self._load_state()
+# (encoding recovered)
+# (encoding recovered)
+    
+    # ============================================================
+    # 鈶?鐥呮瘨閲囬泦
+    # ============================================================
+    def collect_virus(
+        self,
+        source_text: str,
+        virus_type: VirusType,
+        use_collection_shell: bool = True,
+    ) -> str:
+        """K4 Logical Vaccine Engine (encoding recovered)"""
+        virus_id = self._hash(source_text)
+        
+        if virus_id in self.viruses:
+            print(f"[閲囬泦] 鐥呮瘨宸插瓨鍦? {virus_id[:12]}...")
+            return virus_id
+        
+# K4 Logical Vaccine Engine v1.0
+        translation = self._simulate_collection_shell_translation(source_text, virus_type)
+        fidelity = self._measure_fidelity(translation)
+        heat_tax = self._compute_collection_heat_tax(source_text, virus_type)
+        
+        report = VirusReport(
+            virus_id=virus_id,
+            virus_type=virus_type,
+            source_text=source_text,
+            collection_shell=ShellType.COLLECTION if use_collection_shell else ShellType.INTERACTION,
+            translation_fidelity=fidelity,
+            heat_tax=heat_tax,
+        )
+        
+        self.viruses[virus_id] = report
+        self._record_heat_tax("collect", virus_id, heat_tax, f"閲囬泦鐥呮瘨 type={virus_type.value}")
+        self._save_virus(report)
+        
+        print(f"[閲囬泦] 鉁?{virus_id[:16]}... type={virus_type.value} 纬={heat_tax:.4f}")
+        return virus_id
+    
+    # ============================================================
+# K4 Logical Vaccine Engine v1.0
+    # ============================================================
+    def dissect_virus(self, virus_id: str) -> Optional[str]:
+        """K4 Logical Vaccine Engine (encoding recovered)"""
+        if virus_id not in self.viruses:
+            print(f"[瑙ｅ墫] 鉂?鐥呮瘨涓嶅瓨鍦? {virus_id[:12]}...")
+            return None
+        
+        virus = self.viruses[virus_id]
+        
+# K4 Logical Vaccine Engine v1.0
+        rscca_result = self._rscca_audit(virus.source_text, virus.virus_type)
+        
+        if not rscca_result["passed"]:
+# (encoding recovered)
+            self._record_heat_tax("rscca_reject", virus_id, 0.0, rscca_result['reason'])
+            return None
+        
+# K4 Logical Vaccine Engine v1.0
+        target_axiom = rscca_result["target_axiom"]
+        attack_vector = rscca_result["attack_vector"]
+        logic_structure = rscca_result["logic_structure"]
+        vulnerability_score = rscca_result["vulnerability_score"]
+        heat_tax = self._compute_dissection_heat_tax(logic_structure)
+        
+        report = DissectionReport(
+            virus_id=virus_id,
+            target_axiom=target_axiom,
+            attack_vector=attack_vector,
+            logic_structure=logic_structure,
+            vulnerability_score=vulnerability_score,
+            rscca_passed=True,
+            heat_tax=heat_tax,
+        )
+        
+        self.dissections[virus_id] = report
+        self._record_heat_tax("dissect", virus_id, heat_tax, f"瑙ｅ墫鐥呮瘨 target={target_axiom}")
+        self._save_dissection(report)
+        
+        print(f"[瑙ｅ墫] 鉁?{virus_id[:16]}... target={target_axiom} score={vulnerability_score:.2f} 纬={heat_tax:.4f}")
+        return virus_id
+    
+    # ============================================================
+    # 鈶?婕忔礊鎻愬彇 + 鈶?琛ヤ竵鐢熸垚锛堣仈鍚堟墽琛岋級
+    # ============================================================
+    def generate_patch(self, virus_id: str) -> Optional[str]:
+        """K4 Logical Vaccine Engine (encoding recovered)"""
+        if virus_id not in self.dissections:
+            print(f"[琛ヤ竵] 鉂?璇峰厛瀹屾垚瑙ｅ墫: {virus_id[:12]}...")
+            return None
+        
+        dissection = self.dissections[virus_id]
+        
+        # A6鍗囩淮寮曟搸锛氬皢婕忔礊缁撴瀯鍗囩淮涓烘洿楂橀樁閫昏緫妗嗘灦
+        ascension_result = self._a6_ascension_engine(
+            dissection.logic_structure,
+            dissection.target_axiom,
+        )
+        
+        if not ascension_result["success"]:
+            print(f"[琛ヤ竵] 鉂?鍗囩淮澶辫触: {ascension_result['reason']}")
+            return None
+        
+        w_asc = ascension_result["w_asc"]       # 鏈夋晥鍗囩淮鍔?
+        eta_asc = ascension_result["eta_asc"]   # 鍗囩淮鏁堢巼
+        patch_content = ascension_result["patch"]  # L2淇濇姢甯︽墿灞曞唴瀹?
+        
+        heat_tax = dissection.heat_tax + ascension_result.get("heat_tax", 0.0)
+        
+# K4 Logical Vaccine Engine v1.0
+        patch_id = f"PATCH-{virus_id[:8]}"
+        self._save_patch(patch_id, patch_content, dissection)
+        
+        self._record_heat_tax(
+            "patch", virus_id, heat_tax,
+            f"鍗囩淮琛ヤ竵 w_asc={w_asc:.4f} 畏_asc={eta_asc:.4f}"
+        )
+        
+        print(f"[琛ヤ竵] 鉁?{patch_id} w_asc={w_asc:.4f} 畏_asc={eta_asc:.4f} 纬={heat_tax:.4f}")
+        return patch_id
+    
+    # ============================================================
+# K4 Logical Vaccine Engine v1.0
+    # ============================================================
+    def prepare_vaccine(self, virus_id: str, patch_id: str) -> Optional[str]:
+        """K4 Logical Vaccine Engine (encoding recovered)"""
+        if virus_id not in self.dissections:
+# (encoding recovered)
+            return None
+        
+        dissection = self.dissections[virus_id]
+        patch_content = self._load_patch(patch_id)
+        
+        if patch_content is None:
+# (encoding recovered)
+            return None
+        
+# K4 Logical Vaccine Engine v1.0
+        logic_hash = self._hash_json(dissection.logic_structure)
+        
+        vaccine = Vaccine(
+            vaccine_id=f"VAC-{virus_id[:8]}",
+            virus_id=virus_id,
+            target_axiom=dissection.target_axiom,
+            protection_belt_entry=patch_content,
+            logic_structure_hash=logic_hash,
+            efficacy_score=self._estimate_efficacy(patch_content, dissection),
+            heat_tax_cost=self._compute_vaccine_heat_tax(patch_content),
+            status=VaccineStatus.VACCINE_READY,
+        )
+        
+        self.vaccines[vaccine.vaccine_id] = vaccine
+        self._record_heat_tax(
+            "vaccine_prep", virus_id, vaccine.heat_tax_cost,
+# (encoding recovered)
+        )
+        self._save_vaccine(vaccine)
+        
+# (encoding recovered)
+        return vaccine.vaccine_id
+    
+    # ============================================================
+# K4 Logical Vaccine Engine v1.0
+    # ============================================================
+    def deploy_vaccine(self, vaccine_id: str) -> bool:
+        """K4 Logical Vaccine Engine (encoding recovered)"""
+        if vaccine_id not in self.vaccines:
+# (encoding recovered)
+            return False
+        
+        vaccine = self.vaccines[vaccine_id]
+        
+        if vaccine.status == VaccineStatus.DEPLOYED:
+# (encoding recovered)
+            return True
+        
+# K4 Logical Vaccine Engine v1.0
+        if not self._rscca_pre_load_audit(vaccine):
+# (encoding recovered)
+            vaccine.status = VaccineStatus.REJECTED
+            return False
+        
+# K4 Logical Vaccine Engine v1.0
+        budget = self._get_heat_tax_budget()
+        if vaccine.heat_tax_cost > budget:
+# (encoding recovered)
+            return False
+        
+# K4 Logical Vaccine Engine v1.0
+        entry = {
+            "vaccine_id": vaccine.vaccine_id,
+            "logic_structure_hash": vaccine.logic_structure_hash,
+            "protection": vaccine.protection_belt_entry,
+            "deployed_at": datetime.now().isoformat(),
+            "efficacy": vaccine.efficacy_score,
+        }
+        self.protection_belt.append(entry)
+        self._save_protection_belt()
+        
+        vaccine.status = VaccineStatus.DEPLOYED
+        vaccine.deployed_at = datetime.now().isoformat()
+        self._save_vaccine(vaccine)
+        
+        self._record_heat_tax(
+            "deploy", vaccine.virus_id, vaccine.heat_tax_cost,
+# (encoding recovered)
+        )
+        
+# (encoding recovered)
+        return True
+    
+    # ============================================================
+    # 鈶?鏁堟灉楠岃瘉
+    # ============================================================
+    def verify_efficacy(self, vaccine_id: str, test_virus_text: str) -> Dict:
+        """K4 Logical Vaccine Engine (encoding recovered)"""
+        if vaccine_id not in self.vaccines:
+# (encoding recovered)
+        
+        vaccine = self.vaccines[vaccine_id]
+        
+        # 璁＄畻娴嬭瘯鐥呮瘨鐨勯€昏緫缁撴瀯鍝堝笇
+        test_structure = self._extract_logic_structure(test_virus_text)
+        test_hash = self._hash_json(test_structure)
+        
+# K4 Logical Vaccine Engine v1.0
+        blocked = (test_hash == vaccine.logic_structure_hash)
+        
+        # 妯＄硦鍖归厤锛堝悓绫绘敾鍑诲彲鑳界暐鏈夊樊寮傦級
+        if not blocked:
+            similarity = self._structure_similarity(test_structure, vaccine.protection_belt_entry)
+            blocked = similarity > 0.85
+        else:
+            similarity = 1.0
+        
+        result = {
+            "vaccine_id": vaccine_id,
+            "blocked": blocked,
+            "confidence": similarity,
+# (encoding recovered)
+        }
+        
+# (encoding recovered)
+        return result
+    
+    # ============================================================
+    # 鍐呴儴鏂规硶锛堟ā鎷?鍗犱綅瀹炵幇锛?
+    # ============================================================
+    
+    def _hash(self, text: str) -> str:
+        return hashlib.sha256(text.encode('utf-8')).hexdigest()
+    
+    def _hash_json(self, obj) -> str:
+        return hashlib.sha256(json.dumps(obj, sort_keys=True).encode('utf-8')).hexdigest()
+    
+    def _simulate_collection_shell_translation(self, text: str, vtype: VirusType) -> str:
+        """K4 Logical Vaccine Engine (encoding recovered)"""娴嬮噺杞瘧淇濈湡搴︼紙瓒婁綆璇存槑鐥呮瘨琚湁鏁堥殧绂伙級"""K4 Logical Vaccine Engine (encoding recovered)"""璁＄畻閲囬泦鐑◣"""K4 Logical Vaccine Engine (encoding recovered)"""
+# (encoding recovered)
+        
+        v1.1: 鑱斿姩symbolic_rules_omega.OmegaComplianceChecker
+# (encoding recovered)
+        """K4 Logical Vaccine Engine (encoding recovered)"""
+        A6鐭涚浘鍗囩淮寮曟搸
+        
+# (encoding recovered)
+        W_asc = 鏈夋晥鍗囩淮鍔燂紙>0璇存槑鍗囩淮鎴愬姛锛?
+        """K4 Logical Vaccine Engine (encoding recovered)"""
+# (encoding recovered)
+        
+# (encoding recovered)
+        """K4 Logical Vaccine Engine (encoding recovered)"""浠庢枃鏈彁鍙栭€昏緫缁撴瀯锛堥潪鍐呭锛?""
+        return {"type": "extracted", "text_hash": self._hash(text)}
+    
+    def _structure_similarity(self, s1: Dict, s2: Dict) -> float:
+        """K4 Logical Vaccine Engine (encoding recovered)"""
+        return 0.91  # 妯℃嫙锛氶珮搴︾浉浼?
+    
+    # ============================================================
+    # 鎸佷箙鍖?
+    # ============================================================
+    def _save_virus(self, report: VirusReport):
+        import os
+        fp = os.path.join(self.workspace, "viruses", f"{report.virus_id[:16]}.json")
+        with open(fp, 'w', encoding='utf-8') as f:
+            json.dump({"virus_id": report.virus_id, "virus_type": report.virus_type.value,
+                       "translation_fidelity": report.translation_fidelity,
+                       "heat_tax": report.heat_tax, "timestamp": report.timestamp}, f, ensure_ascii=False, indent=2)
+    
+    def _save_dissection(self, report: DissectionReport):
+        import os
+        fp = os.path.join(self.workspace, "dissections", f"{report.virus_id[:16]}.json")
+        with open(fp, 'w', encoding='utf-8') as f:
+            json.dump({"virus_id": report.virus_id, "target_axiom": report.target_axiom,
+                       "vulnerability_score": report.vulnerability_score,
+                       "rscca_passed": report.rscca_passed,
+                       "heat_tax": report.heat_tax, "timestamp": report.timestamp}, f, ensure_ascii=False, indent=2)
+    
+    def _save_patch(self, patch_id: str, content: Dict, dissection: DissectionReport):
+        import os
+        fp = os.path.join(self.workspace, "sandbox", f"{patch_id}.json")
+        with open(fp, 'w', encoding='utf-8') as f:
+            json.dump({"patch_id": patch_id, "content": content,
+                       "target_axiom": dissection.target_axiom}, f, ensure_ascii=False, indent=2)
+    
+    def _load_patch(self, patch_id: str) -> Optional[Dict]:
+        import os
+        fp = os.path.join(self.workspace, "sandbox", f"{patch_id}.json")
+        if not os.path.exists(fp):
+            return None
+        with open(fp, 'r', encoding='utf-8') as f:
+            return json.load(f).get("content")
+    
+    def _save_vaccine(self, vaccine: Vaccine):
+        import os
+        fp = os.path.join(self.workspace, "vaccines", f"{vaccine.vaccine_id}.json")
+        with open(fp, 'w', encoding='utf-8') as f:
+            json.dump({"vaccine_id": vaccine.vaccine_id, "virus_id": vaccine.virus_id,
+                       "target_axiom": vaccine.target_axiom,
+                       "efficacy_score": vaccine.efficacy_score,
+                       "status": vaccine.status.value,
+                       "deployed_at": vaccine.deployed_at}, f, ensure_ascii=False, indent=2)
+    
+    def _save_protection_belt(self):
+        import os
+        fp = os.path.join(self.workspace, "belt", "protection_belt.json")
+        with open(fp, 'w', encoding='utf-8') as f:
+            json.dump(self.protection_belt, f, ensure_ascii=False, indent=2)
+    
+    def _record_heat_tax(self, stage: str, virus_id: str, gamma: float, note: str):
+        self.heat_tax_ledger.append({
+            "stage": stage, "virus_id": virus_id[:16],
+            "gamma": gamma, "note": note,
+            "timestamp": datetime.now().isoformat(),
+        })
+        # 淇濆瓨鍒扮儹绋庤处鏈?
+        import os
+        fp = os.path.join(self.workspace, "heat_tax_ledger.jsonl")
+        with open(fp, 'a', encoding='utf-8') as f:
+            f.write(json.dumps(self.heat_tax_ledger[-1], ensure_ascii=False) + "\n")
+    
+    def _load_state(self):
+        import os, glob
+        # 鍔犺浇鐥呮瘨
+        for fp in glob.glob(os.path.join(self.workspace, "viruses", "*.json")):
+            with open(fp, 'r', encoding='utf-8') as f:
+                d = json.load(f)
+                # 绠€鍖栧姞杞斤紝瀹為檯搴斿畬鏁撮噸寤篤irusReport瀵硅薄
+# K4 Logical Vaccine Engine v1.0
+        for fp in glob.glob(os.path.join(self.workspace, "vaccines", "*.json")):
+            with open(fp, 'r', encoding='utf-8') as f:
+                d = json.load(f)
+        # 鍔犺浇淇濇姢甯?
+        belt_fp = os.path.join(self.workspace, "belt", "protection_belt.json")
+        if os.path.exists(belt_fp):
+            with open(belt_fp, 'r', encoding='utf-8') as f:
+                self.protection_belt = json.load(f)
+    
+    # ============================================================
+    # 鐘舵€佹姤鍛?
+    # ============================================================
+    def status_report(self) -> Dict:
+        """K4 Logical Vaccine Engine (encoding recovered)"""
+# (encoding recovered)
+# (encoding recovered)
+# (encoding recovered)
+# (encoding recovered)
+# (encoding recovered)
+
+K4 vs K3 鏍规湰鍖哄埆锛?
+# (encoding recovered)
+- K4锛氱梾姣掗噰闆?鈫?閫昏緫瑙ｅ墫 鈫?鍗囩淮琛ヤ竵 鈫?姘镐箙鍏嶇柅锛堢儹绋幬斥個锛?
+"""

@@ -1,0 +1,211 @@
+#!/usr/bin/env python3
+"""
+IMA知识库导入脚本 v2
+使用API直接上传文件到知识库
+"""
+
+import json
+import os
+import sys
+import subprocess
+import urllib.request
+from datetime import datetime
+
+API_BASE = "https://ima.qq.com/openapi/wiki/v1"
+CLIENT_ID = "6165e4d1fbbc58d18eb76b820f4bba97"
+API_KEY = "eZ2Yu6VwX2N8RKLsdt/SfWm7EpbH04BhiJN4jtxc4aUHIL4J47sUJ9pz3Z1F3fIIHYml93JTTg=="
+KB_ID = "p4nhLQRiY7NGW54ovyd45QPn-FYlcPPk3Xta0Oxh-Pc="
+SKILL_DIR = r"C:\Program Files\QClaw\resources\openclaw\config\skills\ima\knowledge-base"
+
+def api_call(path, body):
+    """调用IMA API"""
+    data = json.dumps(body, ensure_ascii=False).encode('utf-8')
+    req = urllib.request.Request(
+        f"{API_BASE}/{path}",
+        data=data,
+        headers={
+            "ima-openapi-clientid": CLIENT_ID,
+            "ima-openapi-apikey": API_KEY,
+            "Content-Type": "application/json"
+        },
+        method='POST'
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            return json.loads(resp.read().decode('utf-8'))
+    except Exception as e:
+        return {"code": -1, "msg": str(e)}
+
+def convert_entry_to_markdown(entry):
+    """将JSON条目转换为Markdown内容"""
+    lines = []
+    lines.append(f"# {entry['title']}")
+    lines.append("")
+    lines.append(f"**ID**: {entry['id']} | **层级**: {entry['layer']} | **分类**: {entry['category']}")
+    lines.append("")
+    lines.append(f"**标签**: {', '.join(entry.get('tags', []))}")
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+    lines.append(entry['content'])
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+    lines.append(f"*归档时间: {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
+    return '\n'.join(lines)
+
+def upload_file_to_cos(file_path, cos_credential):
+    """使用cos-upload.cjs上传文件到COS"""
+    script_path = os.path.join(SKILL_DIR, "scripts", "cos-upload.cjs")
+
+    cmd = [
+        "node", script_path,
+        "--file", file_path,
+        "--secret-id", cos_credential.get("secret_id", ""),
+        "--secret-key", cos_credential.get("secret_key", ""),
+        "--token", cos_credential.get("token", ""),
+        "--bucket", cos_credential.get("bucket_name", ""),
+        "--region", cos_credential.get("region", ""),
+        "--cos-key", cos_credential.get("cos_key", ""),
+        "--content-type", "text/markdown",
+        "--start-time", str(cos_credential.get("start_time", "")),
+        "--expired-time", str(cos_credential.get("expired_time", ""))
+    ]
+
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        if result.returncode == 0:
+            return True
+        else:
+            print(f"COS upload error: {result.stderr}")
+            return False
+    except Exception as e:
+        print(f"COS upload exception: {e}")
+        return False
+
+def import_entry(entry):
+    """导入单条记录到知识库"""
+    entry_id = entry['id']
+
+    # 生成markdown内容
+    md_content = convert_entry_to_markdown(entry)
+
+    # 保存临时文件
+    temp_dir = r"C:\MSS-AI-Project\temp_ima"
+    os.makedirs(temp_dir, exist_ok=True)
+    temp_file = os.path.join(temp_dir, f"{entry_id}.md")
+
+    with open(temp_file, 'w', encoding='utf-8') as f:
+        f.write(md_content)
+
+    file_size = os.path.getsize(temp_file)
+    file_name = f"{entry_id}.md"
+
+    print(f"  📄 文件大小: {file_size} bytes")
+
+    # 1. 检查重名
+    print(f"  🔍 检查重名...")
+    check_result = api_call("check_repeated_names", {
+        "params": [{"name": file_name, "media_type": 7}],
+        "knowledge_base_id": KB_ID
+    })
+
+    if check_result.get("code") != 0:
+        print(f"  ❌ 重名检查失败: {check_result.get('msg')}")
+        return False
+
+    # 2. 创建媒体获取COS凭证
+    print(f"  📤 创建媒体...")
+    create_result = api_call("create_media", {
+        "file_name": file_name,
+        "file_size": file_size,
+        "content_type": "text/markdown",
+        "knowledge_base_id": KB_ID,
+        "file_ext": "md"
+    })
+
+    if create_result.get("code") != 0:
+        print(f"  ❌ 创建媒体失败: {create_result.get('msg')}")
+        return False
+
+    media_data = create_result.get("data", {})
+    media_id = media_data.get("media_id")
+    cos_credential = media_data.get("cos_credential")
+
+    if not media_id or not cos_credential:
+        print(f"  ❌ 缺少media_id或cos_credential")
+        return False
+
+    # 3. 上传文件到COS
+    print(f"  ☁️  上传COS...")
+    if not upload_file_to_cos(temp_file, cos_credential):
+        print(f"  ❌ COS上传失败")
+        return False
+
+    # 4. 添加到知识库
+    print(f"  📥 添加到知识库...")
+    add_result = api_call("add_knowledge", {
+        "media_type": 7,
+        "media_id": media_id,
+        "title": file_name,
+        "knowledge_base_id": KB_ID,
+        "file_info": {
+            "cos_key": cos_credential.get("cos_key"),
+            "file_size": file_size,
+            "file_name": file_name
+        }
+    })
+
+    if add_result.get("code") == 0:
+        print(f"  ✅ 导入成功")
+        return True
+    else:
+        print(f"  ❌ 添加知识失败: {add_result.get('msg')}")
+        return False
+
+def main():
+    print("=" * 60)
+    print("IMA知识库导入工具 v2 - MSS v15.1")
+    print("=" * 60)
+    print()
+
+    # 加载JSONL
+    jsonl_path = r"C:\MSS-AI-Project\knowledge_base\ima_full_v12_2.jsonl"
+    print(f"📂 加载: {jsonl_path}")
+
+    entries = []
+    with open(jsonl_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                entries.append(json.loads(line))
+
+    print(f"✅ 加载了 {len(entries)} 条记录")
+    print()
+
+    # 导入条目
+    print("📤 开始导入...")
+    success = 0
+    fail = 0
+
+    for i, entry in enumerate(entries, 1):
+        print(f"[{i}/{len(entries)}] {entry['id']} - {entry['title']}")
+        if import_entry(entry):
+            success += 1
+        else:
+            fail += 1
+        print()
+
+    # 清理临时文件
+    temp_dir = r"C:\MSS-AI-Project\temp_ima"
+    if os.path.exists(temp_dir):
+        for f in os.listdir(temp_dir):
+            os.remove(os.path.join(temp_dir, f))
+        os.rmdir(temp_dir)
+
+    print("=" * 60)
+    print(f"导入完成: {success} 成功, {fail} 失败")
+    print("=" * 60)
+
+if __name__ == "__main__":
+    main()

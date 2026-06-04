@@ -1,0 +1,1 @@
+{"id": "EVO-001", "layer": "L2", "category": "theorem", "title": "MSS开放复杂系统演化第一定律", "content": "系统稳态条件：Φ_锚·η > S_增。其中Φ_锚为负熵流承载能力，η为熵转效率，S_增为系统总熵增。当该不等式成立时，系统维持熵减稳态；反之进入熵增导出模式。", "confidence": 0.88, "axiom_refs": ["A1", "A2", "A3"], "boundary_note": "仅适用于开放系统，封闭系统Φ_锚=0必然热寂", "status": "active", "created_at": "2026-05-15T04:46:00+08:00"}

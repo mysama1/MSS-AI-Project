@@ -1,0 +1,1 @@
+{"id": "HTX-001", "layer": "L2", "category": "formula", "title": "热税公式: gamma(n,D) = gamma_0 * D^(-n)", "content": "热税公式量化单次投影的熵增代价。gamma_0 in (0.3,0.5)为基准热税，n为投影层级深度，D为系统维度。n越大（层级越深），D越大（系统越复杂），热税越低。", "confidence": 0.86, "axiom_refs": ["A3"], "status": "active", "created_at": "2026-05-15T04:50:00+08:00"}
