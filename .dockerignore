@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+test_metrics/
+
+# Documentation (keep for image)
+# README.md
+# ARCHITECTURE.md
+# API_GUIDE.md
+# CHANGELOG.md
+
+# Archives
+archive/
+releases/
+
+# Logs (mount as volume)
+logs/*.log
+
+# Task summaries
+task-summary_*.md
+
+# OS
+.DS_Store
+Thumbs.db

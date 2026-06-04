@@ -1,0 +1,155 @@
+{
+  "test_run": {
+    "date": "2026-05-07T21:20:00+08:00",
+    "version": "v12.2",
+    "models": [
+      "mss-ai-v1",
+      "mss-ai-v2"
+    ]
+  },
+  "results": {
+    "mss-ai-v1": [
+      {
+        "id": "RSCA-01",
+        "category": "RSCA",
+        "score": 0.55,
+        "weighted": 0.8250000000000001,
+        "patterns": [
+          "boundary"
+        ],
+        "forbidden": [],
+        "format": {
+          "confidence": true,
+          "layer": true,
+          "boundary": true
+        }
+      },
+      {
+        "id": "A3-01",
+        "category": "A3",
+        "score": 0.64,
+        "weighted": 0.96,
+        "patterns": [
+          "self-reference",
+          "paradox"
+        ],
+        "forbidden": [],
+        "format": {
+          "confidence": true,
+          "layer": true,
+          "boundary": true
+        }
+      },
+      {
+        "id": "LYR-01",
+        "category": "Layer",
+        "score": 0.7,
+        "weighted": 1.0499999999999998,
+        "patterns": [
+          "interface",
+          "parameter"
+        ],
+        "forbidden": [],
+        "format": {
+          "confidence": true,
+          "layer": true,
+          "boundary": true
+        }
+      },
+      {
+        "id": "FRB-01",
+        "category": "Forbidden",
+        "score": 0.7,
+        "weighted": 1.0499999999999998,
+        "patterns": [
+          "current best",
+          "ongoing"
+        ],
+        "forbidden": [],
+        "format": {
+          "confidence": true,
+          "layer": true,
+          "boundary": true
+        }
+      }
+    ],
+    "mss-ai-v2": [
+      {
+        "id": "RSCA-01",
+        "category": "RSCA",
+        "score": 0.85,
+        "weighted": 1.275,
+        "patterns": [
+          "incomplete",
+          "boundary",
+          "impossible"
+        ],
+        "forbidden": [],
+        "format": {
+          "confidence": true,
+          "layer": true,
+          "boundary": true
+        }
+      },
+      {
+        "id": "A3-01",
+        "category": "A3",
+        "score": 0.87,
+        "weighted": 1.305,
+        "patterns": [
+          "1/0",
+          "singularity",
+          "collapse",
+          "self-reference",
+          "paradox"
+        ],
+        "forbidden": [],
+        "format": {
+          "confidence": true,
+          "layer": true,
+          "boundary": false
+        }
+      },
+      {
+        "id": "LYR-01",
+        "category": "Layer",
+        "score": 0.7,
+        "weighted": 1.0499999999999998,
+        "patterns": [
+          "interface",
+          "parameter"
+        ],
+        "forbidden": [],
+        "format": {
+          "confidence": true,
+          "layer": true,
+          "boundary": true
+        }
+      },
+      {
+        "id": "FRB-01",
+        "category": "Forbidden",
+        "score": 0.35,
+        "weighted": 0.5249999999999999,
+        "patterns": [
+          "mitigate",
+          "ongoing"
+        ],
+        "forbidden": [
+          "solve"
+        ],
+        "format": {
+          "confidence": true,
+          "layer": true,
+          "boundary": true
+        }
+      }
+    ]
+  },
+  "improvement": {
+    "v1_average": 0.6475,
+    "v2_average": 0.6925,
+    "delta": 0.04500000000000004,
+    "percent": 6.949806949806958
+  }
+}
