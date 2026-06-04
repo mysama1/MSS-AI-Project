@@ -107,10 +107,37 @@ LaTeX:   honesty version — a≤68 closed, a≥69 open
 
 ```
 Production:  mss-ai-v3_4-production:latest
-Context:     4096
-Benchmark:   37/37 SQI=100 Dao=100
-Chat:        ollama run mss-ai-v3_4-production:latest
+Benchmark:   v3.4 = 0.72 L4 (21-round LLM Judge, 7 domains)
+Cross:      v3.4=0.72  v3.7=0.72  v3.6=0.54  v3.3=v3.5=失效
+Chat:       ollama run mss-ai-v3_4-production:latest
 ```
+
+---
+
+## Capability Boundaries (A7 Honesty)
+
+### ✅ Verified (confidence ≥70%)
+
+| Capability | Score | Source |
+|:---|:---|:---|
+| Engineering Q&A | 0.72 L4 | 21-round LLM Judge |
+| 网络安全 | 0.78 L4 | 3联回合 |
+| IoT/边缘诊断 | 0.74 L4 | 3联回合 |
+| 数据库运维 | 0.73 L4 | 3联回合 |
+| DevOps/CI-CD | 0.72 L4 | 3联回合 |
+| Python P0吞错 | 100% | 12/12 SC-001 |
+| 系统级热税审计 | 5域验证 | Python/Flink/WebRTC/鸿蒙/Solidity |
+
+### ⚠️ Limited (needs verification)
+
+| Limitation | Detail |
+|:---|:---|
+| P2/P3 false positive | 88.9% |
+| Non-Python syntax | Not supported |
+| Runtime detection | Locks/memory not supported |
+| Multi-round context | Model resets each round (7B limit) |
+
+---
 
 ---
 
