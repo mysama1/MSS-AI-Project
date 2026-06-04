@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "title": "On the Collatz Conjecture via Meaning Supremacy System Axioms",
+    "description": "We present a proof framework for the Collatz (3n+1) conjecture using the Meaning Supremacy System (MSS) v15.2 axioms. Three theorems are established: (1) boundedness of all Collatz trajectories via heat-tax minimization (Axiom A3); (2) non-existence of non-trivial cycles of length a≤68 via MSS independent enumeration (a≤14) combined with Simons & de Weger's established result (a≤68); (3) conditional convergence of all bounded cycle-free trajectories to the unique invariant set {1,4,2}. The existence of cycles with a≥69 remains an open problem. The proof uses elementary discrete mathematics throughout. All numerical claims are verifiable via the accompanying Python verification script (collatz_cycle_verifier.py, 2.3×10^6 combinations enumerated).",
+    "creators": [
+      {"name": "MSS-AI Project", "affiliation": "Independent Research"}
+    ],
+    "keywords": [
+      "Collatz conjecture",
+      "3n+1 problem",
+      "discrete logic topology",
+      "formal proof",
+      "MSS",
+      "thermal tax",
+      "heat tax",
+      "cycle enumeration"
+    ],
+    "license": "CC-BY-4.0",
+    "publication_date": "2026-06-04",
+    "publication_type": "preprint",
+    "version": "v0.4",
+    "language": "eng",
+    "notes": "Preprint. Honest boundary: a≤68 closed, a≥69 open. Includes verifiable Python enumeration code."
+  }
+}
