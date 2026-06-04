@@ -32,10 +32,10 @@ def test_axiom_consistency(kernel, ok):
         ok(f"{aid.value} SAT", vr.status == VerificationStatus.VERIFIED)
 
 def test_cross_axiom(kernel, ok):
-    """15/15 cross-axiom pairs all SAT"""
+    """21/21 cross-axiom pairs all SAT"""
     xres = kernel.check_all_cross_axioms()
     sat = sum(1 for v in xres.values() if v.status == VerificationStatus.VERIFIED)
-    ok(f"Cross-axiom 15/15", sat == 15)
+    ok(f"Cross-axiom 21/21", sat == 21)
 
 def test_heat_tax_violations(kernel, ok):
     """A3 full formula violation detection"""
@@ -214,15 +214,15 @@ if __name__ == "__main__":
 
     # All axioms
     all_traces = trace_engine.trace_all_axioms()
-    ok("All 6 axioms traced", len(all_traces) == 6)
+    ok("All 7 axioms traced", len(all_traces) == 7)
     all_valid = sum(1 for t in all_traces if t.is_valid)
-    ok(f"All axioms valid ({all_valid}/6)", all_valid == 6)
+    ok(f"All axioms valid ({all_valid}/7)", all_valid == 7)
 
     # All pairs
     pair_traces = trace_engine.trace_all_pairs()
-    ok("All 15 pairs traced", len(pair_traces) == 15)
+    ok("All 21 pairs traced", len(pair_traces) == 21)
     pair_valid = sum(1 for t in pair_traces if t.is_valid)
-    ok(f"All pairs valid ({pair_valid}/15)", pair_valid == 15)
+    ok(f"All pairs valid ({pair_valid}/21)", pair_valid == 21)
 
     # Academic paper section export
     section = trace_engine.export_academic_paper_section()
@@ -265,16 +265,16 @@ if __name__ == "__main__":
 
     # Batch axiom verification
     report = bv.verify_axiom_batch()
-    ok("Batch: 6 axioms processed", report.total == 6)
-    ok(f"Batch: all verified ({report.verified}/6)", report.verified == 6)
+    ok("Batch: 7 axioms processed", report.total == 7)
+    ok(f"Batch: all verified ({report.verified}/7)", report.verified == 7)
     ok("Batch: no violations", report.violated == 0)
     ok("Batch: timing recorded", report.total_time_ms > 0)
     ok("Batch: pass_rate=1.0", report.pass_rate == 1.0)
 
     # Batch pair verification
     report2 = bv.verify_pairs_batch()
-    ok("Batch: 15 pairs processed", report2.total == 15)
-    ok(f"Batch: all pairs verified ({report2.verified}/15)", report2.verified == 15)
+    ok("Batch: 21 pairs processed", report2.total == 21)
+    ok(f"Batch: all pairs verified ({report2.verified}/21)", report2.verified == 21)
 
     # Cache hit test (second run should hit cache)
     _ = bv.verify_axiom_batch()
