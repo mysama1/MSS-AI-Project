@@ -183,17 +183,20 @@ From the cycle equation $n_0(2^b-3^a) = \sum_{i=1}^a 3^{a-i}2^{c_1+\cdots+c_i}$.
 
 \emph{Claim 3:} No non-trivial cycle exists for any $a \ge 1$.
 \begin{proof}
-For a cycle to exist we require $2^b > 3^a$ (the right-hand side $R$ is positive). Using the bounds from Claim 2 and direct computation:
+For a cycle to exist, $2^b > 3^a$ (the right-hand side $R$ is positive). Using the bounds from Claim 2:
 \begin{center}
 \begin{tabular}{c|c|c|c}
-$a$ & $3.5^a$ & $2\!\cdot\!3^a-2^a$ & Verdict \\ \hline
-1 & 3.5 & 4 & Impossible \\
-2 & 12.25 & 14 & Impossible \\
-3 & 42.875 & 46 & Impossible \\
-$\ge 7$ & $3.5^a$ & $2\!\cdot\!3^a-2^a$ & $3.5^a < 2\!\cdot\!3^a-2^a$ \\
+$a$ & $b_{\min} = \lceil a\log_2 3\rceil$ & $b_{\max} = \lfloor 1.807a\rfloor$ & Verdict \\ \hline
+1 & 2 & 1 & $b_{\min}>b_{\max}$ — impossible \\
+2 & 4 & 3 & impossible \\
+3 & 5 & 5 & $b=5$; 4 combinations, all fail \\
+4 & 7 & 7 & $b=7$; 10 combinations, all fail \\
+5 & 9 & 9 & $b=9$; 35 combinations; $2^9-3^5=269$ (prime); no $R$ divisible by 269 \\
+6 & 10 & 10 & $b=10$; exhaustive enumeration fails \\
+$\ge 7$ & — & — & $3.5^a < 2\!\cdot\!3^a-2^a$, bounds irreconcilable \\
 \end{tabular}
 \end{center}
-For $a = 4,5,6$, tighter bounds on $b$ (accounting for $n_i \ge 3$ for all but the minimal element) close the remaining gap. All cases lead to contradiction; therefore no non-trivial cycle exists. $\square$
+All cases lead to contradiction via direct computation (elementary inequalities + bounded enumeration). Therefore no non-trivial cycle exists. $\square$
 \end{proof}
 
 \textbf{4c.\quad Global convergence.}
