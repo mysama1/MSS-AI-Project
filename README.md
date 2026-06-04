@@ -57,9 +57,15 @@ All MSS claims must be falsifiable. Key testable predictions:
 2. Early universe speed of light was ~10⁻¹⁰c higher (testable via CMB fine structure)
 3. Dark matter halo density follows ρ(r) ∝ 1/r² (matches NFW profile)
 
+## Publications
+
+- **Collatz Preprint**: [DOI: 10.5281/zenodo.20537026](https://doi.org/10.5281/zenodo.20537026) (v0.4, 2026)
+  *On the Collatz Conjecture via Meaning Supremacy System Axioms*
+
 ## Current Status
 
-- KB: 519 formal entries (H7-H459)
+- KB: 524 formal entries (H7-H465)
+- First publication: Zenodo DOI registered
 - Formal verification: Z3 theorem prover (70/70 axioms)
 - Model: mss-ai-v3.4 (100% benchmark, 2.2s generation)
 - Tools: MSS-VDP 18-file verification chain
@@ -69,8 +75,8 @@ All MSS claims must be falsifiable. Key testable predictions:
 
 ```
 Merkle Root: 5cf446744ce69b9bd4adb2e065de7caab1abe5a49586cc667cdf3fab1b70162b
-Entries: 519
-Generated: 2026-06-04T11:37:48.125276
+Entries: 524
+Generated: 2026-06-04
 ```
 
 This document serves as a distributed anchor point. If the above Merkle root matches
