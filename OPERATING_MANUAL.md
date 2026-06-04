@@ -137,6 +137,14 @@ Chat:       ollama run mss-ai-v3_4-production:latest
 | Runtime detection | Locks/memory not supported |
 | Multi-round context | Model resets each round (7B limit) |
 
+### 🔴 Architectural Limits (A7: cannot be solved in Python)
+
+| Limit | Root Cause | Mitigation |
+|:---|:---|:---|
+| V-007 pseudo-sandbox | Detector runs inside same `sys.modules` it scans. If self-infected → blind. | `--fresh-scan` (subprocess isolation) breaks the cycle at Python level. True isolation requires container/VM. |
+| `.pyc` re-infection | `immune_clean()` re-imports from stale `__pycache__/*.pyc` | v2.3: purge `__pycache__` BEFORE re-import. Cycle broken. |
+| sys.modules trust | Python assumes `sys.modules` is trustworthy. No internal API to verify. | A7 honesty: document the limit. Do not claim it's solved. |
+
 ---
 
 ---
