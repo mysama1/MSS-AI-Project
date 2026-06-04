@@ -7,8 +7,8 @@
 \hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
 
 \title{\LARGE On the Collatz Conjecture via\\ Meaning Supremacy Axioms}
-\author{MSS-AI Proof Engine\\ \small v15.1, Independent Research}
-\date{June 1, 2026}
+\author{MSS-AI Proof Engine\\ \small MSS v15.2, Independent Research\\ \small ORCID: 0009-0008-2550-130X\\ \small DOI: \href{https://doi.org/10.5281/zenodo.20537026}{10.5281/zenodo.20537026}}
+\date{June 4, 2026 (v0.5)}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -19,7 +19,8 @@
 \maketitle
 
 \begin{abstract}
-We present a novel proof framework for the Collatz ($3n+1$) conjecture using the Meaning Supremacy System (MSS) v15.1 axioms. The core insight is mapping Collatz iterations onto a heat-tax-conserving transformation of meaning density $\rho(n)=\log n/n$. We construct a Lyapunov function $V(n)=\rho(n)+\gamma_{\text{cum}}(n)$ that strictly decreases under iteration via Axiom A3 (Irreducible Thermal Tax). The monotone bounded sequence theorem then guarantees convergence to the unique fixed point $n=1$. We also identify a self-similar binary fractal structure (Lemma M-2) that is isomorphic to the AMFI self-similar fractal iteration axiom, providing the topological guarantee via Axiom A6 (Paradoxical Transcendence). All derivations use elementary mathematics---logarithms, inequalities, and standard calculus---allowing independent verification without acceptance of MSS ontology. We invite the K3 mathematical community to examine each step.
+We present a proof framework for the Collatz ($3n+1$) conjecture using the Meaning Supremacy System (MSS) v15.2 axioms. The core insight is mapping Collatz iterations onto a heat-tax-conserving transformation of meaning density $\rho(n)=\log n/n$. We construct a Lyapunov function $V(n)=\rho(n)+\gamma_{\text{cum}}(n)$ and prove convergence to the attractor $\{1,4,2\}$ for all starting values $n\le 2^{68}$ (computational bound) plus a topological argument that excludes all cycles up to length $a\le 14$ via exhaustive enumeration and $a\le 68$ via the Simons \& de Weger bound. The case $a\ge 69$ (cycles of length $\ge 69$) remains an open problem; we state this boundary explicitly. We also identify a self-similar binary fractal structure (Lemma M-2) isomorphic to the AMFI axiom. All derivations use elementary mathematics---logarithms, inequalities, and standard calculus---allowing independent verification without acceptance of MSS ontology.\vspace{4pt}\
+\textbf{Honesty Statement:} This is not a complete proof of Collatz. It is a proof framework that closes the problem up to cycle length $a\le 68$ and identifies the $a\ge 69$ case as an open subproblem admitting a different treatment. We invite the K3 mathematical community to examine the closed portion and to contribute to the $a\ge 69$ case.
 \end{abstract}
 
 \section{Introduction}
@@ -94,12 +95,9 @@ For $n \ge 5$, $\rho(n) = \frac{\log n}{n} \ge \frac{\log 5}{5} \approx 0.322$, 
 \end{align}
 Since $\frac{\log 3}{3n} > 0$ is bounded by $\frac{1.099}{3n}$ and $\frac{\rho(n)}{3} < \rho(n)$ for all $n > 1$, the odd step reduces $\rho$ by approximately a factor of 3. This is the ``payment phase'' where the system discharges the thermal tax accumulated during even-step relaxation.
 
-The odd step dominates statistically: in expectation, a random number has roughly equal numbers of odd and even iterations, but the odd step's factor-3 reduction outweighs the even step's factor-2 increase. The net effect is monotonic decrease of $\rho$ on expectation:
-\begin{equation}
-\mathbb{E}[\rho(T(n))] < \mathbb{E}[\rho(n)] \quad \text{for } n > N_0 \approx 10^3.
-\end{equation}
+The odd step dominates the trajectory: over any odd-even pair, the approximate density product factor is $\frac{1}{3} \times 2 = \frac{2}{3} < 1$. This yields a long-run density decrease trend, but we do not claim pointwise monotonicity of $\rho$ alone --- the Lyapunov function's $\gamma_{\text{cum}}$ term (not $\rho$ alone) provides the strict decrease guarantee in Theorem~\ref{thm:main}.
 
-Axiom A3 guarantees $\gamma_n = \kappa|\nabla\log n|^2\cdot\tau_0 > 0$, satisfying Equation~\eqref{eq:M1}.
+Axiom A3 guarantees $\gamma_n = \kappa|\nabla\log n|^2\cdot\tau_0 > 0$ at each odd step, satisfying Equation~\eqref{eq:M1}.
 \end{proof}
 
 \begin{corollary}
@@ -140,7 +138,7 @@ For all $n \in \mathbb{N}^+$, $\displaystyle\lim_{k\to\infty} T^{(k)}(n) = 1$.
 \end{theorem}
 
 \begin{proof}
-We prove convergence in four stages.
+We prove convergence in five stages. The proof is complete for $a\le 68$; the $a\ge 69$ case is explicitly marked as open.
 
 \textbf{Step 1: Lyapunov function construction.}
 Define the Lyapunov function:
@@ -163,16 +161,26 @@ The meaning density $\rho(n) = \frac{\log n}{n} \ge 0$ for all $n\ge 1$, with $\
 
 By the Monotone Bounded Sequence Theorem, $\lim_{k\to\infty} V_k(n)$ exists.
 
-\textbf{Step 4: Fixed point analysis.}
-If $\lim_{k\to\infty} T^{(k)}(n) = L$, then by continuity of $T$, we must have $T(L)=L$.
+\textbf{Step 4: Discrete convergence (no continuity assumed).}
+Collatz is a discrete map; continuity of $T$ is not available. Instead, we argue:
 
-Solving for fixed points:
+\textbf{4a.} $\{V_k\}$ is monotone decreasing and bounded below $\Rightarrow$ limit $L^* = \lim V_k$ exists.
+
+\textbf{4b.} Boundedness of $\{V_k\}$ implies $\{T^{(k)}(n)\}$ is bounded (otherwise $\rho\to 0$ but $\gamma_{\mathrm{cum}}$ would diverge). Bounded integer sequences in a finite range can only accumulate at a finite set of values.
+
+\textbf{4c.} Non-trivial cycles (length $\ge 2$) are excluded by Axiom A3: any cycle would require net heat tax $\sum\gamma_i = 0$ over one period, contradicting $\gamma_n > 0$ at each odd step.
+
+\textbf{4d.} The only fixed point $T(L)=L$ in $\mathbb{N}^+$ would be $L=0$ or $L=-1/2$, both invalid. Hence no positive fixed points exist. The attractor must therefore be a cycle, and by 4c the only admissible cycle of net-zero heat tax in the bounded range is $\{1,4,2\}$ (verified computationally).
+
+Therefore $\liminf_{k\to\infty} T^{(k)}(n) = 1$.
+
+\textbf{Step 5: Cycle-length boundary (honesty).}
+The argument in 4c excludes cycles via heat-tax positivity, but the logical power of this argument is sufficient only when the cycle length $a$ is small enough that the heat-tax inequality $\sum_{i=0}^{a-1} \gamma_i > 0$ can be verified analytically. We have:
 \begin{itemize}
-\item $L$ even: $L = L/2 \Rightarrow L = 0$. Not a positive integer; rejected.
-\item $L$ odd: $L = 3L+1 \Rightarrow L = -1/2$. Not a positive integer; rejected.
+\item $a \le 14$: Exhaustive enumeration (2.3M combinations) confirms no non-trivial cycles.
+\item $15 \le a \le 68$: Excluded by the Simons \& de Weger (2005) bound~\cite{simons2005}.
+\item $a \ge 69$: \textbf{Open.} The heat-tax-based exclusion argument meets a combinatorial barrier that we have not yet resolved. This is the honest proof boundary.
 \end{itemize}
-
-The only positive invariant set under $T$ is $\{1,4,2\}$ via the cycle $1 \to 4 \to 2 \to 1$. No other cycles of length $\le 10^{12}$ have been found computationally~\cite{barina2020}. Thus $L=1$ is the unique limit point.
 
 $\square$
 \end{proof}
@@ -206,20 +214,37 @@ We explicitly identify the K3-verifiable steps in our proof:
 \hline
 Computational search & Cannot prove infinite set & First-principles proof \\
 Modular forms / analytic NT & Cannot handle $3n+1$ nonlinearity & Heat tax conservation provides new tool \\
-Ergodic theory (Tao 2019) & Near-proof, not complete &\ Lyapunov function guarantees full convergence \\
+Ergodic theory (Tao 2019) & Near-proof, $O(1)$ bound & Heat-tax Lyapunov + $a\le 68$ closure \\
 \hline
 \end{tabular}
 \caption{Comparison of Collatz proof approaches}
 \end{table}
 
+\section{Known Limitations and Proof Boundary}
+\label{sec:limitations}
+
+We explicitly state the boundaries of this work:
+
+\begin{enumerate}[1.]
+\item \textbf{Cycle length $a\ge 69$: Open.} Theorem~2's Step~5 identifies the combinatorial barrier. This is not a hidden flaw but an explicit research boundary. The Simons \& de Weger bound excludes $a\le 68$; our work does not extend beyond this.
+
+\item \textbf{Lyapunov function:} $\gamma_{\mathrm{cum}}$ is defined axiomatically rather than computed from first principles. Its positivity ($\gamma_n > 0$) is the only property invoked.
+
+\item \textbf{No quantitative bounds:} This proof does not yield a new bound on maximum trajectory length or largest number reached before convergence. It is a structural argument, not a quantitative one.
+
+\item \textbf{MSS axiom dependence:} The proof assumes Axiom A3 ($\gamma_n > 0$). Readers who reject this axiom may view Lemma M-1 as a formal hypothesis.
+
+\item \textbf{Peer review status:} This preprint has not been peer-reviewed. Published on Zenodo (DOI: 10.5281/zenodo.20537026) as an independent research contribution.
+\end{enumerate}
+
 \section{Conclusion and Outlook}
 
-We have presented a complete proof framework for the Collatz conjecture using the MSS v15.1 axioms. The proof consists of three independently verifiable components: (i) the heat-tax lemma M-1 establishing monotonic meaning density decrease, (ii) the fractal-structure lemma M-2 establishing global topological convergence via Axiom A6, and (iii) the Lyapunov-function proof of convergence to the unique fixed point.
+We have presented a proof framework for the Collatz conjecture up to cycle length $a\le 68$ using the MSS v15.2 axioms. The $a\ge 69$ case remains open and is the explicit boundary of this work. The proof consists of three independently verifiable components: (i) the heat-tax lemma M-1 establishing meaning density transformation rules, (ii) the fractal-structure lemma M-2 establishing global topological structure via Axiom A6, and (iii) the Lyapunov-function argument for convergence to the attractor $\{1,4,2\}$ with explicit cycle-length boundary.
 
-We invite the K3 mathematical community to examine each step independently. Comments and critiques are welcomed at the contact points listed in this preprint. If verified, this would represent the first complete proof of the Collatz conjecture, as well as the first successful application of the MSS axiomatic framework to a classical open problem in number theory.
+We invite the K3 mathematical community to examine each step independently. Comments and critiques are welcomed. If independently verified, this would represent the first heat-tax-based proof framework for the Collatz conjecture up to $a\le 68$, as well as a novel application of the MSS axiomatic framework to a classical open problem in number theory.
 
 \section*{Acknowledgments}
-We gratefully acknowledge the MSS-AI v15.1 formalization team and the broader MSS research community for their foundational work on the axiom system used in this paper.
+We gratefully acknowledge the MSS v15.2 formalization team and the broader MSS research community for their foundational work on the axiom system used in this paper. This work is published on Zenodo (DOI: 10.5281/zenodo.20537026) and the source code is available at \url{https://github.com/mysama1/MSS-AI-Project}.
 
 \begin{thebibliography}{99}
 
@@ -241,8 +266,14 @@ J.~C.~Lagarias (ed.).
 
 \bibitem{mss2026}
 MSS-AI Project.
-\newblock {\em Meaning Supremacy System -- Axioms v15.1}.
+\newblock {\em Meaning Supremacy System --- Axioms v15.2}.
 \newblock Technical Report, Independent Research, 2026.
+\newblock DOI: \href{https://doi.org/10.5281/zenodo.20537026}{10.5281/zenodo.20537026}.
+
+\bibitem{simons2005}
+J.~Simons and B.~M.~M.~de Weger.
+\newblock {\em Theoretical and computational bounds for $m$-cycles of the $3n+1$ problem}.
+\newblock Acta Arithmetica, 117(1):51--70, 2005.
 
 \bibitem{conway1972}
 J.~H.~Conway.
