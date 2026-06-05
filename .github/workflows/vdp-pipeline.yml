@@ -29,8 +29,8 @@ jobs:
 
       - name: VDP — Full Pipeline (Python V1-V6)
         run: |
-          python vdp_scan.py . --format json > vdp_python.json || echo "[]" > vdp_python.json
-          python -c "import json; r=json.load(open('vdp_python.json')); print('Python V1-V6:', len(r.get('violations',[])), 'violations')"
+          python vdp_scan.py . --format json > vdp_python.json
+          python -c "import json; r=json.load(open('vdp_python.json')); print('Python V1-V6:', r.get('files_scanned',0), 'files |', len(r.get('violations',[])), 'violations')"
 
       - name: VDP — JS/TS scan
         run: |
