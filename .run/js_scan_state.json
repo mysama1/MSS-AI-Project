@@ -1,0 +1,18 @@
+{
+  "block": 5,
+  "completed": [
+    "parser_shell",
+    "V2_ERROR",
+    "V1_PATH",
+    "V5_TIMEOUT",
+    "V8_LEAK",
+    "V9_ASYNC",
+    "integration_pipeline",
+    "integration_api"
+  ],
+  "next": "Integration",
+  "checkpoint": "2026-06-05T12:00:00+08:00",
+  "status": "COMPLETE",
+  "test_violations": 12,
+  "test_files": 3
+}

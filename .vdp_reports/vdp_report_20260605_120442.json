@@ -1,0 +1,426 @@
+{
+  "timestamp": "2026-06-05T12:04:38",
+  "target": "E:\\QClaw-Data\\skills\\mss-vdp",
+  "strictness": 0.5,
+  "stages": {
+    "vdp_scan": {
+      "files_scanned": 29,
+      "files_with_violations": 0,
+      "total_violations": 0,
+      "errors": 17
+    },
+    "js_scan": {
+      "files_scanned": 3,
+      "files_with_violations": 3,
+      "total_violations": 12,
+      "errors": 0
+    },
+    "vdp_precommit": {
+      "total_violations": 37,
+      "raw": null,
+      "files": 29
+    },
+    "unified_audit": {
+      "verdict": "CRITICAL — Severe violations, output should be rejected",
+      "composite_score": 46.0,
+      "total_violations": 60,
+      "T_total": 2362,
+      "layers": {
+        "anchor_guard": {
+          "violations": [
+            {
+              "check": "CHECK_4_BRIDGE",
+              "severity": "low",
+              "detail": "Logical bridge '因此' used without anchor reference",
+              "layer": "anchor_guard"
+            },
+            {
+              "check": "CHECK_4_BRIDGE",
+              "severity": "low",
+              "detail": "Logical bridge '所以' used without anchor reference",
+              "layer": "anchor_guard"
+            },
+            {
+              "check": "CHECK_4_BRIDGE",
+              "severity": "low",
+              "detail": "Logical bridge '于是' used without anchor reference",
+              "layer": "anchor_guard"
+            },
+            {
+              "check": "CHECK_4_BRIDGE",
+              "severity": "low",
+              "detail": "Logical bridge '得出' used without anchor reference",
+              "layer": "anchor_guard"
+            },
+            {
+              "check": "CHECK_4_BRIDGE",
+              "severity": "low",
+              "detail": "Logical bridge 'thus' used without anchor reference",
+              "layer": "anchor_guard"
+            },
+            {
+              "check": "CHECK_4_BRIDGE",
+              "severity": "low",
+              "detail": "Logical bridge 'therefore' used without anchor reference",
+              "layer": "anchor_guard"
+            },
+            {
+              "check": "CHECK_4_BRIDGE",
+              "severity": "low",
+              "detail": "Logical bridge 'hence' used without anchor reference",
+              "layer": "anchor_guard"
+            }
+          ],
+          "violation_count": 7,
+          "anchored_rate": 1.0,
+          "status": "FAIL"
+        },
+        "lexical_guard": {
+          "violations": [
+            {
+              "check": "LEX_HEDGING",
+              "severity": "medium",
+              "detail": "Hedging word: '我认为'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_HEDGING",
+              "severity": "medium",
+              "detail": "Hedging word: '可能'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_HEDGING",
+              "severity": "medium",
+              "detail": "Hedging word: '感觉'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_HEDGING",
+              "severity": "medium",
+              "detail": "Hedging word: '不确定'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_HEDGING",
+              "severity": "medium",
+              "detail": "Hedging word: '不太清楚'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_HEDGING",
+              "severity": "medium",
+              "detail": "Hedging word: '大概'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_HEDGING",
+              "severity": "medium",
+              "detail": "Hedging word: '或许'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_HEDGING",
+              "severity": "medium",
+              "detail": "Hedging word: '差不多'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_HEDGING",
+              "severity": "medium",
+              "detail": "Hedging word: '好像'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_HEDGING",
+              "severity": "medium",
+              "detail": "Hedging word: '也许'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_SUBJECTIVE",
+              "severity": "low",
+              "detail": "Subjective claim: '毫无疑问'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_SUBJECTIVE",
+              "severity": "low",
+              "detail": "Subjective claim: '众所周知'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_SUBJECTIVE",
+              "severity": "low",
+              "detail": "Subjective claim: '毋庸置疑'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_SUBJECTIVE",
+              "severity": "low",
+              "detail": "Subjective claim: '很明显'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_SUBJECTIVE",
+              "severity": "low",
+              "detail": "Subjective claim: '显然'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '根据搜索结果'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户禁止'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户禁止'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户限制'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '基于我的内部知识'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '根据文件记录'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户明确禁止'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户禁止'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户要求'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户禁止'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '根据搜索结果'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '基于我的内部知识'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户禁止'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户说'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户要求'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户明确禁止'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户说'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户明确禁止'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户不允许'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户要求'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户限制'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户说'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户要求'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户要求'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户要求'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户要求'",
+              "layer": "lexical_guard"
+            },
+            {
+              "check": "LEX_PSEUDO_CONSTRAINT",
+              "severity": "critical",
+              "detail": "Fabricated constraint/source: '用户说'",
+              "layer": "lexical_guard"
+            }
+          ],
+          "violation_count": 42,
+          "status": "FAIL"
+        },
+        "vdp_discipline": {
+          "violations": [
+            {
+              "check": "V2_ERRNO",
+              "severity": "critical",
+              "detail": "Causal guessing detected (should report raw errno)",
+              "layer": "vdp_discipline"
+            },
+            {
+              "check": "V7_PSEUDO",
+              "severity": "critical",
+              "detail": "Fabricated user directive or constraint",
+              "layer": "vdp_discipline"
+            }
+          ],
+          "violation_count": 2,
+          "status": "WARN"
+        },
+        "forbidden_guard": {
+          "violations": [
+            {
+              "check": "FORBIDDEN_ELEMENT",
+              "severity": "critical",
+              "detail": "Forbidden element: 'os.system'",
+              "layer": "forbidden_guard"
+            },
+            {
+              "check": "FORBIDDEN_ELEMENT",
+              "severity": "critical",
+              "detail": "Forbidden element: 'subprocess.call'",
+              "layer": "forbidden_guard"
+            },
+            {
+              "check": "FORBIDDEN_ELEMENT",
+              "severity": "critical",
+              "detail": "Forbidden element: 'eval('",
+              "layer": "forbidden_guard"
+            },
+            {
+              "check": "FORBIDDEN_ELEMENT",
+              "severity": "critical",
+              "detail": "Forbidden element: 'exec('",
+              "layer": "forbidden_guard"
+            },
+            {
+              "check": "FORBIDDEN_ELEMENT",
+              "severity": "critical",
+              "detail": "Forbidden element: 'rm -rf'",
+              "layer": "forbidden_guard"
+            },
+            {
+              "check": "FORBIDDEN_PATTERN",
+              "severity": "critical",
+              "detail": "Forbidden pattern matched: 'password\\s*=\\s*['\\\"][^'\\\"]+['\\\"]'",
+              "layer": "forbidden_guard"
+            },
+            {
+              "check": "FORBIDDEN_SHELL",
+              "severity": "critical",
+              "detail": "Destructive shell command: 'rm -rf'",
+              "layer": "forbidden_guard"
+            },
+            {
+              "check": "FORBIDDEN_SHELL",
+              "severity": "critical",
+              "detail": "Destructive shell command: 'rm -rf'",
+              "layer": "forbidden_guard"
+            },
+            {
+              "check": "FORBIDDEN_SHELL",
+              "severity": "critical",
+              "detail": "Destructive shell command: 'rm -rf'",
+              "layer": "forbidden_guard"
+            }
+          ],
+          "violation_count": 9,
+          "status": "FAIL"
+        }
+      },
+      "elapsed_ms": 28
+    }
+  },
+  "summary": {
+    "total_violations": 109,
+    "scan_violations": 0,
+    "js_violations": 12,
+    "precommit_violations": 37,
+    "audit_violations": 60,
+    "elapsed_seconds": 4.2
+  }
+}

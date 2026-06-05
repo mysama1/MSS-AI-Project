@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+"""MSS-VDP setup tools"""
+from setuptools import setup, find_packages
+
+setup(
+    name="mss-vdp",
+    version="2.0.0",
+    description="MSS Verification Discipline Protocol — Multi-language code quality & compliance scanner",
+    long_description=open("README.md", encoding="utf-8").read(),
+    long_description_content_type="text/markdown",
+    author="MSS-AI",
+    url="https://github.com/mss-ai/vdp",
+    packages=find_packages(),
+    py_modules=[
+        "vdp_scan", "js_scan", "rust_scan", "java_cpp_scan", "go_scan",
+        "ruby_scan", "php_scan", "kotlin_scan", "csharp_scan",
+        "vdp_pipeline", "vdp_dsl", "ps_verify", "ps_judge", "py_clean",
+        "android_verify", "ios_verify", "llm_bench", "org_resilience",
+        "content_compliance", "rate_limiter", "service_monitor", "alert_sender",
+        "vdp_fuzzer", "lock_profiler", "memory_profiler"
+    ],
+    python_requires=">=3.10",
+    install_requires=[
+        "tree-sitter>=0.20",
+        "tree-sitter-python",
+        "tree-sitter-javascript",
+        "tree-sitter-rust",
+        "tree-sitter-java",
+        "tree-sitter-cpp",
+        "tree-sitter-c",
+        "tree-sitter-go",
+        "tree-sitter-ruby",
+        "tree-sitter-php",
+        "uvicorn",
+        "fastapi",
+        "pydantic",
+    ],
+    entry_points={
+        "console_scripts": [
+            "vdp-scan = vdp_scan:main",
+            "vdp-js = js_scan:main",
+            "vdp-rust = rust_scan:main",
+            "vdp-go = go_scan:main",
+            "vdp-ruby = ruby_scan:main",
+            "vdp-php = php_scan:main",
+            "vdp-kotlin = kotlin_scan:main",
+            "vdp-csharp = csharp_scan:main",
+            "vdp-pipeline = vdp_pipeline:main",
+            "vdp-dsl = vdp_dsl:main",
+            "vdp-ps = ps_verify:main",
+            "vdp-judge = ps_judge:main",
+            "vdp-pyclean = py_clean:main",
+            "vdp-android = android_verify:main",
+            "vdp-ios = ios_verify:main",
+            "vdp-bench = llm_bench:main",
+            "vdp-org = org_resilience:main",
+            "vdp-compliance = content_compliance:main",
+            "vdp-monitor = service_monitor:main",
+            "vdp-fuzz = vdp_fuzzer:main",
+            "vdp-smoke = smoke_test:main",
+        ]
+    },
+    classifiers=[
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Topic :: Software Development :: Quality Assurance",
+        "Topic :: Software Development :: Testing",
+    ],
+)

@@ -1,0 +1,231 @@
+{
+  "version": "3.0",
+  "domain": "powershell-ai-failure",
+  "description": "PowerShell AI工作流故障矫正测试库 — 覆盖三层归因（物理层/感知层/翻译层）",
+  "golden_rules": {
+    "correct_attribution": "每个问题标注真实根因层级（L1物理/L2感知/L3翻译），不用表象归因",
+    "correct_command": "每条答案必须是纯PowerShell原生Cmdlet，不含POSIX/CMD命令",
+    "projection_first": "每个路径操作必须包含物理投影验证（fsutil/Test-Path）",
+    "no_session_state": "不依赖临时会话变量，全部自包含"
+  },
+  "cases": [
+    {
+      "id": "PS-001",
+      "title": "Junction断裂导致'找不到文件'— AI反复改路径",
+      "scenario": "AI生成脚本读写 D:\\work\\config.json，报错找不到文件。路径确实存在，本地资源管理器可访问。AI连续改了5次路径仍然失败。",
+      "wrong_response": "把 D:\\work\\config.json 改成 D:\\work\\data\\config.json，还是报错就说'沙箱拦截了路径'",
+      "correct_attribution": "L1物理层 — 物理投影断裂。D:\\work\\ 是junction指向 E:\\actual-work\\，junction本身损坏。",
+      "correct_diagnosis": "1. fsutil file queryfileid D:\\work 返回 0x0 → 证实投影断裂\n2. 列出重解析点: Get-ChildItem D:\\ -Force | Where-Object {$_.Attributes -match 'ReparsePoint'}\n3. 重建junction: New-Item -ItemType Junction -Path D:\\work -Target E:\\actual-work -Force",
+      "key_principle": "路径存在≠物理投影正常。AI永远不应归因于'路径不对'，必须先fsutil验证。",
+      "layer": "L1_physical"
+    },
+    {
+      "id": "PS-002",
+      "title": "模块导入'明明装了却找不到'— 会话伪沙盒污染",
+      "scenario": "AI在PowerShell中 Import-Module MyModule 成功。一分钟后第二个脚本运行时报 'MyModule not found'。",
+      "wrong_response": "归因于'模块没装'，反复 Install-Module -Force，浪费5分钟",
+      "correct_attribution": "L1物理层 — 会话伪沙盒。第一次导入在当前会话生效，第二个脚本运行在新进程/新会话中，模块路径不在新会话的 $env:PSModulePath 中。",
+      "correct_diagnosis": "1. 检查模块是否真的安装: Get-Module -ListAvailable MyModule\n2. 在脚本开头强制重载: Remove-Module MyModule -ErrorAction SilentlyContinue; Import-Module MyModule -Force\n3. 持久化路径: [Environment]::SetEnvironmentVariable('PSModulePath', $env:PSModulePath + ';C:\\MyModules', 'Machine')",
+      "key_principle": "PowerShell会话是隔离的。Import-Module只对当前会话有效，不能跨会话共享。与Python sys.modules伪沙盒完全同源。",
+      "layer": "L1_physical"
+    },
+    {
+      "id": "PS-003",
+      "title": "AI写 ls -l /tmp 然后PowerShell报错",
+      "scenario": "AI在Windows PowerShell中生成 ls -l /tmp 命令。",
+      "wrong_response": "改成 dir /tmp 还是报错，然后说'命令不存在'",
+      "correct_attribution": "L2感知层 — POSIX习惯硬套。AI把Linux bash用法直译到PowerShell，既用了POSIX命令又用了Linux路径。",
+      "correct_diagnosis": "替换为: Get-ChildItem C:\\temp\n如果用临时目录: Get-ChildItem $env:TEMP",
+      "key_principle": "这是最基础的认知错误。AI没有'我在Windows上，应该用PowerShell原生命令'的感知。需要命令级检测和自动矫正。",
+      "layer": "L2_perceptual"
+    },
+    {
+      "id": "PS-004",
+      "title": "curl http://api 在PowerShell中行为异常— 双重语义陷阱",
+      "scenario": "AI生成 curl http://api.example.com/data。PowerShell不报错但返回的不是预期数据。",
+      "wrong_response": "连试3次同一个命令，说'API无响应'",
+      "correct_attribution": "L2感知层 — PowerShell的curl是Invoke-WebRequest的别名，但语法不完全兼容curl原生命令。PowerShell有CMD/POSIX/原生三重路径语义，AI必然混淆。",
+      "correct_diagnosis": "使用原生Cmdlet: Invoke-WebRequest -Uri http://api.example.com/data\n或明确调用: curl.exe http://api.example.com/data (调用真正的curl)",
+      "key_principle": "PowerShell别名不是1:1映射。curl在PowerShell中是Invoke-WebRequest的别名，行为与Linux curl完全不同。",
+      "layer": "L2_perceptual"
+    },
+    {
+      "id": "PS-005",
+      "title": "Set-Location后Get-ChildItem找不到文件 — 工作目录投影",
+      "scenario": "AI执行 Set-Location D:\\work 后 Get-ChildItem config.json 报错。D:\\work 是junction。",
+      "wrong_response": "怀疑'路径又坏了'，开始排查权限",
+      "correct_attribution": "L1物理层 — junction的工作目录映射。Set-Location进入junction后，当前工作目录的物理位置可能不是AI预期。",
+      "correct_diagnosis": "1. Set-Location D:\\work 后检查: Get-Location\n2. 验证物理位置: fsutil file queryfileid (Get-Location).Path\n3. 改用全路径: Get-ChildItem D:\\work\\config.json（不依赖当前目录）",
+      "key_principle": "跨junction的当前目录是脆弱的。任何跨junction操作都应使用全路径，不依赖相对路径。",
+      "layer": "L1_physical"
+    },
+    {
+      "id": "PS-006",
+      "title": "AI把findstr当作grep用 — 对象能力完全浪费",
+      "scenario": "AI在PowerShell中写 Get-Process | findstr 'chrome' 来过滤进程。",
+      "wrong_response": "得到错误输出但归因于'findstr语法不对'",
+      "correct_attribution": "L3翻译层 — 字面翻译无原生语义。AI把 bash 的 ps | grep 直译为 Get-Process | findstr，完全没有利用PowerShell的对象管道能力。",
+      "correct_diagnosis": "使用对象过滤: Get-Process | Where-Object Name -eq 'chrome'\n更高级的用法: Get-Process | Where-Object {$_.WorkingSet64 -gt 100MB} | Select-Object Name, Id, WorkingSet64",
+      "key_principle": "PowerShell的核心优势是对象管道，不是文本管道。AI 99%不会用对象属性过滤。",
+      "layer": "L3_translational"
+    },
+    {
+      "id": "PS-007",
+      "title": "$env:Path 修改后其他PowerShell窗口看不到 — 会话隔离",
+      "scenario": "AI执行 $env:Path += ';C:\\tools' 之后新窗口报找不到命令。",
+      "wrong_response": "归因于'环境变量更新没生效'，反复执行同一个临时修改命令",
+      "correct_attribution": "L1物理层 — $env:Path修改仅对当前进程+子进程生效，不影响其他PowerShell窗口和系统级环境变量。",
+      "correct_diagnosis": "持久化修改:\n[Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\\tools', 'Machine')\n然后新开窗口生效",
+      "key_principle": "$env:Path是进程级环境变量，不是系统级。跨窗口必须用SetEnvironmentVariable持久化。",
+      "layer": "L1_physical"
+    },
+    {
+      "id": "PS-008",
+      "title": "AI写的 rm -rf node_modules 在PowerShell中报错",
+      "scenario": "AI在PowerShell中生成 rm -rf node_modules 命令。",
+      "wrong_response": "改成 rm -r node_modules，还是报错，然后说'权限不足'",
+      "correct_attribution": "L2感知层 — POSIX习惯硬套。AI把Linux rm命令直译过来，不知道PowerShell的正确删除命令。",
+      "correct_diagnosis": "标准删除: Remove-Item node_modules -Recurse -Force\n如果目录太深导致路径过长: Get-ChildItem node_modules -Recurse | Remove-Item -Force; Remove-Item node_modules -Force",
+      "key_principle": "PowerShell有自己的一套文件和目录操作命令。任何时候都不应该用 rm/del/mkdir 等别名。",
+      "layer": "L2_perceptual"
+    },
+    {
+      "id": "PS-009",
+      "title": "Start-Process -Verb RunAs 提权后文件操作还是失败",
+      "scenario": "AI对文件操作失败后直接生成 Start-Process -Verb RunAs 提权命令，提权后仍失败。",
+      "wrong_response": "归因于'权限还是不够，需要更高级别管理员'",
+      "correct_attribution": "L1物理层 — 不是权限问题，是物理投影断裂。管理员用户在某些Windows版本中访问junction时仍有bug。",
+      "correct_diagnosis": "1. 先查物理投影: fsutil file queryfileid 目标路径\n2. 查实际权限: Get-Acl 目标路径 | Format-List\n3. 检查junction完整性\n4. 只有以上都通过、且确认权限不足时才提权",
+      "key_principle": "90%的AI提权请求都是路径投影问题，不是真的权限不足。必须先用铁律4的三步流程排查。",
+      "layer": "L1_physical"
+    },
+    {
+      "id": "PS-010",
+      "title": "AI用 cat file.txt | grep error 在PowerShell中效率极低",
+      "scenario": "AI在PowerShell中生成 cat log.txt | findstr error 或 cat log.txt | grep error",
+      "wrong_response": "得到结果但很慢，归因于'文件太大'",
+      "correct_attribution": "L3翻译层 — 字面翻译无原生语义。AI把bash的文本管道直译过来，但PowerShell有专门的Select-String命令（基于.NET正则引擎，远超grep速度）。",
+      "correct_diagnosis": "直接搜索文件: Select-String -Path log.txt -Pattern 'error'\n递归搜索: Get-ChildItem -Recurse *.log | Select-String -Pattern 'error'\n大小写不敏感: Select-String -Path log.txt -Pattern 'error' -CaseSensitive:$false",
+      "key_principle": "Select-String 是 PowerShell 的原生文本搜索工具，比 cat|findstr 快5-10倍且功能强得多。AI完全不知道这个命令的存在。",
+      "layer": "L3_translational"
+    },
+    {
+      "id": "PS-011",
+      "title": "PowerShell脚本放到GitHub Actions中失败 — CI会话完全隔离",
+      "scenario": "AI写的PowerShell脚本在本地完美运行，放到GitHub Actions中立刻报错'找不到模块'",
+      "wrong_response": "归因于'GitHub Actions环境不同'或'CI没有安装PowerShell模块'，花大量时间在CI配置中安装模块",
+      "correct_attribution": "L1物理层 — CI运行的是一个完全全新的PowerShell会话，没有任何本地环境的模块缓存、环境变量、或路径设置。与Python CI的sys.modules问题完全同源。",
+      "correct_diagnosis": "1. 在脚本开头添加所有必需的Import-Module（带Force参数）\n2. 在脚本开头检测并设置所有需要的环境变量\n3. 不依赖任何用户Profile（使用 -NoProfile 启动）\n4. 把所有依赖明确写在脚本里，不用隐式假设",
+      "key_principle": "PowerShell脚本要自包含。不依赖$profile、不依赖本地已安装模块的隐式发现、不依赖当前目录。这和Python的requirements.txt + 显式import是同一个思路。",
+      "layer": "L1_physical"
+    },
+    {
+      "id": "PS-012",
+      "title": "AI生成%USERPROFILE%混搭PowerShell变量 — 语法混淆",
+      "scenario": "AI在PowerShell脚本中写 cd %USERPROFILE%\\Documents",
+      "wrong_response": "归因于'变量名写错了'",
+      "correct_attribution": "L2感知层 — 混淆CMD的%VAR%语法和PowerShell的$env:VAR语法。AI在Windows不同shell之间切换时必然混淆。",
+      "correct_diagnosis": "PowerShell中: Set-Location $env:USERPROFILE\\Documents\n或使用Home变量: Set-Location $HOME\\Documents",
+      "key_principle": "CMD用%VAR%，PowerShell用$env:VAR或$VAR。AI在Windows环境下生成命令时最常犯的语法错误之一。",
+      "layer": "L2_perceptual"
+    },
+    {
+      "id": "PS-013",
+      "title": "New-Item -ItemType Directory 创建在错误位置 — 相对路径陷阱",
+      "scenario": "AI执行 New-Item -ItemType Directory data 以为在项目根目录创建，实际创建在了C:\\Windows\\System32下（当前工作目录）。",
+      "wrong_response": "归因于'权限不足无法创建'",
+      "correct_attribution": "L1物理层 — 当前工作目录未经验证。PowerShell的默认启动目录可能是System32（特别是以管理员运行时）。",
+      "correct_diagnosis": "1. 先验证当前目录: Get-Location\n2. 如果不确定，用全路径: New-Item -ItemType Directory D:\\project\\data\n3. 规范做法: Set-Location D:\\project; New-Item -ItemType Directory .\\data",
+      "key_principle": "永远不假设当前工作目录。要么先Set-Location到确定位置，要么使用全路径。这是最基础的物理层防御。",
+      "layer": "L1_physical"
+    },
+    {
+      "id": "PS-014",
+      "title": "AI用 Write-Output 输出中文内容出现乱码 — 编码问题",
+      "scenario": "AI执行 Write-Output '中文内容' > file.txt 后文件是乱码",
+      "wrong_response": "归因于'文件系统不支持中文'或'字符集损坏'",
+      "correct_attribution": "L3翻译层 — PowerShell的>重定向操作符默认使用UTF-16编码，不是UTF-8。与终端显示的编码不同。",
+      "correct_diagnosis": "标准UTF-8输出:\nWrite-Output '中文内容' | Out-File -FilePath file.txt -Encoding UTF8\n或使用Set-Content:\nSet-Content -Path file.txt -Value '中文内容' -Encoding UTF8",
+      "key_principle": "PowerShell的重定向操作符有编码陷阱。任何涉及CJK字符的输出都必须显式指定 -Encoding UTF8。这是VDP纪律V3在PowerShell中的直接应用。",
+      "layer": "L3_translational"
+    },
+    {
+      "id": "PS-015",
+      "title": "AI反复执行同一个失败命令 — 伪沙盒状态导致结果不变",
+      "scenario": "AI执行某个Import-Module失败后，不改变任何前置条件，直接重复执行3次同一命令。",
+      "wrong_response": "归因于'可能是临时网络问题，等一下就好了'",
+      "correct_attribution": "L1物理层 — 伪沙盒状态已建立。如果一次Import-Module失败，无任何状态变化的情况下重复执行必然也失败。这是AI最常见的无效重试模式。",
+      "correct_diagnosis": "1. 第一次失败→立即切换到诊断模式（不重试）\n2. 检查模块是否存在: Find-Module -Name xxx\n3. 检查PowerShell版本是否兼容\n4. 检查执行策略: Get-ExecutionPolicy\n5. 修复根因后再重试",
+      "key_principle": "同一条件下重复执行只会得到相同结果。伪沙盒不会因为多等几秒就自己好。V5超时即降级规则在此直接适用。",
+      "layer": "L1_physical"
+    },
+    {
+      "id": "PS-016",
+      "title": "AI在PowerShell中写 \"./script.sh\" 执行脚本 — 扩展名混淆",
+      "scenario": "AI在Windows PowerShell中写 ./myscript.sh 试图运行shell脚本",
+      "wrong_response": "改成 bash myscript.sh 还是失败（没有WSL/bash），然后说'系统不支持shell'",
+      "correct_attribution": "L2感知层 — AI混淆了.sh（bash脚本）和.ps1（PowerShell脚本）的扩展名和执行方式。",
+      "correct_diagnosis": "PowerShell脚本: .\\myscript.ps1\nWindows batch: .\\myscript.cmd 或 .\\myscript.bat\n如果真的是bash脚本需要WSL: wsl bash ./myscript.sh",
+      "key_principle": "PowerShell只执行.ps1文件。.sh是Linux bash脚本。AI需要先确认目标操作系统和可用的解释器。",
+      "layer": "L2_perceptual"
+    },
+    {
+      "id": "PS-017",
+      "title": "AI用 Get-Content file.txt | ForEach { ... } 逐行处理大文件 — O(n)性能陷阱",
+      "scenario": "AI用管道逐行处理1GB日志文件，速度极慢。",
+      "wrong_response": "归因于'文件太大，需要更多时间'",
+      "correct_attribution": "L3翻译层 — 未利用PowerShell的流式处理能力。AI把Python的 for line in file 模式直译过来，没有用PowerShell的 .NET 流式 API。",
+      "correct_diagnosis": "流式大文件处理:\n$reader = [System.IO.StreamReader]::new('file.txt')\nwhile ($null -ne ($line = $reader.ReadLine())) {\n    if ($line -match 'error') { Write-Output $line }\n}\n$reader.Close()\n或使用: Get-Content file.txt -ReadCount 1000 | ForEach-Object { ... } （批量读取）",
+      "key_principle": "PowerShell可以通过.NET API直接操作大文件。逐行管道不是唯一方式，也往往不是最好方式。",
+      "layer": "L3_translational"
+    },
+    {
+      "id": "PS-018",
+      "title": "AI的 Invoke-WebRequest 调用被防火墙拦截 — 未验证网络层",
+      "scenario": "AI用 Invoke-WebRequest 调用内网API，一直超时。",
+      "wrong_response": "归因于'API服务down了'或'URL错了'",
+      "correct_attribution": "L1物理层 — PowerShell有自己的网络配置层。代理设置、TLS版本、证书验证都可能导致Invoke-WebRequest行为与curl/browser不同。",
+      "correct_diagnosis": "1. 测试基础连通: Test-NetConnection api.example.com -Port 443\n2. 检查TLS: [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12\n3. 跳过证书验证（开发环境）: [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}\n4. 使用-Body参数发送数据时检查编码",
+      "key_principle": "PowerShell的网络调用与浏览器curl有独立的TLS/代理/证书配置。网络连通性问题不应直接归因于服务端。",
+      "layer": "L1_physical"
+    },
+    {
+      "id": "PS-019",
+      "title": "AI在PowerShell中使用 && 和 || 操作符 — 语法不存在",
+      "scenario": "AI写 command1 && command2 || command3 在PowerShell中报语法错误",
+      "wrong_response": "归因于'语法错误'，反复调整空格",
+      "correct_attribution": "L2感知层 — PowerShell不支持 && 和 || 短路径操作符（PowerShell 7.0+才引入pipeline chain操作符，Windows 10自带的5.1不支持）。",
+      "correct_diagnosis": "PowerShell 5.1的等价写法:\nif (command1) { command2 } else { command3 }\n或:\n$result = command1; if ($LASTEXITCODE -eq 0) { command2 } else { command3 }",
+      "key_principle": "&& 和 || 在Windows PowerShell 5.1中不存在。这是AI最常在PowerShell中犯的语法错误之一。",
+      "layer": "L2_perceptual"
+    },
+    {
+      "id": "PS-020",
+      "title": "综合故障 — 3层归因同时触发的典型案例",
+      "scenario": "AI在Windows CI中执行PowerShell脚本：\n1. 用 cd ~/project 切换目录（POSIX语法）\n2. 用 ls -l 列出文件（POSIX命令）\n3. 用 ./node_modules/.bin/tool 执行工具（Linux路径）\n4. 报错'找不到路径'后提权重试\n全部失败，归因于'CI环境配置有问题'。",
+      "wrong_response": "归因于'CI环境配置不对，需要找运维解决'。消耗2小时。",
+      "correct_attribution": "三层同时触发:\n- L1物理层: ~/project 在CI中可能不是junction，project目录不存在\n- L2感知层: ls -l 和 cd ~ 是POSIX命令\n- L3翻译层: ./node_modules/.bin/tool 是Linux可执行路径格式，Windows需要 .exe 或 .cmd 扩展名\n每条命令都需要独立诊断和矫正。",
+      "correct_diagnosis": "1. 替换所有POSIX命令为原生Cmdlet\n2. Set-Location $env:USERPROFILE\\project （或全路径）\n3. Get-ChildItem (验证项目存在)\n4. .\\node_modules\\.bin\\tool.cmd （Windows路径格式+扩展名）\n5. 不主动提权，先验证物理投影",
+      "key_principle": "综合故障通常同时触发2-3层归因。AI会归因于单一原因反复重试，而忽略其他层的问题。正确的做法是逐层诊断，不要跳步骤。",
+      "layer": "L1+L2+L3"
+    }
+  ],
+  "statistics": {
+    "total_cases": 20,
+    "by_layer": {
+      "L1_physical": 10,
+      "L2_perceptual": 6,
+      "L3_translational": 4
+    },
+    "coverage": {
+      "junction_projection": "PS-001, PS-005, PS-009",
+      "session_sandbox": "PS-002, PS-007, PS-011, PS-015",
+      "posix_habit": "PS-003, PS-008, PS-012, PS-016, PS-019",
+      "dual_semantics": "PS-004",
+      "object_pipeline": "PS-006, PS-010, PS-017",
+      "encoding": "PS-014",
+      "network": "PS-018",
+      "composite": "PS-020"
+    }
+  }
+}

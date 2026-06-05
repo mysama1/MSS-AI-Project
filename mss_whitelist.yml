@@ -1,0 +1,76 @@
+# MSS Cache Immunity Configuration v2.1
+# 白名单 + 巡检策略 + 项目绑定
+
+version: "2.1"
+virus_id: "MSS-LOGIC-VIRUS-007"
+
+# ── 白名单: 跳过这些模块/目录 ──
+whitelist:
+  # 系统内置 — 永远跳过 (除非 --force-check)
+  stdlib: true
+  
+  # 目录级豁免
+  dirs:
+    - "__pycache__"
+    - ".git"
+    - "node_modules"
+    - ".venv"
+    - "venv"
+    - ".tox"
+  
+  # 模块级豁免 (glob)
+  modules:
+    - "_*.pyd"
+    - "*.so"
+    - "test_*"          # 测试文件变更频繁, 不触发告警
+
+# ── 巡检策略 ──
+scan:
+  # L1 日常开发 (pre-commit)
+  dev:
+    schedule: "on_push"
+    scope: ["--project-dirs"]
+    alert_level: "WARN"     # 不阻断提交
+    auto_clean: true
+  
+  # L2 生产环境 (定时)
+  prod:
+    schedule: "0 2 * * *"   # 每天凌晨2点
+    scope: ["--project-dirs", "--force-check"]
+    alert_level: "P1"        # 感染阻断发布
+    auto_clean: true
+  
+  # L3 内核防护 (进程启动)
+  kernel:
+    schedule: "on_startup"
+    scope: ["--force-check"]
+    alert_level: "CRITICAL"  # 感染终止进程
+    auto_clean: false        # 人工确认后清理
+
+# ── SVᵣ 阈值 ──
+sv_r:
+  warn: 0.01      # SVᵣ >= 0.01 → WARN
+  critical: 1.0   # SVᵣ >= 1.0 → CRITICAL
+  p1_escalation: 5.0  # SVᵣ >= 5.0 → 升级P1安全工单
+
+# ── 项目绑定 ──
+projects:
+  - name: "MSS-AI Core"
+    path: "E:\\AI_Workspace\\MSS-AI\\project"
+    level: "kernel"
+    force_check_weekly: true
+  
+  - name: "VDP Skills"
+    path: "E:\\QClaw-Data\\skills\\mss-vdp"
+    level: "prod"
+  
+  - name: "LIB Marketing"
+    path: "E:\\QClaw-Data\\skills\\lib-marketing"
+    level: "dev"
+
+# ── 日志 ──
+logging:
+  dir: "E:\\QClaw-Data\\reports\\cache\\"
+  format: "json"
+  retention_days: 90
+  include_hash: true       # 记录磁盘/缓存哈希差异

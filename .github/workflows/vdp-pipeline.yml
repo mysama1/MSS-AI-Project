@@ -1,0 +1,109 @@
+name: MSS-VDP Pipeline
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  vdp-scan:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install tree-sitter parsers
+        run: |
+          pip install tree-sitter tree-sitter-java tree-sitter-cpp tree-sitter-c tree-sitter-go tree-sitter-rust
+
+      - name: VDP — Python scan
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\vdp_scan.py . --json > vdp_python.json
+          python -c "import json;d=json.load(open('vdp_python.json'));print(f'Python: {len(d.get(\"violations\",[]))} violations')"
+
+      - name: VDP — JS/TS scan
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\js_scan.py . --json > vdp_js.json
+          python -c "import json;d=json.load(open('vdp_js.json'));print(f'JS/TS: {len(d.get(\"violations\",[]))} violations')"
+
+      - name: VDP — Rust scan
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\rust_scan.py . --json > vdp_rust.json
+          python -c "import json;d=json.load(open('vdp_rust.json'));print(f'Rust: {len(d.get(\"violations\",[]))} violations')"
+
+      - name: VDP — Java/C/C++ scan
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\java_cpp_scan.py . --json > vdp_java_cpp.json
+          python -c "import json;d=json.load(open('vdp_java_cpp.json'));print(f'Java/C/C++: {len(d.get(\"violations\",[]))} violations')"
+
+      - name: VDP — Go scan
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\go_scan.py . --json > vdp_go.json
+          python -c "import json;d=json.load(open('vdp_go.json'));print(f'Go: {len(d.get(\"violations\",[]))} violations')"
+
+      - name: VDP — Kotlin scan
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\kotlin_scan.py . --json > vdp_kotlin.json
+          python -c "import json;d=json.load(open('vdp_kotlin.json'));print(f'Kotlin: {len(d.get(\"violations\",[]))} violations')"
+
+      - name: VDP — C# scan
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\csharp_scan.py . --json > vdp_csharp.json
+          python -c "import json;d=json.load(open('vdp_csharp.json'));print(f'C#: {len(d.get(\"violations\",[]))} violations')"
+
+      - name: VDP — Ruby scan
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\ruby_scan.py . --json > vdp_ruby.json
+          python -c "import json;d=json.load(open('vdp_ruby.json'));print(f'Ruby: {len(d.get(\"violations\",[]))} violations')"
+
+      - name: VDP — PHP scan
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\php_scan.py . --json > vdp_php.json
+          python -c "import json;d=json.load(open('vdp_php.json'));print(f'PHP: {len(d.get(\"violations\",[]))} violations')"
+
+      - name: VDP — DSL Rules
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\vdp_dsl.py . --demo --json > vdp_dsl.json
+
+      - name: PS — 8-point safety check
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\ps_verify.py check --json > ps_check.json
+
+      - name: VDP — Unified Audit
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\vdp_pipeline.py . --json > vdp_report.json
+          python -c "
+          import json
+          r=json.load(open('vdp_report.json'))
+          total=sum(len(v.get('violations',[])) for v in r if isinstance(v,dict))
+          rejects=sum(1 for v in r if isinstance(v,dict) and v.get('verdict')=='reject')
+          print(f'TOTAL: {total} violations | {rejects} reject(s)')
+          if rejects > 0: exit(1)
+          "
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: vdp-reports
+          path: |
+            vdp_*.json
+            ps_check.json
+          retention-days: 30
+
+      - name: Generate PDF Report
+        run: |
+          python E:\QClaw-Data\skills\mss-vdp\report_pdf.py vdp_report.json --output vdp_report.pdf
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: vdp-report-pdf
+          path: vdp_report.pdf

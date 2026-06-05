@@ -1,0 +1,166 @@
+# MSS-VDP GitLab CI Pipeline
+# Mirror of .github/workflows/vdp-pipeline.yml for GitLab
+
+default:
+  image: python:3.11
+  before_script:
+    - pip install tree-sitter tree-sitter-java tree-sitter-cpp tree-sitter-c tree-sitter-go tree-sitter-rust tree-sitter-ruby tree-sitter-php
+    - mkdir -p .mss
+
+cache:
+  key: mss-vdp
+  paths:
+    - .mss/
+    - ~/.cache/pip
+
+stages:
+  - scan
+  - analyze
+  - report
+
+# ── Stage 1: Multi-Language Scan ──
+
+python scan:
+  stage: scan
+  script:
+    - python vdp_scan.py . --format json > .mss/vdp_python.json
+    - python -c "import json;d=json.load(open('.mss/vdp_python.json'));print(f'Python: {len(d.get(\"violations\",[]))} violations')"
+  artifacts:
+    paths: [.mss/vdp_python.json]
+    expire_in: 30 days
+
+javascript scan:
+  stage: scan
+  script:
+    - python js_scan.py . --json > .mss/vdp_js.json
+    - python -c "import json;d=json.load(open('.mss/vdp_js.json'));print(f'JS/TS: {len(d.get(\"violations\",[]))} violations')"
+  artifacts:
+    paths: [.mss/vdp_js.json]
+    expire_in: 30 days
+
+rust scan:
+  stage: scan
+  script:
+    - python rust_scan.py . --json > .mss/vdp_rust.json
+    - python -c "import json;d=json.load(open('.mss/vdp_rust.json'));print(f'Rust: {len(d.get(\"violations\",[]))} violations')"
+  artifacts:
+    paths: [.mss/vdp_rust.json]
+    expire_in: 30 days
+
+java-cpp scan:
+  stage: scan
+  script:
+    - python java_cpp_scan.py . --json > .mss/vdp_java_cpp.json
+    - python -c "import json;d=json.load(open('.mss/vdp_java_cpp.json'));print(f'Java/C/C++: {len(d.get(\"violations\",[]))} violations')"
+  artifacts:
+    paths: [.mss/vdp_java_cpp.json]
+    expire_in: 30 days
+
+go scan:
+  stage: scan
+  script:
+    - python go_scan.py . --json > .mss/vdp_go.json
+    - python -c "import json;d=json.load(open('.mss/vdp_go.json'));print(f'Go: {len(d.get(\"violations\",[]))} violations')"
+  artifacts:
+    paths: [.mss/vdp_go.json]
+    expire_in: 30 days
+
+ruby scan:
+  stage: scan
+  script:
+    - python ruby_scan.py . --json > .mss/vdp_ruby.json
+    - python -c "import json;d=json.load(open('.mss/vdp_ruby.json'));print(f'Ruby: {len(d.get(\"violations\",[]))} violations')"
+  artifacts:
+    paths: [.mss/vdp_ruby.json]
+    expire_in: 30 days
+
+kotlin scan:
+  stage: scan
+  script:
+    - python kotlin_scan.py . --json > .mss/vdp_kotlin.json
+    - python -c "import json;d=json.load(open('.mss/vdp_kotlin.json'));print(f'Kotlin: {len(d.get(\"violations\",[]))} violations')"
+  artifacts:
+    paths: [.mss/vdp_kotlin.json]
+    expire_in: 30 days
+
+csharp scan:
+  stage: scan
+  script:
+    - python csharp_scan.py . --json > .mss/vdp_csharp.json
+    - python -c "import json;d=json.load(open('.mss/vdp_csharp.json'));print(f'C#: {len(d.get(\"violations\",[]))} violations')"
+  artifacts:
+    paths: [.mss/vdp_csharp.json]
+    expire_in: 30 days
+
+php scan:
+  stage: scan
+  script:
+    - python php_scan.py . --json > .mss/vdp_php.json
+    - python -c "import json;d=json.load(open('.mss/vdp_php.json'));print(f'PHP: {len(d.get(\"violations\",[]))} violations')"
+  artifacts:
+    paths: [.mss/vdp_php.json]
+    expire_in: 30 days
+
+# ── Stage 2: Analysis ──
+
+dsl rules:
+  stage: analyze
+  script:
+    - python vdp_dsl.py . --demo --json > .mss/vdp_dsl.json
+  artifacts:
+    paths: [.mss/vdp_dsl.json]
+    expire_in: 30 days
+
+content compliance:
+  stage: analyze
+  script:
+    - python content_compliance.py . --recursive --json > .mss/content_compliance.json
+    - python -c "import json;d=json.load(open('.mss/content_compliance.json'));r=d.get('report',{});print(f'Content: {r.get(\"total_violations\",0)} violations')"
+  artifacts:
+    paths: [.mss/content_compliance.json]
+    expire_in: 30 days
+
+org resilience:
+  stage: analyze
+  script:
+    - python org_resilience.py --demo --json > .mss/org_resilience.json
+    - python -c "import json;d=json.load(open('.mss/org_resilience.json'));print(f'Org: M={d[\"global\"][\"M\"]} T_o={d[\"tuning\"][\"T_o\"]}')"
+  artifacts:
+    paths: [.mss/org_resilience.json]
+    expire_in: 30 days
+
+# ── Stage 3: Unified Report ──
+
+unified audit:
+  stage: report
+  script:
+    - python vdp_pipeline.py . --json > .mss/vdp_report.json
+    - |
+      python -c "
+      import json
+      r=json.load(open('.mss/vdp_report.json'))
+      total=sum(len(v.get('violations',[])) for v in r if isinstance(v,dict))
+      rejects=sum(1 for v in r if isinstance(v,dict) and v.get('verdict')=='reject')
+      print(f'TOTAL: {total} violations | {rejects} reject(s)')
+      if rejects > 0: exit(1)
+      "
+  artifacts:
+    paths: [.mss/vdp_report.json]
+    expire_in: 30 days
+
+smoke test:
+  stage: report
+  script:
+    - python smoke_test.py
+  artifacts:
+    paths: [.mss/smoke_test_report.json]
+    expire_in: 30 days
+
+pdf report:
+  stage: report
+  script:
+    - python report_pdf.py .mss/vdp_report.json --output .mss/vdp_report.pdf
+  artifacts:
+    paths: [.mss/vdp_report.pdf]
+    expire_in: 30 days
+  needs: [unified audit]
