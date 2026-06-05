@@ -375,7 +375,31 @@ def main():
         filetype = args.filetype or detect_file_type(None, content)
         result = scan_content(content, filetype, strict=args.strict)
     elif args.target:
-        result = scan_file(args.target, strict=args.strict)
+        target_path = os.path.abspath(args.target)
+        if os.path.isdir(target_path):
+            # Directory scan — walk and scan all files
+            results = []
+            for root, dirs, files in os.walk(target_path):
+                dirs[:] = [d for d in dirs if not d.startswith('.') and d not in ('node_modules','.git','__pycache__','.mss','.run')]
+                for f in files:
+                    if f.endswith(('.py','.ps1','.psm1','.js','.ts','.rs','.go','.rb','.php','.kt','.cs','.java','.cpp','.c')):
+                        filepath = os.path.join(root, f)
+                        results.append(scan_file(filepath, strict=args.strict))
+            # Aggregate results
+            all_v = []
+            for r2 in results:
+                all_v.extend(r2.get('violations', []))
+            has_reject = any(v.get('severity') == 'reject' for v in all_v)
+            has_warn = any(v.get('severity') == 'warn' for v in all_v)
+            result = {
+                'verdict': 'reject' if has_reject else ('warn' if has_warn else 'pass'),
+                'violations': all_v,
+                'files_scanned': len(results),
+                'vdp_version': '1.0',
+                'target': target_path,
+            }
+        else:
+            result = scan_file(target_path, strict=args.strict)
     else:
         parser.print_help()
         sys.exit(1)
