@@ -198,6 +198,49 @@ async function scanAllDocuments() {
     vscode.window.showInformationMessage(`VDP: Scanned ${docs.length} files, ${total} violations found`);
 }
 
+// ── Scan all workspace files (not just open ones) ──
+
+async function scanWorkspaceFiles() {
+    const workspaceFolders = vscode.workspace.workspaceFolders;
+    if (!workspaceFolders || workspaceFolders.length === 0) {
+        const editor = vscode.window.activeTextEditor;
+        if (editor) await scanDocument(editor.document).catch(() => {});
+        return;
+    }
+    
+    const scanExts = Object.keys(EXT_TO_LANG);
+    let files = [];
+    
+    for (const folder of workspaceFolders) {
+        const pattern = `**/*{${scanExts.join(',')}}`;
+        const found = await vscode.workspace.findFiles(
+            new vscode.RelativePattern(folder, pattern),
+            '**/node_modules/**,**/.git/**,**/__pycache__/**'
+        );
+        files.push(...found);
+    }
+    
+    if (files.length === 0) return;
+    files = files.slice(0, 50);
+    
+    await vscode.window.withProgress({
+        location: vscode.ProgressLocation.Window,
+        title: `VDP: Scanning ${files.length} workspace files...`,
+    }, async (progress) => {
+        let total = 0;
+        for (let i = 0; i < files.length; i++) {
+            try {
+                const doc = await vscode.workspace.openTextDocument(files[i]);
+                const r = await scanDocument(doc);
+                if (r && r.violations !== undefined) total += r.violations;
+            } catch {}
+            progress.report({ increment: 100 / files.length });
+        }
+        const msg = total === 0 ? '$(pass) VDP: Workspace clean' : `$(warning) VDP: ${total} violations`;
+        vscode.window.setStatusBarMessage(msg, 8000);
+    });
+}
+
 // ── Status Bar ──
 
 function updateStatusBar(autoScanEnabled = null) {
@@ -291,21 +334,39 @@ function activate(context) {
         })
     );
     
-    // ── Auto-scan on save ──
+    // ── Auto-scan triggers: activate, change (debounced), save, editor switch ──
+    let scanTimeout = null;
     
+    // On document change: debounced 2s (scan without needing save)
+    context.subscriptions.push(
+        vscode.workspace.onDidChangeTextDocument(async (event) => {
+            const autoScan = vscode.workspace.getConfiguration('vdp').get('autoScanOnSave', true);
+            if (!autoScan || !event.document || event.document.isUntitled) return;
+            if (scanTimeout) clearTimeout(scanTimeout);
+            scanTimeout = setTimeout(() => scanDocument(event.document).catch(() => {}), 2000);
+        })
+    );
+    
+    // On save: immediate scan
     context.subscriptions.push(
         vscode.workspace.onDidSaveTextDocument(async (document) => {
-            const autoScan = vscode.workspace.getConfiguration('vdp').get('autoScanOnSave', true);
-            if (autoScan) {
+            if (vscode.workspace.getConfiguration('vdp').get('autoScanOnSave', true)) {
                 await scanDocument(document);
             }
         })
     );
     
-    // Scan currently open file on activation
-    const editor = vscode.window.activeTextEditor;
-    if (editor) {
-        scanDocument(editor.document).catch(() => {});
+    // On editor switch: scan newly focused file
+    context.subscriptions.push(
+        vscode.window.onDidChangeActiveTextEditor(async (editor) => {
+            if (editor && !editor.document.isUntitled) {
+                await scanDocument(editor.document).catch(() => {});
+            }
+        })
+    );
+    
+    // On activation: scan all workspace files
+    scanWorkspaceFiles().catch(() => {});
     }
     
     // ── Config change ──
