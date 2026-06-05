@@ -1,0 +1,8 @@
+__pycache__/
+.mss/
+.run/
+.vdp_reports/
+*.pyc
+*.pdf
+*.jsonl
+*.bak
