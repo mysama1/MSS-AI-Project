@@ -1,0 +1,13 @@
+tree-sitter>=0.20
+tree-sitter-python
+tree-sitter-javascript
+tree-sitter-rust
+tree-sitter-java
+tree-sitter-cpp
+tree-sitter-c
+tree-sitter-go
+tree-sitter-ruby
+tree-sitter-php
+uvicorn
+fastapi
+pydantic

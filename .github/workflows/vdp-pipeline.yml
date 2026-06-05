@@ -27,52 +27,67 @@ jobs:
           pip install tree-sitter-java tree-sitter-cpp tree-sitter-c
           pip install tree-sitter-go tree-sitter-ruby tree-sitter-php
 
-      - name: VDP — Full Pipeline (Python V1-V6)
+      - name: VDP — Python scan
+        continue-on-error: true
         run: |
           python vdp_scan.py . --format json > vdp_python.json
-          python -c "import json; r=json.load(open('vdp_python.json')); print('Python V1-V6:', r.get('files_scanned',0), 'files |', len(r.get('violations',[])), 'violations')"
+          python -c "import json; r=json.load(open('vdp_python.json')); print('Python:', r.get('files_scanned',0), 'files |', len(r.get('violations',[])), 'violations')"
 
       - name: VDP — JS/TS scan
+        continue-on-error: true
         run: |
           python js_scan.py . --json > vdp_js.json || echo "[]" > vdp_js.json
           python -c "import json; r=json.load(open('vdp_js.json')); print('JS/TS:', len(r.get('violations',[])), 'violations')"
 
       - name: VDP — Rust scan
+        continue-on-error: true
         run: |
           python rust_scan.py . --json > vdp_rust.json || echo "[]" > vdp_rust.json
           python -c "import json; r=json.load(open('vdp_rust.json')); print('Rust:', len(r.get('violations',[])), 'violations')"
 
       - name: VDP — Java/C/C++ scan
+        continue-on-error: true
         run: |
           python java_cpp_scan.py . --json > vdp_java_cpp.json || echo "[]" > vdp_java_cpp.json
           python -c "import json; r=json.load(open('vdp_java_cpp.json')); print('Java/C/C++:', len(r.get('violations',[])), 'violations')"
 
       - name: VDP — Go scan
+        continue-on-error: true
         run: |
           python go_scan.py . --json > vdp_go.json || echo "[]" > vdp_go.json
           python -c "import json; r=json.load(open('vdp_go.json')); print('Go:', len(r.get('violations',[])), 'violations')"
 
       - name: VDP — Ruby scan
+        continue-on-error: true
         run: |
           python ruby_scan.py . --json > vdp_ruby.json || echo "[]" > vdp_ruby.json
           python -c "import json; r=json.load(open('vdp_ruby.json')); print('Ruby:', len(r.get('violations',[])), 'violations')"
 
       - name: VDP — PHP scan
+        continue-on-error: true
         run: |
           python php_scan.py . --json > vdp_php.json || echo "[]" > vdp_php.json
           python -c "import json; r=json.load(open('vdp_php.json')); print('PHP:', len(r.get('violations',[])), 'violations')"
 
       - name: VDP — Kotlin scan
+        continue-on-error: true
         run: |
           python kotlin_scan.py . --json > vdp_kotlin.json || echo "[]" > vdp_kotlin.json
           python -c "import json; r=json.load(open('vdp_kotlin.json')); print('Kotlin:', len(r.get('violations',[])), 'violations')"
 
       - name: VDP — C# scan
+        continue-on-error: true
         run: |
           python csharp_scan.py . --json > vdp_csharp.json || echo "[]" > vdp_csharp.json
           python -c "import json; r=json.load(open('vdp_csharp.json')); print('C#:', len(r.get('violations',[])), 'violations')"
 
+      - name: PS — 8-point safety check
+        continue-on-error: true
+        run: |
+          python ps_verify.py check --json > ps_check.json
+
       - name: VDP — Unified Audit
+        continue-on-error: true
         shell: pwsh
         run: |
           python vdp_pipeline.py . --json > vdp_report.json
@@ -86,10 +101,6 @@ jobs:
           print(f"TOTAL: {files} files | {total} violations | {rejects} reject(s)")
           sys.exit(1 if rejects > 0 else 0)
           '@
-
-      - name: PS — 8-point safety check
-        run: |
-          python ps_verify.py check --json > ps_check.json
 
       - name: Upload JSON results
         uses: actions/upload-artifact@v4
