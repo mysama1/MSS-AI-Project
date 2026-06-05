@@ -1,0 +1,11 @@
+{
+  "patch_id": "PATCH-90d54a64",
+  "content": {
+    "type": "L2_protective_belt_extension",
+    "target_axiom": "A6",
+    "content": "针对A6的L2防护规则（升维生成）",
+    "ascension_mechanism": "A6_contradiction_elevation",
+    "w_asc": 0.15
+  },
+  "target_axiom": "A6"
+}

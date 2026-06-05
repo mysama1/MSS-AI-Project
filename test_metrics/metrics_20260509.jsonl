@@ -1,0 +1,1 @@
+{"timestamp": "2026-05-09T21:00:00", "total_requests": 100, "success_count": 95, "failure_count": 5, "avg_response_time": 0.5, "min_response_time": 0.1, "max_response_time": 2.0, "cache_hit_rate": 0.85, "gpu_memory_used": 4096, "health_score": 0.95, "alert_count": 0}

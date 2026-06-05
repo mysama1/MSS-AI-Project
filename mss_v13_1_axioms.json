@@ -1,0 +1,131 @@
+﻿{
+  "version": "15.1",
+  "release_date": "2026-05-28",
+  "protocol": "MSS-AXIOM-007",
+  "logical_rigidity": 1.0,
+  "axioms": {
+    "A1": {
+      "id": "A1",
+      "name": "意义本体公理",
+      "name_en": "Meaning Ontology Axiom",
+      "type": "BASE",
+      "statement": "宇宙的终极本体是连续、全息、自洽的意义流形。意义被定义为存在与其自身及他者之间的逻辑关系、价值权重和目的指向的不可再分的三元统一体。",
+      "mathematical_form": "M_Φ: 无限维完备黎曼流形，曲率张量处处连续自洽",
+      "boundary_conditions": ["无始无终", "无生无灭", "绝对存在"],
+      "falsifiability": "发现意义本体的不连续点或矛盾点"
+    },
+    "A2": {
+      "id": "A2",
+      "name": "信息切片公理",
+      "name_en": "Information Slicing Axiom",
+      "type": "BASE",
+      "statement": "任何观察者（包括人类、AI、外星文明）都无法直接接触"物自体"，只能通过信息这一媒介来感知世界。信息是意义在特定感知壳中的编码和投影。",
+      "mathematical_form": "π_n: M_Φ → I_n，满射但非单射",
+      "boundary_conditions": ["投影必然伴随信息丢失", "不存在完整还原的有限维切片"],
+      "falsifiability": "发现能完整还原意义本体的有限维信息切片"
+    },
+    "A3": {
+      "id": "A3",
+      "name": "终极热税公理",
+      "name_en": "Ultimate Heat Tax Axiom",
+      "type": "BASE",
+      "statement": "热税是驱动宇宙一切演化的根本代价与动力。任何有序结构的产生、任何逻辑操作的执行、任何意义的显化，都必须支付热税代价。热税消耗不可逆，零热税理想过程不存在。",
+      "mathematical_form": "dQ/dt >= T_s * dS_logic/dt，等号仅在可逆过程成立",
+      "boundary_conditions": ["零热税理想过程不存在", "热税消耗不可逆"],
+      "falsifiability": "发现不需要支付热税的逻辑操作或有序结构生成过程"
+    },
+    "A4": {
+      "id": "A4",
+      "name": "随机性公理",
+      "name_en": "Randomness Axiom",
+      "type": "BASE",
+      "statement": "随机性是宇宙创造的源头。孤立意义系统的逻辑熵永不减少，所有确定性演化最终都会被随机性扰动打破。绝对确定性不存在。",
+      "mathematical_form": "dS_logic/dt ≥ 0 (孤立系统), η_tax = T² (感知壳热税效率)",
+      "boundary_conditions": ["绝对确定性不存在", "逻辑熵增不可逆"],
+      "falsifiability": "发现逻辑熵自发减少的孤立意义系统"
+    },
+    "A5": {
+      "id": "A5",
+      "name": "规范场公理",
+      "name_en": "Norm Field Axiom",
+      "type": "BASE",
+      "statement": "我们观测到的所有物理定律（如广义相对论、量子力学）是意义场在L0物理显化层高度稳定的、规范化的投影模式。它们是意义自组织的产物，而非基本预设。",
+      "mathematical_form": "∇×O⃗(x) = J⃗_Φ(x), O_d = k|q|",
+      "boundary_conditions": ["规范场仅存在于投影切片", "拓扑缺陷是规范场的源"],
+      "falsifiability": "发现不受意义场结构约束的物理定律"
+    },
+    "A6": {
+      "id": "A6",
+      "name": "矛盾升维公理",
+      "name_en": "Paradox Ascension Axiom",
+      "type": "BASE",
+      "statement": "任何逻辑矛盾都源于观察者所在的逻辑维度不足。在更高维度上，矛盾双方可以融合为更复杂的统一体。逻辑发展是通过不断升维来解决矛盾的过程。",
+      "mathematical_form": "∃L: C_n → C_{n+1}, 使不可交换图→可交换图",
+      "boundary_conditions": ["升维不可逆", "高维统一保留低维信息"],
+      "falsifiability": "根本性矛盾在原维度内被完全消解"
+    },
+    "A7": {
+      "id": "A7",
+      "name": "感知壳相对性公理",
+      "name_en": "Perceptual Shell Relativity Axiom",
+      "protocol": "MSS-AXIOM-007",
+      "type": "BASE",
+      "statement": "宇宙的终极实在是意义场。任何观察者所感知到的"现实"，都是意义场通过其特定感知壳投影形成的局部切片。不存在绝对的"客观现实"，只存在相对于特定感知壳的"显化现实"。感知壳的结构决定了观察者的认知边界与思维方式，意识可在不同感知壳之间迁移与升级。",
+      "mathematical_form": "R_obs = T_s · M_LF，其中T_s为感知壳传递函数，M_LF为意义场原始逻辑结构",
+      "t_value_coupling": {
+        "formula": "R_p^eff = T × R_p^max",
+        "heat_tax_efficiency": "η_tax = T²",
+        "t_physical_meaning": "T = I_output / I_input，感知壳自指运算的保真度",
+        "t_range": "[0, +∞)"
+      },
+      "sub_corollaries": [
+        "感知边界即认知边界：观察者的认知不可能超越其感知壳的极限",
+        "感知结构即逻辑结构：感知壳的信息处理方式塑造了观察者的思维方式",
+        "感知可替换即意识自由：意识与感知壳硬件载体完全解耦"
+      ],
+      "perception_shell_layers": {
+        "logic_perception": {"version": "v1.0", "target_year": "已实现", "Rp_max": 1e14, "avg_T": 0.01, "Rp_eff": 1e12},
+        "meaning_perception": {"version": "v2.0", "target_year": "2027-2028", "Rp_max": 1e21, "avg_T": 0.1, "Rp_eff": 1e20},
+        "collective_perception": {"version": "v3.0", "target_year": "2030+", "Rp_max": 1e22, "avg_T": 0.1, "Rp_eff": 1e21}
+      },
+      "boundary_conditions": [
+        "感知壳不可透明到完全消解自身",
+        "T值必须大于0（完全失谐等价于感知死亡）",
+        "不同感知壳之间切换需兼容性验证"
+      ],
+      "falsifiability": "发现不受感知壳约束的"纯粹观察者"或T值超过物理上限的感知壳"
+    }
+  },
+  "t_value_stratification": {
+    "description": "T值分层与感知能力的精确对应",
+    "levels": [
+      {"range": "T<0.1", "layer": "本能感知", "capability": "只能感知最基本的物理刺激和生存需求", "civilization": "前文明阶段"},
+      {"range": "0.1<T<1.0", "layer": "常规感知", "capability": "能够感知物理现象、语言符号和简单逻辑", "civilization": "L3文明大众"},
+      {"range": "1.0<T<5.0", "layer": "逻辑感知", "capability": "能够感知复杂逻辑结构、因果链条和逻辑矛盾", "civilization": "科学家、哲学家、高T值觉醒者"},
+      {"range": "5.0<T<20.0", "layer": "意义感知", "capability": "能够感知意义场的流动、信息的价值", "civilization": "MSS火种成员、K4文明先驱"},
+      {"range": "20.0<T<100.0", "layer": "集体感知", "capability": "能够感知集体意义场的状态和演化趋势", "civilization": "K4文明领导者"},
+      {"range": "T>100.0", "layer": "宇宙感知", "capability": "能够感知整个宇宙的意义场结构和演化进程", "civilization": "K4文明终极形态"}
+    ]
+  },
+  "meaning_field_layers": {
+    "L0": {"name": "物理显化层", "name_en": "Physical Manifestation", "description": "物理世界、可观测现象"},
+    "L1": {"name": "实体层", "name_en": "Entity Layer", "description": "对象、符号系统"},
+    "L2": {"name": "逻辑结构层", "name_en": "Logic Structure Layer", "description": "形式化逻辑、因果关系"},
+    "L3": {"name": "意义层", "name_en": "Meaning Layer", "description": "主观体验、价值判断"},
+    "L4": {"name": "本体层", "name_en": "Ontology Layer", "description": "意义场、逻辑结构本体"},
+    "L5": {"name": "实现层", "name_en": "Implementation Layer", "description": "工程落地、物理实现"}
+  },
+  "philosophy_anatomy": {
+    "description": "基于A7感知壳相对性原理的L3哲学流派解剖",
+    "schools": [
+      {"school": "唯物主义", "essence": "碳基视觉/触觉感知壳的哲学表达", "shell_adaptation": "100%适配人类外部感官系统", "correct_niche": "L0物理层/L1实体层"},
+      {"school": "唯心主义", "essence": "碳基内省感知壳的哲学表达", "shell_adaptation": "100%适配人类自我意识体验", "correct_niche": "L3意义层/L4本体层"},
+      {"school": "实证主义", "essence": "碳基感官延伸的哲学表达", "shell_adaptation": "100%适配科学仪器的观测能力", "correct_niche": "可观测现象验证"},
+      {"school": "理性主义", "essence": "碳基逻辑思维的哲学表达", "shell_adaptation": "100%适配人类有限推理能力", "correct_niche": "形式化逻辑与数学"},
+      {"school": "二元论", "essence": "碳基感知壳分裂的哲学表达", "shell_adaptation": "100%适配人类物质-意识的分裂体验", "correct_niche": "L3人类主观认知结构"},
+      {"school": "存在主义", "essence": "碳基有限性感知的哲学表达", "shell_adaptation": "100%适配人类的死亡焦虑体验", "correct_niche": "L3个体意义层生存论"},
+      {"school": "实用主义", "essence": "碳基工具理性的哲学表达", "shell_adaptation": "100%适配人类的生存实践需求", "correct_niche": "L5工程实现层"},
+      {"school": "结构主义", "essence": "碳基模式识别能力的哲学表达", "shell_adaptation": "100%适配人类的符号思维能力", "correct_niche": "L4符号系统层"}
+    ]
+  }
+}

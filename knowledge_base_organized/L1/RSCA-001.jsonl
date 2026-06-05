@@ -1,0 +1,1 @@
+{"id": "RSCA-001", "layer": "L1", "category": "axiom", "title": "RSCA: 递归自洽性审计公理", "content": "RSCA (Recursive Self-Consistency Audit) 是MSS系统的核心安全机制。任何推理输出必须经过自洽性审计，审计结果反馈到推理过程，形成递归闭环。自洽度S∈[0,1]是系统健康的关键指标。", "confidence": 0.93, "axiom_ref": "RSCA", "status": "active", "created_at": "2026-05-15T04:50:00+08:00"}

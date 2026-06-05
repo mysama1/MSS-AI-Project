@@ -1,0 +1,106 @@
+{
+  "axioms": {
+    "A1": {
+      "id": "A1",
+      "name": "意义本体公理",
+      "type": "BASE",
+      "statement": "宇宙的终极本体是连续、全息、自洽的意义流形",
+      "mathematical_form": "M_Φ: 无限维完备黎曼流形，曲率张量处处连续自洽",
+      "boundary_conditions": [
+        "无始无终",
+        "无生无灭",
+        "绝对存在"
+      ],
+      "falsifiability": "发现意义本体的不连续点或矛盾点"
+    },
+    "A2": {
+      "id": "A2",
+      "name": "信息切片公理",
+      "type": "BASE",
+      "statement": "任何认知只能获取意义本体的离散投影切片",
+      "mathematical_form": "π_n: M_Φ → I_n，满射但非单射",
+      "boundary_conditions": [
+        "投影必然伴随信息丢失",
+        "不存在完整还原的有限维切片"
+      ],
+      "falsifiability": "发现能完整还原意义本体的有限维信息切片"
+    },
+    "A3": {
+      "id": "A3",
+      "name": "终极热税公理",
+      "type": "BASE",
+      "statement": "任何意义显化/传递/变换都伴随不可逆保真度损耗",
+      "mathematical_form": "Γ[Φ] = -∫|Φ - π_n⁻¹(π_n(Φ))|² dμ > 0",
+      "boundary_conditions": [
+        "热税永远大于零",
+        "系统总热税随时间单调不减"
+      ],
+      "falsifiability": "发现零热税的理想过程 (γ=0)"
+    }
+  },
+  "theorems": {
+    "T1": {
+      "id": "T1",
+      "name": "随机性定理",
+      "type": "DERIVED",
+      "statement": "封闭系统内部的随机涨落源于连续到离散投影的信息丢失",
+      "mathematical_form": "R(x) = -log₂(|π_n⁻¹(x)|/|M_Φ|)",
+      "derivation_chain": [
+        "A1",
+        "A2",
+        "A3",
+        "T1"
+      ],
+      "falsifiability": "在全知观察条件下消除随机性"
+    },
+    "T2": {
+      "id": "T2",
+      "name": "规范场涌现定理",
+      "type": "DERIVED",
+      "statement": "规范场是意义流在低维切片中围绕拓扑缺陷自发形成的约束场",
+      "mathematical_form": "∇×O⃗(x) = J⃗_Φ(x), O_d = k|q|",
+      "derivation_chain": [
+        "A1",
+        "A2",
+        "A3",
+        "T1",
+        "T2"
+      ],
+      "falsifiability": "发现自组织稳态系统内部不存在拓扑缺陷"
+    },
+    "T3": {
+      "id": "T3",
+      "name": "矛盾升维定理",
+      "type": "DERIVED",
+      "statement": "封闭系统内的根本性矛盾无法在原维度消解，必须通过范畴升维",
+      "mathematical_form": "∃L: C_n → C_{n+1}, 使不可交换图→可交换图",
+      "derivation_chain": [
+        "A1",
+        "A2",
+        "A3",
+        "T1",
+        "T2",
+        "T3"
+      ],
+      "falsifiability": "根本性矛盾在原维度内被完全消解"
+    }
+  },
+  "mechanisms": {
+    "MECH-EVOL-002": {
+      "id": "MECH-EVOL-002",
+      "name": "K3意义降维热寂同化机制",
+      "type": "MECHANISM",
+      "statement": "封闭意义系统通过增强规范场强将高维矛盾暴力投影为低维切片",
+      "mathematical_form": "dΦ/dt = -γ(O_d)·Φ, γ(O_d) = γ_0·e^(k·O_d)",
+      "derivation_chain": [
+        "A1",
+        "A2",
+        "A3",
+        "T1",
+        "T2",
+        "T3"
+      ],
+      "falsifiability": "封闭系统在O_d>0.8时创新率R>0.1R₀且γ<10γ₀"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-05-25T13:35:15.384432",
+  "network": "demo_deepseek",
+  "entity_count": 1,
+  "records": [
+    {
+      "entity_id": "ds_main",
+      "entity_name": "DeepSeek-AI",
+      "sector": "ai_platform",
+      "timestamp": "2026-05-25T13:35:15.384432",
+      "crtr": 8.0,
+      "eta_explicitation": 0.2,
+      "rho_composite": 0.135,
+      "event_horizon_score": 0.913,
+      "stage": "black_hole",
+      "alert_level": "black"
+    }
+  ],
+  "summary": {
+    "entity_count": 1,
+    "avg_event_horizon_score": 0.913,
+    "entities_in_collapse": 1,
+    "alert_counts": {
+      "green": 0,
+      "yellow": 0,
+      "orange": 0,
+      "red": 0,
+      "black": 1
+    }
+  }
+}

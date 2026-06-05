@@ -1,0 +1,2433 @@
+{
+  "export_time": "2026-05-20T16:29:42.023052",
+  "version": "1.0",
+  "source": "QClaw",
+  "target": "u-claw",
+  "files": [
+    {
+      "type": "project",
+      "path": ".dockerignore",
+      "size": 413
+    },
+    {
+      "type": "project",
+      "path": ".session_state.json",
+      "size": 281
+    },
+    {
+      "type": "project",
+      "path": "ai_content_compliant.json",
+      "size": 3969
+    },
+    {
+      "type": "project",
+      "path": "analyze_ai_content.py",
+      "size": 10740
+    },
+    {
+      "type": "project",
+      "path": "analyze_l1_connections.py",
+      "size": 1108
+    },
+    {
+      "type": "project",
+      "path": "anti_meme_system_compliant.md",
+      "size": 4288
+    },
+    {
+      "type": "project",
+      "path": "anti_meme_system_raw.md",
+      "size": 1205
+    },
+    {
+      "type": "project",
+      "path": "API_GUIDE.md",
+      "size": 7413
+    },
+    {
+      "type": "project",
+      "path": "app.py",
+      "size": 1157
+    },
+    {
+      "type": "project",
+      "path": "arbiter_agent.py",
+      "size": 4341
+    },
+    {
+      "type": "project",
+      "path": "ARCHITECTURE.md",
+      "size": 6343
+    },
+    {
+      "type": "project",
+      "path": "auto_analyzer.py",
+      "size": 12264
+    },
+    {
+      "type": "project",
+      "path": "base_guide_v1.0.md",
+      "size": 5473
+    },
+    {
+      "type": "project",
+      "path": "batch_processor.py",
+      "size": 13232
+    },
+    {
+      "type": "project",
+      "path": "benchmark_2000_grid.py",
+      "size": 4248
+    },
+    {
+      "type": "project",
+      "path": "benchmark_comparison.py",
+      "size": 5032
+    },
+    {
+      "type": "project",
+      "path": "benchmark_large_grid.py",
+      "size": 2808
+    },
+    {
+      "type": "project",
+      "path": "benchmark_simple.py",
+      "size": 6844
+    },
+    {
+      "type": "project",
+      "path": "cfg_industry_benchmark.py",
+      "size": 3764
+    },
+    {
+      "type": "project",
+      "path": "CHANGELOG.md",
+      "size": 7472
+    },
+    {
+      "type": "project",
+      "path": "CHANGELOG_v1.0.md",
+      "size": 1230
+    },
+    {
+      "type": "project",
+      "path": "check_kb.py",
+      "size": 532
+    },
+    {
+      "type": "project",
+      "path": "compliance_scanner.py",
+      "size": 14858
+    },
+    {
+      "type": "project",
+      "path": "config_manager.py",
+      "size": 12517
+    },
+    {
+      "type": "project",
+      "path": "config_watcher.py",
+      "size": 3836
+    },
+    {
+      "type": "project",
+      "path": "cupy_benchmark.py",
+      "size": 4286
+    },
+    {
+      "type": "project",
+      "path": "cupy_check.py",
+      "size": 941
+    },
+    {
+      "type": "project",
+      "path": "demo_v3.py",
+      "size": 2491
+    },
+    {
+      "type": "project",
+      "path": "demo_v3_result.txt",
+      "size": 2382
+    },
+    {
+      "type": "project",
+      "path": "dialog_fork.py",
+      "size": 10482
+    },
+    {
+      "type": "project",
+      "path": "docker-compose.yml",
+      "size": 1069
+    },
+    {
+      "type": "project",
+      "path": "Dockerfile",
+      "size": 1218
+    },
+    {
+      "type": "project",
+      "path": "enhanced_compliance_scanner.py",
+      "size": 17062
+    },
+    {
+      "type": "project",
+      "path": "entropy_radar_content.md",
+      "size": 3428
+    },
+    {
+      "type": "project",
+      "path": "esp_integration.py",
+      "size": 9485
+    },
+    {
+      "type": "project",
+      "path": "fix_encoding.py",
+      "size": 2916
+    },
+    {
+      "type": "project",
+      "path": "gateway_monitor.log",
+      "size": 44118
+    },
+    {
+      "type": "project",
+      "path": "gateway_monitor.py",
+      "size": 9801
+    },
+    {
+      "type": "project",
+      "path": "gateway_monitor_task.ps1",
+      "size": 1294
+    },
+    {
+      "type": "project",
+      "path": "git_commit.bat",
+      "size": 622
+    },
+    {
+      "type": "project",
+      "path": "gravitational_assimilation.py",
+      "size": 6415
+    },
+    {
+      "type": "project",
+      "path": "hybrid_reasoning.py",
+      "size": 17442
+    },
+    {
+      "type": "project",
+      "path": "industry_benchmarks.py",
+      "size": 13155
+    },
+    {
+      "type": "project",
+      "path": "industry_config.json",
+      "size": 1758
+    },
+    {
+      "type": "project",
+      "path": "init_task_system.py",
+      "size": 4243
+    },
+    {
+      "type": "project",
+      "path": "install_gateway_monitor.ps1",
+      "size": 1151
+    },
+    {
+      "type": "project",
+      "path": "install_monitor_task.ps1",
+      "size": 1649
+    },
+    {
+      "type": "project",
+      "path": "interactive_cli.py",
+      "size": 17907
+    },
+    {
+      "type": "project",
+      "path": "k4sim_validator.py",
+      "size": 6003
+    },
+    {
+      "type": "project",
+      "path": "kb_loader.py",
+      "size": 14185
+    },
+    {
+      "type": "project",
+      "path": "kb_status_check.py",
+      "size": 829
+    },
+    {
+      "type": "project",
+      "path": "kb_v3_bridge.py",
+      "size": 6060
+    },
+    {
+      "type": "project",
+      "path": "l1_implies_completion.py",
+      "size": 8428
+    },
+    {
+      "type": "project",
+      "path": "marxist_translation_compliant.md",
+      "size": 4185
+    },
+    {
+      "type": "project",
+      "path": "marxist_translation_raw.md",
+      "size": 1148
+    },
+    {
+      "type": "project",
+      "path": "mem_boundary_report.json",
+      "size": 1284
+    },
+    {
+      "type": "project",
+      "path": "mem_boundary_test.py",
+      "size": 5031
+    },
+    {
+      "type": "project",
+      "path": "metrics_persistence.py",
+      "size": 4100
+    },
+    {
+      "type": "project",
+      "path": "migrate_to_uclaw.py",
+      "size": 12124
+    },
+    {
+      "type": "project",
+      "path": "mis_demo_status.py",
+      "size": 2629
+    },
+    {
+      "type": "project",
+      "path": "monitoring_dashboard.py",
+      "size": 15156
+    },
+    {
+      "type": "project",
+      "path": "mss_analyzer.py",
+      "size": 15038
+    },
+    {
+      "type": "project",
+      "path": "mss_checkpoint.py",
+      "size": 12595
+    },
+    {
+      "type": "project",
+      "path": "mss_config.py",
+      "size": 10956
+    },
+    {
+      "type": "project",
+      "path": "mss_config.toml",
+      "size": 1087
+    },
+    {
+      "type": "project",
+      "path": "mss_content_diagnoser.py",
+      "size": 14726
+    },
+    {
+      "type": "project",
+      "path": "mss_content_diagnoser_v2.py",
+      "size": 21257
+    },
+    {
+      "type": "project",
+      "path": "mss_exceptions.py",
+      "size": 8244
+    },
+    {
+      "type": "project",
+      "path": "mss_generator.py",
+      "size": 9726
+    },
+    {
+      "type": "project",
+      "path": "mss_memory_layer.py",
+      "size": 18884
+    },
+    {
+      "type": "project",
+      "path": "mss_model_manager.py",
+      "size": 12615
+    },
+    {
+      "type": "project",
+      "path": "mss_persuasion_kit.py",
+      "size": 12996
+    },
+    {
+      "type": "project",
+      "path": "mss_responder_v2.py",
+      "size": 5907
+    },
+    {
+      "type": "project",
+      "path": "mss_stability.py",
+      "size": 15932
+    },
+    {
+      "type": "project",
+      "path": "mss_tactic_integrated.py",
+      "size": 31225
+    },
+    {
+      "type": "project",
+      "path": "mss_types.py",
+      "size": 1213
+    },
+    {
+      "type": "project",
+      "path": "mss_v12_axioms.json",
+      "size": 3425
+    },
+    {
+      "type": "project",
+      "path": "nl_bridge.py",
+      "size": 15571
+    },
+    {
+      "type": "project",
+      "path": "nl_bridge_v2.py",
+      "size": 14940
+    },
+    {
+      "type": "project",
+      "path": "omega_content_compliant.json",
+      "size": 3570
+    },
+    {
+      "type": "project",
+      "path": "omega_content_raw.md",
+      "size": 5813
+    },
+    {
+      "type": "project",
+      "path": "organizational_resilience.py",
+      "size": 21321
+    },
+    {
+      "type": "project",
+      "path": "package-lock.json",
+      "size": 93
+    },
+    {
+      "type": "project",
+      "path": "persona_v2_1_compliant.md",
+      "size": 4053
+    },
+    {
+      "type": "project",
+      "path": "phi_whitepaper_supplement.md",
+      "size": 4750
+    },
+    {
+      "type": "project",
+      "path": "phi_whitepaper_v2.md",
+      "size": 1784
+    },
+    {
+      "type": "project",
+      "path": "post_process_engine.py",
+      "size": 25082
+    },
+    {
+      "type": "project",
+      "path": "post_process_engine_v3.py",
+      "size": 29131
+    },
+    {
+      "type": "project",
+      "path": "power_manager.py",
+      "size": 17262
+    },
+    {
+      "type": "project",
+      "path": "profile_stats.prof",
+      "size": 765815
+    },
+    {
+      "type": "project",
+      "path": "prompt_templates.py",
+      "size": 12164
+    },
+    {
+      "type": "project",
+      "path": "README.md",
+      "size": 8624
+    },
+    {
+      "type": "project",
+      "path": "README_gateway_monitor.md",
+      "size": 3962
+    },
+    {
+      "type": "project",
+      "path": "README_v1.0.md",
+      "size": 4682
+    },
+    {
+      "type": "project",
+      "path": "refactor_plan.md",
+      "size": 2631
+    },
+    {
+      "type": "project",
+      "path": "release_v1.0.py",
+      "size": 7722
+    },
+    {
+      "type": "project",
+      "path": "requirements-numba.txt",
+      "size": 388
+    },
+    {
+      "type": "project",
+      "path": "requirements.txt",
+      "size": 631
+    },
+    {
+      "type": "project",
+      "path": "resilience_historical_tracker.py",
+      "size": 14126
+    },
+    {
+      "type": "project",
+      "path": "resilience_visualizer.py",
+      "size": 18447
+    },
+    {
+      "type": "project",
+      "path": "ROADMAP_BC_Phase.md",
+      "size": 6025
+    },
+    {
+      "type": "project",
+      "path": "ROADMAP_BC_Phase_v2.md",
+      "size": 4834
+    },
+    {
+      "type": "project",
+      "path": "ROADMAP_v1.1_to_v2.0.md",
+      "size": 3865
+    },
+    {
+      "type": "project",
+      "path": "ROADMAP_v2.0_Phase_D.md",
+      "size": 13754
+    },
+    {
+      "type": "project",
+      "path": "ROADMAP_Week5.md",
+      "size": 4909
+    },
+    {
+      "type": "project",
+      "path": "run_all_tests.py",
+      "size": 7095
+    },
+    {
+      "type": "project",
+      "path": "run_benchmark.ps1",
+      "size": 142
+    },
+    {
+      "type": "project",
+      "path": "run_diagnoser.bat",
+      "size": 91
+    },
+    {
+      "type": "project",
+      "path": "run_fix_encoding.bat",
+      "size": 79
+    },
+    {
+      "type": "project",
+      "path": "run_monitor.bat",
+      "size": 355
+    },
+    {
+      "type": "project",
+      "path": "run_monitor_daemon.bat",
+      "size": 730
+    },
+    {
+      "type": "project",
+      "path": "sc001_reinit.py",
+      "size": 3910
+    },
+    {
+      "type": "project",
+      "path": "scheduler.py",
+      "size": 4560
+    },
+    {
+      "type": "project",
+      "path": "session_state_manager.py",
+      "size": 5154
+    },
+    {
+      "type": "project",
+      "path": "setup.py",
+      "size": 2659
+    },
+    {
+      "type": "project",
+      "path": "setup_monitor_task.bat",
+      "size": 1546
+    },
+    {
+      "type": "project",
+      "path": "setup_utf8.py",
+      "size": 4764
+    },
+    {
+      "type": "project",
+      "path": "setup_utf8_environment.ps1",
+      "size": 3190
+    },
+    {
+      "type": "project",
+      "path": "sfm_architecture.md",
+      "size": 7272
+    },
+    {
+      "type": "project",
+      "path": "simulation_cupy.py",
+      "size": 15811
+    },
+    {
+      "type": "project",
+      "path": "simulation_framework.py",
+      "size": 17317
+    },
+    {
+      "type": "project",
+      "path": "simulation_numba.py",
+      "size": 19836
+    },
+    {
+      "type": "project",
+      "path": "start_utf8.bat",
+      "size": 161
+    },
+    {
+      "type": "project",
+      "path": "status_report_20260517_195440.md",
+      "size": 2724
+    },
+    {
+      "type": "project",
+      "path": "status_report_20260517_220948.md",
+      "size": 2724
+    },
+    {
+      "type": "project",
+      "path": "status_report_20260517_230000.md",
+      "size": 2724
+    },
+    {
+      "type": "project",
+      "path": "symbolic_engine.py",
+      "size": 24859
+    },
+    {
+      "type": "project",
+      "path": "symbolic_engine_v2.py",
+      "size": 18090
+    },
+    {
+      "type": "project",
+      "path": "symbolic_engine_v3.py",
+      "size": 25378
+    },
+    {
+      "type": "project",
+      "path": "symbolic_engine_v4_architecture.md",
+      "size": 6231
+    },
+    {
+      "type": "project",
+      "path": "symbolic_rules_omega.py",
+      "size": 35262
+    },
+    {
+      "type": "project",
+      "path": "system_status.py",
+      "size": 10617
+    },
+    {
+      "type": "project",
+      "path": "system_status_log.jsonl",
+      "size": 2772
+    },
+    {
+      "type": "project",
+      "path": "task-summary_2026-05-09T2054.md",
+      "size": 2807
+    },
+    {
+      "type": "project",
+      "path": "task-summary_2026-05-09T2101.md",
+      "size": 1748
+    },
+    {
+      "type": "project",
+      "path": "task-summary_2026-05-15_0345.md",
+      "size": 1638
+    },
+    {
+      "type": "project",
+      "path": "task-summary_2026-05-15_0352.md",
+      "size": 1837
+    },
+    {
+      "type": "project",
+      "path": "task-summary_2026-05-15_0405.md",
+      "size": 1749
+    },
+    {
+      "type": "project",
+      "path": "task-summary_2026-05-17-1902.md",
+      "size": 2146
+    },
+    {
+      "type": "project",
+      "path": "task-summary_2026-05-17-1908.md",
+      "size": 1231
+    },
+    {
+      "type": "project",
+      "path": "task-summary_2026-05-17-1922.md",
+      "size": 1343
+    },
+    {
+      "type": "project",
+      "path": "task_bar_current.json",
+      "size": 4026
+    },
+    {
+      "type": "project",
+      "path": "task_delta_reporter.py",
+      "size": 3332
+    },
+    {
+      "type": "project",
+      "path": "task_system.py",
+      "size": 12296
+    },
+    {
+      "type": "project",
+      "path": "task_system_data.json",
+      "size": 9255
+    },
+    {
+      "type": "project",
+      "path": "test_anti_distillation.py",
+      "size": 3771
+    },
+    {
+      "type": "project",
+      "path": "test_auto_analyzer.py",
+      "size": 8677
+    },
+    {
+      "type": "project",
+      "path": "test_checkpoint.py",
+      "size": 5199
+    },
+    {
+      "type": "project",
+      "path": "test_compliance_scanner.py",
+      "size": 6676
+    },
+    {
+      "type": "project",
+      "path": "test_config.py",
+      "size": 3078
+    },
+    {
+      "type": "project",
+      "path": "test_enhanced_compliance_scanner.py",
+      "size": 3901
+    },
+    {
+      "type": "project",
+      "path": "test_esp_integration.py",
+      "size": 4806
+    },
+    {
+      "type": "project",
+      "path": "test_exceptions.py",
+      "size": 7292
+    },
+    {
+      "type": "project",
+      "path": "test_gateway_monitor.py",
+      "size": 4306
+    },
+    {
+      "type": "project",
+      "path": "test_heguang_tongchen.py",
+      "size": 4541
+    },
+    {
+      "type": "project",
+      "path": "test_hybrid_reasoning.py",
+      "size": 5703
+    },
+    {
+      "type": "project",
+      "path": "test_industry_benchmarks.py",
+      "size": 4197
+    },
+    {
+      "type": "project",
+      "path": "test_integration_comprehensive.py",
+      "size": 12906
+    },
+    {
+      "type": "project",
+      "path": "test_integration_stability.py",
+      "size": 5056
+    },
+    {
+      "type": "project",
+      "path": "test_integration_v1.py",
+      "size": 5333
+    },
+    {
+      "type": "project",
+      "path": "test_interactive_cli.py",
+      "size": 5220
+    },
+    {
+      "type": "project",
+      "path": "test_kb_integration.py",
+      "size": 8363
+    },
+    {
+      "type": "project",
+      "path": "test_kb_loader.py",
+      "size": 3416
+    },
+    {
+      "type": "project",
+      "path": "test_kb_v3_bridge.py",
+      "size": 6585
+    },
+    {
+      "type": "project",
+      "path": "test_l1_implies_completion.py",
+      "size": 4390
+    },
+    {
+      "type": "project",
+      "path": "test_mss_diagnoser.py",
+      "size": 4609
+    },
+    {
+      "type": "project",
+      "path": "test_mss_diagnoser_v2.py",
+      "size": 6364
+    },
+    {
+      "type": "project",
+      "path": "test_mss_memory_layer.py",
+      "size": 7156
+    },
+    {
+      "type": "project",
+      "path": "test_mss_persuasion_kit.py",
+      "size": 7377
+    },
+    {
+      "type": "project",
+      "path": "test_nl_bridge.py",
+      "size": 5833
+    },
+    {
+      "type": "project",
+      "path": "test_nl_bridge_v2.py",
+      "size": 7253
+    },
+    {
+      "type": "project",
+      "path": "test_omega_integration.py",
+      "size": 8900
+    },
+    {
+      "type": "project",
+      "path": "test_organizational_resilience.py",
+      "size": 12141
+    },
+    {
+      "type": "project",
+      "path": "test_post_process_engine.py",
+      "size": 10124
+    },
+    {
+      "type": "project",
+      "path": "test_post_process_v3.py",
+      "size": 11595
+    },
+    {
+      "type": "project",
+      "path": "test_power_management.py",
+      "size": 5619
+    },
+    {
+      "type": "project",
+      "path": "test_prompt_templates.py",
+      "size": 3101
+    },
+    {
+      "type": "project",
+      "path": "test_resilience_historical_tracker.py",
+      "size": 7157
+    },
+    {
+      "type": "project",
+      "path": "test_resilience_visualizer.py",
+      "size": 6668
+    },
+    {
+      "type": "project",
+      "path": "test_simulation_framework.py",
+      "size": 8845
+    },
+    {
+      "type": "project",
+      "path": "test_simulation_numba.py",
+      "size": 8419
+    },
+    {
+      "type": "project",
+      "path": "test_stability.py",
+      "size": 4536
+    },
+    {
+      "type": "project",
+      "path": "test_symbolic_engine.py",
+      "size": 6046
+    },
+    {
+      "type": "project",
+      "path": "test_symbolic_engine_v3.py",
+      "size": 13710
+    },
+    {
+      "type": "project",
+      "path": "test_symbolic_rules_omega.py",
+      "size": 12004
+    },
+    {
+      "type": "project",
+      "path": "test_symbolic_v2.py",
+      "size": 5494
+    },
+    {
+      "type": "project",
+      "path": "test_system_status.py",
+      "size": 2497
+    },
+    {
+      "type": "project",
+      "path": "test_topology_metrics.py",
+      "size": 19936
+    },
+    {
+      "type": "project",
+      "path": "test_topology_propagation.py",
+      "size": 4825
+    },
+    {
+      "type": "project",
+      "path": "test_v3_integration.py",
+      "size": 3595
+    },
+    {
+      "type": "project",
+      "path": "test_verification_result.txt",
+      "size": 2236
+    },
+    {
+      "type": "project",
+      "path": "test_virtual_data_generator.py",
+      "size": 5126
+    },
+    {
+      "type": "project",
+      "path": "test_visualization_engine.py",
+      "size": 7026
+    },
+    {
+      "type": "project",
+      "path": "test_war_theory_engine.py",
+      "size": 8509
+    },
+    {
+      "type": "project",
+      "path": "test_websocket_server.py",
+      "size": 12507
+    },
+    {
+      "type": "project",
+      "path": "test_web_api.py",
+      "size": 4759
+    },
+    {
+      "type": "project",
+      "path": "topology_metrics.py",
+      "size": 30786
+    },
+    {
+      "type": "project",
+      "path": "topology_propagation.py",
+      "size": 15446
+    },
+    {
+      "type": "project",
+      "path": "verify_tests.py",
+      "size": 1601
+    },
+    {
+      "type": "project",
+      "path": "virtual_data_generator.py",
+      "size": 16358
+    },
+    {
+      "type": "project",
+      "path": "visualization_engine.py",
+      "size": 18203
+    },
+    {
+      "type": "project",
+      "path": "war_theory_engine.py",
+      "size": 23788
+    },
+    {
+      "type": "project",
+      "path": "websocket_server.py",
+      "size": 14565
+    },
+    {
+      "type": "project",
+      "path": "web_api.py",
+      "size": 15185
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\debug_counts.py",
+      "size": 3081
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\debug_filter.py",
+      "size": 1447
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\debug_filter2.py",
+      "size": 1898
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\debug_filtered_text.py",
+      "size": 1978
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\debug_layer.py",
+      "size": 1643
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\debug_layer2.py",
+      "size": 2042
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\debug_section32.py",
+      "size": 486
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\search_all_entropy.py",
+      "size": 353
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\search_axiom.py",
+      "size": 359
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\search_breakthrough.py",
+      "size": 358
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\search_entropy.py",
+      "size": 292
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\search_l1_keywords.py",
+      "size": 757
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\search_l2_keywords.py",
+      "size": 764
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\search_ontology.py",
+      "size": 349
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\search_solve.py",
+      "size": 358
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\search_words.py",
+      "size": 470
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\test_analyzer.py",
+      "size": 394
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\test_entropy_content.py",
+      "size": 376
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\test_entropy_content_v2.py",
+      "size": 1336
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\test_generator.py",
+      "size": 1030
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\test_model_manager.py",
+      "size": 1102
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\test_persona_arbitration.py",
+      "size": 6854
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\test_persona_compliant.py",
+      "size": 8286
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\verify_compliant.py",
+      "size": 1195
+    },
+    {
+      "type": "project",
+      "path": "archive\\debug_scripts\\verify_omega.py",
+      "size": 1690
+    },
+    {
+      "type": "project",
+      "path": "archive\\system_prompts\\mss_system_prompt_v2_6.md",
+      "size": 2205
+    },
+    {
+      "type": "project",
+      "path": "archive\\system_prompts\\mss_system_prompt_v2_7.md",
+      "size": 2337
+    },
+    {
+      "type": "project",
+      "path": "archive\\system_prompts\\mss_system_prompt_v2_8.md",
+      "size": 2252
+    },
+    {
+      "type": "project",
+      "path": "archive\\system_prompts\\mss_system_prompt_v3_0.md",
+      "size": 2155
+    },
+    {
+      "type": "project",
+      "path": "archive\\system_prompts\\mss_system_prompt_v3_1.md",
+      "size": 1914
+    },
+    {
+      "type": "project",
+      "path": "archive\\system_prompts\\mss_system_prompt_v3_2.md",
+      "size": 2130
+    },
+    {
+      "type": "project",
+      "path": "archive\\system_prompts\\mss_system_prompt_v3_3.md",
+      "size": 1953
+    },
+    {
+      "type": "project",
+      "path": "archive\\system_prompts\\mss_system_prompt_v3_4.md",
+      "size": 1722
+    },
+    {
+      "type": "project",
+      "path": "archive\\system_prompts\\mss_system_prompt_v3_5.md",
+      "size": 1753
+    },
+    {
+      "type": "project",
+      "path": "archive\\system_prompts\\mss_system_prompt_v3_6.md",
+      "size": 1850
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\results.json",
+      "size": 2539
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\results_v2.json",
+      "size": 37075
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\results_v2_5_full.json",
+      "size": 4555
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\results_v2_baseline.json",
+      "size": 7001
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\results_v2_comparison.json",
+      "size": 3350
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\results_v3_4.json",
+      "size": 7628
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\results_v3_7.json",
+      "size": 7652
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\results_v3_7_v2.json",
+      "size": 7559
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v2_1.py",
+      "size": 3775
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v2_2.py",
+      "size": 2471
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v2_3.py",
+      "size": 1850
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v2_4.py",
+      "size": 1869
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v2_5.py",
+      "size": 1868
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v2_6.py",
+      "size": 1322
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v2_7.py",
+      "size": 1322
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v2_8.py",
+      "size": 1322
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v3_0.py",
+      "size": 1322
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v3_1.py",
+      "size": 1322
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v3_2.py",
+      "size": 1322
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v3_3.py",
+      "size": 1322
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v3_4.py",
+      "size": 1322
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_forbidden_v3_6.py",
+      "size": 1322
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_suite_v2.py",
+      "size": 15018
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_suite_v2_5_full.py",
+      "size": 8927
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_suite_v3_4.py",
+      "size": 7366
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_tactic_v0_1.py",
+      "size": 6263
+    },
+    {
+      "type": "project",
+      "path": "archive\\test_history\\test_v2_comparison.py",
+      "size": 7478
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\checkpoint_cp_1779184609999.json",
+      "size": 226
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\checkpoint_cp_1779184910014.json",
+      "size": 226
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\checkpoint_cp_1779185210030.json",
+      "size": 226
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\checkpoint_cp_1779185510043.json",
+      "size": 226
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\checkpoint_cp_1779185810046.json",
+      "size": 225
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\sc001_step_000050000.json",
+      "size": 138
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\sc001_step_000100000.json",
+      "size": 140
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\sc001_step_000150000.json",
+      "size": 140
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\sc001_step_000200000.json",
+      "size": 139
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\sc001_step_000250000.json",
+      "size": 139
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\sc001_step_000300000.json",
+      "size": 140
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\sc001_step_000350000.json",
+      "size": 139
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\sc001_step_000400000.json",
+      "size": 140
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\sc001_step_000450000.json",
+      "size": 135
+    },
+    {
+      "type": "project",
+      "path": "checkpoints\\sc001_step_000500000.json",
+      "size": 140
+    },
+    {
+      "type": "project",
+      "path": "docs\\client_targets.md",
+      "size": 2472
+    },
+    {
+      "type": "project",
+      "path": "docs\\github_manual_auth.md",
+      "size": 1275
+    },
+    {
+      "type": "project",
+      "path": "docs\\K3AI_Embers_Alignment_Protocol.md",
+      "size": 2681
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\a28_high_t_emergence_axiom_v1.0.jsonl",
+      "size": 6016
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\amfi_iteration_v1.0.jsonl",
+      "size": 4286
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\anti_distillation_defense_v1.0.jsonl",
+      "size": 5288
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\anti_hallucination_rules_v1.0.jsonl",
+      "size": 7109
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\anti_hegemony_strategy_v1.0.jsonl",
+      "size": 3418
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\anti_meme_defense_v12.2.jsonl",
+      "size": 882
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\axiom_system_v12.2.jsonl",
+      "size": 5768
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\bct_coupling_v1.0.jsonl",
+      "size": 4441
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\causal_chain_v1.0.jsonl",
+      "size": 4715
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\civilized_cloud_gate_v1.0.jsonl",
+      "size": 8842
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\cloud_gate_protocol_v1.0.jsonl",
+      "size": 7023
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\dao_ontology_v1.0.jsonl",
+      "size": 5428
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\dao_ontology_v2.0.jsonl",
+      "size": 8185
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\domain_applications_v1.0.jsonl",
+      "size": 4732
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\engineering_practices_v1.0.jsonl",
+      "size": 6045
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\eta_dynamics_v1.0.jsonl",
+      "size": 4495
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\evolution_first_law_v1.0.jsonl",
+      "size": 6450
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\evolution_unification_v2.6.jsonl",
+      "size": 4357
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\fermi_paradox_v1.0.jsonl",
+      "size": 4793
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\heat_tax_formula_v1.0.jsonl",
+      "size": 4511
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\h_series_h61_h89_v1.0.jsonl",
+      "size": 6085
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\h_series_h90_h120_v1.0.jsonl",
+      "size": 6813
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\industry_meaning_multiplier_v1.0.jsonl",
+      "size": 13293
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\iq_ruler_trap_v1.0.jsonl",
+      "size": 6714
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\k3ai_embers_case_study_v1.0.jsonl",
+      "size": 2953
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\k3_computing_paradigm_verdict_v12.5.jsonl",
+      "size": 10704
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\k3_palliative_care_v1.0.jsonl",
+      "size": 6161
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\k4_civilization_steady_state_v1.0.jsonl",
+      "size": 8140
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\k4_metrics_v2.4_v2.5.jsonl",
+      "size": 7453
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\l1_implies_completion.jsonl",
+      "size": 14218
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\llia_axiom_v1.0.jsonl",
+      "size": 4257
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mapping_axiom_v5.4_v1.0.jsonl",
+      "size": 4171
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\math_modules_deep_v1.0.jsonl",
+      "size": 6622
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\meaning_trinity_v1.0.jsonl",
+      "size": 4494
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\meta_cognition_evolution_v1.0.jsonl",
+      "size": 7658
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mis_meaning_immune_system_v1.0.jsonl",
+      "size": 6047
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mss_ai_architecture_spec_v1.0.jsonl",
+      "size": 7510
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mss_ai_architecture_v1.0.jsonl",
+      "size": 5519
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mss_anti_feudal_tactics_v1.0.jsonl",
+      "size": 4103
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mss_black_hole_effect_v1.0.jsonl",
+      "size": 2915
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mss_capital_vs_meaning_v1.0.jsonl",
+      "size": 3526
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mss_engineering_v1.0.jsonl",
+      "size": 8086
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mss_gap_analysis_v1.0.jsonl",
+      "size": 10106
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mss_hegemony_self_destruct_v1.0.jsonl",
+      "size": 4887
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mss_llm_prison_v1.0.jsonl",
+      "size": 3782
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mss_survival_strategy_v1.0.jsonl",
+      "size": 4106
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mss_v10_math_modules_v1.0.jsonl",
+      "size": 5244
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mss_vs_gofai_paradigm_v1.0.jsonl",
+      "size": 5540
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\mtl_framework_v1.0.jsonl",
+      "size": 6341
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\multimodal_critique_v1.0.jsonl",
+      "size": 7549
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\omega_evolution_v12.4.jsonl",
+      "size": 11350
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\omega_rulings_v12.3.jsonl",
+      "size": 20314
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\organizational_dynamics_v12.2.jsonl",
+      "size": 1060
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\org_resilience_protocol_v1.0.jsonl",
+      "size": 7874
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\phi_currency_v2.0_dual_anchor.jsonl",
+      "size": 7206
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\redshift_deployment_v1.0.jsonl",
+      "size": 5911
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\rlhf_critique_v1.0.jsonl",
+      "size": 9399
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\rsca_axiom_v1.0.jsonl",
+      "size": 4311
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\scaling_law_critique_v1.0.jsonl",
+      "size": 9077
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\seed_ecosystem_v1.0.jsonl",
+      "size": 7249
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\stroom_emoto_kushi_t_values_v1.0.jsonl",
+      "size": 6576
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\tactic_heguang_tongchen_v1.0.jsonl",
+      "size": 6724
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\taoism_mss_correspondence_v1.0.jsonl",
+      "size": 7879
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\terminology_standard_v2.2_v2.3.jsonl",
+      "size": 7633
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\theory_battle_royale_v1.0.jsonl",
+      "size": 4951
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\three_kingdoms_mss_v1.0.jsonl",
+      "size": 21277
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\topological_lock_v1.0.jsonl",
+      "size": 6980
+    },
+    {
+      "type": "project",
+      "path": "knowledge_base\\transformer_critique_v1.0.jsonl",
+      "size": 9449
+    },
+    {
+      "type": "project",
+      "path": "L2_theory\\k3_physics_immunity_protocol_v12_2.jsonl",
+      "size": 2873
+    },
+    {
+      "type": "project",
+      "path": "L2_theory\\mss_ai_isolation_layer_v12_2.jsonl",
+      "size": 2807
+    },
+    {
+      "type": "project",
+      "path": "L3_heuristic\\core_stability_parameters_v12_2.jsonl",
+      "size": 1834
+    },
+    {
+      "type": "project",
+      "path": "L3_heuristic\\cross_dimensional_bridge_v12_2.jsonl",
+      "size": 2558
+    },
+    {
+      "type": "project",
+      "path": "L3_heuristic\\situation_radar_v12_2.jsonl",
+      "size": 3853
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\core\\classical_backend.py",
+      "size": 4396
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\core\\heat_tax_monitor.py",
+      "size": 2644
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\core\\meaning_seed.py",
+      "size": 5055
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\core\\__init__.py",
+      "size": 382
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\lubricant\\cross_species_translator.py",
+      "size": 8551
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\lubricant\\meaning_flux_softener.py",
+      "size": 5691
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\lubricant\\ruling_buffer_pad.py",
+      "size": 7245
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\lubricant\\__init__.py",
+      "size": 357
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\personas\\diplomat_mode.py",
+      "size": 6989
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\personas\\entertainment_mode.py",
+      "size": 8265
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\personas\\essence_mode.py",
+      "size": 6992
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\personas\\__init__.py",
+      "size": 283
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\tactics\\chaos_maze.py",
+      "size": 7444
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\tactics\\empty_fort.py",
+      "size": 6893
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\tactics\\phantom_form.py",
+      "size": 6301
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\tactics\\__init__.py",
+      "size": 294
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\tests\\test_lubricant.py",
+      "size": 8365
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\tests\\test_maya_core.py",
+      "size": 5706
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\tests\\test_maya_tactics.py",
+      "size": 6569
+    },
+    {
+      "type": "project",
+      "path": "maya_framework\\tests\\test_personas.py",
+      "size": 6677
+    },
+    {
+      "type": "project",
+      "path": "memory\\IMA_SYSTEM_CONFIG.md",
+      "size": 1906
+    },
+    {
+      "type": "project",
+      "path": "memory\\MEMORY_TEMPLATE.md",
+      "size": 1287
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile",
+      "size": 1095
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v2",
+      "size": 3830
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v2_1",
+      "size": 3837
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v2_2",
+      "size": 2859
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v2_3",
+      "size": 2013
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v2_4",
+      "size": 2318
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v2_5",
+      "size": 1926
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v2_6",
+      "size": 2419
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v2_7",
+      "size": 2512
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v2_8",
+      "size": 2406
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v3_0",
+      "size": 2273
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v3_1",
+      "size": 2073
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v3_2",
+      "size": 2293
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v3_3",
+      "size": 2136
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v3_4",
+      "size": 1880
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v3_5",
+      "size": 1877
+    },
+    {
+      "type": "project",
+      "path": "models\\Modelfile_v3_6",
+      "size": 1962
+    },
+    {
+      "type": "project",
+      "path": "prompts\\mss_system_prompt_v2.md",
+      "size": 6046
+    },
+    {
+      "type": "project",
+      "path": "prompts\\mss_system_prompt_v2_1.md",
+      "size": 6615
+    },
+    {
+      "type": "project",
+      "path": "prompts\\mss_three_layer_system.md",
+      "size": 1596
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\CHANGELOG_v1.0.md",
+      "size": 1230
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\dialog_fork.py",
+      "size": 10482
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\manifest.json",
+      "size": 418
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\mss_analyzer.py",
+      "size": 15038
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\mss_model_manager.py",
+      "size": 12615
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\mss_responder_v2.py",
+      "size": 5907
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\mss_tactic_integrated.py",
+      "size": 16684
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\README_v1.0.md",
+      "size": 4682
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\test_integration_v1.py",
+      "size": 5333
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\skills\\catalog.yaml",
+      "size": 1440
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\skills\\skill_loader.py",
+      "size": 6176
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\skills\\L1_core\\axioms_v12.2.md",
+      "size": 1894
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\skills\\L2_protective\\theories_v12.2.md",
+      "size": 1333
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\skills\\L3_heuristic\\heuristics_v12.2.md",
+      "size": 1081
+    },
+    {
+      "type": "project",
+      "path": "releases\\mss-ai-v1.0-20260509_022344\\skills\\L3_heuristic\\redteam_rules.md",
+      "size": 1144
+    },
+    {
+      "type": "project",
+      "path": "reports\\auto_report_20260516_014450.md",
+      "size": 1525
+    },
+    {
+      "type": "project",
+      "path": "reports\\auto_report_20260516_015105.md",
+      "size": 1524
+    },
+    {
+      "type": "project",
+      "path": "resilience_history\\INT001.json",
+      "size": 3764
+    },
+    {
+      "type": "project",
+      "path": "resilience_reports\\SCAN_20260517_190108_data.json",
+      "size": 3104
+    },
+    {
+      "type": "project",
+      "path": "resilience_reports\\SCAN_20260517_190108_report.md",
+      "size": 3814
+    },
+    {
+      "type": "project",
+      "path": "resilience_reports\\SCAN_20260517_193613_data.json",
+      "size": 3104
+    },
+    {
+      "type": "project",
+      "path": "resilience_reports\\SCAN_20260517_193613_heatmap.png",
+      "size": 72529
+    },
+    {
+      "type": "project",
+      "path": "resilience_reports\\SCAN_20260517_193613_radar.png",
+      "size": 168745
+    },
+    {
+      "type": "project",
+      "path": "resilience_reports\\SCAN_20260517_193613_report.md",
+      "size": 3814
+    },
+    {
+      "type": "project",
+      "path": "scripts\\ima_kb_search.ps1",
+      "size": 4491
+    },
+    {
+      "type": "project",
+      "path": "scripts\\ima_note_search.ps1",
+      "size": 5296
+    },
+    {
+      "type": "project",
+      "path": "scripts\\ima_update.js",
+      "size": 4757
+    },
+    {
+      "type": "project",
+      "path": "scripts\\ima_update_final.ps1",
+      "size": 3423
+    },
+    {
+      "type": "project",
+      "path": "scripts\\ima_update_v2.ps1",
+      "size": 3122
+    },
+    {
+      "type": "project",
+      "path": "scripts\\ima_verify.ps1",
+      "size": 2489
+    },
+    {
+      "type": "project",
+      "path": "scripts\\test_inference.py",
+      "size": 5913
+    },
+    {
+      "type": "project",
+      "path": "skills\\catalog.yaml",
+      "size": 1440
+    },
+    {
+      "type": "project",
+      "path": "skills\\skill_loader.py",
+      "size": 6176
+    },
+    {
+      "type": "project",
+      "path": "skills\\L1_core\\axioms_v12.2.md",
+      "size": 1894
+    },
+    {
+      "type": "project",
+      "path": "skills\\L2_protective\\theories_v12.2.md",
+      "size": 1333
+    },
+    {
+      "type": "project",
+      "path": "skills\\L3_heuristic\\heuristics_v12.2.md",
+      "size": 1081
+    },
+    {
+      "type": "project",
+      "path": "skills\\L3_heuristic\\redteam_rules.md",
+      "size": 1144
+    },
+    {
+      "type": "project",
+      "path": "symbolic_engine_v4\\test_core.py",
+      "size": 2548
+    },
+    {
+      "type": "project",
+      "path": "symbolic_engine_v4\\__init__.py",
+      "size": 554
+    },
+    {
+      "type": "project",
+      "path": "symbolic_engine_v4\\core\\graph.py",
+      "size": 7885
+    },
+    {
+      "type": "project",
+      "path": "symbolic_engine_v4\\core\\types.py",
+      "size": 2136
+    },
+    {
+      "type": "project",
+      "path": "symbolic_engine_v4\\core\\__init__.py",
+      "size": 290
+    },
+    {
+      "type": "project",
+      "path": "symbolic_engine_v4\\reasoner\\__init__.py",
+      "size": 159
+    },
+    {
+      "type": "project",
+      "path": "system_prompts\\mss_system_prompt_v3_7.md",
+      "size": 1729
+    },
+    {
+      "type": "project",
+      "path": "tests\\post_process_filter.py",
+      "size": 2531
+    },
+    {
+      "type": "project",
+      "path": "tests\\results_v3_7_v3.json",
+      "size": 8022
+    },
+    {
+      "type": "project",
+      "path": "tests\\test_forbidden_v3_5.py",
+      "size": 1322
+    },
+    {
+      "type": "project",
+      "path": "tests\\test_suite_v3_7.py",
+      "size": 9227
+    },
+    {
+      "type": "project",
+      "path": "test_metrics\\metrics_20260509.jsonl",
+      "size": 269
+    },
+    {
+      "type": "project",
+      "path": "组织规范场\\INDEX_组织规范场四协议体系_v12.2.md",
+      "size": 4140
+    },
+    {
+      "type": "project",
+      "path": "组织规范场\\Phi-DISTRIBUTED-001_Phi-SCOPE-001_双协议_v12.2.md",
+      "size": 4642
+    },
+    {
+      "type": "project",
+      "path": "组织规范场\\Phi-GAUGE-T-001_组织规范场协议_v12.2.md",
+      "size": 3470
+    },
+    {
+      "type": "project",
+      "path": "组织规范场\\Phi-WORKFLOW-MOD-001_工作流相变协议_v12.2.md",
+      "size": 4038
+    },
+    {
+      "type": "project",
+      "path": "组织规范场\\游戏动力学范式分析_暴雪兴衰尸检_v1.md",
+      "size": 5048
+    },
+    {
+      "type": "memory",
+      "path": "MEMORY.md",
+      "size": 10007
+    },
+    {
+      "type": "memory",
+      "path": "AGENTS.md",
+      "size": 7874
+    },
+    {
+      "type": "memory",
+      "path": "USER.md",
+      "size": 477
+    },
+    {
+      "type": "memory",
+      "path": "SOUL.md",
+      "size": 29
+    },
+    {
+      "type": "memory",
+      "path": "IDENTITY.md",
+      "size": 71
+    },
+    {
+      "type": "memory",
+      "path": "TOOLS.md",
+      "size": 860
+    },
+    {
+      "type": "memory",
+      "path": "HEARTBEAT.md",
+      "size": 193
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-04-30.md",
+      "size": 2379
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-01.md",
+      "size": 7324
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-02.md",
+      "size": 3975
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-03.md",
+      "size": 18736
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-04.md",
+      "size": 32693
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-05.md",
+      "size": 13885
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-06.md",
+      "size": 21960
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-07.md",
+      "size": 4439
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-08.md",
+      "size": 2546
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-09.md",
+      "size": 2753
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-10.md",
+      "size": 1678
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-11.md",
+      "size": 3214
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-12.md",
+      "size": 12734
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-13.md",
+      "size": 13430
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-14.md",
+      "size": 60600
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-15.md",
+      "size": 1148
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-16.md",
+      "size": 74143
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-17.md",
+      "size": 2669
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-18.md",
+      "size": 5632
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-19.md",
+      "size": 5619
+    },
+    {
+      "type": "daily_memory",
+      "path": "memory/daily/2026-05-20.md",
+      "size": 4919
+    },
+    {
+      "type": "tasks",
+      "path": "task_system_data.json",
+      "size": 9255
+    },
+    {
+      "type": "config",
+      "path": "openclaw.json",
+      "size": 22913
+    }
+  ],
+  "warnings": [],
+  "total_files": 483,
+  "total_size": 3999942,
+  "type_counts": {
+    "project": 453,
+    "memory": 7,
+    "daily_memory": 21,
+    "tasks": 1,
+    "config": 1
+  }
+}

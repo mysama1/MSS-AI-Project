@@ -1,0 +1,4 @@
+[console_scripts]
+mss-ai-api = web_api:main
+mss-ai-cli = interactive_cli:main
+mss-ai-sim = simulation_framework:main

@@ -1,0 +1,1 @@
+{"id": "ENG-001", "layer": "L2", "category": "testing", "title": "MSS-AI测试驱动开发规范", "content": "所有模块必须配套单元测试。测试覆盖率目标：核心逻辑>90%，接口层>80%。测试命名规范：test_[模块]_[功能]_[场景]。使用unittest框架，异步测试使用IsolatedAsyncioTestCase。", "confidence": 0.9, "status": "active", "created_at": "2026-05-15T04:23:00+08:00"}

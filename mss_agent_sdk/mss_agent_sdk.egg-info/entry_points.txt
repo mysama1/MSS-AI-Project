@@ -1,0 +1,2 @@
+[console_scripts]
+mss-audit = mss_agent_sdk.cli:main

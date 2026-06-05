@@ -1,0 +1,8 @@
+{
+  "vaccine_id": "VAC-90d54a64",
+  "virus_id": "90d54a6430aaca77c7303b53761e2944386724f5110f4374cfabc73dd4b1e81e",
+  "target_axiom": "A6",
+  "efficacy_score": 0.82,
+  "status": "deployed",
+  "deployed_at": "2026-05-24T00:35:11.443925"
+}

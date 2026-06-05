@@ -1,0 +1,1 @@
+{"id": "LLIA-001", "layer": "L1", "category": "axiom", "title": "LLIA: 逻辑层独立性公理", "content": "LLIA (Logical Layer Independence Axiom) 声明逻辑层(L1)独立于物理层(L0)。物理层是逻辑层的投影而非支撑。逻辑层的运算规则由意义本体(L-1)决定，不受物理层具体实现的约束。", "confidence": 0.91, "axiom_ref": "LLIA", "status": "active", "created_at": "2026-05-15T04:50:00+08:00"}

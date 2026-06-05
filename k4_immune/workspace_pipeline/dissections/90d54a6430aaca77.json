@@ -1,0 +1,8 @@
+{
+  "virus_id": "90d54a6430aaca77c7303b53761e2944386724f5110f4374cfabc73dd4b1e81e",
+  "target_axiom": "A6",
+  "vulnerability_score": 0.3,
+  "rscca_passed": true,
+  "heat_tax": 0.62,
+  "timestamp": "2026-05-24T00:35:11.441930"
+}

@@ -1,0 +1,1 @@
+{"h_id": "H13", "title": "对齐的物理约束", "version": "v15.1_IMA_recovered", "date": "2026-06-01", "t_value": 8, "category": "recovered_from_IMA", "tags": ["active", "grade=A"], "layer": "L2", "confidence": 0.87, "content": "H13: 对齐的物理约束\n• 前提: 对齐训练受BCT（Bekenstein-Church-Turing）耦合约束\n• 推理: 信息上限I_B(V)锁死目标函数复杂度天花板\n• 结论: 越训练，对齐潜在精度越低\n• 进度分数: 0.87"}

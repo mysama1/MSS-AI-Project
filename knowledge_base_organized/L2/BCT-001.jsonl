@@ -1,0 +1,1 @@
+{"id": "BCT-001", "layer": "L2", "category": "theorem", "title": "BCT: 边界耦合定理", "content": "BCT (Boundary Coupling Theorem) 描述L1逻辑层与L0物理层的耦合关系。边界条件是投影的约束集合，决定L1结构在L0中的可实现性。耦合强度与系统复杂度成正比。", "confidence": 0.85, "axiom_refs": ["A3", "LLIA"], "status": "active", "created_at": "2026-05-15T04:50:00+08:00"}

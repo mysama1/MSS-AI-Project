@@ -1,0 +1,181 @@
+{
+  "benchmark_version": "0.1",
+  "timestamp": "2026-05-26T02:45:13",
+  "kernel_available": true,
+  "reports": {
+    "logiqa": {
+      "dataset": "logiqa",
+      "mss": {
+        "runner": "mss_logical",
+        "dataset": "logiqa",
+        "total_samples": 50,
+        "correct_count": 50,
+        "accuracy": 1.0,
+        "avg_time_ms": 0.01994609832763672,
+        "avg_heat_tax": 0.028800000000000013,
+        "avg_explainability": 1.0,
+        "per_difficulty": {
+          "1": 1.0,
+          "2": 1.0,
+          "3": 1.0,
+          "4": 1.0,
+          "5": 1.0
+        },
+        "per_domain": {
+          "logic": 1.0
+        },
+        "error_samples": [],
+        "timestamp": "2026-05-26T02:45:13"
+      },
+      "llm": {
+        "runner": "llm_baseline",
+        "dataset": "logiqa",
+        "total_samples": 50,
+        "correct_count": 29,
+        "accuracy": 0.58,
+        "avg_time_ms": 3.2864776932567463,
+        "avg_heat_tax": 0.6356177672843113,
+        "avg_explainability": 0.09795727538978106,
+        "per_difficulty": {
+          "1": 0.631578947368421,
+          "2": 0.5333333333333333,
+          "3": 0.375,
+          "4": 1.0,
+          "5": 0.0
+        },
+        "per_domain": {
+          "logic": 0.58
+        },
+        "error_samples": [
+          "logiqa-0007",
+          "logiqa-0008",
+          "logiqa-0011",
+          "logiqa-0012",
+          "logiqa-0013",
+          "logiqa-0017",
+          "logiqa-0024",
+          "logiqa-0026",
+          "logiqa-0027",
+          "logiqa-0028",
+          "logiqa-0029",
+          "logiqa-0032",
+          "logiqa-0033",
+          "logiqa-0034",
+          "logiqa-0035",
+          "logiqa-0039",
+          "logiqa-0044",
+          "logiqa-0045",
+          "logiqa-0046",
+          "logiqa-0047",
+          "logiqa-0049"
+        ],
+        "timestamp": "2026-05-26T02:45:13"
+      },
+      "accuracy_delta": 0.42000000000000004,
+      "heat_tax_ratio": 22.070061364038576,
+      "explainability_delta": 0.902042724610219
+    },
+    "contradiction": {
+      "dataset": "contradiction",
+      "mss": {
+        "runner": "mss_logical",
+        "dataset": "contradiction",
+        "total_samples": 12,
+        "correct_count": 12,
+        "accuracy": 1.0,
+        "avg_time_ms": 0.9970267613728842,
+        "avg_heat_tax": 0.08,
+        "avg_explainability": 1.0,
+        "per_difficulty": {
+          "1": 1.0,
+          "2": 1.0,
+          "3": 1.0
+        },
+        "per_domain": {
+          "contradiction": 1.0
+        },
+        "error_samples": [],
+        "timestamp": "2026-05-26T02:45:13"
+      },
+      "llm": {
+        "runner": "llm_baseline",
+        "dataset": "contradiction",
+        "total_samples": 12,
+        "correct_count": 6,
+        "accuracy": 0.5,
+        "avg_time_ms": 3.418717113159802,
+        "avg_heat_tax": 0.6741482246574703,
+        "avg_explainability": 0.09859011615211577,
+        "per_difficulty": {
+          "1": 0.5,
+          "2": 0.6666666666666666,
+          "3": 0.3333333333333333
+        },
+        "per_domain": {
+          "contradiction": 0.5
+        },
+        "error_samples": [
+          "contra-0001",
+          "contra-0004",
+          "contra-0005",
+          "contra-0006",
+          "contra-0011",
+          "contra-0012"
+        ],
+        "timestamp": "2026-05-26T02:45:13"
+      },
+      "accuracy_delta": 0.5,
+      "heat_tax_ratio": 8.426852808218378,
+      "explainability_delta": 0.9014098838478842
+    },
+    "heat_tax": {
+      "dataset": "heat_tax",
+      "mss": {
+        "runner": "mss_logical",
+        "dataset": "heat_tax",
+        "total_samples": 8,
+        "correct_count": 8,
+        "accuracy": 1.0,
+        "avg_time_ms": 2.243906259536743,
+        "avg_heat_tax": 0.01875,
+        "avg_explainability": 1.0,
+        "per_difficulty": {
+          "1": 1.0,
+          "2": 1.0
+        },
+        "per_domain": {
+          "heat_tax": 1.0
+        },
+        "error_samples": [],
+        "timestamp": "2026-05-26T02:45:13"
+      },
+      "llm": {
+        "runner": "llm_baseline",
+        "dataset": "heat_tax",
+        "total_samples": 8,
+        "correct_count": 4,
+        "accuracy": 0.5,
+        "avg_time_ms": 3.699569633917742,
+        "avg_heat_tax": 0.7190922373378165,
+        "avg_explainability": 0.10079880985536677,
+        "per_difficulty": {
+          "1": 0.3333333333333333,
+          "2": 1.0
+        },
+        "per_domain": {
+          "heat_tax": 0.5
+        },
+        "error_samples": [
+          "ht-0002",
+          "ht-0003",
+          "ht-0004",
+          "ht-0006"
+        ],
+        "timestamp": "2026-05-26T02:45:13"
+      },
+      "accuracy_delta": 0.5,
+      "heat_tax_ratio": 38.35158599135021,
+      "explainability_delta": 0.8992011901446333
+    }
+  }
+}

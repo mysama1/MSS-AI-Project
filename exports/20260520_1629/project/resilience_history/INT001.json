@@ -1,0 +1,126 @@
+{
+  "org_id": "INT001",
+  "org_name": "集成测试",
+  "snapshots": [
+    {
+      "snapshot_id": "SCAN-20260518-140937",
+      "timestamp": "2026-05-18T14:09:37.001143",
+      "global_O_d": 0.4212,
+      "global_phi": 78.3783,
+      "global_gamma": 0.2322,
+      "global_innovation_rate": 0.4537,
+      "resilience_score": 0.1555,
+      "resilience_grade": "D"
+    },
+    {
+      "snapshot_id": "SCAN-20260518-140937",
+      "timestamp": "2026-05-18T14:09:37.002140",
+      "global_O_d": 0.5062,
+      "global_phi": 88.334,
+      "global_gamma": 0.2752,
+      "global_innovation_rate": 0.4362,
+      "resilience_score": 0.1369,
+      "resilience_grade": "D"
+    },
+    {
+      "snapshot_id": "SCAN-20260518-140937",
+      "timestamp": "2026-05-18T14:09:37.002140",
+      "global_O_d": 0.4934,
+      "global_phi": 87.9236,
+      "global_gamma": 0.2683,
+      "global_innovation_rate": 0.4454,
+      "resilience_score": 0.1418,
+      "resilience_grade": "D"
+    },
+    {
+      "snapshot_id": "SCAN-20260518-140937",
+      "timestamp": "2026-05-18T14:09:37.003137",
+      "global_O_d": 0.4357,
+      "global_phi": 79.0377,
+      "global_gamma": 0.239,
+      "global_innovation_rate": 0.446,
+      "resilience_score": 0.1509,
+      "resilience_grade": "D"
+    },
+    {
+      "snapshot_id": "SCAN-20260518-140937",
+      "timestamp": "2026-05-18T14:09:37.003137",
+      "global_O_d": 0.5168,
+      "global_phi": 82.1217,
+      "global_gamma": 0.2811,
+      "global_innovation_rate": 0.3968,
+      "resilience_score": 0.1229,
+      "resilience_grade": "D"
+    },
+    {
+      "snapshot_id": "SCAN-20260518-140937",
+      "timestamp": "2026-05-18T14:09:37.004135",
+      "global_O_d": 0.5325,
+      "global_phi": 72.2,
+      "global_gamma": 0.2901,
+      "global_innovation_rate": 0.3375,
+      "resilience_score": 0.1025,
+      "resilience_grade": "D"
+    },
+    {
+      "snapshot_id": "SCAN-20260518-141034",
+      "timestamp": "2026-05-18T14:10:34.290293",
+      "global_O_d": 0.4212,
+      "global_phi": 78.3783,
+      "global_gamma": 0.2322,
+      "global_innovation_rate": 0.4537,
+      "resilience_score": 0.1555,
+      "resilience_grade": "D"
+    },
+    {
+      "snapshot_id": "SCAN-20260518-141034",
+      "timestamp": "2026-05-18T14:10:34.291290",
+      "global_O_d": 0.5062,
+      "global_phi": 88.334,
+      "global_gamma": 0.2752,
+      "global_innovation_rate": 0.4362,
+      "resilience_score": 0.1369,
+      "resilience_grade": "D"
+    },
+    {
+      "snapshot_id": "SCAN-20260518-141034",
+      "timestamp": "2026-05-18T14:10:34.292287",
+      "global_O_d": 0.4934,
+      "global_phi": 87.9236,
+      "global_gamma": 0.2683,
+      "global_innovation_rate": 0.4454,
+      "resilience_score": 0.1418,
+      "resilience_grade": "D"
+    },
+    {
+      "snapshot_id": "SCAN-20260518-141034",
+      "timestamp": "2026-05-18T14:10:34.292287",
+      "global_O_d": 0.4357,
+      "global_phi": 79.0377,
+      "global_gamma": 0.239,
+      "global_innovation_rate": 0.446,
+      "resilience_score": 0.1509,
+      "resilience_grade": "D"
+    },
+    {
+      "snapshot_id": "SCAN-20260518-141034",
+      "timestamp": "2026-05-18T14:10:34.293285",
+      "global_O_d": 0.5168,
+      "global_phi": 82.1217,
+      "global_gamma": 0.2811,
+      "global_innovation_rate": 0.3968,
+      "resilience_score": 0.1229,
+      "resilience_grade": "D"
+    },
+    {
+      "snapshot_id": "SCAN-20260518-141034",
+      "timestamp": "2026-05-18T14:10:34.293285",
+      "global_O_d": 0.5325,
+      "global_phi": 72.2,
+      "global_gamma": 0.2901,
+      "global_innovation_rate": 0.3375,
+      "resilience_score": 0.1025,
+      "resilience_grade": "D"
+    }
+  ]
+}

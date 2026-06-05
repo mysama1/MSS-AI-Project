@@ -1,0 +1,109 @@
+{
+  "axioms": {
+    "A1_MEANING_ONTOLOGY": {
+      "status": "VERIFIED",
+      "time_ms": 3.99,
+      "violation": "NONE"
+    },
+    "A2_INFORMATION_SLICING": {
+      "status": "VERIFIED",
+      "time_ms": 1.11,
+      "violation": "NONE"
+    },
+    "A3_HEAT_TAX_DYNAMICS": {
+      "status": "VERIFIED",
+      "time_ms": 3.88,
+      "violation": "NONE"
+    },
+    "A4_PROBABILISTIC_CUTOFF": {
+      "status": "VERIFIED",
+      "time_ms": 1.0,
+      "violation": "NONE"
+    },
+    "A5_NORM_FIELD": {
+      "status": "VERIFIED",
+      "time_ms": 1.0,
+      "violation": "NONE"
+    },
+    "A6_PARADOX_ASCENSION": {
+      "status": "VERIFIED",
+      "time_ms": 3.02,
+      "violation": "NONE"
+    }
+  },
+  "cross_axiom": {
+    "total_pairs": 15,
+    "satisfied": 15,
+    "total_ms": 44.85,
+    "pairs": {
+      "A1_MEANING_ONTOLOGY<->A2_INFORMATION_SLICING": "VERIFIED",
+      "A1_MEANING_ONTOLOGY<->A3_HEAT_TAX_DYNAMICS": "VERIFIED",
+      "A1_MEANING_ONTOLOGY<->A4_PROBABILISTIC_CUTOFF": "VERIFIED",
+      "A1_MEANING_ONTOLOGY<->A5_NORM_FIELD": "VERIFIED",
+      "A1_MEANING_ONTOLOGY<->A6_PARADOX_ASCENSION": "VERIFIED",
+      "A2_INFORMATION_SLICING<->A3_HEAT_TAX_DYNAMICS": "VERIFIED",
+      "A2_INFORMATION_SLICING<->A4_PROBABILISTIC_CUTOFF": "VERIFIED",
+      "A2_INFORMATION_SLICING<->A5_NORM_FIELD": "VERIFIED",
+      "A2_INFORMATION_SLICING<->A6_PARADOX_ASCENSION": "VERIFIED",
+      "A3_HEAT_TAX_DYNAMICS<->A4_PROBABILISTIC_CUTOFF": "VERIFIED",
+      "A3_HEAT_TAX_DYNAMICS<->A5_NORM_FIELD": "VERIFIED",
+      "A3_HEAT_TAX_DYNAMICS<->A6_PARADOX_ASCENSION": "VERIFIED",
+      "A4_PROBABILISTIC_CUTOFF<->A5_NORM_FIELD": "VERIFIED",
+      "A4_PROBABILISTIC_CUTOFF<->A6_PARADOX_ASCENSION": "VERIFIED",
+      "A5_NORM_FIELD<->A6_PARADOX_ASCENSION": "VERIFIED"
+    }
+  },
+  "violations": {
+    "negative_I": {
+      "status": "VIOLATION",
+      "error_type": "T_SC_MONOTONICITY"
+    },
+    "negative_Tsc": {
+      "status": "VIOLATION",
+      "error_type": "NEGATIVE_HEAT_TAX"
+    },
+    "zero_T": {
+      "status": "VIOLATION",
+      "error_type": "ZERO_TUNING"
+    },
+    "zero_info": {
+      "status": "VERIFIED",
+      "error_type": "NONE"
+    },
+    "normal": {
+      "status": "VERIFIED",
+      "error_type": "NONE"
+    }
+  },
+  "semantic": {
+    "consistent_set": {
+      "status": "VERIFIED",
+      "proof_steps": 2
+    },
+    "value_conflict": {
+      "status": "CONTRADICTION",
+      "proof_steps": 4
+    },
+    "sem_antonym": {
+      "status": "VERIFIED",
+      "proof_steps": 2
+    },
+    "absolute_rhetoric": {
+      "status": "VERIFIED",
+      "proof_steps": 2
+    }
+  },
+  "audit": {
+    "m_l_formal": 0.7,
+    "m_l_engineering": 0.92,
+    "total_verifications": 30,
+    "version": "0.2"
+  },
+  "_summary": {
+    "total_assertions": 30,
+    "all_expected_statuses_correct": false,
+    "axiom_consistency": "100%",
+    "cross_axiom_consistency": "15/15",
+    "m_l_formal": 0.7
+  }
+}

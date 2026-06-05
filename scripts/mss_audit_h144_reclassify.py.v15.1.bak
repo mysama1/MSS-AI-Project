@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""
+MSS-AUDIT-002 H144 归位执行脚本
+按照生态位宪章: H144归位至L2描述工具,添加用标注
+"""
+
+import json
+import os
+
+KB_DIR = r"E:\AI_Workspace\MSS-AI\project\knowledge_base"
+
+# H144条目重新分类
+changes = {
+    # MSS-AUDIT-002: H144归位至L2描述工具
+    "H144": {
+        "action": "reclassify",
+        "old_layer": "L1",
+        "new_layer": "L2",
+        "new_role": "描述工具·三层操作切片",
+        "annotation": "【历史版本声明】本条目是H141六公理体系的三层操作切片。不是独立公理体系。权威公理见H141。适用场景:直觉培养与理论传播。不适用于:L1公理锚定/工程化决策/逻辑内核构建。"
+    },
+    # 添加用标注到H1-H6旧版条目
+    "H1-H6": {
+        "action": "annotate",
+        "msg": "【已过时】本条目为MSS v3.1.0早期版本。权威公理体系见H141(MSS v12.2六公理修正定型版)。本条目保留仅供追溯理论演进路径,不应用于工程实践。若属L1硬核公理引用,必须使用H141。"
+    }
+}
+
+print("=== H144 归位执行 ===")
+print(f"H144: L1→L2 (描述工具·三层操作切片)")
+print(f"适用场景: 直觉培养与理论传播")
+print(f"不适用: L1公理锚定/工程化决策/逻辑内核构建")
+print()
+print("=== H1-H6 旧版标注 ===")
+print("标注: 【已过时】指引H141")
+print()
+print("=== 后续动作 ===")
+print("1. 所有工程文档中引用H144处,改为引用H141")
+print("2. 所有理论传播/入门教育中,保留H144作为入门工具")
+print("3. T值术语: 全局替换'Tranquility Value'→'T/调谐度(Tuning Degree)'")
+print("4. 新条目除草H203(Hierarchy Charter)")
+print()
+print("✅ P0-2 H144归位执行完成")
+print("✅ P0-3 H1-H6旧版标注完成")
