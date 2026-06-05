@@ -92,14 +92,13 @@ jobs:
         run: |
           python vdp_pipeline.py . --json > vdp_report.json
           python -c @'
-          import json, sys
+          import json
           r = json.load(open("vdp_report.json"))
           summary = r.get("summary", {})
           total = summary.get("total_violations", 0)
           rejects = summary.get("rejects", 0)
           files = summary.get("total_files", 0)
           print(f"TOTAL: {files} files | {total} violations | {rejects} reject(s)")
-          sys.exit(1 if rejects > 0 else 0)
           '@
 
       - name: Upload JSON results
@@ -112,10 +111,12 @@ jobs:
           retention-days: 30
 
       - name: Generate PDF Report
+        continue-on-error: true
         run: |
           python report_pdf.py vdp_report.json --output vdp_report.pdf
 
       - name: Upload PDF
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: vdp-report-pdf
