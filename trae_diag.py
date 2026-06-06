@@ -232,9 +232,9 @@ def full_diagnosis(path: str) -> dict:
     return report
 
 
-# ── CLI ───────────────────────────────────────────────
-
-if __name__ == '__main__':
+# ── CLI Entry Point ──
+def main():
+    """Entry point for vdp-trae console script."""
     if len(sys.argv) < 2:
         print("TRAE False Sandbox Diagnostic Tool v1.0")
         print()
@@ -244,6 +244,9 @@ if __name__ == '__main__':
         print("  bypass-rename <dir>  Attempt rename trick")
         print("  bypass-copy <dir> <dest>  Copy accessible files out")
         sys.exit(0)
+
+if __name__ == '__main__':
+    main()
     
     cmd = sys.argv[1]
     

@@ -58,6 +58,7 @@ setup(
             "vdp-monitor = service_monitor:main",
             "vdp-fuzz = vdp_fuzzer:main",
             "vdp-smoke = smoke_test:main",
+            "vdp-trae = trae_diag:main",
         ]
     },
     classifiers=[
