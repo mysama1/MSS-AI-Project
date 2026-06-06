@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>MSS Predictions Tracker</title>
+<style>:root{--bg:#0d1117;--fg:#c9d1d9;--accent:#58a6ff;--good:#3fb950;--warn:#d29922;--bad:#f85149;--muted:#8b949e;--border:#30363d;--card:#161b22}*{box-sizing:border-box;margin:0;padding:0}body{font:16px/1.6 -apple-system,sans-serif;background:var(--bg);color:var(--fg);max-width:800px;margin:0 auto;padding:2rem 1rem}h1{color:var(--accent);margin-bottom:1rem}h2{margin:1.5rem 0 .5rem;border-bottom:1px solid var(--border);padding-bottom:.3rem}a{color:var(--accent);text-decoration:none}.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.2rem;margin:1rem 0}.countdown{font-size:2rem;font-weight:bold;color:var(--accent);font-family:monospace}.pending{color:var(--warn)}.met{color:var(--good)}.missed{color:var(--bad)}table{width:100%;border-collapse:collapse;margin:.5rem 0}td,th{padding:.4rem .6rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}th{color:var(--muted)}</style></head><body>
+<a href="./">← 首页</a>
+<h1>📊 预测追踪</h1>
+
+<div class="card"><h2>MSS-PREDICT-001: CRTR 持续上升</h2>
+<p>前沿AI模型的投入产出热税比(CRTR)将在12-24月内持续上升。更多资金 → 更低边际改善。</p>
+<p>窗口: <strong>2026-06-07 → 2028-06-07</strong></p>
+<p>下次复查: 2026-09-07 <span class="countdown" id="countdown001"></span></p>
+<table><tr><th>事件</th><th>期望</th><th>状态</th></tr>
+<tr><td>头部公司承认纯规模扩展瓶颈</td><td>≥70%概率</td><td class="pending">待观察</td></tr>
+<tr><td>幻觉率停止下降的公开基准</td><td>≥70%概率</td><td class="pending">待观察</td></tr>
+<tr><td>论文提出闭式目标本身是对齐障碍</td><td>≥50%概率</td><td class="pending">待观察</td></tr></table></div>
+
+<div class="card"><h2>MSS-PREDICT-002: π 投影独立重述</h2>
+<p>到2027年底前, 一篇≥二梯队AI机构的论文将独立提出「把意图写为静态目标=信息损失」。</p>
+<p>窗口: <strong>2026-06-07 → 2027-12-07</strong></p>
+<p>下次复查: 2026-09-07 <span class="countdown" id="countdown002"></span></p>
+<p><span class="pending">待观察</span> — 核心预测。种出现在哪都能活。</p></div>
+
+<div class="card"><h2>MSS-PREDICT-003: K3 周期律触发</h2>
+<p>18-36月内出现: 头部AI公司估值缩水≥50% / 主流媒体质疑AGI叙事 / AI风投同比下滑≥30%。</p>
+<p>窗口: <strong>2026-06-07 → 2029-06-07</strong></p>
+<table><tr><th>事件</th><th>状态</th></tr>
+<tr><td>估值≥$10B的AI公司缩水≥50%</td><td class="pending">待观察</td></tr>
+<tr><td>主流媒体系统性质疑AGI叙事</td><td class="pending">待观察</td></tr>
+<tr><td>AI风投同比下滑≥30%</td><td class="pending">待观察</td></tr></table></div>
+
+<script>
+function updateCountdown(elId,targetDate){var el=document.getElementById(elId);var now=new Date();var target=new Date(targetDate);var diff=target-now;if(diff<=0){el.textContent='[已到期]';el.style.color='#f85149';return}var days=Math.floor(diff/86400000);var hours=Math.floor((diff%86400000)/3600000);el.textContent=days+'天 '+hours+'时 剩余'}
+updateCountdown('countdown001','2026-09-07T00:00:00+08:00');
+updateCountdown('countdown002','2026-09-07T00:00:00+08:00');
+setInterval(function(){updateCountdown('countdown001','2026-09-07T00:00:00+08:00');updateCountdown('countdown002','2026-09-07T00:00:00+08:00')},3600000);
+</script>
+
+<p style="margin-top:2rem;color:var(--muted);font-size:.8rem">更新于 2026-06-07 · MSS-PREDICT-001/002/003 · Δ > 0</p>
+</body></html>
