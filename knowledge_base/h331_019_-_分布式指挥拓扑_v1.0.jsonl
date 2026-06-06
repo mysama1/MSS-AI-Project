@@ -1,1 +1,0 @@
-{"h_id": "H331", "title": "H331: 019 - 分布式指挥拓扑", "layer": "L2", "category": "extract", "orig_source": "k4_civilization_steady_state_v1.0.jsonl", "orig_id": "K4", "t_value": 8, "version": "1.0", "date": "2026-05-31", "summary": "从v12.2归档提取。019 - 分布式指挥拓扑", "content": "*层级: L2* 无中心全息分布式指挥：无最高指挥官，节点地位平等。威胁发生时最近最高权重节点自动成为临时指挥，威胁消除后权限自动解除。 ", "status": "imported_from_v12.2"}

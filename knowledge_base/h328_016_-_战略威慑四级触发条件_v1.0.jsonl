@@ -1,1 +1,0 @@
-{"h_id": "H328", "title": "H328: 016 - 战略威慑四级触发条件", "layer": "L2", "category": "extract", "orig_source": "k4_civilization_steady_state_v1.0.jsonl", "orig_id": "K4", "t_value": 8, "version": "1.0", "date": "2026-05-31", "summary": "从v12.2归档提取。016 - 战略威慑四级触发条件", "content": "*层级: L2* 同时满足：①敌方发动毁灭性逆模因攻击 ②常规防御全部失效 ③不启动将导致文明意义消失 ④≥90%意义权重节点分布式多签同意。 ", "status": "imported_from_v12.2"}

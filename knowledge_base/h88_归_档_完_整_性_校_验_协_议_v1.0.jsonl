@@ -1,1 +1,0 @@
-{"h_id": "H88", "title": "H88: 归档完整性校验协议", "layer": "L3", "category": "validation_protocol", "t_value": 6, "version": "1.0", "date": "2026-05-31", "summary": "H89前置校验协议。三要素：公理覆盖率、跨层一致性、时间戳链。"}

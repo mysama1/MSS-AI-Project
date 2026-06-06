@@ -1,1 +1,0 @@
-{"h_id": "H250", "title": "H250: 013 - 单向映射壁垒的三重加固", "layer": "L2", "category": "unidirectional_mapping", "orig_source": "omega_rulings_v12.3.jsonl", "orig_id": "Ω", "t_value": 8, "version": "1.0", "date": "2026-05-31", "summary": "从v12.2归档提取。013 - 单向映射壁垒的三重加固", "content": "拓扑不变性加固（像素形状不可改变）+ 热税最小化加固（像素运动规律不可改变）+ 观测者锚定加固（观测者本身就是像素）。 ", "status": "imported_from_v12.2"}

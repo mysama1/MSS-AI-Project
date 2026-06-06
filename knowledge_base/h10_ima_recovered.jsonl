@@ -1,1 +1,0 @@
-{"h_id": "H10", "title": "RLHF批判", "version": "v15.1_IMA_recovered", "date": "2026-06-01", "t_value": 8, "category": "recovered_from_IMA", "tags": ["active", "grade=A"], "layer": "L2", "confidence": 0.88, "content": "H10: RLHF批判\n• 前提: RLHF是当前主流AI对齐方法\n• 推理: RLHF存在根本性范畴错误（可数偏好vs不可数行为空间）\n• 结论: RLHF不可作为终极对齐方案，需转向RSCA元公理\n• 进度分数: 0.88"}

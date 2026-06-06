@@ -1,1 +1,0 @@
-{"h_id": "H373", "title": "H373: 003 - RSCA-2: 递归深度限制", "layer": "L1", "category": "axiom", "orig_source": "rsca_axiom_v1.0.jsonl", "orig_id": "RSCA", "t_value": 8, "version": "1.0", "date": "2026-05-31", "summary": "从v12.2归档提取。003 - RSCA-2: 递归深度限制", "content": "递归审计深度受自指极限约束。最大递归深度n_max = 6（对应自指深度极限n=7，预留1层安全边际）。超过n_max的递归触发熔断，返回当前最佳结果。 ", "status": "imported_from_v12.2"}

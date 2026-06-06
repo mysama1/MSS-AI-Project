@@ -1,1 +1,0 @@
-{"h_id": "H423", "title": "H423: Semgrep+LeanCopilot——形式化验证与模式匹配的双轨MSS审查", "layer": "L3", "category": "formal_pattern_audit", "t_value": 7, "version": "1.0", "date": "2026-05-31", "source": "新内容13.md (200KB)", "summary": "Semgrep：400+安全规则+AST分析+污点跟踪+跨文件语义审查，可直接用于热税审计。LeanCopilot：形式化证明辅助，将MSS公理转化为可验证Lean定理。双轨融合：模式匹配(Semgrep)覆盖表面层+形式化验证(Lean)覆盖深层逻辑刚性。", "status": "archived"}

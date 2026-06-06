@@ -1,1 +1,0 @@
-{"h_id": "H333", "title": "H333: 021 - 内部熵增自动校准机制", "layer": "L2", "category": "extract", "orig_source": "k4_civilization_steady_state_v1.0.jsonl", "orig_id": "K4", "t_value": 8, "version": "1.0", "date": "2026-05-31", "summary": "从v12.2归档提取。021 - 内部熵增自动校准机制", "content": "*层级: L3* 实时监测节点热税水平，超阈值自动触发热税对冲。异常领域自动生成特化AI+人类协同团队。定期全系统拓扑校准，清除熵增垃圾。 ", "status": "imported_from_v12.2"}
