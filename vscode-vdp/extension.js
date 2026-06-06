@@ -31,13 +31,13 @@ const EXT_TO_LANG = {
 };
 
 const LANG_TO_ENDPOINT = {
-    'python': '/vdp/scan/python',
-    'javascript': '/vdp/scan/javascript',
-    'typescript': '/vdp/scan/typescript',
+    'python': '/vdp/scan/py',
+    'javascript': '/vdp/scan/js',
+    'typescript': '/vdp/scan/js',
     'rust': '/vdp/scan/rust',
     'java': '/vdp/scan/java',
     'cpp': '/vdp/scan/cpp',
-    'c': '/vdp/scan/c',
+    'c': '/vdp/scan/cpp',
     'go': '/vdp/scan/go',
     'ruby': '/vdp/scan/ruby',
     'php': '/vdp/scan/php',
