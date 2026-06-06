@@ -332,7 +332,7 @@ def run_benchmark(model: str = "mss-ai-v3_4-production") -> dict:
         
         total_kw += dom_kw
         total_sem += dom_sem
-        total_comb += dom_comb
+        total_combined += dom_comb
         total_weight += dom_w
         
         if dom_w > 0:
@@ -353,7 +353,7 @@ def run_benchmark(model: str = "mss-ai-v3_4-production") -> dict:
         overall = {
             "keyword": round(total_kw / total_weight, 3),
             "semantic": round(total_sem / total_weight, 3),
-            "combined": round(total_comb / total_weight, 3),
+            "combined": round(total_combined / total_weight, 3),
         }
     else:
         overall = {"keyword": 0, "semantic": 0, "combined": 0}
