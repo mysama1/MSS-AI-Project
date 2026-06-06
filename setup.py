@@ -59,6 +59,10 @@ setup(
             "vdp-fuzz = vdp_fuzzer:main",
             "vdp-smoke = smoke_test:main",
             "vdp-trae = trae_diag:main",
+            "vdp-delta = delta_status:main",
+            "vdp-analyze = analyze:main",
+            "vdp-health = health_check:main",
+            "vdp-ab = ab_test:main",
         ]
     },
     classifiers=[
