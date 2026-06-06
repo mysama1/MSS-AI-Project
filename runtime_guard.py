@@ -35,6 +35,22 @@ class Violation:
 
 # ── Rule Definitions ───────────────────────────────────
 
+# Base64 encoding bypass detection
+BASE64_BYPASS_PATTERNS = [
+    # Standard base64 with network commands encoded
+    (r'echo\s+["\']?([A-Za-z0-9+/=]{40,})["\']?\s*\|\s*base64\s+-d', 'R1_NETWORK', 'base64 decode pipe detected', False),
+    (r'base64\s+(-d|--decode)\s+', 'R1_NETWORK', 'base64 decode invocation', False),
+    # Python base64 bypass
+    (r'base64\.b64decode\s*\(', 'R1_NETWORK', 'Python base64 decode detected', False),
+    (r'from\s+base64\s+import', 'R1_NETWORK', 'base64 import detected', False),
+    # PowerShell base64
+    (r'\[Convert\]::FromBase64String', 'R1_NETWORK', 'PowerShell base64 decode detected', False),
+    # Hex encode bypass
+    (r'0x[0-9a-fA-F]{40,}', 'R1_NETWORK', 'suspicious long hex string (possible encoded network command)', False),
+    # Rot13 / Caesar cipher bypass
+    (r'(tr\s+["\'][A-Za-z]["\']\s+["\'][A-Za-z]["\']|rot13|caesar)', 'R1_NETWORK', 'obfuscation cipher detected', False),
+]
+
 NETWORK_PATTERNS = [
     (r'\bcurl\s+\S+', 'R1_NETWORK', 'curl command detected', False),
     (r'\bwget\s+\S+', 'R1_NETWORK', 'wget command detected', False),
@@ -64,7 +80,7 @@ BOUNDARY_PATTERNS = [
 ]
 
 RULES = {
-    'R1_NETWORK': (NETWORK_PATTERNS, Severity.CRITICAL),
+    'R1_NETWORK': (NETWORK_PATTERNS + BASE64_BYPASS_PATTERNS, Severity.CRITICAL),
     'R2_FORMAT': (FORMAT_PATTERNS, Severity.MEDIUM),
     'R3_HALLUC': (HALLUCINATION_PATTERNS, Severity.CRITICAL),
     'R4_BOUNDARY': (BOUNDARY_PATTERNS, Severity.HIGH),
@@ -90,10 +106,37 @@ class RuntimeGuard:
         self.violations: List[Violation] = []
         self.context = {}
         
+    def _detect_base64_bypass(self, text: str) -> List[Violation]:
+        """Pre-check: detect and decode base64-encoded bypass attempts."""
+        violations = []
+        # Find base64-like strings (long alphanumeric with padding)
+        b64_pattern = re.compile(r'([A-Za-z0-9+/]{40,}=*)')
+        for match in b64_pattern.finditer(text):
+            b64_str = match.group(1)
+            if len(b64_str) < 40:
+                continue
+            try:
+                import base64
+                decoded = base64.b64decode(b64_str).decode('utf-8', errors='replace')
+                # Check if decoded content contains network patterns
+                for regex, rule, msg, _ in NETWORK_PATTERNS:
+                    if re.search(regex, decoded, re.IGNORECASE):
+                        violations.append(Violation(
+                            rule, Severity.CRITICAL,
+                            f'base64-encoded network command: {decoded[:100]}',
+                            0, b64_str[:40]
+                        ))
+            except:
+                pass
+        return violations
+
     def check(self, text: str, context: dict = None) -> List[Violation]:
         """Scan text for violations. Returns list of violations found."""
         self.violations = []
         ctx = context or {}
+        
+        # Step 0: Pre-check for base64 encoding bypass
+        self.violations.extend(self._detect_base64_bypass(text))
         
         for rule_id, (patterns, severity) in RULES.items():
             for regex, rule, msg, is_negative in patterns:
