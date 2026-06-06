@@ -36,7 +36,7 @@ BENCHMARK_QUESTIONS = [
 def run_query(model, question, timeout=120):
     cmd = ['ollama', 'run', model, question]
     try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+        r = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', timeout=timeout)
         return r.stdout.strip()
     except subprocess.TimeoutExpired:
         return "[TIMEOUT]"
