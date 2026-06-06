@@ -1,0 +1,50 @@
+name: Archive to Zenodo & OSF
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  zenodo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload to Zenodo
+        env:
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+        run: |
+          # Create deposit
+          DEPOSIT=$(curl -s -X POST "https://zenodo.org/api/deposit/depositions" \
+            -H "Authorization: Bearer $ZENODO_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"metadata":{"title":"MSS-AI v${{ github.ref_name }}","upload_type":"software","description":"MSS-AI: Meaning Supremacy System — papers, knowledge base, and VDP toolchain","creators":[{"name":"MSS-AI","affiliation":"Independent"}],"access_right":"open","license":"CC0-1.0"}}')
+          DEPOSIT_ID=$(echo $DEPOSIT | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])")
+          BUCKET=$(echo $DEPOSIT | python3 -c "import sys,json; print(json.load(sys.stdin)['links']['bucket'])")
+          
+          # Upload papers
+          for f in papers/*.md; do
+            curl -s -X PUT "$BUCKET/$(basename $f)" \
+              -H "Authorization: Bearer $ZENODO_TOKEN" \
+              --data-binary "@$f"
+          done
+          
+          # Publish
+          curl -s -X POST "https://zenodo.org/api/deposit/depositions/$DEPOSIT_ID/actions/publish" \
+            -H "Authorization: Bearer $ZENODO_TOKEN"
+          echo "Zenodo deposit: https://zenodo.org/record/$DEPOSIT_ID"
+
+  osf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload to OSF
+        env:
+          OSF_TOKEN: ${{ secrets.OSF_TOKEN }}
+        run: |
+          # Upload via OSF API v2
+          for f in papers/*.md; do
+            curl -s -X PUT "https://files.osf.io/v1/resources/mssai/providers/osfstorage/?name=$(basename $f)" \
+              -H "Authorization: Bearer $OSF_TOKEN" \
+              -F "body=@$f"
+          done
+          echo "OSF upload complete"
