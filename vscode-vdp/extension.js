@@ -52,6 +52,28 @@ let diagnosticCollection = null;
 let scanCount = 0;
 let lastViolationCount = 0;
 
+// ── MSS Analyze ──
+
+function analyzeWithMSS(text) {
+    return new Promise((resolve) => {
+        const { exec } = require('child_process');
+        const prompt = `Analyze through MSS (Meaning Supremacy System):\n1. Which A1-A6 axioms apply?\n2. Dimensional issue (L0 physical / L1 logical / L2 meaning)?\n3. Hidden closed objective or debate trap?\n4. A6 elevation suggestion?\n\nInput: ${text}`;
+        exec(`ollama run mss-ai-v3.4.3-balanced "${prompt.replace(/"/g, '\\"')}"`, { timeout: 120000 }, (err, stdout) => {
+            resolve(err ? `Error: ${err.message}` : stdout.trim() || 'No response from model');
+        });
+    });
+}
+
+function showAnalyzePanel(context, text) {
+    const panel = vscode.window.createWebviewPanel('mssAnalyze', 'MSS Analyze', vscode.ViewColumn.Beside, { enableScripts: true });
+    panel.webview.html = `<html><body style="background:#0d1117;color:#c9d1d9;font:14px/1.6 monospace;padding:16px">
+<h2 style="color:#58a6ff">MSS Analyze</h2><p style="color:#8b949e">Analyzing...</p></body></html>`;
+    analyzeWithMSS(text).then(result => {
+        panel.webview.html = `<html><body style="background:#0d1117;color:#c9d1d9;font:14px/1.6 monospace;padding:16px">
+<h2 style="color:#58a6ff">MSS Analyze</h2><pre style="white-space:pre-wrap;background:#161b22;padding:12px;border-radius:8px">${result.replace(/</g,'&lt;')}</pre></body></html>`;
+    });
+}
+
 // ── API Client ──
 
 function vdpRequest(endpoint, code) {
@@ -331,6 +353,19 @@ function activate(context) {
             await config.update('autoScanOnSave', !current, true);
             updateStatusBar(!current);
             vscode.window.showInformationMessage(`VDP: Auto-scan ${!current ? 'ENABLED' : 'DISABLED'}`);
+        })
+    );
+
+    // ── MSS Analyze command ──
+    context.subscriptions.push(
+        vscode.commands.registerCommand('vdp.analyze', async () => {
+            const editor = vscode.window.activeTextEditor;
+            if (!editor) { vscode.window.showWarningMessage('No active editor'); return; }
+            const selection = editor.selection;
+            const text = selection.isEmpty ? editor.document.getText() : editor.document.getText(selection);
+            if (!text.trim()) { vscode.window.showWarningMessage('No text to analyze'); return; }
+            vscode.window.showInformationMessage('MSS: Analyzing...');
+            showAnalyzePanel(context, text.substring(0, 2000));
         })
     );
     

@@ -1,100 +1,105 @@
 {
-  "name": "mss-vdp",
-  "displayName": "MSS VDP — Verification Discipline Protocol",
-  "description": "Real-time VDP code quality scanning in VS Code. Supports 10 languages, 50+ rules, instant violation highlighting.",
-  "version": "1.0.0",
-  "publisher": "mss-ai",
-  "engines": {
-    "vscode": "^1.80.0"
-  },
-  "categories": [
-    "Linters",
-    "Other"
-  ],
-  "keywords": [
-    "vdp",
-    "mss",
-    "lint",
-    "quality",
-    "security",
-    "code-review"
-  ],
-  "activationEvents": [
-    "onCommand:vdp.scan",
-    "onCommand:vdp.scanAll",
-    "onCommand:vdp.dashboard",
-    "onLanguage:python",
-    "onLanguage:javascript",
-    "onLanguage:typescript",
-    "onLanguage:rust",
-    "onLanguage:java",
-    "onLanguage:cpp",
-    "onLanguage:c",
-    "onLanguage:go",
-    "onLanguage:ruby",
-    "onLanguage:php",
-    "onLanguage:kotlin",
-    "onLanguage:csharp",
-    "workspaceContains:**/*.py",
-    "workspaceContains:**/*.js",
-    "workspaceContains:**/*.ts",
-    "workspaceContains:**/*.rs"
-  ],
-  "main": "./extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "vdp.scan",
-        "title": "VDP: Scan Current File"
-      },
-      {
-        "command": "vdp.scanAll",
-        "title": "VDP: Scan All Open Files"
-      },
-      {
-        "command": "vdp.dashboard",
-        "title": "VDP: Open Dashboard"
-      },
-      {
-        "command": "vdp.toggleAutoScan",
-        "title": "VDP: Toggle Auto-Scan on Save"
-      }
-    ],
-    "configuration": {
-      "title": "MSS VDP",
-      "properties": {
-        "vdp.apiUrl": {
-          "type": "string",
-          "default": "http://127.0.0.1:53000",
-          "description": "VDP API server URL"
-        },
-        "vdp.autoScanOnSave": {
-          "type": "boolean",
-          "default": true,
-          "description": "Automatically scan files on save"
-        },
-        "vdp.showStatusBar": {
-          "type": "boolean",
-          "default": true,
-          "description": "Show violation count in status bar"
-        },
-        "vdp.minSeverity": {
-          "type": "string",
-          "enum": [
-            "warn",
-            "error",
-            "critical"
-          ],
-          "default": "warn",
-          "description": "Minimum severity level to show in problems panel"
-        }
-      }
-    }
-  },
-  "scripts": {
-    "package": "npx vsce package"
-  },
-  "devDependencies": {
-    "@vscode/vsce": "^3.9.1"
-  }
+    "name":  "mss-vdp",
+    "displayName":  "MSS VDP — Verification Discipline Protocol",
+    "description":  "Real-time VDP code quality scanning in VS Code. Supports 10 languages, 50+ rules, instant violation highlighting.",
+    "version":  "1.0.0",
+    "publisher":  "mss-ai",
+    "engines":  {
+                    "vscode":  "^1.80.0"
+                },
+    "categories":  [
+                       "Linters",
+                       "Other"
+                   ],
+    "keywords":  [
+                     "vdp",
+                     "mss",
+                     "lint",
+                     "quality",
+                     "security",
+                     "code-review"
+                 ],
+    "activationEvents":  [
+                             "onCommand:vdp.scan",
+                             "onCommand:vdp.scanAll",
+                             "onCommand:vdp.dashboard",
+                             "onLanguage:python",
+                             "onLanguage:javascript",
+                             "onLanguage:typescript",
+                             "onLanguage:rust",
+                             "onLanguage:java",
+                             "onLanguage:cpp",
+                             "onLanguage:c",
+                             "onLanguage:go",
+                             "onLanguage:ruby",
+                             "onLanguage:php",
+                             "onLanguage:kotlin",
+                             "onLanguage:csharp",
+                             "workspaceContains:**/*.py",
+                             "workspaceContains:**/*.js",
+                             "workspaceContains:**/*.ts",
+                             "workspaceContains:**/*.rs",
+                             "onCommand:vdp.analyze"
+                         ],
+    "main":  "./extension.js",
+    "contributes":  {
+                        "commands":  [
+                                         {
+                                             "command":  "vdp.scan",
+                                             "title":  "VDP: Scan Current File"
+                                         },
+                                         {
+                                             "command":  "vdp.scanAll",
+                                             "title":  "VDP: Scan All Open Files"
+                                         },
+                                         {
+                                             "command":  "vdp.dashboard",
+                                             "title":  "VDP: Open Dashboard"
+                                         },
+                                         {
+                                             "command":  "vdp.toggleAutoScan",
+                                             "title":  "VDP: Toggle Auto-Scan on Save"
+                                         },
+                                         {
+                                             "command":  "vdp.analyze",
+                                             "title":  "MSS: Analyze Selection / Document"
+                                         }
+                                     ],
+                        "configuration":  {
+                                              "title":  "MSS VDP",
+                                              "properties":  {
+                                                                 "vdp.apiUrl":  {
+                                                                                    "type":  "string",
+                                                                                    "default":  "http://127.0.0.1:53000",
+                                                                                    "description":  "VDP API server URL"
+                                                                                },
+                                                                 "vdp.autoScanOnSave":  {
+                                                                                            "type":  "boolean",
+                                                                                            "default":  true,
+                                                                                            "description":  "Automatically scan files on save"
+                                                                                        },
+                                                                 "vdp.showStatusBar":  {
+                                                                                           "type":  "boolean",
+                                                                                           "default":  true,
+                                                                                           "description":  "Show violation count in status bar"
+                                                                                       },
+                                                                 "vdp.minSeverity":  {
+                                                                                         "type":  "string",
+                                                                                         "enum":  [
+                                                                                                      "warn",
+                                                                                                      "error",
+                                                                                                      "critical"
+                                                                                                  ],
+                                                                                         "default":  "warn",
+                                                                                         "description":  "Minimum severity level to show in problems panel"
+                                                                                     }
+                                                             }
+                                          }
+                    },
+    "scripts":  {
+                    "package":  "npx vsce package"
+                },
+    "devDependencies":  {
+                            "@vscode/vsce":  "^3.9.1"
+                        }
 }
