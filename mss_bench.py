@@ -269,15 +269,24 @@ def score_answer(answer: str, question: dict) -> dict:
 
 
 def run_ollama(prompt: str, model: str = "mss-ai-v3_4-production", timeout: int = 60) -> str:
+    """Run a prompt through Ollama using Popen to avoid capture_output OOM."""
     try:
-        r = subprocess.run(
+        p = subprocess.Popen(
             ["ollama", "run", model, prompt],
-            capture_output=True, text=True, timeout=timeout,
-            encoding='utf-8', errors='replace'
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True, encoding='utf-8', errors='replace'
         )
-        clean = re.sub(r'\x1b\[[0-9;]*[a-zA-Z]', '', r.stdout)
+        # Read with timeout, cap at 32KB
+        try:
+            stdout, stderr = p.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            p.kill()
+            stdout, stderr = p.communicate()
+            return "[TIMEOUT after %ds]" % timeout
+        
+        clean = re.sub(r'\x1b\[[0-9;]*[a-zA-Z]', '', stdout or '')
         clean = re.sub(r'\x1b\[.*?[a-zA-Z]', '', clean)
-        return clean.strip()
+        return clean.strip()[:32000]  # cap at 32KB
     except Exception as e:
         return "[ERROR: %s]" % e
 
