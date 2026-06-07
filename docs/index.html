@@ -38,13 +38,9 @@ code{background:#1a1a2a;padding:.1rem .4rem;border-radius:4px;font-size:.9em}
 </p>
 
 <div class="card">
-<h3>Δ 系统状态</h3>
-<table>
-<tr><td>S1 理论不完备标注</td><td><span class="tag tag-good">活跃</span> Five Ways MSS Fails 2026-06-07</td></tr>
-<tr><td>S2 反例响应</td><td><span class="tag tag-good">活跃</span> KB整顿完成 2026-06-07</td></tr>
-<tr><td>S3 异见空间</td><td><span class="tag tag-good">活跃</span> 多解释路径并存</td></tr>
-<tr><td>S4 产出有效度</td><td><span class="tag tag-warn">关注</span> 今日入库暂停, 蛰伏期</td></tr>
-<tr><td>综合</td><td><strong style="color:var(--good)">Δ > 0 — HEALTHY</strong></td></tr>
+<h3>Δ 系统状态 <a href="dashboard/" style="font-size:.8rem;font-weight:400">完整仪表盘 →</a></h3>
+<table id="deltaTable">
+<tr><td colspan="2" style="color:var(--muted)">加载中...</td></tr>
 </table>
 </div>
 
@@ -106,13 +102,35 @@ code{background:#1a1a2a;padding:.1rem .4rem;border-radius:4px;font-size:.9em}
 
 <hr style="border-color:var(--border);margin:2rem 0">
 <p style="color:var(--muted);font-size:.8rem">
-MSS-AI v17.10 · Built by <code>H520-H524</code> · 
+MSS-AI v17.10 · Built by <code>H520-H531</code> · 
 <a href="https://github.com/mysama1/MSS-AI-Project">GitHub</a> · 
 <a href="https://zenodo.org/">Zenodo</a> · 
 <a href="https://osf.io/">OSF</a><br>
 Licensed CC0 — dedicated to the public domain.<br>
 Δ > 0
 </p>
+
+<script>
+fetch('./dashboard/delta.json')
+  .then(r => r.json())
+  .then(d => {
+    const labels = {'S1_incompleteness':'理论不完备标注','S2_counterexample':'反例响应','S3_dissent_space':'异见空间','S4_output_validity':'产出有效度'};
+    const sigs = d.signals;
+    let rows = '';
+    let active = 0;
+    for (const [k, isActive] of Object.entries(sigs)) {
+      const tag = isActive ? 'tag-good' : 'tag-warn';
+      const txt = isActive ? '活跃' : '关注';
+      rows += '<tr><td>'+k.substring(0,2)+' '+labels[k]+'</td><td><span class="tag '+tag+'">'+txt+'</span></td></tr>';
+      if (isActive) active++;
+    }
+    rows += '<tr><td>综合</td><td><strong style="color:var(--good)">&Delta; &gt; 0 &mdash; '+d.delta_status+' ('+active+'/4)</strong></td></tr>';
+    document.getElementById('deltaTable').innerHTML = rows;
+  })
+  .catch(() => {
+    document.getElementById('deltaTable').innerHTML = '<tr><td colspan="2">Δ 数据暂不可用 · <a href="dashboard/">查看仪表盘</a></td></tr>';
+  });
+</script>
 
 </body>
 </html>

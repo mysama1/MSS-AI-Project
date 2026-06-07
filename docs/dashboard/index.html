@@ -1,58 +1,87 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>MSS Dashboard — Δ Status</title>
-<style>:root{--bg:#0d1117;--fg:#c9d1d9;--accent:#58a6ff;--good:#3fb950;--warn:#d29922;--bad:#f85149;--muted:#8b949e;--border:#30363d;--card:#161b22}*{box-sizing:border-box;margin:0;padding:0}body{font:16px/1.6 -apple-system,sans-serif;background:var(--bg);color:var(--fg);max-width:900px;margin:0 auto;padding:2rem 1rem}h1{color:var(--accent);margin-bottom:1rem}h2{margin:1.5rem 0 .5rem;border-bottom:1px solid var(--border);padding-bottom:.3rem}a{color:var(--accent);text-decoration:none}.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;margin:1rem 0}.signal{display:flex;align-items:center;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--border)}.signal:last-child{border-bottom:none}.signal-name{font-weight:bold}.dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:.5rem}.dot-green{background:var(--good);box-shadow:0 0 8px var(--good)}.dot-yellow{background:var(--warn);box-shadow:0 0 8px var(--warn)}.dot-red{background:var(--bad);box-shadow:0 0 8px var(--bad)}.status-big{font-size:3rem;font-weight:bold;text-align:center;margin:1rem 0}.status-healthy{color:var(--good)}.status-warning{color:var(--warn)}.status-critical{color:var(--bad)}table{width:100%;border-collapse:collapse;margin:.5rem 0}td,th{padding:.5rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}th{color:var(--muted)}.bar{height:8px;background:var(--border);border-radius:4px;margin:.3rem 0;overflow:hidden}.bar-fill{height:100%;border-radius:4px}.bar-green{background:var(--good)}.bar-yellow{background:var(--warn)}.bar-red{background:var(--bad)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.tag{display:inline-block;padding:.1rem .5rem;border-radius:10px;font-size:.75rem;margin:.1rem}.tag-green{background:#1a3a1a;color:var(--good)}.tag-yellow{background:#3a2a0a;color:var(--warn)}.tag-blue{background:#1a1a2a;color:var(--accent)}</style></head><body>
-<a href="./">← 首页</a>
-<h1>📊 MSS Dashboard</h1>
+<style>:root{--bg:#0d1117;--fg:#c9d1d9;--accent:#58a6ff;--good:#3fb950;--warn:#d29922;--bad:#f85149;--muted:#8b949e;--border:#30363d;--card:#161b22}*{box-sizing:border-box;margin:0;padding:0}body{font:16px/1.6 -apple-system,sans-serif;background:var(--bg);color:var(--fg);max-width:900px;margin:0 auto;padding:2rem 1rem}h1{color:var(--accent);margin-bottom:.5rem}h2{margin:1.5rem 0 .5rem;border-bottom:1px solid var(--border);padding-bottom:.3rem}a,h3 a{color:var(--accent);text-decoration:none}.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;margin:1rem 0}.signal{display:flex;align-items:center;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--border)}.signal:last-child{border-bottom:none}.signal-name{font-weight:bold}.dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:.5rem}.dot-green{background:var(--good);box-shadow:0 0 8px var(--good)}.dot-yellow{background:var(--warn);box-shadow:0 0 8px var(--warn)}.dot-red{background:var(--bad);box-shadow:0 0 8px var(--bad)}.status-big{font-size:3rem;font-weight:bold;text-align:center;margin:1rem 0}.status-healthy{color:var(--good)}.status-warning{color:var(--warn)}.status-critical{color:var(--bad)}.status-loading{color:var(--muted)}table{width:100%;border-collapse:collapse;margin:.5rem 0}td,th{padding:.5rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}th{color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}@media(max-width:640px){.grid{grid-template-columns:1fr}}.tag{display:inline-block;padding:.1rem .5rem;border-radius:10px;font-size:.75rem;margin:.1rem}.tag-green{background:#1a3a1a;color:var(--good)}.tag-yellow{background:#3a2a0a;color:var(--warn)}.tag-blue{background:#1a1a2a;color:var(--accent)}.updated{color:var(--muted);font-size:.75rem;float:right}</style></head><body>
+<a href="../">← 首页</a>
+<h1>📊 MSS Dashboard <span class="updated" id="ts">加载中...</span></h1>
 
 <div class="card">
-<div class="status-big status-healthy" id="deltaStatus">Δ > 0</div>
-<p style="text-align:center;color:var(--muted)" id="deltaLabel">HEALTHY — 系统在呼吸</p>
+<div class="status-big status-loading" id="deltaStatus">⋯</div>
+<p style="text-align:center;color:var(--muted)" id="deltaLabel">加载中...</p>
 </div>
 
 <div class="grid">
 <div class="card"><h3>Δ 四信号</h3>
-<div class="signal"><span class="signal-name"><span class="dot dot-green"></span> S1 理论不完备标注</span><span class="tag tag-green">活跃</span></div>
-<div class="signal"><span class="signal-name"><span class="dot dot-green"></span> S2 反例响应</span><span class="tag tag-green">活跃</span></div>
-<div class="signal"><span class="signal-name"><span class="dot dot-green"></span> S3 异见空间</span><span class="tag tag-green">活跃</span></div>
-<div class="signal"><span class="signal-name"><span class="dot dot-yellow"></span> S4 产出有效度</span><span class="tag tag-yellow">关注</span></div>
+<div id="signals">加载中...</div>
 </div>
 
-<div class="card"><h3>KB 统计</h3>
-<table><tr><td>总条目</td><td>637</td></tr>
-<tr><td>L0 基础层</td><td>115</td></tr>
-<tr><td>L1 核心理论</td><td>120</td></tr>
-<tr><td>L2 应用理论</td><td>173</td></tr>
-<tr><td>L3 战略层</td><td>56</td></tr>
-<tr><td>L4 元治理</td><td>173</td></tr>
-<tr><td>矛盾</td><td><span class="tag tag-green">0</span></td></tr>
-<tr><td>已知缺口</td><td><span class="tag tag-yellow">16</span></td></tr></table></div>
+<div class="card"><h3>KB 统计 <a href="../kb/" style="font-size:.8rem">→</a></h3>
+<div id="kbStats">加载中...</div></div>
 </div>
 
 <div class="card"><h3>🤖 Model Benchmark (v3.4.3-balanced)</h3>
 <table>
 <tr><th>指标</th><th>v3.4.2</th><th>balanced</th><th>Δ</th></tr>
-<tr><td>AR-01 公理回忆</td><td>0.50</td><td>1.00</td><td><span style="color:var(--good)">+0.50</span></td></tr>
-<tr><td>AA-01 热税应用</td><td>0.56</td><td>0.33</td><td><span style="color:var(--bad)">-0.23</span></td></tr>
-<tr><td>AA-02 GPU对齐</td><td>0.47</td><td>0.53</td><td><span style="color:var(--good)">+0.06</span></td></tr>
-<tr><td>FS-01 格式合规</td><td>0.67</td><td>0.83</td><td><span style="color:var(--good)">+0.16</span></td></tr>
-<tr style="font-weight:bold"><td>总分</td><td>0.471</td><td>0.542</td><td><span style="color:var(--good)">+0.071</span></td></tr>
+<tr><td>AR-01 公理回忆</td><td>0.50</td><td>1.00</td><td style="color:var(--good)">+0.50</td></tr>
+<tr><td>AA-01 热税应用</td><td>0.56</td><td>0.33</td><td style="color:var(--bad)">−0.23</td></tr>
+<tr><td>AA-02 GPU对齐</td><td>0.47</td><td>0.53</td><td style="color:var(--good)">+0.06</td></tr>
+<tr><td>FS-01 格式合规</td><td>0.67</td><td>0.83</td><td style="color:var(--good)">+0.16</td></tr>
+<tr style="font-weight:bold"><td>总分</td><td>0.471</td><td>0.542</td><td style="color:var(--good)">+0.071</td></tr>
 </table>
+<p style="color:var(--muted);font-size:.8rem">提示词 70行(公理锚定/A3公式/诚实边界) > 300行臃肿 > 40行过简 · 天花板 AA-01/CB-01 · <a href="https://github.com/mysama1/MSS-AI-Project/wiki/H-Index#l1-core-theory--%E6%A0%B8%E5%BF%83%E7%90%86%E8%AE%BA">H531</a></p>
 </div>
 
 <div class="card"><h3>🎯 预测追踪</h3>
 <table>
 <tr><th>预测</th><th>窗口</th><th>剩余</th><th>状态</th></tr>
-<tr><td>001 CRTR上升</td><td>12-24月</td><td id="pred001"></td><td><span style="color:var(--warn)">待观察</span></td></tr>
-<tr><td>002 π独立重述</td><td>18个月</td><td id="pred002"></td><td><span style="color:var(--warn)">待观察</span></td></tr>
-<tr><td>003 K3周期律</td><td>18-36月</td><td id="pred003"></td><td><span style="color:var(--warn)">待观察</span></td></tr>
+<tr><td>001 CRTR上升</td><td>12−24月</td><td id="pred001"></td><td style="color:var(--warn)">待观察</td></tr>
+<tr><td>002 π独立重述</td><td>18个月</td><td id="pred002"></td><td style="color:var(--warn)">待观察</td></tr>
+<tr><td>003 K3周期律</td><td>18−36月</td><td id="pred003"></td><td style="color:var(--warn)">待观察</td></tr>
 </table>
 </div>
 
 <script>
-function daysUntil(dateStr){var d=(new Date(dateStr)-new Date())/864e5;return Math.floor(d)}
-document.getElementById('pred001').textContent=daysUntil('2028-06-07')+' 天';
-document.getElementById('pred002').textContent=daysUntil('2027-12-07')+' 天';
-document.getElementById('pred003').textContent=daysUntil('2029-06-07')+' 天';
+// —— Δ Status from delta.json ——
+fetch('./delta.json')
+  .then(r => r.json())
+  .then(d => {
+    const cls = d.delta_status==='HEALTHY'?'status-healthy':d.delta_status==='WARNING'?'status-warning':'status-critical';
+    document.getElementById('deltaStatus').textContent = d.delta_status==='HEALTHY'?'Δ > 0':d.delta_status==='WARNING'?'Δ ≈ 0':'Δ = 0';
+    document.getElementById('deltaStatus').className = 'status-big '+cls;
+    document.getElementById('deltaLabel').textContent = d.delta_status+' — '+(d.active_signals)+'/4 active · tau='+d.tau_months+'mo';
+    document.getElementById('ts').textContent = '更新 '+d.timestamp;
+
+    const sigs = d.signals;
+    const labels = {'S1_incompleteness':'理论不完备标注','S2_counterexample':'反例响应','S3_dissent_space':'异见空间','S4_output_validity':'产出有效度'};
+    const sigsDiv = document.getElementById('signals');
+    sigsDiv.innerHTML = '';
+    for (const [k,active] of Object.entries(sigs)) {
+      const dotCls = active?'dot-green':'dot-yellow';
+      const tagCls = active?'tag-green':'tag-yellow';
+      const txt = active?'活跃':'关注';
+      sigsDiv.innerHTML += '<div class="signal"><span class="signal-name"><span class="dot '+dotCls+'"></span> '+k.substring(0,2)+' '+labels[k]+'</span><span class="tag '+tagCls+'">'+txt+'</span></div>';
+    }
+  })
+  .catch(e => { document.getElementById('deltaStatus').textContent='?'; document.getElementById('deltaLabel').textContent='无法加载 Δ 数据'; });
+
+// —— KB Stats from kb_stats.json ——
+fetch('./kb_stats.json')
+  .then(r => r.json())
+  .then(s => {
+    const names = {'L0_FOUNDATION':'L0 基础层','L1_CORE_THEORY':'L1 核心理论','L2_APPLIED_THEORY':'L2 应用理论','L3_STRATEGIC':'L3 战略层','L4_META':'L4 元治理'};
+    let html = '<table><tr><td>总条目</td><td><b>'+s.total+'</b></td></tr>';
+    for (const [k, v] of Object.entries(s.layers)) {
+      html += '<tr><td>'+names[k]+'</td><td>'+v+'</td></tr>';
+    }
+    html += '<tr><td>矛盾</td><td><span class="tag tag-green">'+s.contradictions+'</span></td></tr>';
+    html += '<tr><td>已知缺口</td><td><span class="tag tag-yellow">'+s.gaps+'</span></td></tr></table>';
+    document.getElementById('kbStats').innerHTML = html;
+  });
+
+// Predictions countdown
+function daysUntil(d){return Math.floor((new Date(d)-new Date())/864e5)}
+document.getElementById('pred001').textContent = daysUntil('2028-06-07')+' d';
+document.getElementById('pred002').textContent = daysUntil('2027-12-07')+' d';
+document.getElementById('pred003').textContent = daysUntil('2029-06-07')+' d';
 </script>
 
-<p style="margin-top:2rem;color:var(--muted);font-size:.8rem">更新于 2026-06-07 · MSS-AI v17.10 · Δ > 0</p>
+<p style="margin-top:2rem;color:var(--muted);font-size:.8rem">MSS-AI v17.10 · Δ > 0 · 开源 CC0 · <a href="https://github.com/mysama1/MSS-AI-Project">GitHub</a></p>
 </body></html>

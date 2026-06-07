@@ -1,0 +1,13 @@
+{
+  "total": 644,
+  "layers": {
+    "L0_FOUNDATION": 115,
+    "L1_CORE_THEORY": 122,
+    "L2_APPLIED_THEORY": 175,
+    "L3_STRATEGIC": 56,
+    "L4_META": 176
+  },
+  "gaps": 16,
+  "contradictions": 0,
+  "updated": "2026-06-07"
+}
