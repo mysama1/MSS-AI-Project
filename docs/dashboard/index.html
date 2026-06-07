@@ -78,7 +78,7 @@ document.getElementById('pred003').textContent = daysUntil('2029-06-07')+' d';
 
 // —— Agent Benchmark from benchmark_results.json ——
 const benchLabels = {heat_tax:'热税检测 (F1)', delta:'Δ协议 (准确)', throughput:'吞吐量 (runs/s)',memory:'记忆效率'};
-fetch('./benchmark_results.json')
+fetch('../benchmark_results.json')
   .then(r => r.json())
   .then(b => {
     const r = b.results;

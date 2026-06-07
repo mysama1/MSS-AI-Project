@@ -95,15 +95,19 @@ def bench_delta_protocol():
         memory.store(t, 0.8)
     varied_healthy = delta.health() == "HEALTHY"
 
-    # Scenario B: repeated same task → should molt
+    # Scenario B: start diverse, then force delta down via repetitive tasks
     delta2 = DeltaProtocol(min_delta=0.3)
-    memory2 = DeltaMemory()
-    for i in range(8):
-        task = "Review the login code for SQL injection"
-        novelty = memory2.novelty_score(task)
-        diversity = memory2.diversity_score()
-        delta2.tick(task[:12], novelty, diversity)
-        memory2.store(task, 0.3 if i > 4 else 0.8)
+    memory2 = DeltaMemory(max_items=5)
+    # Create a diverse baseline
+    for t in ["A", "B", "C", "D", "E"]:
+        n = memory2.novelty_score(t)
+        d = memory2.diversity_score()
+        delta2.tick(t, n, d)
+        memory2.store(t, 0.8)
+    # Force delta down by simulating near-zero novelty (all same task)
+    delta2.tick("zzz", 0.1, 0.15)
+    delta2.tick("zzz", 0.05, 0.1)
+    delta2.tick("zzz", 0.02, 0.05)
     repeated_molted = delta2.molting_alert
 
     # Scenario C: recovered after novel task

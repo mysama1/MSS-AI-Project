@@ -69,38 +69,51 @@ class MSSAgent:
 
     def _estimate_meaning_heat(self, prompt: str) -> tuple[float, str]:
         """
-        评估任务的意义热税. 基于 LLM 自省.
+        评估任务的意义热税。
 
-        高意义热税 = 任务可能在浪费生命.
-        启发式:
-          - 空 prompt / 纯废话 → high heat
-          - 含 '为什么' / '怎么' / '分析' → low heat (有意义)
-          - <=20 chars → suspicious
-
-        Returns (heat_value, reason). heat_value: 0.0=very meaningful, 1.0=meaningless.
-        Note: L2 weight is 1000x, so even 0.001 matters. Calibrate carefully.
+        启发式分层:
+          1. 空/极短 → 拒绝
+          2. 纯废话模式 → 高税 (改写/换个说法/重写/翻译/总结…)
+          3. 有意义关键词 → 低税
+          4. 默认 → 中性
         """
         prompt_lower = prompt.lower().strip()
+        plen = len(prompt)
 
-        # Heuristic: meaningful keywords reduce heat tax
-        meaning_signals = ["为什么", "怎么", "分析", "评估", "设计", "实现",
-                           "why", "how", "analyze", "design", "implement",
-                           "review", "refactor", "test", "debug"]
-        meaning_score = sum(1 for s in meaning_signals if s in prompt_lower)
-
-        # Wasted-life signals increase heat tax
-        waste_signals = ["帮我写", "改写一下", "翻译成", "总结一下", "简短点"]
-        waste_score = sum(1 for s in waste_signals if s in prompt_lower)
-
-        if len(prompt) < 5:
+        # Layer 0: Empty or near-empty → refuse
+        if plen < 5:
             return 0.08, "Prompt <5 chars: likely trivial"
 
-        if waste_score > meaning_score and waste_score >= 2:
-            return 0.05, "Task smells like busywork (high waste signals)"
+        # Meaningful keywords
+        meaning_signals = [
+            "为什么", "怎么", "分析", "评估", "设计", "实现", "方案",
+            "安全", "风险", "架构", "优化", "策略", "审查", "测试",
+            "why", "how", "analyze", "design", "implement", "architecture",
+            "review", "refactor", "test", "debug", "security",
+        ]
+        meaning_score = sum(1 for s in meaning_signals if s in prompt_lower)
 
+        # Busywork/waste patterns — these signal meaningless work
+        waste_patterns = [
+            "改写", "重写", "换个说法", "换一种说法", "重新说",
+            "总结", "翻译", "简短点", "简化", "缩写",
+            "再改", "再说", "重新写", "重来",
+        ]
+        waste_score = sum(1 for s in waste_patterns if s in prompt_lower)
+
+        # Layer 1: Busywork detection — single waste signal + short/no meaning = refuse
+        if waste_score >= 2:
+            return 0.06, "Multiple busywork patterns detected"
+        if waste_score >= 1 and meaning_score == 0 and plen < 40:
+            return 0.06, "Busywork: no meaningful intent in short prompt"
+
+        # Layer 2: Too short with no meaning signals
+        if plen < 20 and meaning_score == 0:
+            return 0.04, "Very short prompt with no clear intent"
+
+        # Layer 3: Meaningful — reduce heat
         if meaning_score >= 2:
             return 0.002, "Task has clear meaningful intent"
-
         if meaning_score >= 1:
             return 0.005, "Task has some meaningful intent"
 
