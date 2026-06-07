@@ -1,3 +1,5 @@
+[![PyPI version](https://badge.fury.io/py/mss-agent.svg)](https://pypi.org/project/mss-agent/)
+
 # MSS-Agent
 
 **世界上第一个内置"意义场自检"的开源 Agent 框架。**
