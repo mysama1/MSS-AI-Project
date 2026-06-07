@@ -1,8 +1,6 @@
-# Running MSS-Agent with DeepSeek
+[English](/deepseek-ai/awesome-deepseek-agent/blob/main/docs/mss-agent.md) | [简体中文](/deepseek-ai/awesome-deepseek-agent/blob/main/docs/mss-agent.zh-CN.md) · [← Back](/deepseek-ai/awesome-deepseek-agent/blob/main/README.md)
 
-[MSS-Agent](https://github.com/mysama1/MSS-AI-Project) is the first open-source Agent framework with built-in "meaning-field self-audit." Unlike traditional agents that blindly execute tasks, MSS-Agent evaluates every task through three layers of "heat tax" — physical, logical, and meaning — before deciding whether to proceed.
-
-This guide walks you through running MSS-Agent with DeepSeek-V4 as the LLM backend.
+MSS-Agent is the first open-source Agent framework with built-in "meaning-field self-audit." Unlike traditional agents that blindly execute tasks, MSS-Agent evaluates every task through three layers of "heat tax" — physical, logical, and meaning — before deciding whether to proceed.
 
 ## Prerequisites
 
@@ -18,7 +16,11 @@ pip install mss-agent openai
 ## Step 2: Set API Key
 
 ```bash
+# Linux / Mac
 export DEEPSEEK_API_KEY="sk-your-api-key"
+
+# Windows (PowerShell)
+$env:DEEPSEEK_API_KEY="sk-your-api-key"
 ```
 
 Or set it in code:
@@ -36,30 +38,28 @@ os.environ["DEEPSEEK_API_KEY"] = "sk-your-api-key"
 from mss_agent import MSSAgent
 from mss_agent.llm.deepseek import DeepSeekLLM
 
-# Create agent with DeepSeek backend
 agent = MSSAgent(
     name="my-agent",
     llm=DeepSeekLLM(model="deepseek-chat"),
 )
 
-# Heat tax will auto-detect busywork
+# Meaningful task — passes, LLM is called
 result = agent.run("Design a secure REST API with rate limiting")
-if result.aborted:
-    print(f"Rejected: {result.reason}")  # Won't happen — meaningful task
-else:
-    print(f"Output: {result.output}")
+print(f"Passed: {result.output}")
+
+# Busywork — rejected BEFORE any API call (saves tokens)
+result = agent.run("改写一下：你好")
+print(f"Rejected: {result.reason}")
 ```
 
-### What MST agent catches
-
-Agent will **auto-reject** these:
+### MSS-Agent auto-rejects these tasks
 
 ```python
 tasks = [
-    "改写一下：你好",           # Busywork detected → ABORT
-    "把刚才那句话重写一遍",      # Waste pattern → ABORT
+    "改写一下：你好",           # Busywork pattern → ABORT
+    "把刚才那句话重写一遍",      # Waste signal → ABORT
     "Again",                   # Too short → ABORT
-    "Design an OAuth2 flow",   # Meaningful → PASS
+    "Design OAuth2 auth flow",  # Meaningful → PASS
 ]
 for t in tasks:
     r = agent.run(t)
@@ -83,17 +83,15 @@ result = agent.run("Analyze the security implications of JWT in browser storage"
 ```python
 print(agent.health_report())
 # {
-#   "heat_tax_total": 0.005,
-#   "delta_status": "HEALTHY",
-#   "runs": 15,
-#   "abort_rate": 0.2
+#   "runs": 15, "aborts": 3,
+#   "abort_rate": 0.2,
+#   "delta_status": "HEALTHY"
 # }
 ```
 
 ## CLI Quick Start
 
 ```bash
-# Install
 pip install mss-agent
 
 # Check a task
@@ -102,18 +100,17 @@ mss-agent check "改写一下：你好"
 
 # Run through DeepSeek
 export DEEPSEEK_API_KEY="sk-..."
-python -c "from mss_agent import MSSAgent; from mss_agent.llm.deepseek import DeepSeekLLM; a=MSSAgent('x',llm=DeepSeekLLM()); print(a.run('Explain the CAP theorem').output)"
 ```
 
 ## How It Works
 
 MSS-Agent applies a **3-layer defense** before any LLM call:
 
-1. **A3 Heat Tax** — Scores the task for meaninglessness. Busywork (rewrite/retranslate/shorten) gets high tax → rejected before LLM is invoked (saves API cost)
-2. **A6 Delta Protocol** — Tracks agent health. If the agent gets stuck repeating similar tasks, it triggers "molting" (pattern reset)
-3. **Memory System** — Remembers but also forgets. Closed patterns are evicted to maintain diversity
+1. **A3 Heat Tax** — Scores task meaningfulness. Busywork (rewrite/retranslate/shorten) gets high tax → rejected before LLM invocation (saves API cost)
+2. **A6 Delta Protocol** — Tracks agent health. If stuck repeating similar tasks, triggers "molting" (pattern reset)
+3. **Memory System** — Remembers but also forgets. Closed patterns evicted to maintain diversity
 
-This means DeepSeek API is only called for tasks that actually matter — saving tokens and ensuring output quality.
+DeepSeek API is only called for tasks that actually matter — saving tokens and ensuring output quality.
 
 ## Resources
 
