@@ -1,7 +1,7 @@
 name: Refresh Dashboard Data
 on:
   schedule:
-    - cron: '0 8 * * *'   # daily 08:00 UTC
+    - cron: '0 8 * * *'
   workflow_dispatch:
 
 permissions:
@@ -15,112 +15,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Install mss-agent
+        run: pip install -e mss_agent/
+
       - name: Generate delta.json
-        run: |
-          python3 -c "
-          import os, json
-          from datetime import datetime, timedelta
-          now = datetime.utcnow()
-          tau = timedelta(days=90)
-          PROJECT_ROOT = '.'
-
-          # Check papers dir for recent activity
-          papers_dir = os.path.join(PROJECT_ROOT, 'papers')
-          s1, s2, s3 = False, False, False
-          if os.path.isdir(papers_dir):
-              files = [f for f in os.listdir(papers_dir) if f.endswith('.md')]
-              for f in files:
-                  fp = os.path.join(papers_dir, f)
-                  mtime = datetime.utcfromtimestamp(os.path.getmtime(fp))
-                  if now - mtime < tau:
-                      s3 = True
-                  if f == 'five_ways_mss_fails.md':
-                      s2 = True
-                  try:
-                      with open(fp, encoding='utf-8') as fh:
-                          c = fh.read()
-                      if '不完备' in c or 'known unknown' in c.lower():
-                          s1 = True
-                  except: pass
-
-          # S4 from KB recency
-          kb_dir = os.path.join(PROJECT_ROOT, 'knowledge_base')
-          s4 = False
-          if os.path.isdir(kb_dir):
-              recent_new, recent_total = 0, 0
-              for root, dirs, filenames in os.walk(kb_dir):
-                  for f in filenames:
-                      if not f.endswith('.jsonl'): continue
-                      fp = os.path.join(root, f)
-                      try:
-                          mtime = datetime.utcfromtimestamp(os.path.getmtime(fp))
-                          recent_total += 1
-                          if now - mtime < tau:
-                              recent_new += 1
-                      except: pass
-              s4 = recent_new > 0 and recent_new < recent_total * 0.1
-
-          active = sum([s1, s2, s3, s4])
-          status = 'HEALTHY' if active >= 3 else ('WARNING' if active >= 2 else 'CRITICAL')
-
-          result = {
-              'timestamp': now.strftime('%Y-%m-%d %H:%M UTC'),
-              'delta_status': status,
-              'active_signals': active,
-              'signals': {
-                  'S1_incompleteness': s1,
-                  'S2_counterexample': s2,
-                  'S3_dissent_space': s3,
-                  'S4_output_validity': s4
-              },
-              'tau_months': 3
-          }
-          with open('docs/delta.json', 'w', encoding='utf-8') as f:
-              json.dump(result, f, indent=2, ensure_ascii=False)
-          print(f'Delta: {status} ({active}/4)')
-          "
+        run: python3 tools/gen_delta.py
 
       - name: Generate kb_stats.json
-        run: |
-          python3 -c "
-          import os, json, re
-          kb = 'knowledge_base'
-          stats = {'total': 0, 'layers': {}, 'gaps': 0, 'contradictions': 0}
-          all_hids = set()
-          for layer in ['L0_FOUNDATION','L1_CORE_THEORY','L2_APPLIED_THEORY','L3_STRATEGIC','L4_META']:
-              ld = os.path.join(kb, layer)
-              count = len([f for f in os.listdir(ld) if f.endswith('.jsonl')]) if os.path.isdir(ld) else 0
-              stats['layers'][layer] = count
-              stats['total'] += count
-              if os.path.isdir(ld):
-                  for f in os.listdir(ld):
-                      if not f.endswith('.jsonl'): continue
-                      fp = os.path.join(ld, f)
-                      try:
-                          for enc in ['utf-8-sig','gbk','latin-1']:
-                              try:
-                                  with open(fp, encoding=enc) as fh: raw = fh.read()
-                                  break
-                              except: continue
-                          for line in raw.strip().split('\n'):
-                              if not line.strip().startswith('{'): continue
-                              try: entry = json.loads(line)
-                              except: continue
-                              hid = entry.get('h_id','') or entry.get('id','')
-                              m = re.search(r'[hH](\d+)', str(hid))
-                              if m: all_hids.add(int(m.group(1)))
-                      except: pass
-          stats['gaps'] = len([i for i in range(1, 531) if i not in all_hids])
-          from datetime import datetime
-          stats['updated'] = datetime.utcnow().strftime('%Y-%m-%d')
-          with open('docs/kb_stats.json', 'w', encoding='utf-8') as f:
-              json.dump(stats, f, indent=2, ensure_ascii=False)
-          print(f'KB: {stats[\"total\"]} entries, {stats[\"gaps\"]} gaps')
-          "
+        run: python3 tools/gen_kb_stats.py
+
+      - name: Run benchmark
+        run: python3 tools/benchmark_agent.py && cp tools/benchmark_results.json docs/benchmark_results.json
 
       - name: Commit updates
         run: |
           git config user.name 'MSS Dashboard Bot'
           git config user.email 'bot@mss-ai'
-          git add docs/delta.json docs/kb_stats.json
-          git diff --staged --quiet || (git commit -m 'Auto: refresh dashboard data' && git push)
+          git add docs/delta.json docs/kb_stats.json docs/benchmark_results.json
+          git diff --staged --quiet || (git commit -m 'Auto: refresh dashboard data + benchmark' && git push)

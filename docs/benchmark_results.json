@@ -1,0 +1,39 @@
+{
+  "benchmark_version": "mss-agent-1.0",
+  "timestamp": "2026-06-07T19:56:27",
+  "overall_score": 0.72,
+  "results": {
+    "heat_tax": {
+      "name": "heat_tax_detection",
+      "precision": 0.556,
+      "recall": 1.0,
+      "f1": 0.714,
+      "true_positives": 10,
+      "false_positives": 8,
+      "true_negatives": 2,
+      "false_negatives": 0,
+      "score": 0.714
+    },
+    "delta": {
+      "name": "delta_protocol",
+      "varied_stays_healthy": true,
+      "repeated_triggers_molt": false,
+      "novelty_enables_recovery": true,
+      "score": 0.667
+    },
+    "throughput": {
+      "name": "throughput",
+      "runs_per_second": 26960.7,
+      "total_time_ms": 4.0,
+      "score": 1.0
+    },
+    "memory": {
+      "name": "memory_efficiency",
+      "stored": 100,
+      "active": 50,
+      "evicted": 50,
+      "efficiency": 0.5,
+      "score": 0.5
+    }
+  }
+}
