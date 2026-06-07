@@ -82,11 +82,13 @@ class DeltaMemory:
         return 1.0
 
     def diversity_score(self) -> float:
-        """计算记忆的多样性. 0=单一模式, 1=高度多样."""
+        """计算记忆多样性。重复任务压低分数。0=单一模式, 1=高度多样。"""
         if len(self.items) < 3:
             return 1.0
-        hashes = set(i["hash"] for i in self.items)
-        return min(len(hashes) / len(self.items), 1.0)
+        unique_hashes = len(set(i["hash"] for i in self.items))
+        # Weighted: each repeat adds weight, reducing diversity
+        weighted_total = sum(1 + (i["repeats"] - 1) * 0.5 for i in self.items)
+        return round(min(unique_hashes / weighted_total, 1.0), 4)
 
     def stats(self) -> dict:
         active = [i for i in self.items if not i["closed"]]

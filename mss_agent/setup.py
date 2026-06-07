@@ -10,6 +10,11 @@ setup(
     url="https://github.com/mysama1/MSS-AI-Project",
     license="MIT",
     packages=find_packages(),
+    entry_points={
+        "console_scripts": [
+            "mss-agent=mss_agent.cli:main",
+        ],
+    },
     python_requires=">=3.10",
     install_requires=[],
     extras_require={
