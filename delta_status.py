@@ -3,13 +3,18 @@
 import sys, os, json, re
 from datetime import datetime, timedelta
 
-def delta_status(tau_months=3):
+# Configurable project root
+PROJECT_ROOT = os.environ.get('MSS_PROJECT_ROOT', r'E:\AI_Workspace\MSS-AI\project')
+
+def delta_status(tau_months=3, output_json=False):
     tau = timedelta(days=tau_months*30)
     now = datetime.now()
     
+    papers_dir = os.path.join(PROJECT_ROOT, 'papers')
+    kb_dir = os.path.join(PROJECT_ROOT, 'knowledge_base')
+    
     # S1: Theory incompleteness annotations
     s1_active = False
-    papers_dir = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'AI_Workspace', 'MSS-AI', 'project', 'papers')
     if os.path.isdir(papers_dir):
         for f in os.listdir(papers_dir):
             fp = os.path.join(papers_dir, f)
@@ -32,11 +37,20 @@ def delta_status(tau_months=3):
         mtime = datetime.fromtimestamp(os.path.getmtime(fails_path))
         s2_active = (now - mtime) < tau
     
-    # S3: Dissent space
-    s3_active = True  # Multiple interpretation paths coexist in KB
+    # S3: Dissent space — detect commentary/critique activity
+    s3_active = False
+    if os.path.isdir(papers_dir):
+        for f in os.listdir(papers_dir):
+            fp = os.path.join(papers_dir, f)
+            if not f.endswith('.md'): continue
+            try:
+                mtime = datetime.fromtimestamp(os.path.getmtime(fp))
+                if now - mtime < tau:
+                    s3_active = True
+                    break
+            except: pass
     
     # S4: Output validity - simplified check
-    kb_dir = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'AI_Workspace', 'MSS-AI', 'project', 'knowledge_base')
     s4_active = False
     if os.path.isdir(kb_dir):
         recent_new = 0
@@ -57,6 +71,24 @@ def delta_status(tau_months=3):
     
     status = "HEALTHY" if active >= 3 else ("WARNING" if active >= 2 else "CRITICAL")
     
+    result = {
+        'timestamp': now.strftime('%Y-%m-%d %H:%M'),
+        'delta_status': status,
+        'active_signals': active,
+        'signals': {
+            'S1_incompleteness': s1_active,
+            'S2_counterexample': s2_active,
+            'S3_dissent_space': s3_active,
+            'S4_output_validity': s4_active
+        },
+        'project_root': PROJECT_ROOT,
+        'tau_months': tau_months
+    }
+    
+    if output_json:
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if status != "CRITICAL" else 1
+    
     print("=== MSS Delta Status ===")
     print(f"Timestamp: {now.strftime('%Y-%m-%d %H:%M')}")
     print()
@@ -72,7 +104,7 @@ def delta_status(tau_months=3):
         print("WARNING: Delta approaching zero. System may be closing.")
         print("Recommended: Trigger 3-tier reboot sequence.")
     elif status == "WARNING":
-        print("CAUTION: Delta and Delta signals inactive. Monitor closely.")
+        print("CAUTION: Delta signals low. Monitor closely.")
     else:
         print("Delta > 0 — System is breathing.")
     
@@ -82,8 +114,9 @@ def main():
     import argparse
     p = argparse.ArgumentParser(description='MSS Delta Status Check')
     p.add_argument('--tau', type=int, default=3, help='Months window for signal detection')
+    p.add_argument('--json', action='store_true', help='Output as JSON (for dashboard)')
     args = p.parse_args()
-    sys.exit(delta_status(tau_months=args.tau))
+    sys.exit(delta_status(tau_months=args.tau, output_json=args.json))
 
 if __name__ == '__main__':
     main()
