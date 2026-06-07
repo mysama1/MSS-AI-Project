@@ -1,12 +1,20 @@
-name: Publish to PyPI
+name: Auto-Publish to PyPI (mss-agent)
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
+    paths:
+      - 'mss_agent/**'
+      - 'tuning/**'
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g. v0.3.1)'
+        required: false
 
 jobs:
-  build-and-publish:
+  publish:
     runs-on: ubuntu-latest
     environment: pypi
     permissions:
@@ -20,15 +28,32 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install build tools
-        run: |
-          python -m pip install --upgrade pip
-          pip install build
+      - name: Install build deps
+        run: pip install build twine
 
-      - name: Build package
-        run: python -m build --wheel
+      - name: Build mss-agent
+        run: |
+          cd mss_agent
+          # copy README into package dir for build
+          cp ../README.md . 2>/dev/null || echo "No README.md"
+          python -m build --wheel
+
+      - name: Verify wheel
+        run: |
+          cd mss_agent/dist
+          python -c "
+          import zipfile, sys
+          whl = [f for f in __import__('glob').glob('*.whl')][0]
+          z = zipfile.ZipFile(whl)
+          py_files = [n for n in z.namelist() if n.endswith('.py')]
+          print(f'Wheel: {whl} | {len(py_files)} .py files')
+          required = ['delta_quick_audit', 'agent_config', 'heat_tax_accountant', 'agent_orchestrator']
+          for r in required:
+              found = any(r in p for p in py_files)
+              print(f'  {\"✅\" if found else \"❌\"} {r}')
+          "
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          packages-dir: dist/
+          packages-dir: mss_agent/dist/

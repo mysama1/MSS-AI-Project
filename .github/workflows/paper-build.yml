@@ -1,0 +1,84 @@
+name: Build Paper Artifacts
+
+on:
+  push:
+    paths:
+      - 'papers/**'
+      - 'knowledge_base/L3_STRATEGIC/**'
+  workflow_dispatch:
+    inputs:
+      paper:
+        description: 'Paper to build (six_rounds_warfare)'
+        required: true
+        default: 'six_rounds_warfare'
+
+jobs:
+  build-paper:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-xetex texlive-lang-chinese
+
+      - name: Convert markdown to LaTeX
+        run: |
+          cd papers
+          pip install pandoc
+          python -c "
+          import subprocess, glob
+          for md in glob.glob('*.md'):
+              tex = md.replace('.md', '.tex')
+              subprocess.run([
+                  'pandoc', md, '-o', tex,
+                  '--from=markdown+smart',
+                  '--to=latex',
+                  '--pdf-engine=xelatex',
+                  '-V', 'mainfont=Liberation Serif',
+                  '-V', 'CJKmainfont=Noto Serif CJK SC',
+              ], check=True)
+              print(f'  Built: {tex}')
+          "
+
+      - name: Build PDF
+        run: |
+          cd papers
+          for tex in *.tex; do
+            xelatex -interaction=nonstopmode "$tex" || true
+            xelatex -interaction=nonstopmode "$tex"
+            echo "  PDF: ${tex%.tex}.pdf"
+          done
+
+      - name: Create arXiv tarball
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          cd papers
+          PAPER="${{ github.event.inputs.paper }}"
+          mkdir -p arxiv_submission
+          cp "${PAPER}.tex" arxiv_submission/
+          cp "${PAPER}.pdf" arxiv_submission/ 2>/dev/null || true
+          # arXiv requires bare .tex + .bbl (no .bib)
+          cd arxiv_submission
+          tar czf "../${PAPER}_arxiv.tar.gz" .
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-artifacts
+          path: |
+            papers/*.pdf
+            papers/*_arxiv.tar.gz
+          retention-days: 30
+
+      - name: Paper stats
+        run: |
+          echo "=== Paper Build Summary ==="
+          find papers -name "*.pdf" -exec ls -lh {} \;
+          find papers -name "*_arxiv.tar.gz" -exec ls -lh {} \;
