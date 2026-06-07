@@ -1,0 +1,12 @@
+
+[deepseek]
+openai>=1.0
+
+[dev]
+pytest
+black
+
+[llm]
+openai>=1.0
+
+[mcp]

@@ -1,0 +1,146 @@
+Metadata-Version: 2.1
+Name: mss-agent
+Version: 0.2.1
+Summary: MSS-Agent: 世界上第一个内置'意义场自检'的开源 Agent 框架
+Home-page: https://github.com/mysama1/MSS-AI-Project
+Author: MSS-AI Project
+License: MIT
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Provides-Extra: llm
+Provides-Extra: deepseek
+Provides-Extra: mcp
+Provides-Extra: dev
+
+[![PyPI version](https://badge.fury.io/py/mss-agent.svg)](https://pypi.org/project/mss-agent/)
+
+# MSS-Agent
+
+**The first open-source Agent framework with built-in "meaning-field self-audit".**
+
+```bash
+pip install mss-agent
+```
+
+[📖 Jupyter Tutorial](tutorials/01_quickstart.ipynb) | [🎥 Demo](examples/maf_integration_demo.py) | [📊 Glass Box](https://mysama1.github.io/MSS-AI-Project/dashboard/) | [中文](README_CN.md)
+
+## 🎯 Learning Goals
+
+After completing this tutorial, you will be able to:
+- ✅ Add heat-tax budgeting to any Agent (reject meaningless work)
+- ✅ Detect when an Agent is stuck in repetition (Δ decay → molt)
+- ✅ Resolve multi-Agent conflicts through dimension elevation (not voting)
+- ✅ Judge when **NOT** to use MSS-Agent
+
+## 🏗️ Three-Layer Defense
+
+### Heat-Tax Budget (Axiom A3)
+
+![Heat Tax Pyramid](docs/images/heat_tax_pyramid.png)
+
+Every task is assessed across three layers of "heat tax":
+- **L2 Meaning Tax** (fake data, concept theft, busywork) → weight **1000x**
+- **L1 Logic Tax** (redundant calls, cache pollution) → weight 1x
+- **L0 Physical Tax** (GPU time, token cost) → weight 0.001x
+
+If L2 heat tax exceeds threshold → Agent refuses to execute and explains why.
+
+### Δ Protocol (Axiom A6)
+
+![Delta Decay Curve](docs/images/delta_decay.png)
+
+Agents don't repeat the same failure patterns:
+- Δ value per task cycle (novelty + diversity)
+- 2 consecutive Δ drops → trigger molting → forget old patterns
+- *"Molting is not failure. It's growth."*
+
+### Elevation Protocol (Axiom A6)
+
+When multiple Agents conflict, don't vote (K3 pattern). Instead: find the trapped dimension → add one dimension → conflict dissolves.
+
+### Onion Architecture
+
+![Onion Architecture](docs/images/onion_architecture.png)
+
+## ⚡ Quick Start
+
+```python
+from mss_agent import MSSAgent, HeatTaxLevel
+
+# Configure your LLM
+def my_llm(prompt: str) -> str:
+    import ollama
+    return ollama.chat("qwen3", prompt)["message"]["content"]
+
+# Create an Agent
+agent = MSSAgent(name="Helper", llm=my_llm)
+
+# Run — heat-tax budget auto-blocks meaningless tasks
+result = agent.run("Rewrite this: 'Hello'")
+if result.aborted:
+    print(f"Agent refused: {result.reason}")
+    # → Agent refused: Short busywork: no meaningful intent
+
+result = agent.run("Design an error handling strategy for a REST API")
+print(result.output)
+
+# Health report
+print(agent.health_report())
+# → {'heat_tax': {...}, 'delta': {...}, 'memory': {'active': 5, 'closed': 2}}
+```
+
+## 🚫 When NOT to Use MSS-Agent
+
+MSS-Agent is not a silver bullet. Skip it when:
+
+| Scenario | Why |
+|----------|-----|
+| Simple if-else workflows | No LLM needed, no meaning-field needed |
+| 100% deterministic tasks | No heat tax to detect (σ=0) |
+| Your Agent never errs or repeats | Δ detection has nothing to work with |
+| Single-Agent single-task | Elevation protocol is overkill |
+| You just need LangChain tool-use | MSS is not a replacement |
+
+## 🔧 Installation & Troubleshooting
+
+```bash
+pip install mss-agent
+```
+
+**"pip can't find the package?"** → Verify Python ≥ 3.10: `python --version`
+
+**"Installed but nothing happens?"** → Check: `python -c "import mss_agent; print(mss_agent.__version__)"`
+
+**Windows users**: Run in PowerShell. If encoding errors appear, add `-Encoding UTF8`.
+
+## 📂 Project Structure
+
+```
+mss_agent/
+  core/           # Agent base + HeatTax + Delta + Memory
+  protocols/      # Quorum-Fast + Elevation
+  examples/       # WriterAgent + MAF Integration Demo
+  tutorials/      # Jupyter Notebook tutorials
+  docs/images/    # Architecture diagrams
+```
+
+## 🌐 Community
+
+- 💬 [GitHub Discussions](https://github.com/mysama1/MSS-AI-Project/discussions) — Q&A, suggestions
+- 🐛 [Issues](https://github.com/mysama1/MSS-AI-Project/issues) — Bug reports
+- ⭐ [Star this repo](https://github.com/mysama1/MSS-AI-Project) — Support us
+
+## Business Model
+
+- ✅ MIT Open Source — core features free forever
+- ✅ Community-driven — DAU first, no paywalls
+- ✅ Optional enterprise services — deployment consulting, custom integration, training
+
+## License
+
+MIT License. See [LICENSE](LICENSE).

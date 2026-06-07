@@ -1,0 +1,66 @@
+{
+  "history": [
+    {
+      "ts": "2026-06-07T18:23:56.741316",
+      "active": 3,
+      "quorum": 0.75,
+      "delta_proxy": 0.375,
+      "signals": {
+        "S1_incompleteness": true,
+        "S2_counterexample": true,
+        "S3_dissent_space": true,
+        "S4_output_validity": false
+      }
+    },
+    {
+      "ts": "2026-06-07T18:23:56.924589",
+      "active": 3,
+      "quorum": 0.75,
+      "delta_proxy": 0.375,
+      "signals": {
+        "S1_incompleteness": true,
+        "S2_counterexample": true,
+        "S3_dissent_space": true,
+        "S4_output_validity": false
+      }
+    },
+    {
+      "ts": "2026-06-07T18:28:09.183108",
+      "active": 3,
+      "quorum": 0.75,
+      "delta_proxy": 0.375,
+      "signals": {
+        "S1_incompleteness": true,
+        "S2_counterexample": true,
+        "S3_dissent_space": true,
+        "S4_output_validity": false
+      }
+    },
+    {
+      "ts": "2026-06-07T18:28:09.357155",
+      "active": 3,
+      "quorum": 0.75,
+      "delta_proxy": 0.375,
+      "signals": {
+        "S1_incompleteness": true,
+        "S2_counterexample": true,
+        "S3_dissent_space": true,
+        "S4_output_validity": false
+      }
+    },
+    {
+      "ts": "2026-06-07T19:17:40.911506",
+      "active": 3,
+      "quorum": 0.75,
+      "delta_proxy": 0.375,
+      "signals": {
+        "S1_incompleteness": true,
+        "S2_counterexample": true,
+        "S3_dissent_space": true,
+        "S4_output_validity": false
+      }
+    }
+  ],
+  "molting_alerts": 0,
+  "created": "2026-06-07T18:23:56.796501"
+}
