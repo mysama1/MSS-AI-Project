@@ -83,19 +83,39 @@ jobs:
       - name: Generate kb_stats.json
         run: |
           python3 -c "
-          import os, json
+          import os, json, re
           kb = 'knowledge_base'
-          stats = {'total': 0, 'layers': {}, 'gaps': 16, 'contradictions': 0}
+          stats = {'total': 0, 'layers': {}, 'gaps': 0, 'contradictions': 0}
+          all_hids = set()
           for layer in ['L0_FOUNDATION','L1_CORE_THEORY','L2_APPLIED_THEORY','L3_STRATEGIC','L4_META']:
               ld = os.path.join(kb, layer)
               count = len([f for f in os.listdir(ld) if f.endswith('.jsonl')]) if os.path.isdir(ld) else 0
               stats['layers'][layer] = count
               stats['total'] += count
+              if os.path.isdir(ld):
+                  for f in os.listdir(ld):
+                      if not f.endswith('.jsonl'): continue
+                      fp = os.path.join(ld, f)
+                      try:
+                          for enc in ['utf-8-sig','gbk','latin-1']:
+                              try:
+                                  with open(fp, encoding=enc) as fh: raw = fh.read()
+                                  break
+                              except: continue
+                          for line in raw.strip().split('\n'):
+                              if not line.strip().startswith('{'): continue
+                              try: entry = json.loads(line)
+                              except: continue
+                              hid = entry.get('h_id','') or entry.get('id','')
+                              m = re.search(r'[hH](\d+)', str(hid))
+                              if m: all_hids.add(int(m.group(1)))
+                      except: pass
+          stats['gaps'] = len([i for i in range(1, 531) if i not in all_hids])
           from datetime import datetime
           stats['updated'] = datetime.utcnow().strftime('%Y-%m-%d')
           with open('docs/kb_stats.json', 'w', encoding='utf-8') as f:
               json.dump(stats, f, indent=2, ensure_ascii=False)
-          print(f'KB: {stats[\"total\"]} entries')
+          print(f'KB: {stats[\"total\"]} entries, {stats[\"gaps\"]} gaps')
           "
 
       - name: Commit updates
