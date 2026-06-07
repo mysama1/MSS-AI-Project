@@ -19,6 +19,8 @@ setup(
     install_requires=[],
     extras_require={
         "llm": ["openai>=1.0"],
+        "deepseek": ["openai>=1.0"],
+        "mcp": [],  # stdlib-only MCP client
         "dev": ["pytest", "black"],
     },
     classifiers=[
