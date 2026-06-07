@@ -23,6 +23,11 @@
 <p style="color:var(--muted);font-size:.8rem">4 项核心指标 · 每 push 自动更新 · <a href="https://github.com/mysama1/MSS-AI-Project/blob/main/tools/benchmark_results.json">JSON</a></p>
 </div>
 
+<div class="card"><h3>📈 Delta 健康曲線</h3>
+<canvas id="deltaChart" width="860" height="200" style="width:100%;max-height:200px"></canvas>
+<p style="color:var(--muted);font-size:.75rem;margin-top:.5rem">Δ = novelty×0.6 + diversity×0.4 ｜ 红线 = 蜕壳阈值 (0.3)</p>
+</div>
+
 <div class="card"><h3>🎯 预测追踪</h3>
 <table>
 <tr><th>预测</th><th>窗口</th><th>剩余</th><th>状态</th></tr>
@@ -75,6 +80,53 @@ function daysUntil(d){return Math.floor((new Date(d)-new Date())/864e5)}
 document.getElementById('pred001').textContent = daysUntil('2028-06-07')+' d';
 document.getElementById('pred002').textContent = daysUntil('2027-12-07')+' d';
 document.getElementById('pred003').textContent = daysUntil('2029-06-07')+' d';
+
+// —— Delta Health Chart ——
+fetch('../delta_history.json')
+  .then(r => r.json())
+  .then(data => {
+    const cv = document.getElementById('deltaChart');
+    const ctx = cv.getContext('2d');
+    const W = cv.width, H = cv.height;
+    const pts = data.history;
+    if (!pts.length) { ctx.fillStyle='#8b949e'; ctx.fillText('No delta data yet',20,100); return; }
+
+    // Background
+    ctx.fillStyle = '#0d1117'; ctx.fillRect(0,0,W,H);
+
+    // Threshold line (0.3)
+    const y0 = H*0.7;
+    ctx.strokeStyle = '#f85149'; ctx.lineWidth = 1; ctx.setLineDash([6,4]);
+    ctx.beginPath(); ctx.moveTo(40, y0); ctx.lineTo(W-20, y0); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#f85149'; ctx.font = '10px monospace'; ctx.fillText('0.3 threshold', 44, y0-4);
+
+    // Plot delta line
+    const x0 = 40, yScale = (H*0.65)/1.0;
+    const step = (W-x0-20) / Math.max(pts.length-1,1);
+    ctx.strokeStyle = '#58a6ff'; ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let i=0;i<pts.length;i++) {
+      const x = x0 + i*step, y = H - 10 - pts[i].delta * yScale;
+      if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+
+    // Dots + molting markers
+    pts.forEach((p,i) => {
+      const x = x0 + i*step, y = H - 10 - p.delta * yScale;
+      ctx.fillStyle = p.molting ? '#f85149' : (p.delta < 0.3 ? '#d29922' : '#3fb950');
+      ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI*2); ctx.fill();
+    });
+
+    // Labels
+    ctx.fillStyle = '#8b949e'; ctx.font = '10px monospace';
+    ctx.fillText('1.0', 12, 18); ctx.fillText('0.0', 12, H-14);
+    if (pts.length>4) ctx.fillText(pts[0].time, 42, H-2);
+    ctx.fillText(pts[pts.length-1].time, W-70, H-2);
+    ctx.fillText('Δ: '+pts[pts.length-1].delta.toFixed(3), W-50, 18);
+  })
+  .catch(() => { document.getElementById('deltaChart').style.display='none'; });
 
 // —— Agent Benchmark from benchmark_results.json ——
 const benchLabels = {heat_tax:'热税检测 (F1)', delta:'Δ协议 (准确)', throughput:'吞吐量 (runs/s)',memory:'记忆效率'};

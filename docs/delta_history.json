@@ -1,0 +1,89 @@
+{
+  "history": [
+    {
+      "time": "20:32",
+      "delta": 1.0,
+      "molting": false,
+      "novelty": 1.0,
+      "diversity": 1.0
+    },
+    {
+      "time": "20:32",
+      "delta": 1.0,
+      "molting": false,
+      "novelty": 1.0,
+      "diversity": 1.0
+    },
+    {
+      "time": "20:32",
+      "delta": 1.0,
+      "molting": false,
+      "novelty": 1.0,
+      "diversity": 1.0
+    },
+    {
+      "time": "20:32",
+      "delta": 1.0,
+      "molting": false,
+      "novelty": 1.0,
+      "diversity": 1.0
+    },
+    {
+      "time": "20:32",
+      "delta": 0.85,
+      "molting": false,
+      "novelty": 0.75,
+      "diversity": 1.0
+    },
+    {
+      "time": "20:32",
+      "delta": 0.656,
+      "molting": false,
+      "novelty": 0.5,
+      "diversity": 0.889
+    },
+    {
+      "time": "20:32",
+      "delta": 0.47,
+      "molting": false,
+      "novelty": 0.25,
+      "diversity": 0.8
+    },
+    {
+      "time": "20:32",
+      "delta": 0.291,
+      "molting": true,
+      "novelty": 0.0,
+      "diversity": 0.727
+    },
+    {
+      "time": "20:32",
+      "delta": 0.267,
+      "molting": true,
+      "novelty": 0.0,
+      "diversity": 0.667
+    },
+    {
+      "time": "20:32",
+      "delta": 0.846,
+      "molting": false,
+      "novelty": 1.0,
+      "diversity": 0.615
+    },
+    {
+      "time": "20:32",
+      "delta": 0.867,
+      "molting": false,
+      "novelty": 1.0,
+      "diversity": 0.667
+    },
+    {
+      "time": "20:32",
+      "delta": 0.882,
+      "molting": false,
+      "novelty": 1.0,
+      "diversity": 0.706
+    }
+  ],
+  "updated": "2026-06-07T20:32:23"
+}
