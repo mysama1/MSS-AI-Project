@@ -2,136 +2,126 @@
 
 # MSS-Agent
 
-**世界上第一个内置"意义场自检"的开源 Agent 框架。**
+**The first open-source Agent framework with built-in "meaning-field self-audit".**
 
 ```bash
 pip install mss-agent
 ```
 
-[📖 Jupyter 教程](tutorials/01_quickstart.ipynb) | [🎥 Demo](examples/maf_integration_demo.py) | [📊 仪表盘](https://mysama1.github.io/MSS-AI-Project/dashboard/)
-
-## 为什么？
-
-现有 Agent 框架 (LangChain, CrewAI, AutoGPT) 只有一个目标：**完成任务。**
-
-MSS-Agent 有两个目标：
-1. **完成任务**
-2. **知道什么时候不该完成任务**
-
-第二点，没有任何框架在做。
+[📖 Jupyter Tutorial](tutorials/01_quickstart.ipynb) | [🎥 Demo](examples/maf_integration_demo.py) | [📊 Glass Box](https://mysama1.github.io/MSS-AI-Project/dashboard/) | [中文](README_CN.md)
 
 ## 🎯 Learning Goals
 
-学完本教程后，你将能够:
-- ✅ 给任何 Agent 增加热税预算（拒绝无意义任务）
-- ✅ 检测 Agent 是否陷入重复模式（Δ 衰减→蜕壳）
-- ✅ 用升维解决多 Agent 冲突（不是投票）
-- ✅ 判断什么时候**不该**用 MSS-Agent
+After completing this tutorial, you will be able to:
+- ✅ Add heat-tax budgeting to any Agent (reject meaningless work)
+- ✅ Detect when an Agent is stuck in repetition (Δ decay → molt)
+- ✅ Resolve multi-Agent conflicts through dimension elevation (not voting)
+- ✅ Judge when **NOT** to use MSS-Agent
 
-## 🏗️ 三层防御
+## 🏗️ Three-Layer Defense
 
-### 热税预算 (A3)
+### Heat-Tax Budget (Axiom A3)
 
-![热税金字塔](docs/images/heat_tax_pyramid.png)
+![Heat Tax Pyramid](docs/images/heat_tax_pyramid.png)
 
-Agent 自动评估每个任务的三层热税：
-- **L2 意义热税** (虚假数据/无意义任务) → 权重 **1000x**
-- **L1 逻辑热税** (冗余调用/缓存污染) → 权重 1x
-- **L0 物理热税** (GPU时间/Token) → 权重 0.001x
+Every task is assessed across three layers of "heat tax":
+- **L2 Meaning Tax** (fake data, concept theft, busywork) → weight **1000x**
+- **L1 Logic Tax** (redundant calls, cache pollution) → weight 1x
+- **L0 Physical Tax** (GPU time, token cost) → weight 0.001x
 
-L2 热税过高 → Agent 拒绝执行并输出原因。
+If L2 heat tax exceeds threshold → Agent refuses to execute and explains why.
 
-### Δ检测协议 (A6)
+### Δ Protocol (Axiom A6)
 
-![Δ衰减曲线](docs/images/delta_decay.png)
+![Delta Decay Curve](docs/images/delta_decay.png)
 
-Agent 不会重复相同失败模式：
-- 每个任务周期的 Δ 值 (新颖度 + 多样性)
-- Δ 连续下降 2 周期 → 触发蜕壳 → 遗忘旧模式
-- "蜕壳不是失败, 是生长"
+Agents don't repeat the same failure patterns:
+- Δ value per task cycle (novelty + diversity)
+- 2 consecutive Δ drops → trigger molting → forget old patterns
+- *"Molting is not failure. It's growth."*
 
-### 升维协议 (A6)
+### Elevation Protocol (Axiom A6)
 
-多 Agent 冲突时，不投票（K3 模式），而是找到被困维度+加一维解决。
+When multiple Agents conflict, don't vote (K3 pattern). Instead: find the trapped dimension → add one dimension → conflict dissolves.
 
-### 洋葱架构
+### Onion Architecture
 
-![洋葱架构](docs/images/onion_architecture.png)
+![Onion Architecture](docs/images/onion_architecture.png)
 
-## ⚡ 快速开始
+## ⚡ Quick Start
 
 ```python
 from mss_agent import MSSAgent, HeatTaxLevel
 
-# 配置任意 LLM
+# Configure your LLM
 def my_llm(prompt: str) -> str:
     import ollama
     return ollama.chat("qwen3", prompt)["message"]["content"]
 
-# 创建 Agent
+# Create an Agent
 agent = MSSAgent(name="Helper", llm=my_llm)
 
-# 运行 — 内置热税预算自动拦截无意义任务
-result = agent.run("帮我改写这句话：'你好'")
+# Run — heat-tax budget auto-blocks meaningless tasks
+result = agent.run("Rewrite this: 'Hello'")
 if result.aborted:
-    print(f"Agent 拒绝: {result.reason}")
-    # → Agent 拒绝: Task has LOW meaning: Pure paraphrasing...
+    print(f"Agent refused: {result.reason}")
+    # → Agent refused: Short busywork: no meaningful intent
 
-result = agent.run("设计一个 REST API 的错误处理方案")
+result = agent.run("Design an error handling strategy for a REST API")
 print(result.output)
 
-# 健康报告
+# Health report
 print(agent.health_report())
 # → {'heat_tax': {...}, 'delta': {...}, 'memory': {'active': 5, 'closed': 2}}
 ```
 
-## 🚫 何时不该用 MSS-Agent
+## 🚫 When NOT to Use MSS-Agent
 
-MSS-Agent 不是万能药。以下场景**建议别用**：
+MSS-Agent is not a silver bullet. Skip it when:
 
-| 场景 | 原因 |
-|------|------|
-| 简单 if-else 流程 | 不需要 LLM, 更不需要意义场 |
-| 100%确定性任务 | 没有热税需要检测 (σ=0) |
-| Agent 从不出错不重复 | Δ 检测无用武之地 |
-| 单Agent单任务 | 升维协议不需要 |
-| 你只需要 LangChain 的 tool use | MSS 不是替代品 |
+| Scenario | Why |
+|----------|-----|
+| Simple if-else workflows | No LLM needed, no meaning-field needed |
+| 100% deterministic tasks | No heat tax to detect (σ=0) |
+| Your Agent never errs or repeats | Δ detection has nothing to work with |
+| Single-Agent single-task | Elevation protocol is overkill |
+| You just need LangChain tool-use | MSS is not a replacement |
 
-## 🔧 安装与问题排查
+## 🔧 Installation & Troubleshooting
 
 ```bash
 pip install mss-agent
 ```
 
-**"pip 找不到包?"** → 确认 Python >= 3.10: `python --version`
+**"pip can't find the package?"** → Verify Python ≥ 3.10: `python --version`
 
-**"装了没反应?"** → 检查: `python -c "import mss_agent; print(mss_agent.__version__)"`
+**"Installed but nothing happens?"** → Check: `python -c "import mss_agent; print(mss_agent.__version__)"`
 
-**Windows 用户**: 建议在 PowerShell 中运行。如果编码报错, 加 `-Encoding UTF8`。
+**Windows users**: Run in PowerShell. If encoding errors appear, add `-Encoding UTF8`.
 
-## 📂 项目结构
+## 📂 Project Structure
 
 ```
 mss_agent/
-  core/           # Agent基类 + 热税 + Δ + 记忆
+  core/           # Agent base + HeatTax + Delta + Memory
   protocols/      # Quorum-Fast + Elevation
-  examples/       # WriterAgent + MAF集成Demo
-  tutorials/      # Jupyter Notebook教程
-  docs/images/    # 架构图
+  examples/       # WriterAgent + MAF Integration Demo
+  tutorials/      # Jupyter Notebook tutorials
+  docs/images/    # Architecture diagrams
 ```
 
-## 🌐 社区
+## 🌐 Community
 
-- 💬 [GitHub Discussions](https://github.com/mysama1/MSS-AI-Project/discussions) — 提问、建议、讨论
-- 🐛 [Issues](https://github.com/mysama1/MSS-AI-Project/issues) — Bug报告
-- ⭐ [Star this repo](https://github.com/mysama1/MSS-AI-Project) — 支持我们
+- 💬 [GitHub Discussions](https://github.com/mysama1/MSS-AI-Project/discussions) — Q&A, suggestions
+- 🐛 [Issues](https://github.com/mysama1/MSS-AI-Project/issues) — Bug reports
+- ⭐ [Star this repo](https://github.com/mysama1/MSS-AI-Project) — Support us
 
-## 商业模式
+## Business Model
 
-- ✅ MIT 开源 — 核心功能永远免费
-- ✅ 社区驱动 — DAU 优先, 不设付费墙
-- ✅ 可选企业服务 — 部署咨询/定制集成/培训
+- ✅ MIT Open Source — core features free forever
+- ✅ Community-driven — DAU first, no paywalls
+- ✅ Optional enterprise services — deployment consulting, custom integration, training
 
-## 许可证
+## License
 
-MIT License. 详见 [LICENSE](LICENSE).
+MIT License. See [LICENSE](LICENSE).
