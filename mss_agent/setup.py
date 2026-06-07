@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="mss-agent",
-    version="0.2.1",
+    version="0.3.0",
     description="MSS-Agent: 世界上第一个内置'意义场自检'的开源 Agent 框架",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
@@ -11,6 +11,9 @@ setup(
     license="MIT",
     packages=["mss_agent", "mss_agent.core", "mss_agent.examples",
               "mss_agent.llm", "mss_agent.mcp", "mss_agent.protocols"],
+    package_data={
+        "mss_agent.core": ["*.py"],
+    },
     package_dir={"mss_agent": "."},
     entry_points={
         "console_scripts": [
