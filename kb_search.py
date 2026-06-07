@@ -48,45 +48,65 @@ class KBSearch:
                     continue
                 fpath = os.path.join(layer_dir, f)
                 
-                # Extract H-ID
-                m = re.match(r'h(\d+)', f)
-                if not m:
-                    continue
-                hid = int(m.group(1))
-                
                 try:
-                    for enc in ['utf-8-sig', 'utf-8', 'gbk']:
+                    # Read file (always utf-8-sig to handle BOM gracefully)
+                    raw = None
+                    for enc in ['utf-8-sig', 'gbk', 'latin-1']:
                         try:
                             with open(fpath, encoding=enc) as fh:
-                                for line in fh:
-                                    if line.strip().startswith('{'):
-                                        entry = json.loads(line.strip())
-                                        break
+                                raw = fh.read()
                             break
-                        except:
+                        except (UnicodeDecodeError, UnicodeError):
                             continue
+                    if raw is None:
+                        continue
                     
-                    title = entry.get('title', entry.get('name', entry.get('topic', '')))
-                    content = entry.get('content', '')
-                    if not content:
-                        # Collect all text fields
-                        content = ' '.join(str(v) for v in entry.values() if isinstance(v, str))
+                    # Parse all JSON objects (handle batched files)
+                    entries = []
+                    for line in raw.strip().split('\n'):
+                        line = line.strip()
+                        if line.startswith('{'):
+                            try:
+                                entries.append(json.loads(line))
+                            except json.JSONDecodeError:
+                                pass
                     
-                    # Also extract from raw text
-                    with open(fpath, encoding='utf-8', errors='replace') as fh:
-                        raw = fh.read()
+                    # If single-line file wrapped, try parsing the whole thing
+                    if not entries:
+                        try:
+                            entries.append(json.loads(raw))
+                        except json.JSONDecodeError:
+                            pass
                     
-                    self.index[hid] = {
-                        'h_id': f'H{hid}',
-                        'title': str(title),
-                        'layer': layer,
-                        'filename': f,
-                        'content': content[:5000],
-                        'raw': raw[:10000],
-                        'entry': entry
-                    }
+                    # Index each entry found
+                    for entry in entries:
+                        hid_str = entry.get('h_id', '') or entry.get('id', '')
+                        if not hid_str:
+                            continue
+                        # Normalize: "H520" or "h520" -> 520
+                        m = re.search(r'[hH](\d+)', hid_str)
+                        if not m:
+                            continue
+                        hid = int(m.group(1))
+                        if hid in self.index:
+                            continue  # Duplicate, keep first
+                        
+                        title = entry.get('title', entry.get('name', entry.get('topic', '')))
+                        content = entry.get('content', '')
+                        if not content:
+                            content = ' '.join(str(v) for v in entry.values() if isinstance(v, str))
+                        
+                        self.index[hid] = {
+                            'h_id': f'H{hid}',
+                            'title': str(title),
+                            'layer': layer,
+                            'filename': f,
+                            'content': content[:5000],
+                            'raw': raw[:10000],
+                            'entry': entry
+                        }
                 except Exception as e:
-                    print(f"  ⚠️ Skip {f}: {e}", file=sys.stderr)
+                    print(f"  Skip {f}: {e}", file=sys.stderr)
                     continue
         
         print(f"Indexed {len(self.index)} entries across {len(LAYERS)} layers", file=sys.stderr)
@@ -100,6 +120,23 @@ class KBSearch:
         """
         query_lower = query.lower()
         terms = query_lower.split()
+        
+        # CJK bigram decomposition: "热税公式" → ["热税公式", "热税", "税公", "公式", "热", "税", "公", "式"]
+        cjk_terms = []
+        for term in terms:
+            has_cjk = any('\u4e00' <= c <= '\u9fff' or '\u3040' <= c <= '\u30ff' for c in term)
+            if has_cjk and len(term) >= 2 and ' ' not in term:
+                # Original term (substring check, weighted 2x)
+                cjk_terms.append((term, 2.0))
+                # Bigrams
+                for i in range(len(term) - 1):
+                    cjk_terms.append((term[i:i+2], 1.0))
+                # Single chars (avoid scoring noise from common single chars)
+                # Only add if the term is short (<=4 chars)
+                if len(term) <= 4:
+                    for c in term:
+                        cjk_terms.append((c, 0.5))
+        
         results = []
         
         for hid, info in self.index.items():
@@ -120,10 +157,16 @@ class KBSearch:
                 if term.upper() == info['h_id'] or term.upper().replace('H','') == str(hid):
                     score += 10.0
             
+            # CJK bigram + substring matching
+            for cjk_term, weight in cjk_terms:
+                score += title_lower.count(cjk_term) * 3.0 * weight
+                score += content_lower.count(cjk_term) * 1.0 * weight
+            
             if score > 0:
-                # Find snippet around first match
+                # Find snippet around first match (check CJK terms too)
                 snippet = ""
-                for term in terms:
+                all_terms = terms + [t for t, _ in cjk_terms]
+                for term in all_terms:
                     idx = content_lower.find(term)
                     if idx >= 0:
                         start = max(0, idx - 50)

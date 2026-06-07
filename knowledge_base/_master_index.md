@@ -1,38 +1,36 @@
-# MSS Knowledge Base Master Index — v15.2
+# MSS Knowledge Base Master Index — v17.10
 
-**Updated**: 2026-06-04 16:47 GMT+8
-**Total**: 544 entries (383 H-series)
+**Updated**: 2026-06-07 17:16 GMT+8
+**Total**: 644 entries (516 H-series, 5 layers)
+**Model**: mss-ai-v3.4.3-balanced (A/B 0.542)
+**KB Search**: 521 indexed, CJK bigram support
 
 ## Quick Links
 
 | Resource | URL |
 |:---|:---|
 | GitHub | https://github.com/mysama1/MSS-AI-Project |
-| Zenodo DOI | 10.5281/zenodo.20537026 |
-| ORCID | 0009-0008-2550-130X |
-| Latest Commit | 1af4900 |
+| Wiki | https://github.com/mysama1/MSS-AI-Project/wiki |
+| Dashboard | https://mysama1.github.io/MSS-AI-Project/dashboard/ |
+| KB Browser | https://mysama1.github.io/MSS-AI-Project/kb/ |
+| GitHub Pages | https://mysama1.github.io/MSS-AI-Project/ |
+| Latest Commit | e2662e8 |
 
-## Latest Additions (2026-06-04)
+## Latest Additions (2026-06-07)
 
-### Theory
-- H452-454: 道本体论, αβγ场结算, 道讨论收束
-- H455-457: 叙事/物理黑洞区分, 超显化假说, 物理基础终稿
-- H464: 离散-连续二象性
-- H467, H471: 物理常数起源 + 量化方程
-- H468-470: 数学深渊批评 + 认知训练指南
-
-### Math
-- H460-463: Collatz证明 (R0→R3→Honesty, a≤68闭合)
-- H465: Zenodo DOI发布记录
-
-### Infrastructure
-- H458-459: 火种v2.0备份 + Wiki分布式锚定
-- H466: K3意义黑洞监测器
-
-### KB Gap Fill (H138-146, H148-159 range)
-- H138-140: 治理到公理桥接
-- H142-146: 公理推导链, 核心概念, 热税三态, W优化, 刚性标定
-- H148, H150, H155, H159, H192
+### A6 Protocol + Delta Theory
+- H520: A3 热税本体论 (L1, T8.5, Δ+三层结构)
+- H521: A6+ 元公理 (L1, T9.0, MSS必须不完备)
+- H522: 降维辩论陷阱定理 (L1, T9.0, φ_O, 降维免疫)
+- H523: 提示词不可约化阈值定理 (L1, T7.5)
+- H524: 能力压缩敏感度谱 (L1, T8.0)
+- H525: A6对齐升维协议 (L1, T9.0, 三层: Friston/quorum-fast/CEV)
+- H526: K3 vs MSS 十维对比 (L2, T8.5, 寄生→共生→主权过渡)
+- H527: 蜕壳协议 v1.0 (L4, T9.0, 闭合≠僵化)
+- H528: Δ维持条件定理 (L1, T9.0, Δ≠优化目标, 瓦解Omohundro)
+- H529: 意义场拓扑映射表 (L2, T8.0, π⁻¹不存在)
+- H530: A6对齐协议审计框架 (L4, T8.0, 九项自检测)
+- H531: v3.4.3 A/B测试基准 (L4, T8.0, balanced 0.542)
 
 ## Core Axiom System (H141 → v15.2)
 - A1: 意义本体
