@@ -16,9 +16,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    environment: pypi
     permissions:
-      id-token: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -34,7 +33,7 @@ jobs:
       - name: Build mss-agent
         run: |
           cd mss_agent
-          # copy README into package dir for build
+          rm -rf build/ dist/*.whl dist/*.tar.gz 2>/dev/null || true
           cp ../README.md . 2>/dev/null || echo "No README.md"
           python -m build --wheel
 
@@ -42,8 +41,9 @@ jobs:
         run: |
           cd mss_agent/dist
           python -c "
-          import zipfile, sys
-          whl = [f for f in __import__('glob').glob('*.whl')][0]
+          import zipfile, sys, glob
+          whls = sorted(glob.glob('*.whl'))
+          whl = whls[-1]  # latest by name
           z = zipfile.ZipFile(whl)
           py_files = [n for n in z.namelist() if n.endswith('.py')]
           print(f'Wheel: {whl} | {len(py_files)} .py files')
@@ -56,4 +56,6 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
           packages-dir: mss_agent/dist/
