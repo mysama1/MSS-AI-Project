@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use mss-agent in your research, please cite it as below."
+
+authors:
+  - family-names: ""
+    given-names: ""
+    orcid: ""
+
+title: "mss-agent: Meaning-Surplus-Security Framework — A Three-Layer Heat-Tax Architecture for LLM Conversation Quality"
+version: 0.3.3
+date-released: 2026-06-08
+doi: 10.5281/zenodo.20587900
+repository-code: "https://github.com/mysama1/MSS-AI-Project"
+url: "https://pypi.org/project/mss-agent/"
+license: MIT
+abstract: >
+  MSS-Agent is an open-source Python framework that implements a three-layer
+  architecture (L0 physical, L1 logical redundancy, L2 meaning integrity) for
+  monitoring and constraining LLM conversations. It provides the Delta Protocol
+  for detecting repetitive conversation patterns, HeatTax accounting for
+  tracking meaning-waste budgets, and multi-agent orchestration with
+  asyncio-based parallel execution and QuorumFast convergence detection.
+keywords:
+  - "LLM"
+  - "AI safety"
+  - "conversation quality"
+  - "heat tax"
+  - "multi-agent"
+  - "open source"
+  - "formal verification"
