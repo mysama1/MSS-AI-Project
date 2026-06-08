@@ -8,8 +8,8 @@ tags:
   - conversation quality
   - open source
 authors:
-  - name: ""
-    orcid: ""
+  - name: "YinChen Guo"
+    orcid: "0009-0008-2550-130X"
     affiliation: "Independent Researcher"
 date: 18 June 2026
 bibliography: paper.bib

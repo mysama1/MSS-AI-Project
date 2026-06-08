@@ -95,16 +95,21 @@ class MSSAgent:
 
         # Busywork/waste patterns — these signal meaningless work
         waste_patterns = [
+            # Chinese
             "改写", "重写", "换个说法", "换一种说法", "重新说",
             "总结", "翻译", "简短点", "简化", "缩写",
             "再改", "再说", "重新写", "重来",
+            # English
+            "rewrite", "rephrase", "reword", "summarize",
+            "translate", "shorten", "simplify", "again", "retry",
+            "one more", "just", "quick",
         ]
         waste_score = sum(1 for s in waste_patterns if s in prompt_lower)
 
         # Layer 1: Busywork detection — single waste signal + short/no meaning = refuse
         if waste_score >= 2:
             return 0.06, "Multiple busywork patterns detected"
-        if waste_score >= 1 and meaning_score == 0 and plen < 40:
+        if waste_score >= 1 and meaning_score == 0 and plen < 50:
             return 0.06, "Busywork: no meaningful intent in short prompt"
 
         # Layer 2: Too short with no meaning signals

@@ -1,6 +1,6 @@
 {
   "benchmark_version": "mss-agent-1.0",
-  "timestamp": "2026-06-07T20:18:11",
+  "timestamp": "2026-06-07T20:44:58",
   "overall_score": 0.875,
   "results": {
     "heat_tax": {
@@ -23,7 +23,7 @@
     },
     "throughput": {
       "name": "throughput",
-      "runs_per_second": 27843.5,
+      "runs_per_second": 26213.7,
       "total_time_ms": 4.0,
       "score": 1.0
     },

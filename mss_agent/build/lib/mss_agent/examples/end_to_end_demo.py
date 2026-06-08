@@ -121,7 +121,7 @@ except Exception as e:
 
 # ---- Summary ----
 header(f"SUMMARY: {ok_count} OK / {err_count} Errors")
-print(f"  MSS-Agent v0.3.3 is {'✅ operational' if err_count == 0 else '⚠️ has issues'}")
+print(f"  MSS-Agent v0.3.1 is {'✅ operational' if err_count == 0 else '⚠️ has issues'}")
 
 if err_count == 0:
     print(f"\n  Next steps:")
