@@ -57,6 +57,11 @@ class TurnReport:
     def l2_pct(self) -> float:
         return self.l2_tokens / max(self.total, 1)
 
+    @property
+    def l2_ratio_warning(self) -> bool:
+        """Alias for l2_warning (v0.3.2+)."""
+        return self.l2_warning
+
 
 class HeatTaxAccountant:
     """
