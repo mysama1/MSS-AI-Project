@@ -10,6 +10,7 @@ from typing import Any, Callable, Dict, List, Optional
 from enum import Enum
 import json
 import time
+import asyncio
 import hashlib
 
 
@@ -181,7 +182,7 @@ class AgentOrchestrator:
                 ctx.errors[node.id] = str(e)
 
     def _run_parallel(self, ctx: ExecutionContext):
-        """并行: 所有Agent独立处理同一个输入"""
+        """并行: 所有Agent独立处理同一个输入 (同步for循环,保持向后兼容)"""
         for node in ctx.nodes:
             if ctx.heat_tax_used + node.heat_tax_budget > ctx.heat_tax_pool:
                 ctx.errors[node.id] = "热税预算不足"
@@ -193,62 +194,113 @@ class AgentOrchestrator:
             except Exception as e:
                 ctx.errors[node.id] = str(e)
 
+    async def _run_parallel_async(self, ctx: ExecutionContext):
+        """真正的并行: 所有Agent通过asyncio并发执行 (v0.3.3+)"""
+
+        async def _run_one(node: AgentNode):
+            """在后台线程中运行单个handler,不阻塞event loop"""
+            if ctx.heat_tax_used + node.heat_tax_budget > ctx.heat_tax_pool:
+                return (node.id, None, "热税预算不足")
+            try:
+                if asyncio.iscoroutinefunction(node.handler):
+                    result = await asyncio.wait_for(
+                        node.handler(ctx.input_text, {"task_id": ctx.task_id}),
+                        timeout=node.timeout_seconds,
+                    )
+                else:
+                    loop = asyncio.get_running_loop()
+                    result = await asyncio.wait_for(
+                        loop.run_in_executor(
+                            None, node.handler, ctx.input_text, {"task_id": ctx.task_id}
+                        ),
+                        timeout=node.timeout_seconds,
+                    )
+                return (node.id, result, None)
+            except asyncio.TimeoutError:
+                return (node.id, None, f"超时({node.timeout_seconds}s)")
+            except Exception as e:
+                return (node.id, None, str(e))
+
+        tasks = [_run_one(node) for node in ctx.nodes]
+        results = await asyncio.gather(*tasks)
+
+        for node_id, result, error in results:
+            if error:
+                ctx.errors[node_id] = error
+            else:
+                ctx.results[node_id] = result
+                node = next((n for n in ctx.nodes if n.id == node_id), None)
+                if node:
+                    ctx.heat_tax_used += node.heat_tax_budget
+
+    async def run_async(
+        self,
+        ctx: ExecutionContext,
+        mode: Optional[OrchestratorMode] = None,
+    ) -> ExecutionContext:
+        """
+        异步执行编排 (v0.3.3+)。
+
+        PARALLEL/QUORUM模式用asyncio真正并发;
+        SEQUENTIAL/PIPELINE依赖串行数据流仍同步执行。
+        """
+        mode = mode or self.default_mode
+
+        if mode in (OrchestratorMode.PARALLEL, OrchestratorMode.QUORUM):
+            await self._run_parallel_async(ctx)
+            if mode == OrchestratorMode.QUORUM and ctx.results:
+                self._resolve_quorum(ctx)
+        elif mode == OrchestratorMode.SEQUENTIAL:
+            self._run_sequential(ctx)
+        elif mode == OrchestratorMode.PIPELINE:
+            self._run_pipeline(ctx)
+
+        return ctx
+
     def _run_quorum(self, ctx: ExecutionContext):
         """Quorum模式: 并行执行+收敛检测"""
-        # 1. 并行执行
         self._run_parallel(ctx)
+        if ctx.results:
+            self._resolve_quorum(ctx)
 
+    def _resolve_quorum(self, ctx: ExecutionContext):
+        """QuorumFast收敛检测 — 从结果中提取共识 (v0.3.3: 提取为独立方法)"""
         if not ctx.results:
             ctx.quorum_detail = QuorumResult(
-                quorum_reached=False,
-                quorum_size=0,
-                total_voters=len(ctx.nodes),
-                convergent=False,
-                divergent_agents=[],
-                consensus_output=None,
+                quorum_reached=False, quorum_size=0, total_voters=len(ctx.nodes),
+                convergent=False, divergent_agents=[], consensus_output=None,
                 detail={"reason": "no results"},
             )
             return
 
-        # 2. QuorumFast收敛检测
         verdicts = {}
         for node_id, result in ctx.results.items():
-            # 提取关键判断字段
             verdict = result.get("verdict") or result.get("score") or result.get("output")
             if verdict is not None:
                 key = str(verdict)[:100]
                 verdicts.setdefault(key, []).append(node_id)
 
-        # 3. 找到最大共识组
         if verdicts:
             largest_key = max(verdicts, key=lambda k: len(verdicts[k]))
             quorum_size = len(verdicts[largest_key])
             total = len(ctx.results)
             quorum_reached = quorum_size / total >= ctx.quorum_threshold
-
-            # 发散Agent
             divergent = [
-                aid for aids in verdicts.values()
-                for aid in aids
+                aid for aids in verdicts.values() for aid in aids
                 if aid not in verdicts[largest_key]
             ]
 
             ctx.quorum_detail = QuorumResult(
-                quorum_reached=quorum_reached,
-                quorum_size=quorum_size,
-                total_voters=total,
-                convergent=quorum_reached,
-                divergent_agents=divergent,
-                consensus_output=largest_key,
+                quorum_reached=quorum_reached, quorum_size=quorum_size,
+                total_voters=total, convergent=quorum_reached,
+                divergent_agents=divergent, consensus_output=largest_key,
                 detail={
                     "verdict_groups": {k: len(v) for k, v in verdicts.items()},
                     "threshold": ctx.quorum_threshold,
                 },
             )
 
-            # 4. 收敛时合并输出
             if quorum_reached:
-                # 取共识组的第一个结果作为merged
                 consensus_id = verdicts[largest_key][0]
                 merged = dict(ctx.results[consensus_id])
                 merged["_quorum_size"] = quorum_size
