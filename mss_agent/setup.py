@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="mss-agent",
-    version="0.3.3",
+    version="0.3.4",
     description="MSS-Agent: 世界上第一个内置'意义场自检'的开源 Agent 框架",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
