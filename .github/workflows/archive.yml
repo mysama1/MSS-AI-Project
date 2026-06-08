@@ -21,10 +21,11 @@ jobs:
           DEPOSIT_ID=$(echo $DEPOSIT | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])")
           BUCKET=$(echo $DEPOSIT | python3 -c "import sys,json; print(json.load(sys.stdin)['links']['bucket'])")
           
-          # Upload papers
-          for f in papers/*.md; do
-            curl -s -X PUT "$BUCKET/$(basename $f)" \
+          # Upload papers (fix: add explicit Content-Type)
+          for f in papers/*.md papers/*.tex; do
+            [ -f "$f" ] && curl -s -X PUT "$BUCKET/$(basename $f)" \
               -H "Authorization: Bearer $ZENODO_TOKEN" \
+              -H "Content-Type: application/octet-stream" \
               --data-binary "@$f"
           done
           
