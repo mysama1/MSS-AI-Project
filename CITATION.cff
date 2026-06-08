@@ -2,9 +2,9 @@ cff-version: 1.2.0
 message: "If you use mss-agent in your research, please cite it as below."
 
 authors:
-  - family-names: ""
-    given-names: ""
-    orcid: ""
+  - family-names: "Guo"
+    given-names: "YinChen"
+    orcid: "https://orcid.org/0009-0008-2550-130X"
 
 title: "mss-agent: Meaning-Surplus-Security Framework — A Three-Layer Heat-Tax Architecture for LLM Conversation Quality"
 version: 0.3.3
