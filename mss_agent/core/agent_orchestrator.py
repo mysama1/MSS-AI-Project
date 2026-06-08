@@ -95,6 +95,49 @@ class AgentOrchestrator:
 
     def __init__(self, default_mode: OrchestratorMode = OrchestratorMode.SEQUENTIAL):
         self.default_mode = default_mode
+        self.agents: Dict[str, AgentNode] = {}
+
+    @property
+    def mode(self) -> OrchestratorMode:
+        """Current orchestrator mode (v0.3.2+)."""
+        return self.default_mode
+
+    def add_agent(
+        self,
+        name: str,
+        llm: Callable,
+        role: Optional[AgentRole] = None,
+        heat_tax_budget: int = 300,
+        timeout_seconds: int = 30,
+        retries: int = 1,
+    ) -> AgentNode:
+        """
+        Register an agent in the orchestrator (v0.3.2+).
+
+        Args:
+            name: Unique agent name
+            llm: Callable(input_text, context) → dict handler
+            role: AgentRole (auto-detected if None)
+            heat_tax_budget: Token budget for this agent
+            timeout_seconds: Max execution time
+            retries: Retry count on failure
+
+        Returns:
+            The created AgentNode
+        """
+        if role is None:
+            role = AgentRole.CUSTOM
+
+        node = AgentNode(
+            id=name.lower().replace(' ', '_'),
+            role=role,
+            handler=llm,
+            heat_tax_budget=heat_tax_budget,
+            timeout_seconds=timeout_seconds,
+            retries=retries,
+        )
+        self.agents[node.id] = node
+        return node
 
     def run(
         self,
