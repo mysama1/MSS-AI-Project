@@ -4,7 +4,7 @@ MSS-Agent: 世界上第一个内置"意义场自检"的开源 Agent 框架.
 MSS-Agent 不是 LangChain 的替代品——它是 LangChain 的"良心".
 """
 
-__version__ = "0.3.3"
+__version__ = "0.3.4"
 __author__ = "MSS-AI Project"
 __license__ = "MIT"
 
@@ -19,6 +19,7 @@ from .core.agent_config import AgentConfig
 from .core.heat_tax_accountant import HeatTaxAccountant
 from .core.agent_orchestrator import AgentOrchestrator
 from .core.delta_callback import MSSHybridCallback, MSSHybridWrapper
+from .core.tool_budget_gate import ToolBudgetGate, ToolCategory
 
 __all__ = [
     "MSSAgent", "HeatTaxBudget", "HeatTaxLevel",
@@ -26,5 +27,6 @@ __all__ = [
     "DeltaQuickAudit", "DeltaResult", "Tier", "SessionState",
     "DomainDetector", "FewShotBuilder",
     "AgentConfig", "HeatTaxAccountant", "AgentOrchestrator",
-"MSSHybridCallback", "MSSHybridWrapper",
+    "MSSHybridCallback", "MSSHybridWrapper",
+    "ToolBudgetGate", "ToolCategory",
 ]
