@@ -1,0 +1,103 @@
+{
+  "round": 3,
+  "passed": 7,
+  "failed": 5,
+  "total": 12,
+  "tests": [
+    {
+      "name": "T-L2-01a Clean Python",
+      "layer": "L2",
+      "mod": "audit",
+      "passed": true,
+      "detail": "clean: verdict=PASS score=1.0",
+      "elapsed": 0.003
+    },
+    {
+      "name": "T-L2-01b eval() detection",
+      "layer": "L2",
+      "mod": "audit",
+      "passed": false,
+      "detail": "eval: verdict=NEEDS_HUMAN score=0.91",
+      "elapsed": 0.002
+    },
+    {
+      "name": "T-L2-01c exec() detection",
+      "layer": "L2",
+      "mod": "audit",
+      "passed": true,
+      "detail": "exec: verdict=NEEDS_HUMAN score=0.91",
+      "elapsed": 0.001
+    },
+    {
+      "name": "T-L2-01d Empty file",
+      "layer": "L2",
+      "mod": "audit",
+      "passed": true,
+      "detail": "empty: verdict=PASS score=1.0",
+      "elapsed": 0.0
+    },
+    {
+      "name": "T-L2-01e 500 functions",
+      "layer": "L2",
+      "mod": "audit",
+      "passed": true,
+      "detail": "500 funcs: verdict=PASS lat=0.00s",
+      "elapsed": 0.004
+    },
+    {
+      "name": "T-L2-01f Cross-language eval",
+      "layer": "L2",
+      "mod": "audit",
+      "passed": true,
+      "detail": "JS eval: verdict=NEEDS_HUMAN findings=1",
+      "elapsed": 0.002
+    },
+    {
+      "name": "T-L2-02a 5 pass no escalate",
+      "layer": "L2",
+      "mod": "hive_audit",
+      "passed": false,
+      "detail": "5 pass: findings=0 escalate=False",
+      "elapsed": 0.0
+    },
+    {
+      "name": "T-L2-02b Mixed + escalate check",
+      "layer": "L2",
+      "mod": "hive_audit",
+      "passed": false,
+      "detail": "EXCEPTION: HiveConfig.__init__() got an unexpected keyword argument 'density_threshold'"
+    },
+    {
+      "name": "T-L2-02c Batch checkpoints",
+      "layer": "L2",
+      "mod": "hive_audit",
+      "passed": true,
+      "detail": "10 tasks: checkpoints=3",
+      "elapsed": 0.0
+    },
+    {
+      "name": "T-L2-03a Record",
+      "layer": "L2",
+      "mod": "feedback_evolution",
+      "passed": true,
+      "detail": "records=8 gen=1",
+      "elapsed": 0.007
+    },
+    {
+      "name": "T-L2-03b Analyze→Adapt",
+      "layer": "L2",
+      "mod": "feedback_evolution",
+      "passed": false,
+      "detail": "adaptations=0 from 10 records",
+      "elapsed": 0.006
+    },
+    {
+      "name": "T-L2-03c CodeAgent→Evolution link",
+      "layer": "L2",
+      "mod": "code->evo",
+      "passed": false,
+      "detail": "⚠️ 未连接: CodeAgent不导入进化模块",
+      "elapsed": 0.219
+    }
+  ]
+}
