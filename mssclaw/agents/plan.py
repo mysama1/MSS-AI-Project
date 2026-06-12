@@ -124,15 +124,34 @@ class PlanAgent(BaseAgent):
 
     # ── 任务调度 ──
 
+    def remaining_budget(self) -> float:
+        """返回剩余热税预算 (0-100%)."""
+        return max(0, (1 - self.heat.total()) * 100)
+
+    def warn_budget(self) -> str:
+        """预算预警: >30% 警告, >50% 紧急."""
+        t = self.heat.total()
+        if t > 0.5:
+            return f"🔴 紧急: 预算仅剩 {self.remaining_budget():.0f}%"
+        elif t > 0.3:
+            return f"🟡 预警: 预算消耗 {t:.0%}, 请关注"
+        return ""
+
     def create_task(self, title: str, description: str,
                     capability: str, priority: TaskPriority = TaskPriority.NORMAL,
                     dependencies: list[str] = None, tags: list[str] = None,
                     estimated_tokens: int = 1000) -> Task:
-        """创建新任务 (S-019: 热税预分配)."""
-        # 热税检查: 如果已超预算, 拒绝创建
+        """创建新任务 (S-019: 热税预分配 + 预算预警)."""
+        # 预算预警
+        warning = self.warn_budget()
+        if warning:
+            print(f"[PLAN] {warning} — 将创建 '{title}'")
+
+        # 热税检查: 如果已超预算, 拒绝创建并给出可操作的提示
         if self.heat.exceeded():
-            print(f"[PLAN] ⛔ Task '{title}' rejected: heat budget exceeded ({self.heat.total():.2f})")
-            raise RuntimeError(f"Heat budget exceeded: {self.heat.total():.2f}")
+            pct = f"{self.heat.total():.0%}"
+            print(f"[PLAN] ⛔ Task '{title}' rejected: 热税预算已耗尽 ({pct}). 请等待冷却或减少任务量.")
+            raise RuntimeError(f"热税预算已耗尽 ({pct}). 请等待已完成任务释放预算, 或减少任务创建频率.")
 
         task = Task(
             title=title,
@@ -174,6 +193,11 @@ class PlanAgent(BaseAgent):
                     "status": "idle",
                     "load": 0,
                 }
+            else:
+                available = list(self.bus._nodes.keys()) if self.bus else []
+                hint = f" 可用: {available}" if available else " 请先将 Agent connect(bus)"
+                print(f"[PLAN] ❌ Agent '{agent_name}' 未在总线注册.{hint}")
+                raise ValueError(f"Agent '{agent_name}' 未注册." + hint)
         agent_info = self._agent_registry.get(agent_name, {})
         agent_caps = agent_info.get("capabilities", [])
         if task.required_capability not in agent_caps and "general" not in agent_caps:
