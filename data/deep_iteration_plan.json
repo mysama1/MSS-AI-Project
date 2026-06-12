@@ -1,0 +1,140 @@
+{
+  "plan": "MSS-AI 深度迭代计划 v1.0",
+  "generated": "2026-06-12T23:21+08:00",
+  "context": "基于MSS六公理全周审计 (24 issues, ~19% health) 的统一修复路线图",
+
+  "pillars": {
+    "P0_break_vacuum": {
+      "goal": "打破A5物理投影真空 — 系统从未在真实条件下运行过",
+      "tasks": [
+        {
+          "id": "DEEP-001",
+          "name": "真实LLM集成基准",
+          "priority": 10,
+          "source": ["A5-001", "NEXT-002", "①"],
+          "detail": "DeepSeek API (sk-c855...) + Ollama (mss-ai-v3.4.3-balanced) 实测:",
+          "metrics": ["延迟(ms)", "token消耗", "质量评分", "热度(heat/sec)", "成功率"],
+          "subtasks": [
+            "CodeAgent.generate_code() 用 DeepSeek 跑 10 个真实任务",
+            "Ollama 本地模型 10 个相同任务对比",
+            "记录 mss_checks: heat_tax, delta_health, syntax_ok",
+            "产出: 首个真实性能基线表"
+          ],
+          "estimated_hours": 2
+        },
+        {
+          "id": "DEEP-002",
+          "name": "并发安全性测试",
+          "priority": 10,
+          "source": ["A5-002", "NEXT-003", "3"],
+          "detail": "10+ Agent 真实并发: 竞态条件/死锁/消息量上限",
+          "depends_on": ["DEEP-001"],
+          "estimated_hours": 2
+        }
+      ]
+    },
+
+    "P1_close_loops": {
+      "goal": "关闭A2/A6反馈回路 — 进化闭环+冲突解决",
+      "tasks": [
+        {
+          "id": "DEEP-003",
+          "name": "进化闭环闭合",
+          "priority": 9,
+          "source": ["A2-001", "NEXT-001", "②", "2"],
+          "detail": "FeedbackEvolution adaptations → CodeAgent/PlanAgent 自动接收并修改行为",
+          "subtasks": [
+            "CodeAgent 新增 receive_adaptation() 方法",
+            "PlanAgent 新增 apply_evolution() 调度",
+            "Adaptation→Action 映射协议: prompt修改/参数调整/模型切换",
+            "端到端验证: 20条记录 → adaptation → Agent行为改变"
+          ],
+          "estimated_hours": 2
+        },
+        {
+          "id": "DEEP-004",
+          "name": "统一质量定义",
+          "priority": 9,
+          "source": ["A1-001", "③"],
+          "detail": "AuditAgent 五维评分为唯一质量标准 → Plan/Code 消费之",
+          "subtasks": [
+            "AuditAgent.quality_standard() 导出可调用接口",
+            "PlanAgent assign_task 后自动 audit → 失败则 escalate",
+            "CodeAgent 生成后用 AuditAgent 自审 → 不合格重新生成"
+          ],
+          "estimated_hours": 1.5
+        }
+      ]
+    },
+
+    "P2_formalize": {
+      "goal": "理论形式化 — 证据→公式→代码",
+      "tasks": [
+        {
+          "id": "DEEP-005",
+          "name": "T_s意义温度形式化",
+          "priority": 8,
+          "source": ["A4-002", "4"],
+          "detail": "基于双线证据库推导 T_s 计算公式并集成到 heat_tax.py",
+          "formula_target": "T_s = f(noise_ratio, vacuum_diameter, anchoring_strength)",
+          "estimated_hours": 3
+        },
+        {
+          "id": "DEEP-006",
+          "name": "KB条目入库 (证据→H条目)",
+          "priority": 7,
+          "source": ["A2-003", "9"],
+          "detail": "双线实证证据 → H596-H610 入库 + 主索引更新",
+          "estimated_hours": 1
+        }
+      ]
+    },
+
+    "P3_integrate": {
+      "goal": "跨系统统一 + 长期运行",
+      "tasks": [
+        {
+          "id": "DEEP-007",
+          "name": "mss_agent + mssclaw 统一",
+          "priority": 7,
+          "source": ["A6-003"],
+          "detail": "两套系统功能重叠 → 统一为 mssclaw, 废弃 mss_agent 重复模块",
+          "estimated_hours": 3
+        },
+        {
+          "id": "DEEP-008",
+          "name": "TSP bridge 多进程实测",
+          "priority": 6,
+          "source": ["A5-004", "NEXT-004", "7"],
+          "estimated_hours": 4
+        },
+        {
+          "id": "DEEP-009",
+          "name": "ComfyUI 闭环",
+          "priority": 6,
+          "source": ["A5-005", "5"],
+          "detail": "VideoPromptAgent 产出 → ComfyUI生成 → 图片反馈 → 自动改进",
+          "estimated_hours": 3
+        },
+        {
+          "id": "DEEP-010",
+          "name": "性能基线 + 24h稳定性",
+          "priority": 5,
+          "source": ["NEXT-005", "8"],
+          "estimated_hours": 2
+        }
+      ]
+    }
+  },
+
+  "execution_order": {
+    "phase_1_break_vacuum": ["DEEP-001"],
+    "phase_2_concurrent": ["DEEP-002"],
+    "phase_3_close_loops": ["DEEP-003", "DEEP-004"],
+    "phase_4_formalize": ["DEEP-005", "DEEP-006"],
+    "phase_5_unify": ["DEEP-007"],
+    "phase_6_integrate": ["DEEP-008", "DEEP-009", "DEEP-010"]
+  },
+
+  "immediate_next": "DEEP-001: 用 DeepSeek API 跑 10 个真实 CodeAgent 任务 → 产出首个真实性能基线"
+}
