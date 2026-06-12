@@ -115,7 +115,7 @@ class CodeAgent(BaseAgent):
         syntax_ok = self._quick_syntax_check(code, language)
 
         # A6 Δ: 趋势监测
-        self.delta.tick(1.0 if len(code) > 20 else 0.0)
+        self.delta.tick(task_hash=f"gen:{title}", novelty_score=0.5, diversity_score=0.5)
 
         return {
             "success": len(code) > 20,
