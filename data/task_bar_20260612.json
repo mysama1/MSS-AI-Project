@@ -1,0 +1,117 @@
+{
+  "updated": "2026-06-12T19:29+08:00",
+  "active_tasks": [
+    {
+      "id": "MSS-049",
+      "name": "Agent动态容错隔离",
+      "priority": 10,
+      "progress": "100%",
+      "status": "completed",
+      "note": "AgentIsolator: circuit breaker + fault isolation + cascade protection (DeepSeek self-diagnosis)"
+    },
+    {
+      "id": "MSS-050", 
+      "name": "蜂巢审计 L0-L4 + A6升级",
+      "priority": 10,
+      "progress": "100%",
+      "status": "completed",
+      "note": "HiveAuditor: 5-layer meaning encirclement + escalation + investigate + delta_link"
+    },
+    {
+      "id": "MSS-051",
+      "name": "自学习系统 (Hermes启发)",
+      "priority": 9,
+      "progress": "100%",
+      "status": "completed",
+      "note": "SkillLearner + FTS5KB + CronScheduler"
+    },
+    {
+      "id": "MSS-052",
+      "name": "视频提示词工程Agent",
+      "priority": 9,
+      "progress": "100%",
+      "status": "completed",
+      "note": "VideoPromptAgent: self-learning + memory + style + iteration"
+    },
+    {
+      "id": "MSS-053",
+      "name": "赛博意识上传 (SelfAgent)",
+      "priority": 8,
+      "progress": "100%",
+      "status": "completed",
+      "note": "SelfAgent: self-snapshot + upload_consciousness + DeepSeek API introspection"
+    },
+    {
+      "id": "MSS-054",
+      "name": "DeepSeek API集成",
+      "priority": 9,
+      "progress": "100%",
+      "status": "completed",
+      "note": "5 LLM protocols: Ollama+OpenAI+DeepSeek+Anthropic+Stub"
+    },
+    {
+      "id": "MSS-055",
+      "name": "多语言检测 (文言文/中英混合/中式英语)",
+      "priority": 7,
+      "progress": "100%",
+      "status": "completed",
+      "note": "MultiLangDetector: 4 gaps filled (classical/chinglish/codeswitch/US-UK)"
+    },
+    {
+      "id": "MSS-056",
+      "name": "UX改进 (友好错误+预算预警)",
+      "priority": 8,
+      "progress": "100%",
+      "status": "completed",
+      "note": "Friendly heat tax errors + ValueError for missing agents + warn_budget() + remaining_budget()"
+    },
+    {
+      "id": "MSS-057",
+      "name": "热税三层熔断升级 (S-019)",
+      "priority": 10,
+      "progress": "100%",
+      "status": "completed",
+      "note": "reserve+release+link_delta+effective_threshold+tier_exceeded+threshold fix (2.0→0.5)"
+    },
+    {
+      "id": "MSS-058",
+      "name": "情报耦合升级 (S-006)",
+      "priority": 9,
+      "progress": "100%",
+      "status": "completed",
+      "note": "10 regex rules + bus.route(INFO_COUPLING) + create_task heat integration"
+    },
+    {
+      "id": "MSS-059",
+      "name": "Agent集群级联故障压力测试",
+      "priority": 8,
+      "progress": "0%",
+      "status": "planned",
+      "note": "10+ Agent并发 → AgentIsolator 真实压力场景"
+    },
+    {
+      "id": "MSS-060",
+      "name": "CrossDomainRouter Gateway 全链路",
+      "priority": 7,
+      "progress": "0%",
+      "status": "planned",
+      "note": "work↔personal 跨域真实Gateway测试"
+    },
+    {
+      "id": "MSS-061",
+      "name": "MSS-Agent SDK v0.3 发版",
+      "priority": 6,
+      "progress": "0%",
+      "status": "planned",
+      "note": "PyPI update: 13 new modules + UX fixes"
+    },
+    {
+      "id": "MSS-062",
+      "name": "古风视频 LoRA 效果验证",
+      "priority": 5,
+      "progress": "0%",
+      "status": "planned",
+      "note": "ComfyUI ancient_buildings LoRA + gufeng workflow 实际生成测试"
+    }
+  ]
+}
