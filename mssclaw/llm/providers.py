@@ -144,6 +144,44 @@ class DeepSeekProvider(OpenAIProvider):
                         base_url="https://api.deepseek.com/v1")
 
 
+class AnthropicProvider(LLMProvider):
+    """Anthropic Claude API Provider."""
+
+    def __init__(self, model="claude-sonnet-4-20250514", api_key="",
+                 max_tokens=4096, temperature=0.7):
+        super().__init__(model, timeout=120.0)
+        self.api_key = api_key
+        self.max_tokens = max_tokens
+        self.temperature = temperature
+        self._base = "https://api.anthropic.com/v1"
+
+    def generate(self, prompt: str, **kwargs) -> str:
+        payload = {
+            "model": self.model,
+            "max_tokens": kwargs.get("max_tokens", self.max_tokens),
+            "temperature": kwargs.get("temperature", self.temperature),
+            "messages": [{"role": "user", "content": prompt}],
+        }
+        headers = {
+            "x-api-key": self.api_key,
+            "anthropic-version": "2023-06-01",
+            "Content-Type": "application/json",
+        }
+        data = json.dumps(payload).encode("utf-8")
+        if _HAS_HTTPX:
+            with httpx.Client(timeout=self.timeout) as c:
+                r = c.post(f"{self._base}/messages", content=data, headers=headers)
+                r.raise_for_status()
+                return r.json()["content"][0]["text"]
+        else:
+            req = _urllib.Request(f"{self._base}/messages", data=data, headers=headers)
+            resp = _urllib.urlopen(req, timeout=self.timeout)
+            return json.loads(resp.read())["content"][0]["text"]
+
+    def health(self) -> dict:
+        return {"ok": bool(self.api_key), "provider": "anthropic", "model": self.model}
+
+
 class StubProvider(LLMProvider):
     """测试/降级 Provider. 返回固定文本."""
     
@@ -158,6 +196,7 @@ class StubProvider(LLMProvider):
 PROVIDER_REGISTRY = {
     "ollama": OllamaProvider,
     "openai": OpenAIProvider,
+    "anthropic": AnthropicProvider,
     "deepseek": DeepSeekProvider,
     "stub": StubProvider,
 }
