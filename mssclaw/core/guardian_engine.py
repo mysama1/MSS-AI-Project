@@ -161,7 +161,7 @@ class GuardianEngine:
             GuardianResult: density, violations, hit_guardians, score
         """
         if not text:
-            return GuardianResult(density=0.0, score=0.0)
+            return GuardianResult(density=0.0, score=1.0)  # empty = clean
 
         # ── Layer 1: Guardian check ──
         hit_guardians = []
@@ -201,7 +201,8 @@ class GuardianEngine:
         # 累进扣分: hard = -0.15, soft = -0.05
         # strictness 调节: 高 strictness → 扣分力度大
         penalty = (hard_count * 0.15 + soft_count * 0.05) * (1.0 + self.strictness)
-        score = max(0.0, density - penalty)
+        # score = 1.0 - density - penalty: 干净=1.0, 污染的=0.0
+        score = max(0.0, 1.0 - density - penalty)
 
         return GuardianResult(
             density=round(density, 3),

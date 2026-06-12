@@ -337,9 +337,9 @@ class PlanAgent(BaseAgent):
             if density >= 0.7:
                 is_polluted = True
                 reasons.append(f"Guard density={density:.2f}")
-            if score <= 0.2 and density >= 0.5:
+            if score < 0.5 and density >= 0.3:
                 is_polluted = True
-                reasons.append(f"Quality score={score:.2f}")
+                reasons.append(f"Quality score={score:.2f} (low)")
 
         # 检测逻辑矛盾
         contradictions = self._detect_contradictions(content)
