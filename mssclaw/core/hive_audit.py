@@ -97,6 +97,7 @@ class HiveAuditor:
         self._findings: list[AuditFinding] = []
         self._checkpoints: list[dict] = []
         self._drift_vector: list[float] = []  # 方向漂移累积
+        self._last_elevation_idx: int = 0     # 上次升级后的索引
         self._lock = threading.Lock()
 
     # ═══ L0: 微观层 — 单任务微审计 ═══
@@ -366,3 +367,109 @@ class HiveAuditor:
             "category": f.category, "message": f.message,
             "source": f.source, "time": f.timestamp
         } for f in self._findings]
+
+    # ═══ 升级机制: A6 逻辑升维 — 检查无效 → 停止死磕 → 升维 ═══
+
+    def should_escalate(self) -> tuple[bool, str, Optional[str]]:
+        """
+        判断是否应该升级 (A6 矛盾升维).
+
+        逻辑: 同一类别连续 N 次检查无效 → 不在这一层继续死磕 → 升维
+        Returns: (should_escalate, reason, target_dimension)
+        """
+        if not self._findings:
+            return False, "", None
+
+        # 检查最近发现 (只看升级点之后)
+        recent = self._findings[self._last_elevation_idx:]
+        by_cat = defaultdict(int)
+        for f in recent:
+            if f.severity in ("critical", "blocker"):
+                by_cat[f.category] += 1
+
+        # 同一类别 >=3 次 → 当前层检查无效, 需要升维
+        for cat, count in by_cat.items():
+            if count >= 3:
+                dim = self._get_elevation_dimension(cat)
+                return True, f"{count} critical findings in '{cat}' — elevation needed", dim
+
+        # 检查点持续恶化
+        recent_cps = self._checkpoints[-3:]
+        if len(recent_cps) >= 3:
+            worsening = all(
+                (recent_cps[i].get("severe", 0) + recent_cps[i].get("warning", 0)) >= 
+                (recent_cps[i-1].get("severe", 0) + recent_cps[i-1].get("warning", 0))
+                for i in range(1, len(recent_cps))
+            )
+            if worsening:
+                return True, "Checkpoints worsening — current level insufficient", "strategic"
+
+        return False, "", None
+
+    def _get_elevation_dimension(self, category: str) -> str:
+        """根据问题类别返回应升级到的维度."""
+        dim_map = {
+            "quality": "process",      # 质量问题 → 流程维度
+            "logic": "symbolic",       # 逻辑问题 → 符号维度
+            "conflict": "semantic",    # 冲突 → 语义维度
+            "direction": "strategic",  # 方向 → 战略维度
+            "drift": "strategic",      # 漂移 → 战略维度
+        }
+        return dim_map.get(category, "meta")
+
+    def trigger_elevation(self, category: str, reason: str) -> AuditFinding:
+        """
+        触发 A6 逻辑升维 — 发起 MOLT_SIGNAL.
+        不在当前层继续死磕, 而是把问题提升到更高维度.
+        """
+        dim = self._get_elevation_dimension(category)
+        finding = AuditFinding(
+            level=AuditLevel.L4_MACRO,  # 宏面层发出升级信号
+            severity="blocker" if category in ("logic", "conflict") else "critical",
+            category="direction",
+            message=f"A6 ELEVATION: {category} → {dim} dimension. {reason}",
+            source="hive_escalation"
+        )
+        self._findings.append(finding)
+        self._last_elevation_idx = len(self._findings)  # 标记升级点
+        return finding
+
+    def investigate(self) -> dict:
+        """
+        启动调查 — 不是增加检查, 而是更深层的分析.
+        返回调查建议和元分析结果.
+        """
+        should_esc, reason, dim = self.should_escalate()
+        if not should_esc:
+            return {"action": "continue", "reason": "no escalation needed"}
+
+        # 深层分析: 聚合所有发现中的模式
+        all_categories = defaultdict(int)
+        all_severities = defaultdict(int)
+        for f in self._findings[-20:]:
+            all_categories[f.category] += 1
+            all_severities[f.severity] += 1
+
+        top_cat = max(all_categories, key=all_categories.get) if all_categories else "unknown"
+
+        return {
+            "action": "elevate",
+            "reason": reason,
+            "target_dimension": dim or self._get_elevation_dimension(top_cat),
+            "pattern_analysis": {
+                "dominant_category": top_cat,
+                "category_distribution": dict(all_categories),
+                "severity_distribution": dict(all_severities),
+            },
+            "recommendation": f"Stop checking at current level. Elevate {top_cat} issue to {dim} dimension.",
+        }
+
+    def tick_delta(self, delta_protocol=None):
+        """
+        联动 DeltaProtocol: 每次检查后 tick 一次。
+        如果 delta 检测到闭合/平台期 → 自动触发升级.
+        """
+        if delta_protocol:
+            delta_protocol.tick(score=self.status().get("by_severity", {}).get("critical", 0))
+            if delta_protocol.molting_alert:
+                return self.trigger_elevation("direction", "Delta closure detected — auto-elevation")
