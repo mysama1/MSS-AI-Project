@@ -1,0 +1,74 @@
+{
+  "total_budget": 10000.0,
+  "remaining": 30.0,
+  "total_committed": 9970.0,
+  "total_actual": 8000.0,
+  "reject_count": 7,
+  "feedback_count": 4,
+  "usage_log": [
+    {
+      "task_id": "a1a9443a6ec7",
+      "predicted": 450.0,
+      "actual": 2000.0,
+      "status": "adjusted",
+      "timestamp": 1781237562.631409
+    },
+    {
+      "task_id": "f469956ac771",
+      "predicted": 4400.0,
+      "actual": null,
+      "status": "rejected",
+      "timestamp": 1781237562.632417
+    },
+    {
+      "task_id": "45308396edc5",
+      "predicted": 30.0,
+      "actual": null,
+      "status": "committed",
+      "timestamp": 1781237562.632417
+    },
+    {
+      "task_id": "0fa1bf8e31ea",
+      "predicted": 360.0,
+      "actual": null,
+      "status": "rejected",
+      "timestamp": 1781237562.632417
+    },
+    {
+      "task_id": "fdf5de0cf142",
+      "predicted": 80.0,
+      "actual": null,
+      "status": "rejected",
+      "timestamp": 1781237562.632417
+    },
+    {
+      "task_id": "f368caa4ee03",
+      "predicted": 450.0,
+      "actual": null,
+      "status": "rejected",
+      "timestamp": 1781237562.632417
+    },
+    {
+      "task_id": "6df4290231af",
+      "predicted": 300.0,
+      "actual": null,
+      "status": "rejected",
+      "timestamp": 1781237562.632417
+    },
+    {
+      "task_id": "0e1b7783ca61",
+      "predicted": 20.0,
+      "actual": null,
+      "status": "committed",
+      "timestamp": 1781237562.63338
+    }
+  ],
+  "prediction_bias": {
+    "": [
+      3.4444444444444446,
+      3.4444444444444446,
+      3.4444444444444446,
+      3.4444444444444446
+    ]
+  }
+}

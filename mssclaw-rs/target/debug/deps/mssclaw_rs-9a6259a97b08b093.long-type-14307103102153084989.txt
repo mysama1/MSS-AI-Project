@@ -1,0 +1,1 @@
+std::iter::FilterMap<std::slice::Iter<'_, Rule>, {closure@src\scanner.rs:379:29: 379:40}>: IntoParallelIterator

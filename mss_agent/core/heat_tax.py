@@ -7,10 +7,19 @@ A3 热税预算 — MSS-Agent 的第一道防线.
   L2 意义热税 (meaningless work)     — 权重 1000.0
 
 如果 L2 意义热税超过 budget → 拒绝执行.
+
+v1.1: 集成 HeatTaxFuseGroup — 三层级联熔断器.
+  熔断器与预算独立运行, 熔断器处理"是否安全继续",
+  预算处理"是否值得继续".
 """
 from enum import Enum
 from dataclasses import dataclass, field
 from typing import Optional, Callable
+
+from .heat_tax_fuse import (
+    HeatTaxFuseGroup, FuseLevel, FuseState,
+    create_fuse_group,
+)
 
 
 class HeatTaxLevel(Enum):
@@ -42,6 +51,7 @@ class HeatTaxBudget:
     })
     spent: dict = field(default_factory=dict)
     log: list = field(default_factory=list)
+    fuse: Optional[HeatTaxFuseGroup] = None  # v1.1: 可选熔断器
 
     def __post_init__(self):
         for level in HeatTaxLevel:
@@ -77,7 +87,7 @@ class HeatTaxBudget:
         return self.spent[HeatTaxLevel.L2_MEANING] / pt > 0.5
 
     def snapshot(self) -> dict:
-        return {
+        result = {
             "total": round(self.total(), 4),
             "L0_physical": round(self.spent[HeatTaxLevel.L0_PHYSICAL], 2),
             "L1_logical": round(self.spent[HeatTaxLevel.L1_LOGICAL], 2),
@@ -86,6 +96,57 @@ class HeatTaxBudget:
             "exceeded": self.exceeded(),
             "log_count": len(self.log),
         }
+        if self.fuse:
+            result["fuse"] = self.fuse.stats()
+        return result
+
+    # ── v1.1: 熔断器集成 ──────────────────────────────────────
+
+    def enable_fuse(self, delta_check: Optional[Callable[[], float]] = None,
+                    audit_dir: str = "") -> HeatTaxFuseGroup:
+        """启用三层熔断器. 返回 fuse 对象以便外部操作."""
+        self.fuse = create_fuse_group(delta_check=delta_check, audit_dir=audit_dir)
+        return self.fuse
+
+    def check_safety(self, context: str = "") -> Optional[str]:
+        """
+        检查当前热税状态是否触发熔断.
+        如果触发 → 返回拒绝原因 (str)
+        如果安全 → 返回 None
+        """
+        if not self.fuse:
+            return None
+
+        # 传递给熔断器的是原始裸值（未加权），不是 spent 的加权值
+        l0 = self.spent[HeatTaxLevel.L0_PHYSICAL] / self.weights[HeatTaxLevel.L0_PHYSICAL]
+        l1 = self.spent[HeatTaxLevel.L1_LOGICAL] / self.weights[HeatTaxLevel.L1_LOGICAL]
+        l2 = self.spent[HeatTaxLevel.L2_MEANING] / self.weights[HeatTaxLevel.L2_MEANING]
+
+        results = self.fuse.check_and_trip(l0, l1, l2, context)
+
+        if self.fuse.l2.tripped:
+            return f"L2 fuse tripped: meaning-level violation ({l2:.2f})"
+        if self.fuse.l1.tripped:
+            return f"L1 fuse tripped: logic redundancy ({l1:.2f}), bypass allowed"
+        if self.fuse.l0.tripped:
+            return f"L0 fuse tripped: resource exhausted ({l0:.2f})"
+        return None
+
+    def grad_multiplier(self) -> float:
+        """梯度衰减系数. 熔断器激活时返回 <1.0."""
+        if self.fuse:
+            return self.fuse.grad_multiplier()
+        return 1.0
+
+    def reset_fuse_if_cooled(self) -> bool:
+        """尝试复位熔断器. 返回是否有熔断器被复位."""
+        if not self.fuse:
+            return False
+        l0 = self.spent[HeatTaxLevel.L0_PHYSICAL] / self.weights[HeatTaxLevel.L0_PHYSICAL]
+        l1 = self.spent[HeatTaxLevel.L1_LOGICAL] / self.weights[HeatTaxLevel.L1_LOGICAL]
+        l2 = self.spent[HeatTaxLevel.L2_MEANING] / self.weights[HeatTaxLevel.L2_MEANING]
+        results = self.fuse.reset_if_cooled(l0, l1, l2)
+        return any(results.values())
 
 
 class HeatTaxAbort(Exception):

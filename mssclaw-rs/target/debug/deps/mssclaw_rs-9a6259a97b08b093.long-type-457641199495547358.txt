@@ -1,0 +1,1 @@
+rayon::iter::FlatMap<rayon::slice::Iter<'_, scanner::NodeRef>, {closure@src\scanner.rs:376:19: 376:25}>

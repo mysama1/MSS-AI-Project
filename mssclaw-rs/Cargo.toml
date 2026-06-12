@@ -1,0 +1,22 @@
+[package]
+name = "mssclaw-rs"
+version = "0.1.0"
+edition = "2021"
+description = "MSS-VDP Rust acceleration backend — AST scanning engine with FFI safety guardrails"
+license = "MIT"
+
+[lib]
+name = "mssclaw_rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.25", features = ["extension-module"] }
+rayon = "1.10"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+panic = "abort"

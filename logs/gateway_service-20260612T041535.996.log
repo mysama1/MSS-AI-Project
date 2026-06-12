@@ -1,0 +1,22 @@
+[gateway_service] Starting OpenClaw Gateway...
+2026-06-12T10:54:56.487+08:00 [gateway] loading configurationâ€¦
+2026-06-12T10:54:57.529+08:00 [gateway] resolving authenticationâ€¦
+2026-06-12T10:54:57.554+08:00 [gateway] starting...
+2026-06-12T10:55:00.868+08:00 [gateway] auto-enabled plugins for this runtime without writing config:
+- ollama/mss-ai-v3_6-32k:latest model configured, enabled automatically.
+2026-06-12T10:55:02.112+08:00 [gateway] starting HTTP server...
+2026-06-12T10:55:02.362+08:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-12T10:55:06.830+08:00 [gateway] agent model: ollama/mss-ai-v3_6-32k:latest (thinking=medium, fast=off)
+2026-06-12T10:55:06.836+08:00 [gateway] http server listening (7 plugins: browser, canvas, device-pair, file-transfer, memory-core, phone-control, talk-voice; 9.3s)
+2026-06-12T10:55:06.841+08:00 [gateway] log file: C:\Windows\TEMP\openclaw\openclaw-2026-06-12.log
+2026-06-12T10:55:07.658+08:00 [gateway] starting channels and sidecars...
+2026-06-12T10:55:09.912+08:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-06-12T10:55:09.930+08:00 [gateway] ready
+2026-06-12T10:55:09.942+08:00 [heartbeat] started
+2026-06-12T10:57:33.112+08:00 [gateway] provider auth state pre-warmed in 132268ms eventLoopMax=98851.4ms
+2026-06-12T12:15:34.803+08:00 [gateway] signal SIGINT received
+2026-06-12T12:15:34.809+08:00 [gateway] received SIGINT; shutting down
+2026-06-12T12:15:34.844+08:00 [shutdown] started: gateway stopping
+2026-06-12T12:15:35.874+08:00 [gmail-watcher] gmail watcher stopped
+2026-06-12T12:15:35.884+08:00 [shutdown] completed cleanly in 1041ms
+ÖÕÖ¹Åú´¦Àí²Ù×÷Âð(Y/N)? 

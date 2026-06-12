@@ -6,6 +6,7 @@ setup.py
 ./core/agent.py
 ./core/agent_config.py
 ./core/agent_orchestrator.py
+./core/auto_archive.py
 ./core/delta.py
 ./core/delta_callback.py
 ./core/delta_quick_audit.py
@@ -15,6 +16,10 @@ setup.py
 ./core/heat_tax_accountant.py
 ./core/hybrid_pipeline_demo.py
 ./core/memory.py
+./core/memory_guard.py
+./core/session_recall_summarizer.py
+./core/t_value_filter.py
+./core/tool_budget_gate.py
 ./examples/__init__.py
 ./examples/analyst.py
 ./examples/demo_mcp_filesystem.py

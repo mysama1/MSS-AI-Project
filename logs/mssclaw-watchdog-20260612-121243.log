@@ -1,0 +1,3 @@
+2026-06-12 12:12:43 [INFO] Launching: python -c "print(42)"
+2026-06-12 12:12:43 [DEBUG] Creation flags: 0x09000200 (BREAKAWAY_FROM_JOB=0x01000000)
+2026-06-12 12:12:43 [INFO] Child spawned: PID=24972

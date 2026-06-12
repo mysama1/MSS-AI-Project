@@ -1,0 +1,14 @@
+E:\AI_Workspace\MSS-AI\project\mssclaw-rs\target\debug\deps\pyo3_build_config-9b5ba6e17ec03c67.d: C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\pyo3-build-config-0.25.1\src\lib.rs C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\pyo3-build-config-0.25.1\src\errors.rs C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\pyo3-build-config-0.25.1\src\impl_.rs E:\AI_Workspace\MSS-AI\project\mssclaw-rs\target\debug\build\pyo3-build-config-7531e71cce32d6dc\out/pyo3-build-config-file.txt E:\AI_Workspace\MSS-AI\project\mssclaw-rs\target\debug\build\pyo3-build-config-7531e71cce32d6dc\out/pyo3-build-config.txt
+
+E:\AI_Workspace\MSS-AI\project\mssclaw-rs\target\debug\deps\libpyo3_build_config-9b5ba6e17ec03c67.rlib: C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\pyo3-build-config-0.25.1\src\lib.rs C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\pyo3-build-config-0.25.1\src\errors.rs C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\pyo3-build-config-0.25.1\src\impl_.rs E:\AI_Workspace\MSS-AI\project\mssclaw-rs\target\debug\build\pyo3-build-config-7531e71cce32d6dc\out/pyo3-build-config-file.txt E:\AI_Workspace\MSS-AI\project\mssclaw-rs\target\debug\build\pyo3-build-config-7531e71cce32d6dc\out/pyo3-build-config.txt
+
+E:\AI_Workspace\MSS-AI\project\mssclaw-rs\target\debug\deps\libpyo3_build_config-9b5ba6e17ec03c67.rmeta: C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\pyo3-build-config-0.25.1\src\lib.rs C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\pyo3-build-config-0.25.1\src\errors.rs C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\pyo3-build-config-0.25.1\src\impl_.rs E:\AI_Workspace\MSS-AI\project\mssclaw-rs\target\debug\build\pyo3-build-config-7531e71cce32d6dc\out/pyo3-build-config-file.txt E:\AI_Workspace\MSS-AI\project\mssclaw-rs\target\debug\build\pyo3-build-config-7531e71cce32d6dc\out/pyo3-build-config.txt
+
+C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\pyo3-build-config-0.25.1\src\lib.rs:
+C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\pyo3-build-config-0.25.1\src\errors.rs:
+C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\pyo3-build-config-0.25.1\src\impl_.rs:
+E:\AI_Workspace\MSS-AI\project\mssclaw-rs\target\debug\build\pyo3-build-config-7531e71cce32d6dc\out/pyo3-build-config-file.txt:
+E:\AI_Workspace\MSS-AI\project\mssclaw-rs\target\debug\build\pyo3-build-config-7531e71cce32d6dc\out/pyo3-build-config.txt:
+
+# env-dep:CARGO_PKG_VERSION=0.25.1
+# env-dep:OUT_DIR=E:\\AI_Workspace\\MSS-AI\\project\\mssclaw-rs\\target\\debug\\build\\pyo3-build-config-7531e71cce32d6dc\\out

@@ -1,0 +1,4 @@
+[proxy-bootstrap] no proxy env detected, globalAgent unchanged
+[proxy-bootstrap] undici global dispatcher set to EnvHttpProxyAgent
+[proxy-bootstrap] no proxy env detected, globalAgent unchanged
+[proxy-bootstrap] undici global dispatcher set to EnvHttpProxyAgent

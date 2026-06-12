@@ -1,0 +1,19 @@
+[gateway_service] Starting OpenClaw Gateway...
+2026-06-12T01:40:21.722+08:00 [gateway] loading configuration…
+2026-06-12T01:40:21.748+08:00 [gateway] resolving authentication…
+2026-06-12T01:40:21.796+08:00 [gateway] starting...
+2026-06-12T01:40:28.073+08:00 [gateway] starting HTTP server...
+2026-06-12T01:40:28.508+08:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-12T01:40:33.739+08:00 [gateway] agent model: openai/gpt-5.5 (thinking=medium, fast=off)
+2026-06-12T01:40:33.748+08:00 [gateway] http server listening (7 plugins: browser, canvas, device-pair, file-transfer, memory-core, phone-control, talk-voice; 11.9s)
+2026-06-12T01:40:33.759+08:00 [gateway] log file: C:\Windows\TEMP\openclaw\openclaw-2026-06-12.log
+2026-06-12T01:40:33.769+08:00 [gateway] starting channels and sidecars...
+2026-06-12T01:40:34.270+08:00 [browser/server] Browser control listening on http://127.0.0.1:18791/ (auth=token)
+2026-06-12T01:40:34.295+08:00 [gateway] ready
+2026-06-12T01:40:34.316+08:00 [heartbeat] started
+2026-06-12T01:42:41.323+08:00 [gateway] provider auth state pre-warmed in 124581ms eventLoopMax=19176.4ms
+2026-06-12T10:47:16.311+08:00 [gateway] signal SIGINT received
+2026-06-12T10:47:16.320+08:00 [gateway] received SIGINT; shutting down
+2026-06-12T10:47:16.363+08:00 [shutdown] started: gateway stopping
+2026-06-12T10:47:16.397+08:00 [gmail-watcher] gmail watcher stopped
+2026-06-12T10:47:16.408+08:00 [shutdown] completed cleanly in 45ms
