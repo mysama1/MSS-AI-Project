@@ -206,12 +206,17 @@ class SwarmBus:
 
     # ── 路由 ──
 
-    def route(self, msg: Message) -> bool:
+    def route(self, msg: Message, retries: int = 3, retry_delay: float = 0.5) -> bool:
         """路由消息到接收者.
+
+        Args:
+            msg: 消息对象
+            retries: 投递失败时的重试次数
+            retry_delay: 重试间隔 (秒)
 
         Returns:
             True: 投递成功
-            False: 被拦截（循环检测/超时）
+            False: 被拦截（循环检测/超时）或重试耗尽
         """
         msg.sign()
 
@@ -228,23 +233,33 @@ class SwarmBus:
             self._log(msg, "expired", "")
             return False
 
-        # 路由
+        # 路由 (带重试)
         receiver = msg.header.receiver
-        self._log(msg, "routed", reason)
-
-        with self._lock:
-            if receiver == "ALL":
-                # 广播
-                for name, node in list(self._nodes.items()):
-                    if name != msg.header.sender:
-                        node.receive(msg)
-            elif receiver in self._nodes:
-                self._nodes[receiver].receive(msg)
-            else:
-                self._log(msg, "no_receiver", f"receiver '{receiver}' not found")
-                return False
-
-        return True
+        for attempt in range(retries + 1):
+            try:
+                with self._lock:
+                    if receiver == "ALL":
+                        for name, node in list(self._nodes.items()):
+                            if name != msg.header.sender:
+                                node.receive(msg)
+                    elif receiver in self._nodes:
+                        self._nodes[receiver].receive(msg)
+                    else:
+                        raise KeyError(receiver)
+                self._log(msg, "routed", f"{reason} (attempt {attempt+1})" if attempt > 0 else reason)
+                return True
+            except KeyError:
+                # Agent 未注册: 等待重试 (可能正在 connect)
+                if attempt < retries:
+                    time.sleep(retry_delay)
+                    continue
+                self._log(msg, "no_receiver", f"receiver '{receiver}' not found after {retries+1} attempts")
+            except Exception as e:
+                if attempt < retries:
+                    time.sleep(retry_delay)
+                    continue
+                self._log(msg, "error", f"route failed: {e}")
+        return False
 
     # ── 查询 ──
 
