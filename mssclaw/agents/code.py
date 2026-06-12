@@ -178,10 +178,13 @@ class CodeAgent(BaseAgent):
 
     def get_evo_status(self) -> dict:
         """获取进化状态."""
+        evo_stat = self._evo.status()
         return {
             "adaptations_received": len(self._evo_adaptations),
             "latest_adaptation": self._evo_adaptations[-1].adaptation if self._evo_adaptations else None,
-            "ready_to_evolve": self._evo.ready_to_evolve(),
+            "ready_to_evolve": evo_stat["ready_to_evolve"],
+            "total_records": evo_stat["total_records"],
+            "generation": evo_stat["generation"],
         }
 
     def audit_code(self, path: str) -> dict:

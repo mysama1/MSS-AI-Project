@@ -558,7 +558,7 @@ class AuditAgent(BaseAgent):
         return False
 
     def _calculate_score(self, findings: list[AuditFinding]) -> float:
-        """计算五维加权审计评分"""
+        """计算五维加权审计评分. BLOCKER全局惩罚×0.5."""
         dim_scores = self._calculate_dimension_scores(findings)
         if not dim_scores:
             return 1.0
@@ -568,7 +568,10 @@ class AuditAgent(BaseAgent):
             for dim, weight in DIMENSION_WEIGHTS.items()
         )
         total_weight = sum(DIMENSION_WEIGHTS.values())
-        return round(total / total_weight, 3) if total_weight else 1.0
+        raw = round(total / total_weight, 3) if total_weight else 1.0
+        # BLOCKER 全局乘数
+        has_blocker = any(f.severity == AuditSeverity.BLOCKER for f in findings)
+        return round(raw * 0.5, 3) if has_blocker else raw
 
     def _calculate_dimension_scores(self, findings: list[AuditFinding]) -> dict[str, float]:
         """计算各维度独立得分"""
@@ -580,10 +583,10 @@ class AuditAgent(BaseAgent):
             dim_findings[dim].append(f)
 
         severity_map = {
-            AuditSeverity.BLOCKER: 0.30,
-            AuditSeverity.CRITICAL: 0.20,
-            AuditSeverity.MAJOR: 0.10,
-            AuditSeverity.MINOR: 0.03,
+            AuditSeverity.BLOCKER: 0.50,
+            AuditSeverity.CRITICAL: 0.30,
+            AuditSeverity.MAJOR: 0.15,
+            AuditSeverity.MINOR: 0.05,
             AuditSeverity.INFO: 0.01,
         }
 
