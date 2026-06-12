@@ -1,0 +1,126 @@
+{
+  "round": 1,
+  "passed": 9,
+  "failed": 6,
+  "total": 15,
+  "tests": [
+    {
+      "name": "T-L0-01a Stub",
+      "layer": "L0",
+      "mod": "providers",
+      "passed": false,
+      "detail": "EXCEPTION: LLMProvider.__init__() missing 1 required positional argument: 'model'"
+    },
+    {
+      "name": "T-L0-01b DeepSeek",
+      "layer": "L0",
+      "mod": "providers",
+      "passed": true,
+      "detail": "DS=OK",
+      "elapsed": 1.367
+    },
+    {
+      "name": "T-L0-01c Ollama",
+      "layer": "L0",
+      "mod": "providers",
+      "passed": true,
+      "detail": "Ollama=OK [Confidence]: 0.9 | [Layer]: L0 | [Bo",
+      "elapsed": 5.796
+    },
+    {
+      "name": "T-L0-02a Stub latency",
+      "layer": "L0",
+      "mod": "providers",
+      "passed": false,
+      "detail": "EXCEPTION: LLMProvider.__init__() missing 1 required positional argument: 'model'"
+    },
+    {
+      "name": "T-L0-02b DeepSeek short",
+      "layer": "L0",
+      "mod": "providers",
+      "passed": true,
+      "detail": "DS short: 1.2s, 1tok",
+      "elapsed": 1.158
+    },
+    {
+      "name": "T-L0-02c DeepSeek medium",
+      "layer": "L0",
+      "mod": "providers",
+      "passed": true,
+      "detail": "DS medium: 2.3s, 409tok",
+      "elapsed": 2.289
+    },
+    {
+      "name": "T-L0-03a Write-Read",
+      "layer": "L0",
+      "mod": "agent_registry",
+      "passed": true,
+      "detail": "write-read: TX",
+      "elapsed": 0.024
+    },
+    {
+      "name": "T-L0-03b Restart recovery",
+      "layer": "L0",
+      "mod": "agent_registry",
+      "passed": false,
+      "detail": "restart: tasks=N/A",
+      "elapsed": 0.129
+    },
+    {
+      "name": "T-L1-01a Charge total",
+      "layer": "L1",
+      "mod": "heat_tax",
+      "passed": false,
+      "detail": "charge x3: total=1.00",
+      "elapsed": 0.006
+    },
+    {
+      "name": "T-L1-01b Exceed+Reject",
+      "layer": "L1",
+      "mod": "heat_tax",
+      "passed": false,
+      "detail": "total=0.00 exceeded=False",
+      "elapsed": 0.0
+    },
+    {
+      "name": "T-L1-01c Release",
+      "layer": "L1",
+      "mod": "heat_tax",
+      "passed": false,
+      "detail": "release: 0.00→0.00",
+      "elapsed": 0.0
+    },
+    {
+      "name": "T-L1-02a Clean code",
+      "layer": "L1",
+      "mod": "guardian_engine",
+      "passed": true,
+      "detail": "clean: score=1.00 dens=0.00",
+      "elapsed": 0.004
+    },
+    {
+      "name": "T-L1-02b No false violations",
+      "layer": "L1",
+      "mod": "guardian_engine",
+      "passed": true,
+      "detail": "clean: viol=0",
+      "elapsed": 0.001
+    },
+    {
+      "name": "T-L1-02c Empty text",
+      "layer": "L1",
+      "mod": "guardian_engine",
+      "passed": true,
+      "detail": "empty: score=1.0",
+      "elapsed": 0.0
+    },
+    {
+      "name": "T-L1-02d 10K performance",
+      "layer": "L1",
+      "mod": "guardian_engine",
+      "passed": true,
+      "detail": "10K chars: 1ms score=1.00",
+      "elapsed": 0.001
+    }
+  ]
+}
