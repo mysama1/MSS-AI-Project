@@ -2,6 +2,7 @@
 Code-Agent — 编程执行者.
 
 职责：
+  - LLM 驱动的代码生成 (P1: wired to Ollama/DeepSeek)
   - Python/JS/Go 编码
   - pip 包发布、CI/CD 维护
   - 代码审计（安全+性能）
@@ -10,15 +11,22 @@ Code-Agent — 编程执行者.
 import json
 from .base import BaseAgent
 from ..swarm.protocol import Message, MessageType
+from ..llm.providers import get_provider
 
 
 class CodeAgent(BaseAgent):
     role = "Code-Agent"
-    capabilities = ["coding", "python", "debugging", "ci_cd", "audit"]
+    capabilities = ["coding", "python", "debugging", "ci_cd", "audit", "llm_generate"]
 
-    def __init__(self, name: str = "CODE", workspace: str = "", **kwargs):
+    def __init__(self, name: str = "CODE", workspace: str = "",
+                 llm_model: str = "mss-ai-v3.4.3-balanced",
+                 llm_provider: str = "ollama",
+                 **kwargs):
         super().__init__(name=name, **kwargs)
         self._workspace = workspace
+        self._llm = None
+        self._llm_model = llm_model
+        self._llm_provider = llm_provider
 
     def _register_handlers(self) -> None:
         self.swarm.on(MessageType.TASK_ASSIGN.value)(self._on_task)
@@ -27,8 +35,14 @@ class CodeAgent(BaseAgent):
         task_id = msg.payload.get("task_id", "")
         spec = msg.payload.get("spec", {})
 
-        action = spec.get("action", "audit")
-        if action == "audit":
+        action = spec.get("action", "generate")  # 默认: LLM生成
+        if action == "generate":
+            result = self.generate_code(
+                task_spec=spec,
+                prompt=spec.get("prompt", spec.get("description", ""))
+            )
+            self.report(task_id, result, result.get("success", False))
+        elif action == "audit":
             result = self.audit_code(spec.get("path", ""))
             self.report(task_id, result, result.get("ok", False))
         elif action == "run_tests":
@@ -42,6 +56,47 @@ class CodeAgent(BaseAgent):
             self.report(task_id, result, True)
         else:
             self.report(task_id, {"error": f"Unknown action: {action}"}, False)
+
+    def generate_code(self, task_spec: dict, prompt: str = "") -> dict:
+        """LLM 驱动的代码生成 (P1).
+        
+        Args:
+            task_spec: {title, description, language, ...}
+            prompt: 额外的提示词
+        
+        Returns:
+            {success, code, language, chars, model}
+        """
+        # 懒初始化 LLM (延迟加载, 省资源)
+        if self._llm is None:
+            try:
+                self._llm = get_provider(self._llm_provider, model=self._llm_model)
+            except Exception as e:
+                return {"success": False, "error": f"LLM init failed: {e}"}
+
+        title = task_spec.get("title", "unnamed task")
+        description = task_spec.get("description", prompt)
+        language = task_spec.get("language", "Python")
+        
+        code_prompt = (
+            f"Write {language} code for this task. Return ONLY the code, no explanation.\n\n"
+            f"Task: {title}\n"
+            f"Description: {description}\n"
+        )
+        if prompt:
+            code_prompt += f"\nAdditional requirements: {prompt}"
+
+        try:
+            code = self._llm(code_prompt)
+            return {
+                "success": len(code) > 20,
+                "code": code,
+                "chars": len(code),
+                "language": language,
+                "model": self._llm_model,
+            }
+        except Exception as e:
+            return {"success": False, "error": f"LLM generation failed: {e}"}
 
     def audit_code(self, path: str) -> dict:
         """代码审计 — 安全 + 规范 + 性能"""
