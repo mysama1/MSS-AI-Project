@@ -25,8 +25,8 @@ from topology_metrics import TopologyMetricsEngine
 from kb_loader import KBLoader
 from mss_checkpoint import CheckpointManager, SessionSnapshot, AutoSaver
 from mss_stability import SystemHealthMonitor, AdaptiveTaskScheduler
-from symbolic_rules_omega import OmegaComplianceChecker, check_compliance
-from symbolic_engine_v3 import create_mss_v12_engine, HeatTaxMonitor
+from mssclaw.core.semantic.symbolic_rules_omega import OmegaComplianceChecker, check_compliance
+from mssclaw.core.semantic.symbolic_engine_v3 import create_mss_v12_engine, HeatTaxMonitor
 from organizational_resilience import OrganizationalResilienceScanner, create_demo_organization
 from arbiter_agent import ArbiterAgent
 
@@ -288,7 +288,7 @@ Please rephrase using MSS terminology."""
                     self.kb_graph = self.kb_loader.to_graph()
                 except Exception:
                     # Fallback: create empty graph
-                    from symbolic_engine_v2 import MSSKnowledgeGraph
+                    from mssclaw.core.semantic.symbolic_engine_v2 import MSSKnowledgeGraph
                     self.kb_graph = MSSKnowledgeGraph()
             self.topology_engine = TopologyMetricsEngine(self.kb_graph)
             self.post_processor_v3 = create_topology_aware_engine(self.topology_engine)
@@ -615,7 +615,7 @@ Please rephrase using MSS terminology."""
         edge_count = len(graph.edges)
 
         # 检测循环
-        from symbolic_engine_v3 import CycleDetector
+        from mssclaw.core.semantic.symbolic_engine_v3 import CycleDetector
         detector = CycleDetector(graph)
         cycles = detector.find_cycles()
 

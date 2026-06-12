@@ -166,7 +166,7 @@ class RefinementWorkshop:
         """Lazy-init OmegaComplianceChecker for deep MSS axiom audit."""
         try:
             sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-            from symbolic_rules_omega import OmegaComplianceChecker, RuleLayer
+            from mssclaw.core.semantic.symbolic_rules_omega import OmegaComplianceChecker, RuleLayer
             self._omega_checker = OmegaComplianceChecker()
             self._omega_available = True
             # Verify loaded

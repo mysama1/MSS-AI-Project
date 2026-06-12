@@ -64,7 +64,7 @@ if _DUAL_OMEGA_PATH not in sys.path:
     sys.path.insert(0, _DUAL_OMEGA_PATH)
 
 try:
-    from symbolic_rules_omega import OmegaComplianceChecker as _OmegaChecker
+    from mssclaw.core.semantic.symbolic_rules_omega import OmegaComplianceChecker as _OmegaChecker
     _HAS_REAL_RSCA = True
 except ImportError:
     _OmegaChecker = None

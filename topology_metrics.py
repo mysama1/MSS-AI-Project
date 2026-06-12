@@ -24,7 +24,7 @@ from typing import Dict, List, Set, Optional, Tuple, Any
 from collections import defaultdict, deque
 import heapq
 
-from symbolic_engine import (
+from mssclaw.core.semantic.symbolic_engine import (
     MSSKnowledgeGraph, ConceptNode, RelationEdge,
     NodeType, RelationType
 )
@@ -820,7 +820,7 @@ def enhance_graph_algorithms(graph_algorithms) -> TopologyMetricsEngine:
     为symbolic_engine_v2.GraphAlgorithms添加拓扑度量能力。
 
     Usage:
-        from symbolic_engine_v2 import GraphAlgorithms
+        from mssclaw.core.semantic.symbolic_engine_v2 import GraphAlgorithms
         from topology_metrics import enhance_graph_algorithms
 
         ga = GraphAlgorithms(knowledge_graph)

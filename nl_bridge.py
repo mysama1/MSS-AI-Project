@@ -15,7 +15,7 @@ from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
 from enum import Enum, auto
 
-from symbolic_engine import (
+from mssclaw.core.semantic.symbolic_engine import (
     MSSKnowledgeGraph, ConceptNode, RelationEdge,
     NodeType, RelationType, InferenceResult
 )

@@ -18,7 +18,7 @@ from nl_bridge import (
     NLToSymbolicBridge, NLQuery, BridgeResult,
     QueryIntent, create_bridge_with_kb
 )
-from symbolic_engine import InferenceResult
+from mssclaw.core.semantic.symbolic_engine import InferenceResult
 
 class ResponseFormat(Enum):
     """响应格式类型"""
@@ -344,7 +344,7 @@ class NLBridgeV2(NLToSymbolicBridge):
 def create_v2_bridge(kb_dir: str = "knowledge_base") -> NLBridgeV2:
     """创建增强版桥接器"""
     from kb_loader import KBLoader
-    from symbolic_engine import MSSKnowledgeGraph
+    from mssclaw.core.semantic.symbolic_engine import MSSKnowledgeGraph
 
     loader = KBLoader(kb_dir)
     count = loader.load_all()

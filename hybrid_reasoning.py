@@ -14,8 +14,8 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple, Any
 from enum import Enum, auto
 
-from symbolic_engine import MSSKnowledgeGraph, ConceptNode, RelationEdge, NodeType, RelationType
-from symbolic_engine_v2 import GraphAlgorithms, LayerAwareReasoner
+from mssclaw.core.semantic.symbolic_engine import MSSKnowledgeGraph, ConceptNode, RelationEdge, NodeType, RelationType
+from mssclaw.core.semantic.symbolic_engine_v2 import GraphAlgorithms, LayerAwareReasoner
 from mss_stability import SystemHealthMonitor, quick_stability_check
 
 class ReasoningMode(Enum):

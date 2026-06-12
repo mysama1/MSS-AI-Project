@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Iterator
 from datetime import datetime
 
-from symbolic_engine import (
+from mssclaw.core.semantic.symbolic_engine import (
     MSSKnowledgeGraph, ConceptNode, RelationEdge,
     NodeType, RelationType, SymbolicReasoner
 )

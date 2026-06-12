@@ -7,8 +7,8 @@ import os
 import json
 from typing import Optional
 from kb_loader import KBLoader, load_default_kb
-from symbolic_engine import RelationEdge, RelationType
-from symbolic_engine_v3 import SymbolicEngineV3, MSSKnowledgeGraph
+from mssclaw.core.semantic.symbolic_engine import RelationEdge, RelationType
+from mssclaw.core.semantic.symbolic_engine_v3 import SymbolicEngineV3, MSSKnowledgeGraph
 
 class KBV3Bridge:
     """Bridge between kb_loader and SymbolicEngineV3"""
@@ -62,7 +62,7 @@ class KBV3Bridge:
         self._merge_graphs(engine.graph, kb_graph)
 
         # Rebuild transitive reasoner with merged graph
-        from symbolic_engine_v3 import TransitiveReasoner
+        from mssclaw.core.semantic.symbolic_engine_v3 import TransitiveReasoner
         engine.transitive_reasoner = TransitiveReasoner(engine.graph)
 
         self.engine = engine

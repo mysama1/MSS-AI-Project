@@ -727,7 +727,7 @@ def demo_topology_engine():
     if TOPOLOGY_AVAILABLE:
         print("Topology metrics available")
         # Create a simple graph for demo
-        from symbolic_engine import MSSKnowledgeGraph, ConceptNode, RelationEdge, NodeType, RelationType
+        from mssclaw.core.semantic.symbolic_engine import MSSKnowledgeGraph, ConceptNode, RelationEdge, NodeType, RelationType
 
         graph = MSSKnowledgeGraph()
         for i in range(3):

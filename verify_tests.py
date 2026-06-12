@@ -10,8 +10,8 @@ results.append("=" * 60)
 
 # Test 1: Import check
 try:
-    from symbolic_engine import MSSKnowledgeGraph, ConceptNode, RelationEdge
-    from symbolic_engine import NodeType, RelationType, InferenceResult, SymbolicReasoner
+    from mssclaw.core.semantic.symbolic_engine import MSSKnowledgeGraph, ConceptNode, RelationEdge
+    from mssclaw.core.semantic.symbolic_engine import NodeType, RelationType, InferenceResult, SymbolicReasoner
     from kb_loader import KBLoader, KBEntry
     results.append("[PASS] All imports successful")
 except Exception as e:

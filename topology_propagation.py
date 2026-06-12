@@ -18,7 +18,7 @@ from collections import defaultdict, deque
 import time
 import json
 
-from symbolic_engine import (
+from mssclaw.core.semantic.symbolic_engine import (
     MSSKnowledgeGraph, ConceptNode, RelationEdge,
     NodeType, RelationType, InferenceResult
 )
@@ -328,7 +328,7 @@ def demo():
     print("MSS Topology Propagation Engine Demo")
     print("=" * 60)
 
-    from symbolic_engine import MSSKnowledgeGraph, ConceptNode, RelationEdge, NodeType, RelationType
+    from mssclaw.core.semantic.symbolic_engine import MSSKnowledgeGraph, ConceptNode, RelationEdge, NodeType, RelationType
 
     # 创建示例图谱（MTL映射示例）
     graph = MSSKnowledgeGraph()

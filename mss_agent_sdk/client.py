@@ -32,7 +32,7 @@ class MSSClient:
             # 导入本地符号引擎（避免循环依赖）
             import sys
             sys.path.insert(0, str(Path(__file__).parent.parent))
-            from symbolic_engine import SymbolicReasoner
+            from mssclaw.core.semantic.symbolic_engine import SymbolicReasoner
             self._symbolic_engine = SymbolicReasoner()
             kb_path = Path(self.config.knowledge_base_path)
             if kb_path.exists():

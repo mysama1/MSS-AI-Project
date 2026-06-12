@@ -18,11 +18,11 @@ import math
 from datetime import datetime
 from collections import defaultdict
 
-from symbolic_engine_v3 import (
+from mssclaw.core.semantic.symbolic_engine_v3 import (
     SymbolicEngineV3, HeatTaxMonitor, HeatTaxState,
     MSSv12AxiomSystem, AxiomType
 )
-from symbolic_engine import (
+from mssclaw.core.semantic.symbolic_engine import (
     MSSKnowledgeGraph, ConceptNode, RelationEdge,
     NodeType, RelationType, InferenceResult
 )

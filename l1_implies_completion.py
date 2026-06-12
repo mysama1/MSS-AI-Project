@@ -9,7 +9,7 @@ from typing import Dict, List, Set, Tuple
 from dataclasses import dataclass
 
 from kb_loader import KBLoader
-from symbolic_engine import MSSKnowledgeGraph, ConceptNode, RelationEdge, RelationType
+from mssclaw.core.semantic.symbolic_engine import MSSKnowledgeGraph, ConceptNode, RelationEdge, RelationType
 
 @dataclass
 class L1AxiomCluster:
