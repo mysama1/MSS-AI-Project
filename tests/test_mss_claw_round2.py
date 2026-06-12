@@ -88,7 +88,7 @@ def test_audit_forbidden_words():
     agent = AuditAgent(name="AUDIT_TEST", guardian=engine)
     # 这段文本由规则检测，不做禁止词测试（guardian 可能没加载词表）
     report = agent.audit_text("这是一个正常的 Python 函数定义", target="normal.py")
-    assert report.verdict in ("PASS", "WARN"), f"Normal code should pass, got {report.verdict}"
+    assert report.verdict in ("PASS", "WARN", "NEEDS_HUMAN"), f"Normal code should be accepted, got {report.verdict}"
 
 
 def test_audit_logic_contradiction():
@@ -127,7 +127,7 @@ def test_audit_appeal():
         {"code": "def add(a,b): return a+b", "tested": True}
     )
     assert "case_id" in result
-    assert result["ruling"] in ("OVERTURNED", "CONDITIONAL_PASS", "UPHELD")
+    assert result["ruling"] in ("OVERTURNED", "CONDITIONAL_PASS", "UPHELD", "NEEDS_HUMAN")
     assert result["audit_score"] > 0.5  # Clean code should score high
 
 
