@@ -58,15 +58,23 @@ class CodeAgent(BaseAgent):
             self.report(task_id, {"error": f"Unknown action: {action}"}, False)
 
     def generate_code(self, task_spec: dict, prompt: str = "") -> dict:
-        """LLM 驱动的代码生成 (P1).
+        """LLM 驱动的代码生成 (P1) — MSS 逻辑严谨性.
         
-        Args:
-            task_spec: {title, description, language, ...}
-            prompt: 额外的提示词
-        
-        Returns:
-            {success, code, language, chars, model}
+        MSS 三层防护:
+          A3 热税 — 生成前检查预算, 无意义任务拒绝
+          Guardian — 生成后检查意义污染
+          A6 Δ   — 生成后 tick, 检测闭合趋势
         """
+        # A3: 热税检查
+        if self.heat.exceeded():
+            return {"success": False, "error": f"Heat budget exceeded ({self.heat.total():.0%})"}
+
+        self.heat.charge(
+            self.heat.__class__.L1_LOGICAL if hasattr(self.heat.__class__, 'L1_LOGICAL') else 0,
+            task_spec.get("estimated_tokens", 1000) * 0.01,
+            f"generate: {task_spec.get('title', 'unknown')}"
+        )
+
         # 懒初始化 LLM (延迟加载, 省资源)
         if self._llm is None:
             try:
@@ -77,7 +85,7 @@ class CodeAgent(BaseAgent):
         title = task_spec.get("title", "unnamed task")
         description = task_spec.get("description", prompt)
         language = task_spec.get("language", "Python")
-        
+
         code_prompt = (
             f"Write {language} code for this task. Return ONLY the code, no explanation.\n\n"
             f"Task: {title}\n"
@@ -88,15 +96,38 @@ class CodeAgent(BaseAgent):
 
         try:
             code = self._llm(code_prompt)
-            return {
-                "success": len(code) > 20,
-                "code": code,
-                "chars": len(code),
-                "language": language,
-                "model": self._llm_model,
-            }
         except Exception as e:
             return {"success": False, "error": f"LLM generation failed: {e}"}
+
+        # Guardian: 检查意义污染
+        pollution_free = True
+        guardian_note = ""
+        try:
+            g_result = self.guardian.scan(code) if self.guardian else None
+            if g_result and g_result.score < 0.5:
+                pollution_free = False
+                guardian_note = f"Low quality score: {g_result.score:.2f}"
+        except Exception:
+            pass
+
+        # A6 Δ: 记录生成行为, 检测闭合趋势
+        self.delta.tick(1.0 if len(code) > 20 else 0.0)
+        if self.delta.molting_alert:
+            guardian_note += " | Delta: closure pattern detected"
+
+        return {
+            "success": len(code) > 20 and pollution_free,
+            "code": code,
+            "chars": len(code),
+            "language": language,
+            "model": self._llm_model,
+            "mss_checks": {
+                "heat_tax": round(self.heat.total(), 3),
+                "guardian_ok": pollution_free,
+                "delta_health": str(self.delta.health()),
+            },
+            "notes": guardian_note if guardian_note else None,
+        }
 
     def audit_code(self, path: str) -> dict:
         """代码审计 — 安全 + 规范 + 性能"""
