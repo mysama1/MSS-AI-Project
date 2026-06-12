@@ -22,7 +22,7 @@ from typing import Any, Callable, Optional
 # MSS-Agent 已有核心
 from ..core.heat_tax import HeatTaxBudget, HeatTaxLevel
 from ..core.delta import DeltaProtocol
-from ..core.guardian_engine import GuardianEngine
+from mssclaw.core.guardian_engine import GuardianEngine
 from ..core.normative_field import NormativeField, NormLevel, NormVerdict
 from ..swarm.protocol import AgentMetrics, AgentStatus, AuditVerdict, MessageType, Priority
 from ..swarm.swarm import SwarmBus, SwarmNode

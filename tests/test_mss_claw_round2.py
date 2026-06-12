@@ -30,7 +30,7 @@ from mss_agent.core.recovery import (
     RetryManager, RetryPolicy, RecoveryCoordinator,
 )
 from mss_agent.swarm.swarm import SwarmBus
-from mss_agent.core.guardian_engine import GuardianEngine
+from mssclaw.core.guardian_engine import GuardianEngine
 
 # ── 测试工具 ──
 

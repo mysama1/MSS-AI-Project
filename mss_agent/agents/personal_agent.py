@@ -30,7 +30,7 @@ from ..core.personal_norm_field import (
 )
 from ..core.heat_tax import HeatTaxBudget
 from ..core.delta import DeltaProtocol
-from ..core.guardian_engine import GuardianEngine
+from mssclaw.core.guardian_engine import GuardianEngine
 from ..swarm.swarm import SwarmBus, SwarmNode
 from ..swarm.protocol import Message, MessageHeader, MessageType, Priority
 

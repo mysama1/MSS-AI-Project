@@ -2,3 +2,27 @@
 [proxy-bootstrap] undici global dispatcher set to EnvHttpProxyAgent
 [proxy-bootstrap] no proxy env detected, globalAgent unchanged
 [proxy-bootstrap] undici global dispatcher set to EnvHttpProxyAgent
+2026-06-12T12:16:47.550+08:00 [gateway] loading configuration…
+2026-06-12T12:16:47.575+08:00 [gateway] resolving authentication…
+2026-06-12T12:16:47.596+08:00 [gateway] starting...
+2026-06-12T12:16:52.467+08:00 [gateway] auto-enabled plugins:
+- ollama/mss-ai-v3_6-32k:latest model configured, enabled automatically.
+2026-06-12T12:16:54.121+08:00 [gateway] starting HTTP server...
+2026-06-12T12:16:54.130+08:00 [canvas] host mounted at http://127.0.0.1:50942/__openclaw__/canvas/ (root C:\Windows\system32\config\systemprofile\.openclaw\canvas)
+2026-06-12T12:16:54.299+08:00 [health-monitor] started (interval: 300s, startup-grace: 60s, channel-connect-grace: 120s)
+2026-06-12T12:16:54.319+08:00 [gateway] agent model: ollama/mss-ai-v3_6-32k:latest
+2026-06-12T12:16:54.321+08:00 [gateway] ready (5 plugins: acpx, browser, device-pair, phone-control, talk-voice; 6.7s)
+2026-06-12T12:16:54.325+08:00 [gateway] log file: \tmp\openclaw\openclaw-2026-06-12.log
+2026-06-12T12:16:54.424+08:00 [gateway] starting channels and sidecars...
+2026-06-12T12:16:54.469+08:00 [heartbeat] started
+2026-06-12T12:16:57.685+08:00 [plugins] embedded acpx runtime backend registered (cwd: C:\Windows\system32\config\systemprofile\.openclaw\workspace)
+2026-06-12T12:16:57.733+08:00 [browser/server] Browser control listening on http://127.0.0.1:50944/ (auth=token)
+2026-06-12T12:17:58.241+08:00 [plugins] embedded acpx runtime backend ready
+2026-06-12T12:18:32.913+08:00 [agent/embedded] [loop-stop][outer][outerStop=model_not_found] runId=930e041f-e457-4601-850c-83f98cc3f8e9 sessionId=995eb984-39d6-4b48-91aa-ec2f73448fd3 durationMs=818 error=Unknown model: ollama/mss-ai-v3_6-32k:latest. Ollama requires authentication to be registered as a provider. Set OLLAMA_API_KEY="***" (any value works) or run "openclaw configure". See: https://docs.openclaw.ai/providers/ollama
+2026-06-12T12:48:28.950+08:00 [agent/embedded] [loop-stop][outer][outerStop=model_not_found] runId=054c89b1-83d2-48ab-980b-7aadeb4328f1 sessionId=995eb984-39d6-4b48-91aa-ec2f73448fd3 durationMs=140 error=Unknown model: ollama/mss-ai-v3_6-32k:latest. Ollama requires authentication to be registered as a provider. Set OLLAMA_API_KEY="***" (any value works) or run "openclaw configure". See: https://docs.openclaw.ai/providers/ollama
+2026-06-12T13:18:28.937+08:00 [agent/embedded] [loop-stop][outer][outerStop=model_not_found] runId=f95e479a-e0d5-497a-8553-461f406dcbe0 sessionId=995eb984-39d6-4b48-91aa-ec2f73448fd3 durationMs=144 error=Unknown model: ollama/mss-ai-v3_6-32k:latest. Ollama requires authentication to be registered as a provider. Set OLLAMA_API_KEY="***" (any value works) or run "openclaw configure". See: https://docs.openclaw.ai/providers/ollama
+2026-06-12T13:48:29.048+08:00 [agent/embedded] [loop-stop][outer][outerStop=model_not_found] runId=0fbae89a-f461-4ff2-9925-0ee79dd71067 sessionId=995eb984-39d6-4b48-91aa-ec2f73448fd3 durationMs=248 error=Unknown model: ollama/mss-ai-v3_6-32k:latest. Ollama requires authentication to be registered as a provider. Set OLLAMA_API_KEY="***" (any value works) or run "openclaw configure". See: https://docs.openclaw.ai/providers/ollama
+2026-06-12T14:18:28.957+08:00 [agent/embedded] [loop-stop][outer][outerStop=model_not_found] runId=a64e5a3c-cf17-43e6-bca7-7f09fb96d5b1 sessionId=995eb984-39d6-4b48-91aa-ec2f73448fd3 durationMs=144 error=Unknown model: ollama/mss-ai-v3_6-32k:latest. Ollama requires authentication to be registered as a provider. Set OLLAMA_API_KEY="***" (any value works) or run "openclaw configure". See: https://docs.openclaw.ai/providers/ollama
+2026-06-12T14:48:28.938+08:00 [agent/embedded] [loop-stop][outer][outerStop=model_not_found] runId=85d44a0d-8b9b-44e1-b99c-2198954f79cc sessionId=995eb984-39d6-4b48-91aa-ec2f73448fd3 durationMs=139 error=Unknown model: ollama/mss-ai-v3_6-32k:latest. Ollama requires authentication to be registered as a provider. Set OLLAMA_API_KEY="***" (any value works) or run "openclaw configure". See: https://docs.openclaw.ai/providers/ollama
+2026-06-12T15:18:28.946+08:00 [agent/embedded] [loop-stop][outer][outerStop=model_not_found] runId=70de0017-d26d-45f0-b815-39082417e892 sessionId=995eb984-39d6-4b48-91aa-ec2f73448fd3 durationMs=140 error=Unknown model: ollama/mss-ai-v3_6-32k:latest. Ollama requires authentication to be registered as a provider. Set OLLAMA_API_KEY="***" (any value works) or run "openclaw configure". See: https://docs.openclaw.ai/providers/ollama
+2026-06-12T15:48:28.943+08:00 [agent/embedded] [loop-stop][outer][outerStop=model_not_found] runId=eecdef29-bbb6-463d-bbf7-fe68aa714747 sessionId=995eb984-39d6-4b48-91aa-ec2f73448fd3 durationMs=140 error=Unknown model: ollama/mss-ai-v3_6-32k:latest. Ollama requires authentication to be registered as a provider. Set OLLAMA_API_KEY="***" (any value works) or run "openclaw configure". See: https://docs.openclaw.ai/providers/ollama
