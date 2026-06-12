@@ -58,24 +58,36 @@ class CodeAgent(BaseAgent):
             self.report(task_id, {"error": f"Unknown action: {action}"}, False)
 
     def generate_code(self, task_spec: dict, prompt: str = "") -> dict:
-        """LLM 驱动的代码生成 (P1) — MSS 逻辑严谨性.
-        
-        MSS 三层防护:
-          A3 热税 — 生成前检查预算, 无意义任务拒绝
-          Guardian — 生成后检查意义污染
-          A6 Δ   — 生成后 tick, 检测闭合趋势
+        """LLM 驱动的代码生成 — 生产纪律层.
+
+        CodeAgent 职责 (生产纪律):
+          A3 热税   — 预算管理, 超额拒绝
+          A6 Δ    — 趋势监测, 闭合预警
+          Syntax  — 快速语法检查 (非审查)
+
+        AuditAgent 职责 (质量审查):
+          五维评分 — security/pollution/logic/code/style
+          安全检测 — eval/exec/硬编码密钥
+          上诉仲裁 — appeal 流程
+
+        架构: CodeAgent 产出 → SwarmBus → AuditAgent 审查
         """
         # A3: 热税检查
         if self.heat.exceeded():
-            return {"success": False, "error": f"Heat budget exceeded ({self.heat.total():.0%})"}
+            return {
+                "success": False,
+                "error": f"Heat budget exceeded ({self.heat.total():.0%})",
+                "mss_checks": {"heat_tax": round(self.heat.total(), 3)},
+            }
 
+        from ..core.heat_tax import HeatTaxLevel
         self.heat.charge(
-            self.heat.__class__.L1_LOGICAL if hasattr(self.heat.__class__, 'L1_LOGICAL') else 0,
+            HeatTaxLevel.L1_LOGICAL,
             task_spec.get("estimated_tokens", 1000) * 0.01,
             f"generate: {task_spec.get('title', 'unknown')}"
         )
 
-        # 懒初始化 LLM (延迟加载, 省资源)
+        # 懒初始化 LLM
         if self._llm is None:
             try:
                 self._llm = get_provider(self._llm_provider, model=self._llm_model)
@@ -99,35 +111,38 @@ class CodeAgent(BaseAgent):
         except Exception as e:
             return {"success": False, "error": f"LLM generation failed: {e}"}
 
-        # Guardian: 检查意义污染
-        pollution_free = True
-        guardian_note = ""
-        try:
-            g_result = self.guardian.scan(code) if self.guardian else None
-            if g_result and g_result.score < 0.5:
-                pollution_free = False
-                guardian_note = f"Low quality score: {g_result.score:.2f}"
-        except Exception:
-            pass
+        # 快速语法检查 (效率优先 — 完整审查交给 AuditAgent)
+        syntax_ok = self._quick_syntax_check(code, language)
 
-        # A6 Δ: 记录生成行为, 检测闭合趋势
+        # A6 Δ: 趋势监测
         self.delta.tick(1.0 if len(code) > 20 else 0.0)
-        if self.delta.molting_alert:
-            guardian_note += " | Delta: closure pattern detected"
 
         return {
-            "success": len(code) > 20 and pollution_free,
+            "success": len(code) > 20,
             "code": code,
             "chars": len(code),
             "language": language,
             "model": self._llm_model,
             "mss_checks": {
                 "heat_tax": round(self.heat.total(), 3),
-                "guardian_ok": pollution_free,
+                "exceeded": self.heat.exceeded(),
                 "delta_health": str(self.delta.health()),
+                "syntax_ok": syntax_ok,
+                "ready_for_audit": syntax_ok and not self.heat.exceeded(),
             },
-            "notes": guardian_note if guardian_note else None,
         }
+
+    def _quick_syntax_check(self, code: str, language: str) -> bool:
+        """快速语法检查 (非深度审查 — 审查交给 AuditAgent)."""
+        if not code or len(code) < 10:
+            return False
+        if language == "Python":
+            try:
+                compile(code, "<generated>", "exec")
+                return True
+            except SyntaxError:
+                return False
+        return True  # 非 Python 跳过语法检查
 
     def audit_code(self, path: str) -> dict:
         """代码审计 — 安全 + 规范 + 性能"""
