@@ -782,3 +782,25 @@ class AuditAgent(BaseAgent):
             "active_rules": sum(1 for r in self._rules if r.enabled),
         })
         return base
+
+    # ═══ A1: 统一质量标准 ═══
+
+    @staticmethod
+    def quality_standard() -> dict:
+        """导出统一质量标准 — 所有Agent消费的唯一"好"定义.
+
+        PlanAgent/CodeAgent 应使用此标准而非自行定义质量.
+        这是 A1(意义锚定) 的工程落地.
+        """
+        return {
+            "version": "v1.0",
+            "dimensions": {
+                "security": {"weight": 0.3, "description": "无动态代码执行/注入/密钥泄露"},
+                "pollution": {"weight": 0.25, "description": "无意义空洞/低信息密度"},
+                "logic": {"weight": 0.2, "description": "逻辑自洽/无矛盾"},
+                "code": {"weight": 0.15, "description": "语法正确/可运行"},
+                "style": {"weight": 0.1, "description": "命名规范/文档充分"},
+            },
+            "pass_threshold": 0.5,
+            "blocker_rule": "任何 BLOCKER 级发现 → 总体分×0.5",
+        }
