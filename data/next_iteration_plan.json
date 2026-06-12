@@ -1,0 +1,55 @@
+{
+  "iteration": "next",
+  "generated": "2026-06-12T23:08+08:00",
+  "status": "planned",
+  "blind_spots": [
+    {
+      "id": "NEXT-001",
+      "name": "进化闭环 — Agent 接收 adaptations",
+      "priority": 10,
+      "note": "FeedbackEvolution 产出 adaptations → CodeAgent/PlanAgent 自动接收并修改 prompt/行为",
+      "blockers": ["需要定义 Adaptation→Action 映射协议"],
+      "estimated_hours": 2
+    },
+    {
+      "id": "NEXT-002", 
+      "name": "真实 LLM 集成基准",
+      "priority": 10,
+      "note": "Ollama(mss-ai-v3.4.3-balanced) + DeepSeek(deepseek-chat) → 测延迟/质量/热度/token消耗",
+      "blockers": ["需要 API key 安全存储"],
+      "estimated_hours": 3
+    },
+    {
+      "id": "NEXT-003",
+      "name": "并发安全性测试",
+      "priority": 9,
+      "note": "10+ Agent 并发 → 锁竞争/死锁检测/消息量上限",
+      "blockers": ["需要真实 LLM 环境 (NEXT-002)"],
+      "estimated_hours": 2
+    },
+    {
+      "id": "NEXT-004",
+      "name": "分布式节点 (TSP bridge)",
+      "priority": 8,
+      "note": "多进程/多机 → TSP bridge 实测 → JSON→zero-copy 迁移",
+      "blockers": ["需要至少 2 个进程/机器"],
+      "estimated_hours": 4
+    },
+    {
+      "id": "NEXT-005",
+      "name": "性能基线",
+      "priority": 7,
+      "note": "tasks/sec, mem/agent, msg latency, heat/request → 24h 稳定性",
+      "blockers": ["需要真实 LLM (NEXT-002) + 并发 (NEXT-003)"],
+      "estimated_hours": 2
+    }
+  ],
+  "dependency_graph": {
+    "NEXT-002": [],
+    "NEXT-001": [],
+    "NEXT-003": ["NEXT-002"],
+    "NEXT-005": ["NEXT-002", "NEXT-003"],
+    "NEXT-004": []
+  },
+  "recommended_order": ["NEXT-002", "NEXT-001", "NEXT-003", "NEXT-005", "NEXT-004"]
+}
