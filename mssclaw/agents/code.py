@@ -12,6 +12,7 @@ import json
 from .base import BaseAgent
 from ..swarm.protocol import Message, MessageType
 from ..llm.providers import get_provider
+from ..core.feedback_evolution import FeedbackEvolution
 
 
 class CodeAgent(BaseAgent):
@@ -27,6 +28,8 @@ class CodeAgent(BaseAgent):
         self._llm = None
         self._llm_model = llm_model
         self._llm_provider = llm_provider
+        self._evo = FeedbackEvolution()  # 进化引擎
+        self._evo_adaptations: list = []  # 累积的适应策略
 
     def _register_handlers(self) -> None:
         self.swarm.on(MessageType.TASK_ASSIGN.value)(self._on_task)
@@ -117,8 +120,17 @@ class CodeAgent(BaseAgent):
         # A6 Δ: 趋势监测
         self.delta.tick(task_hash=f"gen:{title}", novelty_score=0.5, diversity_score=0.5)
 
+        # 进化记录: 写入 FeedbackEvolution
+        success = len(code) > 20
+        self._evo.record(
+            self.name, task_spec.get("title", "unknown"),
+            success=success,
+            audit_score=0.7 if success else 0.2,
+            issues=["syntax_error"] if not syntax_ok else []
+        )
+
         return {
-            "success": len(code) > 20,
+            "success": success,
             "code": code,
             "chars": len(code),
             "language": language,
@@ -143,6 +155,34 @@ class CodeAgent(BaseAgent):
             except SyntaxError:
                 return False
         return True  # 非 Python 跳过语法检查
+
+    def receive_adaptation(self, adaptations: list) -> int:
+        """接收进化引擎的适应策略 — 连接A2 L2反馈环.
+
+        Args:
+            adaptations: FeedbackEvolution.analyze_and_adapt() 产出
+        Returns:
+            被应用的 adaptation 数量
+        """
+        applied = 0
+        for a in adaptations:
+            if a.agent == self.name or a.agent in ("Code-Agent", "Code", "CODE"):
+                self._evo_adaptations.append(a)
+                # 应用 prompt 修改
+                if "prompt" in a.adaptation.lower() or "Do NOT" in a.adaptation:
+                    if not hasattr(self, '_evo_prompt_suffix'):
+                        self._evo_prompt_suffix = ""
+                    self._evo_prompt_suffix = a.adaptation
+                    applied += 1
+        return applied
+
+    def get_evo_status(self) -> dict:
+        """获取进化状态."""
+        return {
+            "adaptations_received": len(self._evo_adaptations),
+            "latest_adaptation": self._evo_adaptations[-1].adaptation if self._evo_adaptations else None,
+            "ready_to_evolve": self._evo.ready_to_evolve(),
+        }
 
     def audit_code(self, path: str) -> dict:
         """代码审计 — 安全 + 规范 + 性能"""
