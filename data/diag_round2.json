@@ -1,0 +1,87 @@
+{
+  "round": 2,
+  "passed": 8,
+  "failed": 2,
+  "tests": [
+    {
+      "name": "T-L1-01a Charge",
+      "layer": "L1",
+      "mod": "heat_tax",
+      "passed": false,
+      "detail": "total=1.00 (60k/100k)",
+      "elapsed": 0.0
+    },
+    {
+      "name": "T-L1-01b Exceed",
+      "layer": "L1",
+      "mod": "heat_tax",
+      "passed": false,
+      "detail": "total=0.01 exceeded=False",
+      "elapsed": 0.0
+    },
+    {
+      "name": "T-L1-01c Reserve/Release",
+      "layer": "L1",
+      "mod": "heat_tax",
+      "passed": true,
+      "detail": "reserve-release: 300->0",
+      "elapsed": 0.0
+    },
+    {
+      "name": "T-L1-04a Sequential",
+      "layer": "L1",
+      "mod": "swarm",
+      "passed": true,
+      "detail": "5 nodes: inbox=[1, 1, 1, 1, 1]",
+      "elapsed": 0.003
+    },
+    {
+      "name": "T-L1-04b Concurrent",
+      "layer": "L1",
+      "mod": "swarm",
+      "passed": true,
+      "detail": "10t: inbox=[1, 1, 1, 1, 1, 1, 1, 1, 1, 1] errs=0",
+      "elapsed": 0.058
+    },
+    {
+      "name": "T-L1-04c Flood",
+      "layer": "L1",
+      "mod": "swarm",
+      "passed": true,
+      "detail": "same recv: 10/10 errs=0",
+      "elapsed": 0.003
+    },
+    {
+      "name": "T-L1-05a Isolate",
+      "layer": "L1",
+      "mod": "agent_isolator",
+      "passed": true,
+      "detail": "3fail: open",
+      "elapsed": 0.0
+    },
+    {
+      "name": "T-L1-05b Noise tolerance",
+      "layer": "L1",
+      "mod": "agent_isolator",
+      "passed": true,
+      "detail": "1fail+2ok: isolated=False",
+      "elapsed": 0.0
+    },
+    {
+      "name": "T-L1-05c Release",
+      "layer": "L1",
+      "mod": "agent_isolator",
+      "passed": true,
+      "detail": "release: closed",
+      "elapsed": 0.0
+    },
+    {
+      "name": "T-L1-05d Recovery",
+      "layer": "L1",
+      "mod": "agent_isolator",
+      "passed": true,
+      "detail": "recover: half_open",
+      "elapsed": 0.021
+    }
+  ]
+}
