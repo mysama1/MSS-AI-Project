@@ -1,9 +1,19 @@
-# MSS Knowledge Base Master Index — v17.10
+# MSS Knowledge Base Master Index — v17.11
 
-**Updated**: 2026-06-07 17:16 GMT+8
-**Total**: 644 entries (516 H-series, 5 layers)
+**Updated**: 2026-06-13 18:40 GMT+8
+**Total**: 644 entries (516 H-series, 5 layers) + 72 entries (CF-series, 3 projects)
 **Model**: mss-ai-v3.4.3-balanced (A/B 0.542)
 **KB Search**: 521 indexed, CJK bigram support
+
+## 双域架构
+
+| 域 | 编号 | 说明 | 索引 |
+|----|------|------|------|
+| **核心域** (MSS-CORE) | H1-H999 | MSS 理论、公理、工程、VDP、模型、验证 | _master_index.md (本文件) |
+| **文化虚构域** (MSS-CF) | CF001-CF999 | 文化意义场构建、虚构世界观推演 | [CF_CULTURAL/_cf_index.md](CF_CULTURAL/_cf_index.md) |
+
+**CF 项目**: CP-001武侠(45) · CIV-001巨鸟(11) · CP-003木外系(16) = 72条目
+**域防火墙**: CF 条目独立索引，不进入核心 H 搜索。引用须带 `[CF]` 前缀。
 
 ## Quick Links
 
