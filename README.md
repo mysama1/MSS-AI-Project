@@ -1,5 +1,6 @@
 [![PyPI version](https://badge.fury.io/py/mss-agent.svg)](https://pypi.org/project/mss-agent/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20587900.svg)](https://doi.org/10.5281/zenodo.20587900)
+[![Paper DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20701039.svg)](https://doi.org/10.5281/zenodo.20701039)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![JOSS](https://joss.theoj.org/papers/10.21105/joss.00000/status.svg)](https://joss.theoj.org)
