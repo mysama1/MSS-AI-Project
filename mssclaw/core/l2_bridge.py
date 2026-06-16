@@ -77,16 +77,16 @@ class L2Bridge:
         delta_health = ds.get("current_delta", 1.0) or 1.0
         delta_pattern = ds.get("pattern", "healthy")
         molting = ds.get("molting_alert", False)
-        tax_total = ts.get("total_weighted", 0)
+        tax_total = ts.get("total", 0)
         tax_threshold = ts.get("threshold", 2.0)
         tax_ratio = tax_total / max(tax_threshold, 0.01)
-        l2_spent = ts.get("spent", {}).get("L2_MEANING", 0)
-        l2_ratio = l2_spent / max(tax_threshold * self.tax.weights.get(2, 1.0), 0.01)  # L2 is index 2
+        l2_spent = ts.get("L2_meaning", 0)
+        l2_ratio = l2_spent / max(tax_threshold * 1000, 0.01)  # L2 weight ≈ 1000x
 
         # ── Level determination ──
         if delta_pattern == "collapse" or (molting and tax_ratio > 0.8):
             new_level = BridgeLevel.CRISIS
-        elif molting or delta_pattern == "decline" or tax_ratio > 0.7:
+        elif molting or delta_pattern == "decline" or tax_ratio > 0.7 or l2_ratio > 0.5:
             new_level = BridgeLevel.STRESS
         elif (delta_health < self.delta.min_delta * 1.5) or tax_ratio > 0.5:
             new_level = BridgeLevel.CAUTION

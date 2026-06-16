@@ -73,32 +73,44 @@ class CognitiveFramework:
     # ─── 1. Capability Self-Awareness ───
 
     def register_capability(self, name: str, tier: int = 1, **kwargs):
-        """注册一项能力."""
+        """注册一项能力. tier: 1→C, 2→B, 3→A."""
         if self._cl is None:
-            from mssclaw.core.capability_level import CapabilityLevel
+            from mssclaw.core.capability_level import CapabilityLevel, CapTier
             self._cl = CapabilityLevel()
-        self._cl.register(name, tier, **kwargs)
+        tier_map = {1: self._cl.register.__annotations__.get('tier', None)}
+        from mssclaw.core.capability_level import CapTier
+        ct_map = {1: CapTier.C, 2: CapTier.B, 3: CapTier.A}
+        cap_tier = ct_map.get(tier, CapTier.C)
+        self._cl.register(name, cap_tier, **kwargs)
         self.capabilities[name] = tier
 
     def promote_capability(self, name: str) -> int:
-        """升级能力."""
-        if self._cl is None:
+        """升级能力. Returns new tier (1=C,2=B,3=A)."""
+        if self._cl is None or name not in self.capabilities:
             return 0
-        self._cl.promote(name)
-        tier = self._cl.get(name)
-        if tier:
-            self.capabilities[name] = tier
-        return tier or 0
+        from mssclaw.core.capability_level import CapTier
+        ok = self._cl.promote(name)
+        if ok:
+            cap = self._cl.get(name)
+            tier_map = {CapTier.C: 1, CapTier.B: 2, CapTier.A: 3}
+            new_tier = tier_map.get(cap.tier, self.capabilities[name])
+            self.capabilities[name] = new_tier
+            return new_tier
+        return self.capabilities[name]
 
     def demote_capability(self, name: str) -> int:
-        """降级能力."""
-        if self._cl is None:
+        """降级能力. Returns new tier (1=C,2=B,3=A)."""
+        if self._cl is None or name not in self.capabilities:
             return 0
-        self._cl.demote(name)
-        tier = self._cl.get(name)
-        if tier:
-            self.capabilities[name] = tier
-        return tier or 0
+        from mssclaw.core.capability_level import CapTier
+        ok = self._cl.demote(name)
+        if ok:
+            cap = self._cl.get(name)
+            tier_map = {CapTier.C: 1, CapTier.B: 2, CapTier.A: 3}
+            new_tier = tier_map.get(cap.tier, self.capabilities[name])
+            self.capabilities[name] = new_tier
+            return new_tier
+        return self.capabilities[name]
 
     def capability_tier_distribution(self) -> Dict[int, int]:
         """{1: count_T1, 2: count_T2, 3: count_T3, ...}"""
