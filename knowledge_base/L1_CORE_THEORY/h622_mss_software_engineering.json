@@ -1,0 +1,50 @@
+{
+  "h_id": "H622",
+  "title": "MSS Software Engineering Whitepaper — Full Lifecycle",
+  "type": "theory",
+  "layer": "L1_CORE_THEORY",
+  "axioms": ["A1", "A2", "A3", "A5", "A6"],
+  "category": "software_engineering",
+  "created": "2026-06-17T00:03:00",
+  "summary": "MSS公理体系对软件开发全生命周期(需求→架构→编码→测试→运维→协作→安全)的结构性重构。核心洞察: 所有K3痛点都是意义场隐性溃败, MSS不是新工具而是可计算/可审计/可升维的公理注入。",
+  "lifecycle": {
+    "requirements": {
+      "k3_pain": "语义鸿沟,需求熵增,PRD与代码脱节",
+      "mss_solution": "需求意义节点+稳定子(A1)+可变投影(A2)。变更只改投影不动稳定子,跨团队以意义节点为锚点,自动检测矛盾→升维",
+      "key_axiom": "A1, A5"
+    },
+    "architecture": {
+      "k3_pain": "架构腐化,依赖混乱,微服务拆分无客观标准",
+      "mss_solution": "架构规范场(A5): 形式化层间/模块间/数据流约束,运行时审计,违反者阻断或热税记录。规范场即可执行架构文档",
+      "key_axiom": "A5"
+    },
+    "coding": {
+      "k3_pain": "技术债无形,复杂度无量化,性能与可维护性冲突",
+      "mss_solution": "每行代码热税账户(A3): cognitive_complexity + coupling_cost + duplication_penalty,超预算强制重构,热税余额决定重构优先级",
+      "key_axiom": "A3"
+    },
+    "testing": {
+      "k3_pain": "覆盖率谎言,测试与需求脱节,回归成本越来越高",
+      "mss_solution": "意义保真度η替代覆盖率。每个测试=意义断言(节点+输入投影+期望输出+η阈值)。自动从意义场推导测试用例,只跑受影响节点",
+      "key_axiom": "A2"
+    },
+    "operations": {
+      "k3_pain": "告警疲劳,MTTR小时级,回滚靠经验",
+      "mss_solution": "意义场健康度+自动升维(A6)。看意义节点偏离吸引子而非指标波动。局部故障→降级→升维(异地多活)→热税审计报告",
+      "key_axiom": "A6"
+    },
+    "collaboration": {
+      "k3_pain": "跨团队误解,接口文档不一致,前后端扯皮",
+      "mss_solution": "共享意义场+投影审计。每团队维护意义场子域,接口=对外投影(带η_min)。变更自动通知依赖方。新人读意义场而非wiki",
+      "key_axiom": "A2, A5"
+    },
+    "security": {
+      "k3_pain": "补丁追不上漏洞,合规成本高,内部威胁难检测",
+      "mss_solution": "稳定子(A1)不可违反+行为热税异常检测。NEVER规则阻断零日漏洞。合规=导出稳定子满足度报告。热税模式异常早于行为异常",
+      "key_axiom": "A3, A5"
+    }
+  },
+  "core_insight": "所有这些问题的根因都是意义场在开发过程中的隐性溃败。MSS为软件开发注入可计算/可审计/可升维的公理体系——让软件质量从艺术变成工程,从感觉变成热税。",
+  "relation_to_h621": "H621聚焦前端UI层,MSS推演至全生命周期。下一步: 编码层热税预算→测试层η保真度→运维层自动升维,逐层落地。",
+  "status": "draft"
+}
