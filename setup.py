@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 
 with open("README.md", encoding="utf-8") as f:
@@ -5,8 +6,8 @@ with open("README.md", encoding="utf-8") as f:
 
 setup(
     name="mss-agent",
-    version="0.3.0",
-    description="MSS-Agent: 内置意义场自检 + 流式呼吸感 + 本地加密保险箱的开源Agent框架",
+    version="0.3.9",
+    description="MSS-Agent: AI Agent framework with meaning-field self-check, streaming, and local encrypted vault",
     long_description=long_desc,
     long_description_content_type="text/markdown",
     author="MSS-AI Project",
@@ -14,11 +15,10 @@ setup(
     license="MIT",
     packages=find_packages(include=["mss_agent", "mss_agent.*", "mssclaw", "mssclaw.*"]),
     include_package_data=True,
-    package_data={"mssclaw": ["tpl/**/*", "static/**/*"]},
     entry_points={
         "console_scripts": [
             "mss-agent=mss_agent.cli:main",
-            "mss-vault=mss_agent.vault_cli:main",
+            "mss-vault=mssclaw.core.vault_cli:main",
             "mss-agent-serve=mss_agent.agent_serve:main",
             "mssclaw=mssclaw.cli:main",
         ],
@@ -33,10 +33,8 @@ setup(
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
-        "Topic :: Scientific/Engineering :: Artificial Intelligence",
     ],
 )
