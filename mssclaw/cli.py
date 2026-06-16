@@ -14,6 +14,7 @@ import sys, os
 USAGE = """mssclaw — MSS AI Framework
 
   init       一键环境初始化
+  lint        Theorem L1分层检查
   escalate    开发矛盾升维器
   goal        开发目标锚定
   timer       开发热税计时器
@@ -326,6 +327,7 @@ def main():
     rest = args[1:]
 
     commands = {
+        "lint": lambda r: __import__('mssclaw.core.layering_linter', fromlist=['cmd_lint']).cmd_lint(r),
         "escalate": lambda r: __import__('mssclaw.core.escalator', fromlist=['cmd_escalate']).cmd_escalate(r),
         "goal": lambda r: __import__('mssclaw.core.goal_anchor', fromlist=['cmd_goal']).cmd_goal(r),
         "timer": lambda r: __import__('mssclaw.core.heat_tax_timer', fromlist=['cmd_timer']).cmd_timer(r),
