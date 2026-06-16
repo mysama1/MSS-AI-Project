@@ -13,6 +13,7 @@ import sys, os
 
 USAGE = """mssclaw — MSS AI Framework
 
+  init       一键环境初始化
   vault      密码管理器 (setup/add/get/list/search/serve...)
   chat       终端AI聊天 (--model qwen2.5:7b)
   serve      启动双服务 (Agent:5100 + Vault:5099)
@@ -323,6 +324,7 @@ def main():
 
     commands = {
         "vault": cmd_vault,
+        "init": lambda r: __import__('mssclaw.core.init_env', fromlist=['init_environment']).init_environment(),
         "chat": cmd_chat,
         "serve": cmd_serve,
         "demo": cmd_demo,
