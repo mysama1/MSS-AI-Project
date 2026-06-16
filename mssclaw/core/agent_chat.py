@@ -152,6 +152,19 @@ def chat_loop(model: str = "qwen2.5:7b"):
             elif cmd[0] == "absorb" and len(cmd) > 1:
                 desc = " ".join(cmd[1:])
                 from mssclaw.core.digest_engine import DigestEngine
+                from mssclaw.core.logic_virus_detector import LogicVirusDetector
+
+                detector = LogicVirusDetector()
+                virus_report = detector.scan(desc)
+
+                if virus_report.risk_level.value in ("critical", "high"):
+                    print(c(f"  ⚠️  Virus detected: {virus_report.risk_level.value}", "red"))
+                    for r in virus_report.recommendations:
+                        print(c(f"    {r}", "red"))
+                    cleaned = detector.repair(desc, virus_report)
+                    print(c(f"  🔧 Auto-repaired: {len(virus_report.findings)} issues fixed", "yellow"))
+                    desc = cleaned
+
                 engine = DigestEngine(agent)
                 result = engine.absorb_and_digest(desc)
                 print(c(f"  Absorbed: {result['absorbed']['name']}", "cyan"))
