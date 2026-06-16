@@ -100,9 +100,12 @@ class MSSShell:
         """智能路由: 判断需要什么模式."""
         prompt_lower = prompt.lower()
         plen = len(prompt)
+        # Count CJK chars (each carries more meaning than ASCII)
+        cjk_count = sum(1 for c in prompt if '\u4e00' <= c <= '\u9fff' or '\u3040' <= c <= '\u30ff')
+        effective_len = plen + cjk_count * 2  # CJK chars count as 3
 
-        # Very short / greetings → shell only
-        if plen < 10:
+        # Very short ASCII → shell only
+        if effective_len < 12:
             return ShellMode.SHELL_ONLY
 
         # Dual mode triggers
