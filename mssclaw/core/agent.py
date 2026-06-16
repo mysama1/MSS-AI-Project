@@ -311,15 +311,13 @@ class MSSAgent:
 
     # ── v1.6 Sprint 22-23: Streaming + Style + DeepFold ──
 
-    def run_stream(self, prompt: str, style: str = "prose", fold: bool = False):
+    def run_stream(self, prompt: str, style: str = "prose", fold: bool = False, semantic: bool = False):
         """
-        流式执行任务 — 带节奏控制的优雅输出.
+        流式执行任务.
 
         style: "prose"|"code"|"poetry"|"chat"|"explain"
-
-        用法:
-            for token in agent.run_stream("写一首诗", style="poetry"):
-                print(token, end="", flush=True)
+        fold: 自动折叠深度内容
+        semantic: 启用 MSS 语义节奏引擎 (意义密度感知)
         """
         t0 = time.time()
         self.run_count += 1
@@ -340,7 +338,15 @@ class MSSAgent:
         if not hasattr(self.llm, 'stream'):
             output = self.llm(prompt)
             yield output
-        elif fold:
+        elif semantic:
+            from .semantic_styler import SemanticStreamStyler
+            raw = self.llm.stream(prompt)
+            styled = SemanticStreamStyler(raw, base_style=style)
+            output_parts = []
+            for chunk in styled:
+                output_parts.append(chunk)
+                yield chunk
+            output = "".join(output_parts)
             from .deep_fold import deep_stream
             output_parts = []
             for chunk in deep_stream(self, prompt, style=style, fold=True):
