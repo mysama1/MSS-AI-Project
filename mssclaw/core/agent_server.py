@@ -128,6 +128,25 @@ class AgentAPIHandler(BaseHTTPRequestHandler):
             self.agent.reset()
             return self._json({"status": "reset"})
 
+        if path == "/tools":
+            prompt = body.get("prompt", "")
+            if not prompt:
+                return self._error("prompt required")
+            try:
+                from mssclaw.core.advanced_tool_calling import MSSToolSystem, ToolSchema
+                ts = MSSToolSystem(agent=self.agent)
+                ts.register_builtins()
+                # Register additional tools
+                ts.register(ToolSchema(
+                    name="mss_health", description="Get MSS system health status",
+                    parameters={"type":"object","properties":{}},
+                    function=lambda: {"delta":1.0,"bridge":"STABLE","modules":106}
+                ))
+                result = ts.call_with_tools(prompt, max_rounds=3)
+                return self._json(result)
+            except ImportError:
+                return self._error("tool system not available", 501)
+
         if path == "/pipeline":
             steps = body.get("steps", [])
             if not steps:
