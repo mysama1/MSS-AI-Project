@@ -185,6 +185,7 @@ USAGE = """mssclaw vault — 极简密码管理
   delete <key>             删除
   gen <key> [category]     生成强密码并存入
   export [json|csv]        导出
+  import [url_filter]     从Chrome/Edge导入密码
   audit                    审计日志"""
 
 
@@ -214,6 +215,9 @@ def main():
         cmd_gen(args[1], args[2] if len(args) > 2 else "password")
     elif cmd == "export":
         cmd_export(args[1] if len(args) > 1 else "json")
+    elif cmd == "import":
+        from mssclaw.core.chrome_import import cmd_import
+        cmd_import(args[1] if len(args) > 1 else None)
     elif cmd == "audit":
         cmd_audit()
     else:
