@@ -90,6 +90,13 @@ class FastStyler:
     def __init__(self, token_stream: Iterator[str], max_delay_ms: float = 30):
         self._stream = token_stream
         self._max = max_delay_ms / 1000
+        self._last_ts = 0.0
+        self._intervals = []
+
+    def _natural_pace(self) -> float:
+        if len(self._intervals) < 3:
+            return 0.5
+        return sorted(self._intervals)[len(self._intervals)//2]
 
     def __iter__(self):
         return self._generate()
@@ -99,14 +106,20 @@ class FastStyler:
             if token.startswith("[") and token.endswith("]"):
                 yield token
                 continue
+            now = time.time()
+            if self._last_ts > 0:
+                self._intervals.append(now - self._last_ts)
+                self._intervals = self._intervals[-20:]
+            self._last_ts = now
+            natural = self._natural_pace()
             for char in token:
                 yield char
                 if char in self.PUNCT:
-                    delay = min(self._max, self.PUNCT[char])
+                    delay = min(self._max, self.PUNCT[char], natural * 0.5)
                     if delay > 0.002:
                         time.sleep(delay)
                 elif char == "\n":
-                    time.sleep(min(self._max, 0.08))
+                    time.sleep(min(self._max, 0.08, natural * 0.3))
 
 
 def routed_stream(agent, prompt: str) -> Iterator[str]:

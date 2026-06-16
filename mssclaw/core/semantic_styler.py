@@ -216,6 +216,10 @@ class SemanticStreamStyler:
         self._scene = SceneDetector()
         self._buffer = ""
         self._total_chars = 0
+        # Speed alignment: track LLM's natural pace
+        self._last_token_ts = 0.0
+        self._token_intervals = []  # last N inter-token intervals
+        self._max_artificial_delay = 0.05  # hard cap: never add >50ms
 
     def __iter__(self):
         return self._generate()
@@ -225,6 +229,17 @@ class SemanticStreamStyler:
             if raw_token.startswith("[") and raw_token.endswith("]"):
                 yield raw_token
                 continue
+
+            # Track LLM's natural generation speed
+            now = time.time()
+            if self._last_token_ts > 0:
+                interval = now - self._last_token_ts
+                self._token_intervals.append(interval)
+                self._token_intervals = self._token_intervals[-20:]
+            self._last_token_ts = now
+
+            # Natural pace: median inter-token interval
+            natural_pace = self._natural_pace()
 
             # Scene detection → auto-switch style
             new_style = self._scene.detect(raw_token)
@@ -239,10 +254,19 @@ class SemanticStreamStyler:
                 yield char
                 self._buffer = (self._buffer + char)[-100:]
 
-                # Calculate delay
-                delay = self._calculate_delay(char, rep_score)
+                # Calculate delay — capped by natural pace
+                raw_delay = self._calculate_delay(char, rep_score)
+                # Key: never exceed natural pace or hard cap
+                delay = min(raw_delay, natural_pace * 0.6, self._max_artificial_delay)
                 if delay > 0.001:
                     time.sleep(delay)
+
+    def _natural_pace(self) -> float:
+        """LLM 真实生成速度 (秒/token)."""
+        if len(self._token_intervals) < 3:
+            return 0.5  # default: assume fast
+        intervals = sorted(self._token_intervals)
+        return intervals[len(intervals) // 2]  # median
 
     def _calculate_delay(self, char: str, rep_score: float) -> float:
         """基于语义密度 + 重复度计算延迟."""
