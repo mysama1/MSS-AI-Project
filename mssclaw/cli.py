@@ -14,6 +14,7 @@ import sys, os
 USAGE = """mssclaw — MSS AI Framework
 
   init       一键环境初始化
+  vaccine     疫苗效力评估
   classify    逻辑病毒分类
   lint        Theorem L1分层检查
   escalate    开发矛盾升维器
@@ -328,6 +329,7 @@ def main():
     rest = args[1:]
 
     commands = {
+        "vaccine": lambda r: __import__('mssclaw.core.vaccine_efficacy', fromlist=['cmd_vaccine']).cmd_vaccine(r),
         "classify": lambda r: __import__('mssclaw.core.virus_taxonomy', fromlist=['cmd_classify']).cmd_classify(r),
         "lint": lambda r: __import__('mssclaw.core.layering_linter', fromlist=['cmd_lint']).cmd_lint(r),
         "escalate": lambda r: __import__('mssclaw.core.escalator', fromlist=['cmd_escalate']).cmd_escalate(r),
