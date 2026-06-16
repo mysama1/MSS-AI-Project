@@ -1,12 +1,9 @@
-
-[deepseek]
-openai>=1.0
+requests>=2.28
+cryptography>=41.0
 
 [dev]
 pytest
-black
+pytest-cov
 
 [llm]
 openai>=1.0
-
-[mcp]

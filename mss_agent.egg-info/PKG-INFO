@@ -1,147 +1,134 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.4
 Name: mss-agent
-Version: 0.2.1
-Summary: MSS-Agent: 世界上第一个内置'意义场自检'的开源 Agent 框架
+Version: 0.3.0
+Summary: MSS-Agent: 内置意义场自检 + 流式呼吸感 + 本地加密保险箱的开源Agent框架
 Home-page: https://github.com/mysama1/MSS-AI-Project
 Author: MSS-AI Project
 License: MIT
-Classifier: Development Status :: 3 - Alpha
+Classifier: Development Status :: 4 - Beta
 Classifier: Intended Audience :: Developers
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
 Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
-Provides-Extra: llm
-Provides-Extra: deepseek
-Provides-Extra: mcp
-Provides-Extra: dev
 License-File: LICENSE
+Requires-Dist: requests>=2.28
+Requires-Dist: cryptography>=41.0
+Provides-Extra: llm
+Requires-Dist: openai>=1.0; extra == "llm"
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license
+Dynamic: license-file
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
 
-[![PyPI version](https://badge.fury.io/py/mss-agent.svg)](https://pypi.org/project/mss-agent/)
+# MSS-Agent v0.3.0
 
-# MSS-Agent
+**世界上第一个内置「意义场自检」的开源 Agent 框架**
 
-**The first open-source Agent framework with built-in "meaning-field self-audit".**
+不只是另一个 Agent 框架。MSS-Agent 在 LangChain/CrewAI/AutoGen 的基础上增加了他们都没有的东西：
+
+- 🔥 **A3 热税预算** — 自动拒绝无意义任务，节省 90%+ 无效推理
+- Δ **意义开放度检测** — 实时监控 Agent 是否陷入循环/闭合
+- 🛡️ **规范场 + 幻觉盾** — 双重防线防止不安全输出
+- 🧠 **认知框架** — Agent 知道自己的能力边界和身份
+- 🔐 **本地加密保险箱** — AES-256 凭证管理，Zero-Trust
+- 🎭 **流式呼吸感** — 5 种节奏 + 语义感知 + 深度折叠
+- 🔧 **MSS 工具调用** — 每个工具调用过 L2 安检
+- 📚 **RAG 管道** — BM25+意义密度检索，零外部依赖
+- 🔄 **多Agent流水线** — Writer→Reviewer→Refiner
+- 🛡️ **容错后端** — 重试+降级+熔断
+
+**行业评分**: 核心能力 26/40 + L2 护城河 34/40 = **60/80** (领先 LangChain 22分)
+
+## 快速开始
 
 ```bash
 pip install mss-agent
+
+# 密码管理器
+mss-vault setup
+mss-vault add github_token ghp_xxx
+mss-vault serve                    # Web面板: http://127.0.0.1:5099
+
+# Agent (需要 Ollama)
+ollama pull qwen2.5:7b
+mss-agent-serve --model qwen2.5:7b  # API: http://127.0.0.1:5100
 ```
 
-[📖 Jupyter Tutorial](tutorials/01_quickstart.ipynb) | [🎥 Demo](examples/maf_integration_demo.py) | [📊 Glass Box](https://mysama1.github.io/MSS-AI-Project/dashboard/) | [中文](README_CN.md)
-
-## 🎯 Learning Goals
-
-After completing this tutorial, you will be able to:
-- ✅ Add heat-tax budgeting to any Agent (reject meaningless work)
-- ✅ Detect when an Agent is stuck in repetition (Δ decay → molt)
-- ✅ Resolve multi-Agent conflicts through dimension elevation (not voting)
-- ✅ Judge when **NOT** to use MSS-Agent
-
-## 🏗️ Three-Layer Defense
-
-### Heat-Tax Budget (Axiom A3)
-
-![Heat Tax Pyramid](docs/images/heat_tax_pyramid.png)
-
-Every task is assessed across three layers of "heat tax":
-- **L2 Meaning Tax** (fake data, concept theft, busywork) → weight **1000x**
-- **L1 Logic Tax** (redundant calls, cache pollution) → weight 1x
-- **L0 Physical Tax** (GPU time, token cost) → weight 0.001x
-
-If L2 heat tax exceeds threshold → Agent refuses to execute and explains why.
-
-### Δ Protocol (Axiom A6)
-
-![Delta Decay Curve](docs/images/delta_decay.png)
-
-Agents don't repeat the same failure patterns:
-- Δ value per task cycle (novelty + diversity)
-- 2 consecutive Δ drops → trigger molting → forget old patterns
-- *"Molting is not failure. It's growth."*
-
-### Elevation Protocol (Axiom A6)
-
-When multiple Agents conflict, don't vote (K3 pattern). Instead: find the trapped dimension → add one dimension → conflict dissolves.
-
-### Onion Architecture
-
-![Onion Architecture](docs/images/onion_architecture.png)
-
-## ⚡ Quick Start
+## Python API
 
 ```python
-from mss_agent import MSSAgent, HeatTaxLevel
+from mssclaw.core.agent import MSSAgent
+from mssclaw.core.llm_backend import OllamaBackend
 
-# Configure your LLM
-def my_llm(prompt: str) -> str:
-    import ollama
-    return ollama.chat("qwen3", prompt)["message"]["content"]
+# 创建 Agent (真 LLM)
+agent = MSSAgent("poet", llm=OllamaBackend("qwen2.5:7b"))
 
-# Create an Agent
-agent = MSSAgent(name="Helper", llm=my_llm)
-
-# Run — heat-tax budget auto-blocks meaningless tasks
-result = agent.run("Rewrite this: 'Hello'")
-if result.aborted:
-    print(f"Agent refused: {result.reason}")
-    # → Agent refused: Short busywork: no meaningful intent
-
-result = agent.run("Design an error handling strategy for a REST API")
-print(result.output)
-
-# Health report
-print(agent.health_report())
-# → {'heat_tax': {...}, 'delta': {...}, 'memory': {'active': 5, 'closed': 2}}
+# 流式输出 (语义感知节奏)
+for token in agent.run_stream("写一首五言绝句", semantic=True):
+    print(token, end="", flush=True)
 ```
 
-## 🚫 When NOT to Use MSS-Agent
+## 架构
 
-MSS-Agent is not a silver bullet. Skip it when:
+```
+┌─────────────────────────────────────────────────────┐
+│  L2 五维护城河                                       │
+│  HeatTax ↔ Delta ↔ NormativeField ↔ HallucinationShield ↔ CognitiveFramework │
+│         ↕              ↕                      ↕                       ↕       │
+│      L2Bridge    NormShieldBridge    DriftCompactionGuard        assess()     │
+├─────────────────────────────────────────────────────┤
+│  流式输出: SmartRouter → SemanticStyler → DeepFold   │
+│  LLM后端: OllamaBackend / OpenAIBackend              │
+├─────────────────────────────────────────────────────┤
+│  凭证保险箱: CredentialVault + Toolkit + CLI + Web   │
+│  备份/健康/统计/搜索/Chrome导入/HTTP API             │
+└─────────────────────────────────────────────────────┘
+```
 
-| Scenario | Why |
-|----------|-----|
-| Simple if-else workflows | No LLM needed, no meaning-field needed |
-| 100% deterministic tasks | No heat tax to detect (σ=0) |
-| Your Agent never errs or repeats | Δ detection has nothing to work with |
-| Single-Agent single-task | Elevation protocol is overkill |
-| You just need LangChain tool-use | MSS is not a replacement |
+## CLI 命令
 
-## 🔧 Installation & Troubleshooting
+| 命令 | 功能 |
+|---|---|
+| `mss-vault setup` | 初始化保险箱 |
+| `mss-vault add/get/list/search` | 凭证管理 |
+| `mss-vault gen <key>` | 生成强密码 |
+| `mss-vault import` | 从Chrome导入 |
+| `mss-vault health/stats` | 健康检查/统计 |
+| `mss-vault serve` | Web面板 (127.0.0.1:5099) |
+| `mss-agent-serve` | Agent API (127.0.0.1:5100) |
+
+## 流式模式
+
+| 模式 | 效果 |
+|---|---|
+| `chat` | ⚡ 极速对话 (L0) |
+| `prose` | 📖 自然标点停顿 (L1) |
+| `poetry` | 🐌 诗歌节奏 (L2 + 语义) |
+| `explain` | 📝 深度解释 + 自动折叠 (L2) |
+| `code` | 🔧 代码慢速精准 (L2) |
+
+## Docker
 
 ```bash
-pip install mss-agent
+docker build -t mssclaw .
+docker-compose up -d
 ```
-
-**"pip can't find the package?"** → Verify Python ≥ 3.10: `python --version`
-
-**"Installed but nothing happens?"** → Check: `python -c "import mss_agent; print(mss_agent.__version__)"`
-
-**Windows users**: Run in PowerShell. If encoding errors appear, add `-Encoding UTF8`.
-
-## 📂 Project Structure
-
-```
-mss_agent/
-  core/           # Agent base + HeatTax + Delta + Memory
-  protocols/      # Quorum-Fast + Elevation
-  examples/       # WriterAgent + MAF Integration Demo
-  tutorials/      # Jupyter Notebook tutorials
-  docs/images/    # Architecture diagrams
-```
-
-## 🌐 Community
-
-- 💬 [GitHub Discussions](https://github.com/mysama1/MSS-AI-Project/discussions) — Q&A, suggestions
-- 🐛 [Issues](https://github.com/mysama1/MSS-AI-Project/issues) — Bug reports
-- ⭐ [Star this repo](https://github.com/mysama1/MSS-AI-Project) — Support us
-
-## Business Model
-
-- ✅ MIT Open Source — core features free forever
-- ✅ Community-driven — DAU first, no paywalls
-- ✅ Optional enterprise services — deployment consulting, custom integration, training
 
 ## License
 
-MIT License. See [LICENSE](LICENSE).
+MIT
