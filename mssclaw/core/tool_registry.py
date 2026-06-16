@@ -287,6 +287,60 @@ def builtin_kb_search(query: str) -> str:
         return f"KB unavailable: {e}"
 
 
+# ── Office Tools ──
+
+def builtin_word_count(text: str) -> str:
+    """统计字数."""
+    import re
+    chars = len(text)
+    words_cn = len(re.findall(r'[\u4e00-\u9fff]', text))
+    words_en = len(re.findall(r'[a-zA-Z]+', text))
+    lines = text.count('\n') + 1
+    return f"{chars} chars | {words_cn} CJK | {words_en} EN | {lines} lines"
+
+
+def builtin_format_table(data: str, columns: str = "") -> str:
+    """格式化为 Markdown 表格."""
+    lines = [l.strip() for l in data.strip().split('\n') if l.strip()]
+    if not lines:
+        return "(empty)"
+    cols = columns.split(',') if columns else [f"Col{i+1}" for i in range(len(lines[0].split(',')))]
+    header = "| " + " | ".join(cols) + " |"
+    sep = "|" + "|".join(["---"] * len(cols)) + "|"
+    rows = []
+    for line in lines[:20]:
+        cells = line.split(',')[:len(cols)]
+        while len(cells) < len(cols):
+            cells.append("")
+        rows.append("| " + " | ".join(cells) + " |")
+    return "\n".join([header, sep] + rows)
+
+
+def builtin_text_summarize(text: str) -> str:
+    """抽取式摘要 (取前3个关键句)."""
+    import re
+    sentences = re.split(r'[。.！!？?\n]', text)
+    sentences = [s.strip() for s in sentences if len(s.strip()) > 10]
+    if len(sentences) <= 2:
+        return text[:200]
+    # Simple: first + middle + last
+    picks = [sentences[0]]
+    if len(sentences) > 2:
+        picks.append(sentences[len(sentences)//2])
+    picks.append(sentences[-1])
+    return "。".join(picks) + "。"
+
+
+def builtin_json_format(json_str: str) -> str:
+    """JSON美化."""
+    import json as _json
+    try:
+        data = _json.loads(json_str)
+        return _json.dumps(data, ensure_ascii=False, indent=2)
+    except _json.JSONDecodeError as e:
+        return f"Invalid JSON: {e}"
+
+
 def register_builtin_tools(registry: ToolRegistry):
     """注册内置工具."""
     registry.register("calculator", builtin_calculator,
@@ -313,3 +367,20 @@ def register_builtin_tools(registry: ToolRegistry):
         "Search the MSS knowledge base (618 entries across L0-L4 layers)",
         {"type": "object", "properties": {"query": {"type": "string"}}},
         category="safe")
+    # Office tools
+    registry.register("word_count", builtin_word_count,
+        "Count words and characters in text",
+        {"type": "object", "properties": {"text": {"type": "string"}}},
+        category="office")
+    registry.register("format_table", builtin_format_table,
+        "Format data as a markdown table",
+        {"type": "object", "properties": {"data": {"type": "string"}, "columns": {"type": "string"}}},
+        category="office")
+    registry.register("text_summarize", builtin_text_summarize,
+        "Generate a brief summary of text (extractive)",
+        {"type": "object", "properties": {"text": {"type": "string"}}},
+        category="office")
+    registry.register("json_format", builtin_json_format,
+        "Pretty-print or validate JSON",
+        {"type": "object", "properties": {"json_str": {"type": "string"}}},
+        category="office")
