@@ -212,6 +212,61 @@ def builtin_length(text: str) -> int:
     return len(text)
 
 
+def builtin_read_file(path: str) -> str:
+    """读取文本文件 (前 5KB)."""
+    from pathlib import Path
+    p = Path(path)
+    if not p.exists():
+        return f"Error: file not found: {path}"
+    if p.stat().st_size > 100 * 1024:
+        return f"Error: file too large ({p.stat().st_size} bytes)"
+    try:
+        return p.read_text(encoding="utf-8", errors="replace")[:5000]
+    except Exception as e:
+        return f"Error: {e}"
+
+
+def builtin_list_dir(path: str = ".") -> str:
+    """列出目录文件."""
+    from pathlib import Path
+    p = Path(path)
+    if not p.exists():
+        return f"Error: directory not found: {path}"
+    if not p.is_dir():
+        return f"Error: not a directory: {path}"
+    try:
+        items = []
+        for item in sorted(p.iterdir()):
+            suffix = "/" if item.is_dir() else ""
+            size = item.stat().st_size if item.is_file() else 0
+            items.append(f"  {item.name}{suffix} ({size}B)")
+        return "\n".join(items[:50])
+    except Exception as e:
+        return f"Error: {e}"
+
+
+def builtin_run_command(command: str) -> str:
+    """执行安全命令 (白名单)."""
+    import subprocess
+    # Whitelist: only safe commands
+    safe_commands = ["dir", "echo", "date", "time", "whoami", "hostname",
+                     "ls", "pwd", "cat", "head", "wc", "uname"]
+    cmd_parts = command.strip().split()
+    if not cmd_parts or cmd_parts[0].lower() not in safe_commands:
+        return f"Error: command '{cmd_parts[0]}' not in safe list"
+    try:
+        result = subprocess.run(
+            command, shell=True, capture_output=True, text=True,
+            timeout=10, cwd="."
+        )
+        output = (result.stdout + result.stderr)[:2000]
+        return output if output.strip() else "(no output)"
+    except subprocess.TimeoutExpired:
+        return "Error: command timed out"
+    except Exception as e:
+        return f"Error: {e}"
+
+
 def register_builtin_tools(registry: ToolRegistry):
     """注册内置工具."""
     registry.register("calculator", builtin_calculator,
@@ -226,3 +281,15 @@ def register_builtin_tools(registry: ToolRegistry):
         "Count the number of characters in a text",
         {"type": "object", "properties": {"text": {"type": "string"}}},
         category="safe")
+    registry.register("read_file", builtin_read_file,
+        "Read the contents of a text file",
+        {"type": "object", "properties": {"path": {"type": "string"}}},
+        category="file")
+    registry.register("list_dir", builtin_list_dir,
+        "List files in a directory",
+        {"type": "object", "properties": {"path": {"type": "string"}}},
+        category="file")
+    registry.register("run_command", builtin_run_command,
+        "Run a safe shell command (dir/ls/echo/date only)",
+        {"type": "object", "properties": {"command": {"type": "string"}}},
+        category="system")
