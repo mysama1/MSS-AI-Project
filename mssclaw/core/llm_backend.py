@@ -16,7 +16,7 @@ from __future__ import annotations
 import requests
 import json
 import time
-from typing import Optional, Callable, Dict
+from typing import Optional, Callable, Dict, Iterator
 
 
 class OllamaBackend:
@@ -63,6 +63,35 @@ class OllamaBackend:
         except Exception:
             return []
 
+    def stream(self, prompt: str) -> Iterator[str]:
+        """流式调用 Ollama."""
+        try:
+            resp = requests.post(
+                f"{self.host}/api/generate",
+                json={
+                    "model": self.model,
+                    "prompt": prompt,
+                    "stream": True,
+                    "options": {"temperature": self.temperature},
+                },
+                timeout=self.timeout,
+                stream=True,
+            )
+            for line in resp.iter_lines():
+                if line:
+                    try:
+                        chunk = json.loads(line)
+                        token = chunk.get("response", "")
+                        if token:
+                            yield token
+                        if chunk.get("done"):
+                            break
+                    except json.JSONDecodeError:
+                        continue
+        except Exception as e:
+            self._last_error = str(e)[:200]
+            yield f"[{self.model}] {self._last_error}"
+
     def __repr__(self):
         return f"OllamaBackend({self.model})"
 
@@ -107,6 +136,41 @@ class OpenAIBackend:
 
     def __repr__(self):
         return f"OpenAIBackend({self.model})"
+
+    def stream(self, prompt: str) -> Iterator[str]:
+        """流式调用 OpenAI 兼容 API."""
+        try:
+            resp = requests.post(
+                f"{self.base_url}/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {self.api_key}",
+                    "Content-Type": "application/json",
+                },
+                json={
+                    "model": self.model,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "temperature": self.temperature,
+                    "stream": True,
+                },
+                timeout=self.timeout,
+                stream=True,
+            )
+            for line in resp.iter_lines():
+                if line and line.startswith(b"data: "):
+                    data_str = line[6:]
+                    if data_str == b"[DONE]":
+                        break
+                    try:
+                        chunk = json.loads(data_str)
+                        delta = chunk["choices"][0].get("delta", {})
+                        content = delta.get("content", "")
+                        if content:
+                            yield content
+                    except (json.JSONDecodeError, KeyError, IndexError):
+                        continue
+        except Exception as e:
+            self._last_error = str(e)[:200]
+            yield f"[{self.model}] {self._last_error}"
 
 
 def create_backend(kind: str = "ollama", **kwargs) -> Callable:

@@ -309,6 +309,58 @@ class MSSAgent:
         self.run_count = 0
         self.abort_count = 0
 
+    # ── v1.6 Sprint 22: Streaming support ──
+
+    def run_stream(self, prompt: str):
+        """
+        流式执行任务 — 逐 token 输出.
+
+        用法:
+            for token in agent.run_stream("写一首诗"):
+                print(token, end="", flush=True)
+        """
+        t0 = time.time()
+        self.run_count += 1
+
+        # 热税评估 (同 run)
+        meaning_heat, meaning_reason = self._estimate_meaning_heat(prompt)
+        self.tax.charge(HeatTaxLevel.L2_MEANING, meaning_heat, meaning_reason)
+        if self.tax.l2_dominant() and meaning_heat > 0.05:
+            self.abort_count += 1
+            yield f"[ABORTED: {meaning_reason}]"
+            return
+        if self.tax.exceeded():
+            self.abort_count += 1
+            yield f"[ABORTED: budget exceeded]"
+            return
+
+        # 调用 LLM (流式)
+        if not hasattr(self.llm, 'stream'):
+            # Fallback: non-streaming
+            output = self.llm(prompt)
+            yield output
+        else:
+            output_parts = []
+            for token in self.llm.stream(prompt):
+                output_parts.append(token)
+                yield token
+            output = "".join(output_parts)
+
+        # L2 bridge + delta + memory (same as run)
+        task_hash = self._task_hash(prompt)
+        elapsed = (time.time() - t0) * 1000
+        token_estimate = len(output) / 4
+        self.tax.charge(HeatTaxLevel.L1_LOGICAL, token_estimate * 0.0001, f"{int(token_estimate)} tokens")
+        self.tax.charge(HeatTaxLevel.L0_PHYSICAL, elapsed * 0.00001, f"{elapsed:.0f}ms")
+
+        novelty = self.memory.novelty_score(prompt)
+        diversity = self.memory.diversity_score()
+        current_delta = self.delta.tick(task_hash, novelty, diversity)
+
+        self.l2bridge.step()
+        self.tax.reset_fuse_if_cooled()
+        self.memory.store(prompt, current_delta)
+
     # ── v1.5 Sprint 8: Credential Vault ──
 
     @property
