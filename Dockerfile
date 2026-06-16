@@ -1,52 +1,31 @@
-# MSS-AI Dockerfile
-# Multi-stage build for minimal production image
+# MSSclaw Docker 镜像
+# 用法:
+#   docker build -t mssclaw .
+#   docker run -p 5099:5099 -v ~/.mssclaw:/root/.mssclaw mssclaw
 
-# Stage 1: Build dependencies
-FROM python:3.11-slim as builder
-
-WORKDIR /build
-
-# Install build dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy requirements
-COPY requirements.txt .
-
-# Install Python dependencies
-RUN pip install --no-cache-dir --user -r requirements.txt
-
-# Stage 2: Production image
 FROM python:3.11-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PYTHONIOENCODING=utf-8 \
-    PATH=/root/.local/bin:$PATH
+LABEL org.mssclaw.version="1.0.0"
+LABEL org.mssclaw.description="MSS-AI Agent Framework"
 
 WORKDIR /app
 
-# Copy installed packages from builder
-COPY --from=builder /root/.local /root/.local
+# Install system deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy application code
-COPY *.py .
-COPY knowledge_base/ ./knowledge_base/
-COPY skills/ ./skills/
-COPY L2_theory/ ./L2_theory/
-COPY L3_heuristic/ ./L3_heuristic/
+# Install Python deps
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Create logs directory
-RUN mkdir -p logs
+# Install mssclaw
+COPY . .
+RUN pip install -e . --no-deps
 
-# Expose API port
-EXPOSE 8000
+# Vault data volume
+VOLUME ["/root/.mssclaw"]
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" || exit 1
-
-# Default command: run Web API
-CMD ["python", "web_api.py"]
+# Default: run vault server
+EXPOSE 5099
+CMD ["python", "-m", "mssclaw.core.vault_cli", "serve", "--no-auth"]

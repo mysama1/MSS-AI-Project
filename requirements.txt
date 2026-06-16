@@ -1,26 +1,8 @@
-# MSS-AI Core Dependencies
-# Minimal dependencies for production deployment
+# MSSclaw 核心依赖
+requests>=2.28
+cryptography>=41.0
 
-# Web API Framework
-fastapi>=0.104.0
-uvicorn>=0.24.0
-pydantic>=2.5.0
-
-# Numerical Computing
-numpy>=1.24.0
-
-# Data Processing
-# (stdlib only - json, dataclasses, typing)
-
-# Optional: Enhanced Performance
-# numba>=0.58.0  # Uncomment for JIT acceleration
-
-# Optional: Advanced Visualization
-# matplotlib>=3.8.0  # Uncomment for graphical charts
-# plotly>=5.18.0     # Uncomment for interactive web charts
-
-# Development Dependencies (install with: pip install -r requirements-dev.txt)
-# pytest>=7.4.0
-# pytest-asyncio>=0.21.0
-# black>=23.0.0
-# mypy>=1.7.0
+# 可选
+# pyyaml>=6.0       # YAML配置支持
+# pytest>=7.0       # 测试
+# pytest-cov>=4.0   # 覆盖率
