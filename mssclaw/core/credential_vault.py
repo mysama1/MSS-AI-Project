@@ -206,14 +206,15 @@ class CredentialVault:
             return False
         try:
             with sqlite3.connect(str(self._db_path)) as conn:
-                conn.execute("DELETE FROM vault WHERE key=?", (key,))
+                cursor = conn.execute("DELETE FROM vault WHERE key=?", (key,))
                 conn.commit()
+                deleted = cursor.rowcount > 0
         except Exception as e:
             self._add_audit("delete", key, success=False, detail=str(e))
             return False
         self._touch()
-        self._add_audit("delete", key, success=True)
-        return True
+        self._add_audit("delete", key, success=deleted, detail="" if deleted else "not found")
+        return deleted
 
     def list_keys(self, category: str = None) -> list:
         if self._locked:
@@ -237,6 +238,8 @@ class CredentialVault:
         self._audit.append(AuditRecord(action=action, target_key=target_key, success=success, detail=detail))
 
     def audit_log(self, limit: int = 20) -> list:
+        # Flush first to DB, then read combined
+        self._flush_audit()
         with sqlite3.connect(str(self._db_path)) as conn:
             rows = conn.execute("SELECT ts, action, target_key, success, detail FROM audit_log ORDER BY id DESC LIMIT ?", (limit,)).fetchall()
         return [{"ts": r[0], "action": r[1], "key": r[2], "ok": bool(r[3]), "detail": r[4]} for r in rows]
