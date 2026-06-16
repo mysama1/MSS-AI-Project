@@ -13,6 +13,8 @@ setup(
     url="https://github.com/mysama1/MSS-AI-Project",
     license="MIT",
     packages=find_packages(include=["mss_agent", "mss_agent.*", "mssclaw", "mssclaw.*"]),
+    include_package_data=True,
+    package_data={"mssclaw": ["tpl/**/*", "static/**/*"]},
     entry_points={
         "console_scripts": [
             "mss-agent=mss_agent.cli:main",
