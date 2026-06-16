@@ -14,6 +14,8 @@ import sys, os
 USAGE = """mssclaw — MSS AI Framework
 
   init       一键环境初始化
+  escalate    开发矛盾升维器
+  goal        开发目标锚定
   timer       开发热税计时器
   vault      密码管理器 (setup/add/get/list/search/serve...)
   chat       终端AI聊天 (--model qwen2.5:7b)
@@ -324,6 +326,8 @@ def main():
     rest = args[1:]
 
     commands = {
+        "escalate": lambda r: __import__('mssclaw.core.escalator', fromlist=['cmd_escalate']).cmd_escalate(r),
+        "goal": lambda r: __import__('mssclaw.core.goal_anchor', fromlist=['cmd_goal']).cmd_goal(r),
         "timer": lambda r: __import__('mssclaw.core.heat_tax_timer', fromlist=['cmd_timer']).cmd_timer(r),
         "vault": cmd_vault,
         "init": lambda r: __import__('mssclaw.core.init_env', fromlist=['init_environment']).init_environment(),
