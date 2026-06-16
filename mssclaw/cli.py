@@ -132,28 +132,70 @@ def cmd_kb(args_rest):
 
 
 def cmd_health(args_rest):
-    from mssclaw.core.agent import MSSAgent
-    from mssclaw.core.llm_backend import create_backend
+    """全系统健康报告."""
     from mssclaw.core.delta_monitor import DeltaMonitor
-
-    agent = MSSAgent(name="health-check", llm=create_backend("auto"))
-    monitor = DeltaMonitor(agent=agent)
-
-    print("MSS System Health")
-    print("─" * 30)
-    health = monitor.check()
-    status_colors = {"healthy": "green", "degrading": "yellow", "critical": "red", "dead": "red"}
-    print(f"  Delta:   {health['delta']:.3f} ({health['delta_status']})")
-    print(f"  Bridge:  {health['bridge']}")
-    print(f"  Message: {health['message']}")
-
-    # Check vault
+    from mssclaw.core.process_monitor import ProcessMonitor
     from pathlib import Path
+
+    print("╔══════════════════════════════════╗")
+    print("║   MSS System Health Report       ║")
+    print("╠══════════════════════════════════╣")
+
+    # 1. Process health
+    pm = ProcessMonitor()
+    pr = pm.check()
+    status_icon = "🟢" if pr["status"] == "HEALTHY" else "🟡"
+    print(f"║ {status_icon} 进程: {pr['total']} | 孤儿:{pr['orphans']} | "
+          f"高CPU:{pr['high_cpu']} | 服务:{sum(pr['services'].values())}/3")
+
+    # 2. Key services
+    svc = pr["services"]
+    for name, running in svc.items():
+        icon = "✅" if running else "❌"
+        print(f"║    {icon} {name}")
+
+    # 3. Orphans
+    for o in pr.get("orphan_list", [])[:3]:
+        print(f"║    ⚠️  PID {o['pid']}: {o['cmd'][:40]}")
+
+    print("╠══════════════════════════════════╣")
+
+    # 4. Vault
     vault_path = Path.home() / ".mssclaw" / "vault.db"
     if vault_path.exists():
-        print(f"  Vault:   {vault_path.stat().st_size/1024:.1f}KB")
+        size_kb = vault_path.stat().st_size / 1024
+        print(f"║ 🔐 Vault: {size_kb:.0f}KB")
+        # Check backups
+        backup_dir = vault_path.parent / f"{vault_path.name}.backups"
+        if backup_dir.exists():
+            backups = list(backup_dir.glob("vault_*.db"))
+            print(f"║    Backups: {len(backups)} files")
     else:
-        print(f"  Vault:   not initialized")
+        print(f"║ 🔐 Vault: not initialized")
+
+    # 5. Sessions
+    sess_dir = Path.home() / ".mssclaw" / "sessions"
+    if sess_dir.exists():
+        sessions = list(sess_dir.glob("*.json"))
+        if sessions:
+            print(f"║ 💾 Sessions: {len(sessions)}")
+
+    # 6. Delta
+    from mssclaw.core.agent import MSSAgent
+    from mssclaw.core.llm_backend import create_backend
+    agent = MSSAgent(name="health-check", llm=create_backend("auto"))
+    monitor = DeltaMonitor(agent=agent)
+    health = monitor.check()
+    print(f"║ 📊 Delta: {health['delta']:.3f} ({health['delta_status']})")
+
+    print("╚══════════════════════════════════╝")
+
+    if pr["orphans"] > 0:
+        print(f"\n  ⚠️  {pr['orphans']} orphan processes. Run: mssclaw health --fix")
+
+    if "--fix" in args_rest:
+        killed = pm.kill_orphans()
+        print(f"  🧹 Cleaned {killed} orphan processes")
 
 
 def cmd_version(args_rest):
