@@ -1,0 +1,75 @@
+{
+  "h_id": "H628",
+  "title": "MSS意义场工程学 — 全研究线整合地图",
+  "type": "meta_theory",
+  "layer": "L1_CORE_THEORY",
+  "axioms": ["A1", "A2", "A3", "A5", "A6"],
+  "category": "integration",
+  "created": "2026-06-17T00:41:00",
+  "integrates": [
+    "H523_prompt_irreducibility",
+    "H556_semantic_density_grammar_tradeoff",
+    "H567_meaning_landauer_limit",
+    "H589_prompt_field",
+    "H590_semantic_bridge",
+    "H591_contradiction_optimum_prompt",
+    "H593_categorical_unification",
+    "H594_type4_ncategory",
+    "H624_theorem_L1",
+    "H626_theorem_L1_v02",
+    "H627_meaning_field_engineering"
+  ],
+  "assets_mapped": {
+    "system_prompts_evolution": {
+      "path": "system_prompts/mss_system_prompt_v3_7.md → archive/system_prompts/v2_6 through v3_6",
+      "evolution": "v2.6(vague) → v3.0(structured) → v3.4.3-balanced(70行最优) → v3.7(current)",
+      "key_discovery": "不可约化提示词阈值 (H523): 压缩到70行以下会导致特定能力崩塌。提示词不是越短越好。"
+    },
+    "prompt_engineering_audit_paper": {
+      "path": "papers/prompt_engineering_audit.md",
+      "key_insights": [
+        "发现1: 不可约化内容阈值 — 信息论问题,非工程问题",
+        "发现2: Three types of prompts — Type A(S-style规范)/B(capability能力)/C(honesty边界)",
+        "发现3: 热税审计 — 冗长提示词支付隐性热税(300行→臃肿→AA-01崩塌)",
+        "核心公式: 提示词 = L1信息 → π_prompt → 模型内化 → 输出"
+      ]
+    },
+    "ESP_prompt_templates": {
+      "path": "scripts/archive/prompt_templates.py",
+      "pattern": "Entropy-Steering Prompting: 前摄引导(输入层MSS约束) + 后验过滤(输出层违规拦截)",
+      "three_tier": "STANDARD / STRICT / OMEGA — 从三验算到全量Ω裁定"
+    },
+    "semantic_styler": {
+      "path": "mssclaw/core/semantic_styler.py",
+      "role": "A2投影层: 根据内容类型(code/math/prose)自动切换语言风格",
+      "integration": "感知壳的渲染子模块 — 不做内容决策,只做形式投影"
+    },
+    "normative_field": {
+      "path": "mssclaw/core/normative_field.py",
+      "role": "A5规范场实现: 检查输出是否违反稳定子/规范路径/热税预算",
+      "integration": "逻辑内核的审计子模块 — 不生成内容,只检查合法性"
+    },
+    "category_theory": {
+      "path": "H593-H594",
+      "role": "数学底层: 三层范畴(Physical/Cognitive/Logical) + 函子抬升",
+      "unification": "A6升维/蜕壳/悖论消解/矛盾最优态 都是同一结构的七个投影"
+    },
+    "theorem_L1": {
+      "path": "H624-H626",
+      "role": "分层合法性定理: 提示词结构必须满足C1(稳定子不裂)/C2(跨层热税可偿)/C3(每层有S_i)",
+      "application": "审计现有prompt_templates → 发现C1/C3违规 → 指导重构"
+    }
+  },
+  "unified_architecture": {
+    "layers": {
+      "L3_Prompt_Field": "系统指令(稳定子+规范场+热税预算) — A5规范场的提示词投射",
+      "L2_Normative_Kernel": "规范场引擎(normative_field.py) — A5运行时审计",
+      "L1_Semantic_Shell": "感知壳(semantic_styler.py) — A2形式投影",
+      "L0_Category_Base": "范畴论底层(H593) — 三层范畴+函子抬升"
+    },
+    "flow": "用户意图 → L3(注入稳定子) → 模型推理 → L2(规范场审计输出) → L1(语义样式投影) → 用户可见",
+    "audit_cycle": "Theorem L1检查分层合法性 → 违规驱动重构 → 硬化规范场 → 下一轮审计"
+  },
+  "key_insight": "MSS意义场工程学不是新领域——它是过去所有提示词工程/语义引擎/规范场/范畴论工作的自然收敛点。H628就是这张整合地图。",
+  "status": "draft"
+}
