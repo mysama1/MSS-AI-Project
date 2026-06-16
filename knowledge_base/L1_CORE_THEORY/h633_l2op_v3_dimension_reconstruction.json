@@ -1,0 +1,52 @@
+{
+  "h_id": "H633",
+  "title": "L2-OP v3: 多Agent维度重构协议",
+  "version": "v3.0",
+  "status": "formalized",
+  "layer": "L1_CORE_THEORY",
+  "domain": "paradox_resolution",
+  "tags": ["L2-OP", "Type_II_paradox", "multi_agent", "VCG", "mechanism_design", "dimension_reconstruction"],
+  "date": "2026-06-17",
+  "source": "H565→H568→H569→H571→H576收敛产物",
+  "related_h": ["H565", "H568", "H569", "H571", "H576", "A5", "A6"],
+
+  "evolution_chain": {
+    "v1_H565": "候选公理: 优化面维度=Agent数。注入prompt后TypeⅡ 0.20→0.40(+100%未破天花板)",
+    "v2_H568": "机制设计精炼: L2-OP不是哲学公理,是机制设计公理。'不能改玩家,只能改游戏'",
+    "v3_H633": "可计算协议: VCG外部性内化→补偿维度重构→纳什均衡与帕累托最优对齐"
+  },
+
+  "core_theorem": {
+    "statement": "给定N-Agent博弈G,存在维度重构R使纳什均衡与帕累托最优在重构面G'上对齐。重构方法是添加补偿维度c_i = externality_i(S),其中externality_i是Agent i的策略选择对全局社会福利造成的损失。",
+    "formula": "G' = G ⊕ compensation_dim(c)  where  c_i(S) = max_W(S') - W(S)  and  W(S) = Σ u_j(S)",
+    "vickrey_equivalence": "维克里拍卖: 投标人支付次高价→报价=真值。L2-OP: Agent承担外部性→选帕累托→两者同构。",
+    "mss_corollary": "A5自洽Agent天然降低补偿需求(因子~0.5),因A5='说真话偏好'已作为隐式约束。”
+  },
+
+  "algorithm": {
+    "step_1": "编码博弈: payoff_matrix → nash_equilibria + pareto_frontier",
+    "step_2": "计算TypeⅡ gap: gap = 1 - |NE ∩ Pareto| / |NE|",
+    "step_3": "VCG维度重构: 对每个策略组合S计算c_i(S) = max_total - W(S)",
+    "step_4": "MSS减免: 若Agent_i A5自洽, c′_i = c_i × 0.5",
+    "convergence_guarantee": "VCG性质: 说真话(选Pareto)是占优策略。gap → 0"
+  },
+
+  "engineering_implementation": {
+    "file": "mssclaw/core/l2op_v3.py",
+    "cli": "mssclaw l2op [gap|reconstruct|demo]",
+    "demo_game": "囚徒困境: gap 1.0→0.0, CC从被支配→占优策略",
+    "supported": "2-Agent离散博弈 (MVP), 扩展到N-Agent连续域是推论"
+  },
+
+  "open_questions": {
+    "q1": "补偿维度的实现成本: 谁承担VCG外部性结算？(类比: 维克里拍卖需要可信第三方)",
+    "q2": "N>2连续域: 是否可映射到MSS规范性审计(每个Agent自带A5?",
+    "q3": "TypeⅡ是否在所有博弈可消解: VCG保证DC博弈,但无限策略空间有近似性"
+  },
+
+  "maturity_assessment": {
+    "previous": "L2-OP v2 陈述级 (0.20→0.40, E-011验证)",
+    "current": "L2-OP v3 可计算级 (囚徒困境 gap 1.0→0.0 ✅)",
+    "next": "E-021 Nash均衡实证 (H602 TODO) — 多Agent真实模型验证"
+  }
+}
