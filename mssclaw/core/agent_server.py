@@ -101,6 +101,39 @@ class AgentAPIHandler(BaseHTTPRequestHandler):
             self.agent.reset()
             return self._json({"status": "reset"})
 
+        if path == "/pipeline":
+            steps = body.get("steps", [])
+            if not steps:
+                return self._error("steps required")
+
+            results = []
+            t0 = time.time()
+            context = ""
+            for i, step in enumerate(steps):
+                prompt = step.get("prompt", "")
+                label = step.get("label", f"Step {i+1}")
+                if context:
+                    prompt = f"Previous context:\n{context}\n\nTask: {prompt}"
+                result = self.agent.run(prompt)
+                output = result.output[:1000] if result.output else ""
+                context += f"\n[{label}]: {output}"
+                results.append({
+                    "step": i+1, "label": label,
+                    "output": output,
+                    "delta": result.delta,
+                    "heat_tax": result.heat_tax.get("total", 0),
+                    "elapsed_ms": round(result.elapsed_ms) if hasattr(result, 'elapsed_ms') else 0,
+                })
+
+            elapsed = round((time.time() - t0) * 1000)
+            return self._json({
+                "pipeline": results,
+                "total_steps": len(steps),
+                "total_elapsed_ms": elapsed,
+                "final_delta": self.agent.delta.snapshot().get("current_delta", 0),
+                "bridge": self.agent.l2bridge.level.name,
+            })
+
         self._error("not found", 404)
 
     def do_OPTIONS(self):

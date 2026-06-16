@@ -8,7 +8,7 @@
   body{font:14px/1.5 system-ui,-apple-system,sans-serif;color:var(--tx);background:var(--bg);display:flex;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
   @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
-  /* Sidebar — collapsible */
+  /* Sidebar �?collapsible */
   #sidebar{width:0;min-width:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;transition:all .25s cubic-bezier(.4,0,.2,1);overflow:hidden;z-index:10}
   #sidebar.open{width:260px;min-width:260px}
   #sidebar-inner{width:260px;min-width:260px;display:flex;flex-direction:column;height:100%}
@@ -26,7 +26,7 @@
   .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}.dot.on{background:var(--ok)}.dot.off{background:var(--err)}
   .dot.pulse{animation:pulse 2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-  /* Sidebar toggle button — always visible on left edge */
+  /* Sidebar toggle button �?always visible on left edge */
   #sidebar-toggle{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:20;width:20px;height:48px;background:var(--surface);border:1px solid var(--border);border-left:none;border-radius:0 6px 6px 0;cursor:pointer;color:var(--dim);font-size:10px;display:flex;align-items:center;justify-content:center;transition:all .2s;opacity:.5}
   #sidebar-toggle:hover{opacity:1;width:24px;color:var(--tx)}
   #sidebar.open~#sidebar-toggle{left:260px}
@@ -56,7 +56,7 @@
   .msg pre code{background:none;padding:0}
   .msg-foot{font-size:10px;color:var(--dim);margin-top:4px;display:flex;gap:8px}
   .msg.user .msg-foot{color:rgba(255,255,255,.5)}
-  .streaming .msg:last-child:after{content:'▊';animation:blink 1s steps(1) infinite;color:var(--accent)}@keyframes blink{50%{opacity:0}}
+  .streaming .msg:last-child:after{content:'�?;animation:blink 1s steps(1) infinite;color:var(--accent)}@keyframes blink{50%{opacity:0}}
 
   #stats-bar{padding:4px 24px 4px 28px;font-size:10px;color:var(--dim);display:flex;gap:14px;border-top:1px solid var(--border);overflow-x:auto;min-height:20px}
   #stats-bar span{white-space:nowrap}
@@ -85,15 +85,15 @@
   ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:0}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 
   /* Minimized mode: hide top bar and stats */
-  #main.minimal #top-bar,#main.minimal #stats-bar{display:none}
-  #main.minimal #messages{padding-top:12px}
+  
+  
 </style></head><body>
 
 <aside id="sidebar">
   <div id="sidebar-inner">
     <div class="side-header">
       <div class="brand"><div class="brand-icon">🧬</div><h1>mssclaw</h1></div>
-      <button class="icon-btn" onclick="newChat()" title="New Chat (Ctrl+N)">＋</button>
+      <button class="icon-btn" onclick="newChat()" title="New Chat (Ctrl+N)">�?/button>
     </div>
     <div id="session-list"></div>
     <div class="side-footer">
@@ -103,12 +103,12 @@
   </div>
 </aside>
 
-<button id="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">◀</button>
+<button id="sidebar-toggle" onclick="ts()" title="Toggle sidebar">◀</button>
 
 <main id="main">
   <div id="top-bar">
     <span class="title" id="session-title">mssclaw</span>
-    <button class="icon-btn" onclick="toggleMinimal()" title="Minimal mode">⊡</button>
+    <button class="icon-btn" onclick="toggleMinimal()" title="Minimal mode">�?/button>
     <button class="icon-btn" id="btn-health" onclick="togglePanel('health')">📊</button>
     <button class="icon-btn" id="btn-models" onclick="togglePanel('models')">🤖</button>
     <button class="icon-btn" onclick="toggleTheme()">🌓</button>
@@ -125,23 +125,21 @@
 
 <!-- Health Panel -->
 <div class="overlay" id="health-ov" onclick="closePanels()"></div>
-<div class="panel" id="health-pn"><button class="icon-btn close-btn" onclick="closePanels()">✕</button><h3>📊 System Health</h3><div id="health-data"></div></div>
+<div class="panel" id="health-pn"><button class="icon-btn close-btn" onclick="closePanels()">�?/button><h3>📊 System Health</h3><div id="health-data"></div></div>
 <!-- Models Panel -->
 <div class="overlay" id="models-ov" onclick="closePanels()"></div>
-<div class="panel" id="models-pn"><button class="icon-btn close-btn" onclick="closePanels()">✕</button><h3>🤖 Models</h3><div id="models-data"></div></div>
+<div class="panel" id="models-pn"><button class="icon-btn close-btn" onclick="closePanels()">�?/button><h3>🤖 Models</h3><div id="models-data"></div></div>
 
 <script>
-// ═══ State ═══
-const API='http://127.0.0.1:5100',OLLAMA='http://localhost:11434/api/tags';
-let ST={sessions:[],cur:null,msgs:[],model:'qwen2.5:7b',sending:false,sidebarOpen:true,minimal:false};
+// ══�?State ══�?const API='http://127.0.0.1:5100',OLLAMA='http://localhost:11434/api/tags';
+let ST={sessions:[],cur:null,msgs:[],model:'qwen2.5:7b',sending:false,sidebarOpen:true};
 const raw=localStorage.getItem('mss_v3');
 ST.sessions=raw?JSON.parse(raw):[{id:'s1',title:'Chat',msgs:[],ts:Date.now()}];
 ST.cur=ST.sessions[0];ST.msgs=ST.cur.msgs||[];
 
-// ═══ Init ═══
-function init(){
+// ══�?Init ══�?function init(){
   ST.sidebarOpen=localStorage.getItem('mss_sidebar')!=='closed';
-  if(!ST.sidebarOpen)document.getElementById('sidebar').classList.remove('open');
+  if(ST.sidebarOpen)document.getElementById('sidebar').classList.add('open');document.getElementById('sidebar-toggle').textContent='?';
   renderAll();check();setInterval(check,15000);
   document.addEventListener('keydown',e=>{
     if(e.key==='Escape')closePanels();
@@ -150,8 +148,7 @@ function init(){
 }
 function save(){if(ST.cur){ST.cur.msgs=ST.msgs;if(ST.msgs.length)ST.cur.title=ST.msgs[0].content.slice(0,40)}localStorage.setItem('mss_v3',JSON.stringify(ST.sessions))}
 
-// ═══ Render ═══
-function renderAll(){renderSessions();renderMessages()}
+// ══�?Render ══�?function renderAll(){renderSessions();renderMessages()}
 function renderSessions(){
   document.getElementById('session-list').innerHTML=ST.sessions.map(s=>`<div class="session${s.id===ST.cur.id?' active':''}" onclick="switchSession('${s.id}')">${s.title||'Chat'}</div>`).join('');
 }
@@ -164,8 +161,7 @@ function renderMessages(){
 }
 function fmt(t){return String(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/```(\w*)\n?([\s\S]*?)```/g,'<pre><code>$2</code></pre>').replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}
 
-// ═══ Actions ═══
-function newChat(){save();const s={id:'s'+Date.now(),title:'Chat',msgs:[],ts:Date.now()};ST.sessions.unshift(s);ST.cur=s;ST.msgs=[];renderAll();document.getElementById('chat-input').focus()}
+// ══�?Actions ══�?function newChat(){save();const s={id:'s'+Date.now(),title:'Chat',msgs:[],ts:Date.now()};ST.sessions.unshift(s);ST.cur=s;ST.msgs=[];renderAll();document.getElementById('chat-input').focus()}
 function switchSession(id){save();const s=ST.sessions.find(x=>x.id===id);if(!s)return;ST.cur=s;ST.msgs=s.msgs||[];renderAll()}
 function setModel(m){ST.model=m;document.getElementById('model-select').value=m;document.getElementById('st-model').textContent=m}
 function quick(t){document.getElementById('chat-input').value=t;send()}
@@ -186,8 +182,7 @@ async function send(){
   document.getElementById('messages').classList.remove('streaming');inp.focus();
 }
 
-// ═══ Health ═══
-async function check(){
+// ══�?Health ══�?async function check(){
   try{
     const r=await fetch(API+'/health');const d=await r.json();
     const dot=document.getElementById('agent-dot'),txt=document.getElementById('agent-text');
@@ -209,9 +204,8 @@ async function check(){
   }catch(e){}
 }
 
-// ═══ UI ═══
-function toggleSidebar(){const s=document.getElementById('sidebar');s.classList.toggle('open');ST.sidebarOpen=s.classList.contains('open');localStorage.setItem('mss_sidebar',ST.sidebarOpen?'open':'closed');document.getElementById('sidebar-toggle').textContent=ST.sidebarOpen?'◀':'▶'}
-function toggleMinimal(){ST.minimal=!ST.minimal;document.getElementById('main').classList.toggle('minimal',ST.minimal)}
+// ══�?UI ══�?function ts(){const s=document.getElementById('sidebar');s.classList.toggle('open');ST.sidebarOpen=s.classList.contains('open');localStorage.setItem('mss_sidebar',ST.sidebarOpen?'open':'closed');document.getElementById('sidebar-toggle').textContent=ST.sidebarOpen?'◀':'�?}
+
 function togglePanel(n){const pn=document.getElementById(n+'-pn'),ov=document.getElementById(n+'-ov');if(pn.classList.contains('open')){closePanels();return}closePanels();pn.classList.add('open');ov.classList.add('open');check()}
 function closePanels(){document.querySelectorAll('.panel,.overlay').forEach(e=>e.classList.remove('open'))}
 function toggleTheme(){const t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('mss_theme',t)}
