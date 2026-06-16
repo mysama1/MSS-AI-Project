@@ -309,9 +309,9 @@ class MSSAgent:
         self.run_count = 0
         self.abort_count = 0
 
-    # ── v1.6 Sprint 22: Streaming support ──
+    # ── v1.6 Sprint 22-23: Streaming + Style + DeepFold ──
 
-    def run_stream(self, prompt: str, style: str = "prose"):
+    def run_stream(self, prompt: str, style: str = "prose", fold: bool = False):
         """
         流式执行任务 — 带节奏控制的优雅输出.
 
@@ -336,10 +336,17 @@ class MSSAgent:
             yield f"[ABORTED: budget exceeded]"
             return
 
-        # 调用 LLM (流式 + 节奏控制)
+        # 调用 LLM (流式 + 节奏 + 可选折叠)
         if not hasattr(self.llm, 'stream'):
             output = self.llm(prompt)
             yield output
+        elif fold:
+            from .deep_fold import deep_stream
+            output_parts = []
+            for chunk in deep_stream(self, prompt, style=style, fold=True):
+                output_parts.append(chunk)
+                yield chunk
+            output = "".join(output_parts)
         else:
             from .stream_styler import StreamStyler
             raw_stream = self.llm.stream(prompt)
