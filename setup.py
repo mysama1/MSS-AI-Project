@@ -9,10 +9,11 @@ setup(
     author="MSS-AI Project",
     url="https://github.com/mysama1/MSS-AI-Project",
     license="MIT",
-    packages=find_packages(include=["mss_agent", "mss_agent.*"]),
+    packages=find_packages(include=["mss_agent", "mss_agent.*", "mssclaw", "mssclaw.*"]),
     entry_points={
         "console_scripts": [
             "mss-agent=mss_agent.cli:main",
+            "mss-vault=mss_agent.vault_cli:main",
         ],
     },
     python_requires=">=3.10",
