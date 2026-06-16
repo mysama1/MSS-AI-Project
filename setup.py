@@ -1,10 +1,13 @@
 from setuptools import setup, find_packages
 
+with open("README.md", encoding="utf-8") as f:
+    long_desc = f.read()
+
 setup(
     name="mss-agent",
-    version="0.2.1",
-    description="MSS-Agent: 世界上第一个内置'意义场自检'的开源 Agent 框架",
-    long_description=open("mss_agent/README.md", encoding="utf-8").read(),
+    version="0.3.0",
+    description="MSS-Agent: 内置意义场自检 + 流式呼吸感 + 本地加密保险箱的开源Agent框架",
+    long_description=long_desc,
     long_description_content_type="text/markdown",
     author="MSS-AI Project",
     url="https://github.com/mysama1/MSS-AI-Project",
@@ -14,21 +17,23 @@ setup(
         "console_scripts": [
             "mss-agent=mss_agent.cli:main",
             "mss-vault=mss_agent.vault_cli:main",
+            "mss-agent-serve=mss_agent.agent_serve:main",
         ],
     },
     python_requires=">=3.10",
-    install_requires=[],
+    install_requires=["requests>=2.28", "cryptography>=41.0"],
     extras_require={
         "llm": ["openai>=1.0"],
-        "deepseek": ["openai>=1.0"],
-        "mcp": [],
-        "dev": ["pytest", "black"],
+        "dev": ["pytest", "pytest-cov"],
     },
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
     ],
 )
