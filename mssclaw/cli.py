@@ -97,8 +97,8 @@ def cmd_demo(args_rest):
         from mssclaw.core.demo import demo_setup
         demo_setup()
     else:
-        from mssclaw.core.demo import demo_run
-        demo_run()
+        from mssclaw.core.demo import run_demo
+        run_demo()
 
 
 def cmd_kb(args_rest):
