@@ -410,6 +410,69 @@ class MSSAgent:
             return v.get(key)
         return None
 
+    # ── v1.7 Sprint 35: Tool Calling ──
+
+    def run_with_tools(self, prompt: str, tools):
+        """
+        带工具调用的任务执行.
+
+        LLM 输出工具调用指令 → L2 过滤 → 执行 → 返回结果.
+        """
+        t0 = time.time()
+        self.run_count += 1
+
+        # 热税评估
+        meaning_heat, meaning_reason = self._estimate_meaning_heat(prompt)
+        self.tax.charge(HeatTaxLevel.L2_MEANING, meaning_heat, meaning_reason)
+
+        # 构建 tool-aware prompt
+        tool_desc = tools.get_descriptions()
+        system_prompt = (
+            f"You have access to these tools:\n{tool_desc}\n\n"
+            f"To use a tool, respond with JSON: "
+            f'{{"tool": "name", "params": {{...}}}}\n'
+            f"If no tool needed, respond normally.\n\n"
+            f"User: {prompt}\nAssistant:"
+        )
+
+        output = self.llm(system_prompt)
+
+        # Parse tool call (more robust)
+        result = None
+        try:
+            import json as _tool_json
+            import re
+            # Try multiple JSON extraction patterns
+            patterns = [
+                r'\{[^{}]*"tool"\s*:\s*"(\w+)"[^{}]*\}',  # standard JSON
+                r'```json\s*(\{[^`]+\})\s*```',              # code block
+                r'(\{[^}]+\})',                                 # any JSON-like
+            ]
+            for pat in patterns:
+                match = re.search(pat, output, re.DOTALL)
+                if match:
+                    call_data = _tool_json.loads(match.group(1) if '```' in pat else match.group())
+                    tool_name = call_data.get("tool", "")
+                    params = call_data.get("params", {})
+                    if tool_name and tool_name in tools._tools:
+                        result = tools.call(tool_name, params, tax=self.tax, delta=self.delta)
+                        break
+        except (_tool_json.JSONDecodeError, KeyError, AttributeError, ValueError):
+            pass
+
+        elapsed = (time.time() - t0) * 1000
+        current_delta = self.delta.tick(self._task_hash(prompt), 0.5, 0.5)
+        self.l2bridge.step()
+
+        if result:
+            output = f"{output}\n\n[Tool: {result.get('success', False)}] {result.get('result', result.get('error', ''))}"
+
+        return AgentResult(
+            success=True, output=output, aborted=False,
+            heat_tax=self.tax.snapshot(), delta=current_delta,
+            elapsed_ms=elapsed,
+        )
+
 
 # ════════════════════════════════════════════════════════════
 # Agent 配置系统 (原 agent_config.py, 已合并)
