@@ -49,7 +49,7 @@ def chat_loop(model: str = "qwen2.5:7b"):
     print(c(f"║   Model: {model:<24s} ║", "cyan"))
     print(c("╚══════════════════════════════════╝", "cyan"))
     print()
-    print(c("  /clear  /save  /load  /model <name>  /vault  /tools  /quit", "dim"))
+    print(c("  /clear  /save  /load  /model <name>  /vault  /tools  /absorb <desc>  /quit", "dim"))
     print()
 
     # Create agent
@@ -148,6 +148,16 @@ def chat_loop(model: str = "qwen2.5:7b"):
                 tools_enabled = not tools_enabled
                 status = "ON" if tools_enabled else "OFF"
                 print(c(f"  Tools: {status} ({len(tools._tools)} available)", "dim"))
+                continue
+            elif cmd[0] == "absorb" and len(cmd) > 1:
+                desc = " ".join(cmd[1:])
+                from mssclaw.core.digest_engine import DigestEngine
+                engine = DigestEngine(agent)
+                result = engine.absorb_and_digest(desc)
+                print(c(f"  Absorbed: {result['absorbed']['name']}", "cyan"))
+                print(c(f"  Applied: {result['report']['applied']} | Conflicts: {result['report']['conflicts']}", "dim"))
+                for d in result['report']['details']:
+                    print(c(f"    {d}", "dim"))
                 continue
             else:
                 print(c("  Commands: /clear /save /load /model /vault /quit", "dim"))
