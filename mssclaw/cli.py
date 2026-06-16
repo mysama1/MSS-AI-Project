@@ -62,6 +62,9 @@ def cmd_serve(args_rest):
     print(f"Starting MSS services...")
     print(f"  Vault API:  http://127.0.0.1:{port_vault}")
     print(f"  Agent API:  http://127.0.0.1:{port_agent} (model: {model})")
+    if "--all" in sys.argv:
+        print(f"  Chat:       mssclaw chat --model {model}")
+        print(f"  Web panel:  http://127.0.0.1:{port_vault} (browser)")
     print(f"  Press Ctrl+C to stop")
     print()
 
