@@ -1,0 +1,34 @@
+{
+  "h_id": "H621",
+  "title": "MSS Frontend Architecture Whitepaper v0.1",
+  "type": "theory",
+  "layer": "L1_CORE_THEORY",
+  "axioms": ["A1", "A2", "A3", "A5", "A6"],
+  "category": "frontend_architecture",
+  "created": "2026-06-16T23:59:00",
+  "summary": "传统AI前端灾难的MSS诊断与攻坚路径。根因非代码质量,而是意义场五层溃败。",
+  "diagnosis": {
+    "ui_disaster": "A2投影热税失控: LLM输出→JSON.parse→setState→DOM渲染,每层投影支付热税且无审计",
+    "routing_disaster": "A5规范场缺失: 隐式路由规范被违反,两个页面共用状态槽相互覆盖",
+    "state_chaos": "A1稳定子漂移: 无可变意义锚点,user/session/context被随意覆盖",
+    "bug_proliferation": "A6矛盾无处升维: 修复=在规范场废墟上打补丁而非重建规范场"
+  },
+  "architecture": {
+    "perception_shell": "纯渲染层,只做A2投影,不持有业务逻辑。React/Vue/HTML皆可。",
+    "logic_kernel": "MSS公理锚定,路由/状态/规范场管理。不关心UI框架。",
+    "field_store": "意义场存储: 稳定子(A1)+规范场(A5)+热税账簿(A3)"
+  },
+  "attack_paths": [
+    "路由升维: URL路径匹配→意义场状态转换,无404(不存在的路径在意义场无对应节点)",
+    "状态管理热税预算: 每个state change附带heatCost,超预算自动降级/延迟/升维",
+    "矛盾升维消解(A6): 矛盾→引入新维度→新交互,例: 403→\"申请临时权限\"表单",
+    "稳定子固化(A1): immutable锚点(USER_IDENTITY/SESSION_CONTEXT/APP_CONFIG)"
+  ],
+  "phase1": [
+    "Redux/Zustand上加意义场审计层",
+    "React Router上加意义路由中间件",
+    "API调用层加热税预算"
+  ],
+  "status": "draft",
+  "references": ["A1身份公理", "A2投影公理", "A3热税公理", "A5规范场公理", "A6升维公理"]
+}
