@@ -89,6 +89,9 @@ class MSSAgent:
         self._vault = None
         self._vault_path = ""
 
+        # v1.9 Sprint 45: 记忆凝聚器
+        self._consolidator = None
+
         # v1.2: R-001 梯度窃用检测 + C-Weight 抉择门控
         self.r001 = GradientTheftDetector(strictness=0.7)
         self.cweight = CWeightGate()
@@ -271,6 +274,12 @@ class MSSAgent:
 
         # Store in memory
         self.memory.store(prompt, current_delta)
+
+        # Auto-consolidation (every ~50 memories)
+        if self._consolidator is None:
+            from .memory_consolidator import MemoryConsolidator
+            self._consolidator = MemoryConsolidator(self.memory)
+        self._consolidator.auto_consolidate()
 
         return AgentResult(
             success=True,
