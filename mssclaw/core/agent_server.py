@@ -39,12 +39,9 @@ class AgentAPIHandler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path.rstrip("/")
 
         if path == "/health" or path == "":
-            return self._json({
-                "status": "ok",
-                "agent": self.agent.name if self.agent else "none",
-                "model": str(getattr(self.agent, 'llm', 'none')),
-                "bridge": self.agent.l2bridge.level.name if self.agent else "N/A",
-            })
+            from .delta_monitor import DeltaMonitor
+            monitor = DeltaMonitor(agent=self.agent)
+            return self._json(monitor.check())
 
         if path == "/report":
             if not self.agent:
