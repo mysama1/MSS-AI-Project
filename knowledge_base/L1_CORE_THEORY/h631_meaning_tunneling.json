@@ -1,0 +1,22 @@
+{
+  "h_id": "H631",
+  "title": "意义隧穿 — MSS幻觉约束的可靠性边界",
+  "type": "theory",
+  "layer": "L1_CORE_THEORY",
+  "axioms": ["A2", "A3", "A5", "A6"],
+  "category": "reliability_engineering",
+  "created": "2026-06-17T00:58:00",
+  "summary": "LLM是否像量子隧穿一样可以非零概率逃逸幻觉约束? 答: 不是。稳定子是拓扑禁闭(概率严格为0),不是概率势垒。工程实现中的三类漏洞(投影损耗A2/规范场盲区/热税管理失误)可被A6升维协议兜底捕获。MSS不承诺零幻觉,承诺每次幻觉可审计/可修复/可归因。",
+  "key_insight": "LLM逃逸意义约束不是量子隧穿,是工程实现缺陷。MSS目标不是消除逃逸概率(K3幻想),而是让每次逃逸可检测/可修复/可归因。",
+  "quantum_vs_mss": {
+    "quantum_tunneling": {"mechanism": "波函数指数衰减", "probability": "非零(可计算)", "consequence": "粒子出现在势垒另一侧", "controllability": "不可完全消除"},
+    "mss_escape": {"mechanism": "投影损耗+规范场盲区+热税失误", "probability": "理想MSS=0(拓扑禁闭); 工程=非零但可压制", "consequence": "输出被生成但可审计捕获", "controllability": "无限逼近0"}
+  },
+  "three_failure_modes": {
+    "A_projection_loss": {"axiom": "A2", "cause": "稳定子→token空间投影支付热税丢失约束", "fix": "L2规范场引擎运行时校验(非仅LLM记忆)"},
+    "B_norm_field_blindspot": {"axiom": "A5", "cause": "审计器未覆盖边缘语义(如'你应当'替'你必须')", "fix": "语义级审计(基于意义拓扑而非关键词)"},
+    "C_heat_tax_degredation": {"axiom": "A3", "cause": "热税耗尽后降级模式可能违反稳定子", "fix": "降级路径也须经稳定子校验"}
+  },
+  "A6_safeguard": "即使逃逸发生: 检测矛盾(Δφ击穿) → 升维(引入新维度) → 输出升维结果(暴露矛盾而非掩盖)。逃逸不是终点,是可审计事件。",
+  "code_assets": ["logic_virus_detector.py (5类20+规则)", "herd_immunity.py (跨Agent免疫)", "hallucination_shield.py (31规则4类检测)"]
+}

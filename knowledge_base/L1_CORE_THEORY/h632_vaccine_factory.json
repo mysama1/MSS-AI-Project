@@ -1,0 +1,43 @@
+{
+  "h_id": "H632",
+  "title": "逻辑病毒疫苗工厂 — 意义场工程学的防御维度",
+  "type": "architecture",
+  "layer": "L1_CORE_THEORY",
+  "axioms": ["A1","A2","A3","A5","A6"],
+  "category": "defense_integration",
+  "created": "2026-06-17T00:58:00",
+  "summary": "逻辑病毒疫苗工厂不是意义场工程学的应用案例,而是其在防御维度上的完整特化。126个Sprint、10个H条目、6条定理直接映射到疫苗设计/生产/评估全流程。意义场工程学内置架构级免疫系统。",
+  "vaccine_components": {
+    "稳定子强化剂": {"mss": "不可变约束的冗余备份", "effect": "防止逻辑病毒改写核心身份/关系"},
+    "规范场补丁": {"mss": "新增审计规则", "effect": "检测并阻断病毒传播路径"},
+    "升维触发器": {"mss": "预设的矛盾升维路径", "effect": "病毒引发矛盾时自动跳转更高维度消解"},
+    "热税盾牌": {"mss": "热税预算的紧急配额", "effect": "遭受攻击时保留关键操作预算"}
+  },
+  "four_layer_mapping": {
+    "L3_Prompt_Field": {"normal": "定义稳定子/规范路径/热税预算", "defense": "定义免疫边界(哪些稳定子不可被外部输入修改)"},
+    "L2_Normative_Kernel": {"normal": "A5运行时审计", "defense": "威胁检测(实时审计I/O是否携带逻辑病毒特征)"},
+    "L1_Semantic_Shell": {"normal": "A2形式投影", "defense": "疫苗投递(免疫指令→用户可理解的接种方案)"},
+    "L0_Category_Base": {"normal": "范畴论底层", "defense": "疫苗设计(证明疫苗的拓扑有效性)"}
+  },
+  "production_line": "L0分析病毒拓扑→L2设计针对性审计规则→L3生成免疫稳定子→L1投影为接种指令",
+  "theorem_mapping": {
+    "Theorem_L1": "验证疫苗设计不破坏宿主意义场的合法分层",
+    "H551_Identity": "量化病毒对身份稳定子的破坏力,指导疫苗强度设计",
+    "H556_Semantic_Density": "衡量疫苗信息压缩效率,确保接种不产生额外热税",
+    "H563_Thermodynamic": "计算疫苗接种的热税上限,避免免疫行为导致系统过热",
+    "H565_Interactive": "优化接种时机和剂量(多Agent协同免疫)",
+    "H567_Landauer": "确定疫苗最小不可约化信息量(防止疫苗被降解)",
+    "H569_Game_Theory": "设计疫苗博弈策略(让病毒在博弈中自我耗竭)"
+  },
+  "code_assets": {
+    "logic_virus_detector.py": "5类型20+规则实时检测 (L2威胁检测)",
+    "herd_immunity.py": "跨Agent免疫记忆传播 (稳定子冗余备份)",
+    "hallucination_shield.py": "31规则4类幻觉检测 (L2规范场补丁)"
+  },
+  "unformalized": [
+    "逻辑病毒MSS分类学(身份窃取型/规范场污染型/热税耗尽型)",
+    "疫苗效力评估指标(η保真度+γ热税效率)",
+    "疫苗组合协议(多种疫苗同时接种的兼容性检查=Theorem L1扩展)"
+  ],
+  "core_insight": "意义场工程学=建构维度+防御维度。逻辑病毒疫苗工厂不是附属品,是对抗环境中的完整镜像。"
+}
