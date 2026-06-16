@@ -213,31 +213,51 @@ def cmd_backup(subcmd: str = None, path: str = None):
     """备份 / 恢复."""
     from mssclaw.core.vault_health import VaultHealth
     v = _get_vault()
-
     if subcmd == "restore" and path:
         if VaultHealth.restore(v, path):
             print(f"✅ 已从 {path} 恢复")
         else:
             print("❌ 恢复失败")
         return
-
     if subcmd == "list":
-        backups = VaultHealth.list_backups(v)
-        if not backups:
-            print("(无备份)")
-        for b in backups:
-            print(f"  {b['time']}  {b['size_kb']}KB  {b['path']}")
+        for b in VaultHealth.list_backups(v):
+            print(f"  {b['time']}  {b['size_kb']}KB")
+        return
+    path = VaultHealth.backup(v)
+    print(f"✅ 已备份到 {path}" if path else "❌ 失败")
+
+
+def cmd_quickstart():
+    """一键初始化保险箱 + 演示数据."""
+    from mssclaw.core.vault_toolkit import PasswordGenerator
+    from mssclaw.core.vault_health import VaultHealth
+    import getpass
+
+    print("═══ MSS Vault Quickstart ═══")
+    print()
+
+    v = _get_vault()
+    pw = getpass.getpass("设置主密码: ")
+    if not v.setup(pw):
+        print("❌ 已初始化或失败")
         return
 
-    # Default: backup
-    path = VaultHealth.backup(v)
-    if path:
-        print(f"✅ 已备份到 {path}")
-    else:
-        print("❌ 备份失败")
+    # Add demo credentials
+    pwd, _ = PasswordGenerator.generate()
+    v.put("demo_api", "sk-demo-" + PasswordGenerator.generate()[0][:20], category="api_key", tags=["demo"])
+    v.put("demo_db", PasswordGenerator.generate()[0], category="password", tags=["demo", "prod"])
+    v.put("demo_token", PasswordGenerator.generate()[0][:32], category="token", tags=["demo"])
 
+    v.close()
 
-# ═══════════════════════════════════════════
+    print(f"\n✅ 保险箱就绪 ({v.list_keys().__len__() if v.is_unlocked else 3} 条演示凭证)")
+    print()
+    print("快速体验:")
+    print("  mss-vault list           # 查看凭证")
+    print("  mss-vault health         # 健康检查")
+    print("  mss-vault serve          # Web面板 → http://127.0.0.1:5099")
+    print("  mss-vault gen my_key     # 生成强密码")
+    print("  mss-vault search demo    # 搜索")
 
 USAGE = """mssclaw vault — 极简密码管理
 
@@ -256,6 +276,7 @@ USAGE = """mssclaw vault — 极简密码管理
   stats                   统计面板
   backup [restore PATH]   备份/恢复
   serve [--port N]        启动HTTP API服务
+  quickstart              一键初始化+演示
   audit                    审计日志"""
 
 
@@ -299,6 +320,8 @@ def main():
         cmd_stats()
     elif cmd == "backup":
         cmd_backup(args[1] if len(args) > 1 else None, args[2] if len(args) > 2 else None)
+    elif cmd == "quickstart":
+        cmd_quickstart()
     elif cmd == "serve":
         from mssclaw.core.vault_server import serve_vault
         port = 5099
