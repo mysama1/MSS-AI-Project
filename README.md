@@ -4,71 +4,67 @@
 
 ```
 mssclaw (框架平台)
-├── mss-ai models     ← 本地模型 (mss-ai-v3.4.3-balanced等)
-├── Agent 引擎         ← L2护城河 + 流式 + 工具 + RAG
-├── Vault 保险箱       ← 密码管理全栈
-├── Library 库系统     ← 工具库/技能库/知识库/免疫库/模型库
-└── CLI 统一入口       ← mssclaw vault|chat|serve|absorb|library
+├── mss-ai models     ← 本地模型 (mss-ai-v3.4.3等, 9 models)
+├── Agent 引擎         ← L2护城河 + 6流式模式 + 10工具 + RAG
+├── Vault 保险箱       ← 密码管理全栈 (AES-256-GCM)
+├── Library 库系统     ← 8库643条目统一管理
+│   ├── tools(10) + skills(5) + models(30) + kb(618)
+│   └── immunity + agents + sessions + custom
+├── Multi-Model 编排   ← Shell模式(壳+核) + Pipeline + AutoRoute
+└── CLI               ← vault|chat|serve|absorb|library|models|status
 ```
 
-## 🛡️ L2 独有护城河 (行业 0/40)
-- 🔥 **A3 热税预算** — 自动拒绝无意义任务
-- Δ **意义开放度检测** — 实时监控闭合/循环
-- 🛡️ **规范场 + 幻觉盾** — 31规则+4类检测
-- 🧠 **认知框架** — 能力自知+身份锚定+演化就绪
-- 📊 **Δ 健康监控** — 不只"活着", 要"有意义"
+## 🛡️ L2 独有护城河
+- 🔥 A3 热税预算  — 自动拒绝无意义任务
+- Δ 意义开放度检测  — 实时监控闭合/循环
+- 🛡️ 规范场+幻觉盾  — 31规则+4类检测
+- 🧠 认知框架  — 能力自知+身份锚定+演化就绪
+- 📊 Δ 健康监控  — 不只"活着", 要"有意义"
 
 ## 🤖 Agent 核心能力
-- **LLM 后端**: Ollama + OpenAI 兼容
-- **流式输出**: 6模式 + 语义感知 + 深度折叠 + 速度对齐
-- **工具调用**: 6内置工具 + L2 安检
-- **RAG 管道**: BM25+密度, 零外部依赖
-- **多Agent流水线**: Writer→Reviewer→Refiner
-- **容错**: 重试+降级+熔断
-- **记忆**: 三层存储 + 自动凝聚
-- **评测**: 道评分 valid-pseudo×2.0
+- LLM 后端: Ollama + OpenAI兼容
+- 流式输出: 6模式+语义感知+深度折叠+速度对齐
+- 工具调用: 10内置工具+L2安检 (safe|file|office)
+- RAG 管道: BM25+密度, 零外部依赖
+- 多Agent流水线: Writer→Reviewer→Refiner
+- 容错: 重试+降级+熔断
+- 记忆: 三层存储+自动凝聚
+- 评测: 道评分 valid−pseudo×2.0 (MSS独有)
 
-## 🔐 密码管理器全栈
-- **加密**: AES-256-GCM, Zero-Trust
-- **工具**: 生成器+TOTP+强度评估+8类模板
-- **CLI**: `mss-vault` 15+命令
-- **Web面板**: `mss-vault serve` → http://127.0.0.1:5099
-- **HTTP API**: RESTful, 127.0.0.1 only
-- **导入**: Chrome/Edge 一键迁移
-- **备份**: 自动+旋转+恢复
-- **体检**: 弱密码/重复/过期检测
+## 🔐 MSS Vault 全栈
+- 加密: AES-256-GCM, Zero-Trust
+- CLI: `mss-vault` 15+命令
+- Web面板: http://127.0.0.1:5099
+- HTTP API: RESTful
+- 导入: Chrome/Edge 一键迁移
+- 备份: 自动+旋转
 
-## 📦 部署
-- **Docker**: `docker-compose up`
-- **双微服务**: Vault:5099 + Agent:5100
-- **统一入口**: `mssclaw vault|chat|serve|demo|kb|health`
-- **PyPI**: `pip install mss-agent==0.3.0`
+## 🌐 全球模型目录 (30 models)
+- Cloud(18): GPT-4o, Claude 3.5, Gemini 2.0/2.5, DeepSeek V3/R1, Grok-2...
+- Local(9): Ollama自动扫描
+- MSS(3): mss-ai-v3.4.3-balanced/slim, mss-ai-v3.4.2-production
+
+## 🧬 MSS 独有特性
+| 特性 | 同行 |
+|---|---|
+| L2 意义场护城河 | ❌ |
+| 语义流式+折叠+路由 | ❌ |
+| 道评分评测 | ❌ |
+| 技能编译器(吸收→消化) | ❌ |
+| 逻辑病毒检测+群体免疫 | ❌ |
+| Shell双模型(壳+核) | ❌ |
+| 多模型智能编排 | ⚠️ 部分 |
+| 统一库管理+跨库检索 | ❌ |
 
 ## 🚀 快速开始
 ```bash
 pip install mss-agent
-mss-vault quickstart               # 一键初始化
-mss-vault serve                    # Web面板
-mssclaw chat --model qwen2.5:7b   # 终端AI
+mss-vault quickstart
+mssclaw chat --model qwen2.5:7b
+mssclaw serve --all
 ```
 
-## 📊 行业评分
-```
-MSS-Agent:  27(能力) + 34(护城河) = 61/80  ← 总分第一
-LangChain:  38(能力) +  0(护城河) = 38/80
-Dify:       35(能力) +  0(护城河) = 35/80
-```
-
-## 🏗️ 架构
-```
-L2: HeatTax ↔ Delta ↔ NormField ↔ HalluShield ↔ CogFrame (+3桥)
-Agent: LLM + 流式(6模式) + 工具(6+L2) + RAG + Pipeline + 评测
-Vault: 加密 + CLI + Web + API + 导入 + 备份 + 健康
-工程: Docker + 容错 + 持久化 + 统一入口 + 进程监控
-```
-
-## 📈 开发统计
-- 50 Sprints | 115 Tests | 50 Commits
-- 4.5小时连续构建 | 14:00 → 18:37
-- GitHub: mysama1/MSS-AI-Project
+## 📊 开发统计
+- 81 Sprints | 117 Tests | 81 Commits
+- v0.3.0 | GitHub: mysama1/MSS-AI-Project
 - License: MIT
