@@ -220,10 +220,7 @@ def web_dashboard():
         f.write(html)
 
     print(f"Dashboard written to: {out_path}")
-    try:
-        os.startfile(str(out_path))
-    except Exception:
-        print(f"Open manually: {out_path}")
+    print(f"  Open manually: file:///{out_path}")
 
 
 # ── CLI Entry ─────────────────────────
