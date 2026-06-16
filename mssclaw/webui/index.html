@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mssclaw v0.3.9</title>
+<style>
+:root {
+  --bg: #0f0f0f; --sidebar: #1a1a1a; --card: #222; --border: #333;
+  --text: #eee; --muted: #888; --accent: #7c3aed; --accent-hover: #6d28d9;
+  --danger: #ef4444; --success: #22c55e; --radius: 8px;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { height:100%; overflow:hidden; }
+body { font-family:var(--font); background:var(--bg); color:var(--text); display:flex; }
+/* Sidebar */
+#sidebar { width:280px; min-width:280px; background:var(--sidebar); border-right:1px solid var(--border); display:flex; flex-direction:column; }
+.sidebar-header { padding:16px; border-bottom:1px solid var(--border); }
+.sidebar-header h1 { font-size:18px; font-weight:700; display:flex; align-items:center; gap:8px; }
+.sidebar-header .version { font-size:11px; color:var(--muted); margin-top:2px; }
+#session-list { flex:1; overflow-y:auto; padding:8px; }
+.session-item { padding:10px 12px; border-radius:6px; cursor:pointer; margin-bottom:2px; font-size:13px; color:var(--muted); transition:.15s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.session-item:hover { background:var(--card); color:var(--text); }
+.session-item.active { background:var(--accent); color:#fff; }
+.model-selector { padding:12px 16px; border-top:1px solid var(--border); }
+.model-selector select { width:100%; padding:8px; border-radius:6px; border:1px solid var(--border); background:var(--card); color:var(--text); font-size:13px; }
+/* Main */
+#main { flex:1; display:flex; flex-direction:column; }
+#chat-header { padding:12px 20px; border-bottom:1px solid var(--border); font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px; }
+.status-dot { width:8px; height:8px; border-radius:50%; }
+.status-dot.online { background:var(--success); }
+#messages { flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:16px; }
+.message { max-width:85%; padding:12px 16px; border-radius:var(--radius); font-size:14px; line-height:1.6; animation:fadeIn .2s; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.message.user { background:var(--accent); align-self:flex-end; border-bottom-right-radius:2px; }
+.message.assistant { background:var(--card); align-self:flex-start; border-bottom-left-radius:2px; }
+.message pre { background:#000; padding:12px; border-radius:6px; overflow-x:auto; font-family:var(--mono); font-size:13px; margin:8px 0; }
+.message code { font-family:var(--mono); font-size:13px; background:rgba(255,255,255,.1); padding:1px 4px; border-radius:3px; }
+.message pre code { background:none; padding:0; }
+.meta { font-size:11px; color:var(--muted); margin-top:4px; }
+/* Input */
+#input-area { padding:16px 20px; border-top:1px solid var(--border); display:flex; gap:8px; }
+#input-area textarea { flex:1; padding:10px 14px; border-radius:var(--radius); border:1px solid var(--border); background:var(--card); color:var(--text); font-size:14px; font-family:var(--font); resize:none; min-height:44px; max-height:120px; outline:none; }
+#input-area textarea:focus { border-color:var(--accent); }
+#send-btn { padding:10px 20px; border:none; border-radius:var(--radius); background:var(--accent); color:#fff; font-size:14px; font-weight:600; cursor:pointer; transition:.15s; }
+#send-btn:hover { background:var(--accent-hover); }
+#send-btn:disabled { opacity:.5; cursor:not-allowed; }
+/* Toolbar */
+#toolbar { display:flex; gap:6px; padding:4px 20px; }
+.tool-btn { padding:6px 12px; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--muted); font-size:12px; cursor:pointer; transition:.15s; }
+.tool-btn:hover { border-color:var(--accent); color:var(--text); }
+.tool-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+/* Empty state */
+.empty-state { flex:1; display:flex; align-items:center; justify-content:center; flex-direction:column; color:var(--muted); gap:8px; }
+.empty-state .icon { font-size:48px; }
+.empty-state h2 { font-size:18px; font-weight:600; color:var(--text); }
+.empty-state p { font-size:13px; }
+/* Stats bar */
+#stats { padding:8px 20px; border-top:1px solid var(--border); font-size:11px; color:var(--muted); display:flex; gap:16px; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside id="sidebar">
+  <div class="sidebar-header">
+    <h1>🧬 mssclaw</h1>
+    <div class="version">v0.3.9 · 108 Sprints · 126 Tests</div>
+  </div>
+  <div id="session-list"></div>
+  <div class="model-selector">
+    <select id="model-select" onchange="switchModel(this.value)">
+      <option>qwen2.5:7b</option>
+      <option>qwen3.5:4b</option>
+      <option>qwen3.5:9b</option>
+      <option>phi3:mini</option>
+      <option>mss-ai-v3.4.3-balanced</option>
+    </select>
+  </div>
+</aside>
+
+<!-- Main -->
+<main id="main">
+  <div id="chat-header">
+    <span class="status-dot online"></span>
+    <span id="header-title">New Chat</span>
+  </div>
+
+  <div id="toolbar">
+    <button class="tool-btn active" onclick="toggleMode('chat')">💬 Chat</button>
+    <button class="tool-btn" onclick="toggleMode('vault')">🔐 Vault</button>
+    <button class="tool-btn" onclick="toggleMode('status')">📊 Status</button>
+    <button class="tool-btn" onclick="toggleMode('models')">🤖 Models</button>
+  </div>
+
+  <div id="messages">
+    <div class="empty-state">
+      <div class="icon">🧬</div>
+      <h2>mssclaw — Meaning Supremacy System</h2>
+      <p>Ask anything. Built-in meaning-field self-check.</p>
+      <p style="font-size:11px;margin-top:12px">108 Sprints · 126 Tests · 106 Modules · 30 Models</p>
+    </div>
+  </div>
+
+  <div id="stats">
+    <span>🟢 Online</span>
+    <span id="stats-model">qwen2.5:7b</span>
+    <span id="stats-sessions">0 sessions</span>
+  </div>
+
+  <div id="input-area">
+    <textarea id="user-input" placeholder="Type your message... (Enter to send, Shift+Enter for new line)" onkeydown="handleKey(event)"></textarea>
+    <button id="send-btn" onclick="sendMessage()">Send</button>
+  </div>
+</main>
+
+<script>
+// ═══ State ═══
+const state = {
+  sessions: JSON.parse(localStorage.getItem('mss_sessions') || '[]'),
+  currentSession: null,
+  messages: [],
+  model: 'qwen2.5:7b',
+  mode: 'chat',
+};
+
+// ═══ Init ═══
+function init() {
+  if (state.sessions.length === 0) {
+    state.sessions = [{ id: '1', title: 'New Chat', messages: [], created: Date.now() }];
+    save();
+  }
+  state.currentSession = state.sessions[0];
+  state.messages = state.currentSession.messages;
+  renderSessions();
+  renderMessages();
+}
+
+function save() {
+  if (state.currentSession) {
+    state.currentSession.messages = state.messages;
+    state.currentSession.title = state.messages[0]?.content?.slice(0, 30) || 'New Chat';
+  }
+  localStorage.setItem('mss_sessions', JSON.stringify(state.sessions));
+  document.getElementById('stats-sessions').textContent = state.sessions.length + ' sessions';
+}
+
+// ═══ Sessions ═══
+function renderSessions() {
+  const list = document.getElementById('session-list');
+  list.innerHTML = state.sessions.map(s => `
+    <div class="session-item ${s.id === state.currentSession?.id ? 'active' : ''}"
+         onclick="switchSession('${s.id}')">
+      ${s.title || 'New Chat'}
+    </div>
+  `).join('');
+}
+
+function switchSession(id) {
+  save();
+  state.currentSession = state.sessions.find(s => s.id === id);
+  state.messages = state.currentSession?.messages || [];
+  renderSessions();
+  renderMessages();
+}
+
+function newSession() {
+  save();
+  const s = { id: Date.now().toString(), title: 'New Chat', messages: [], created: Date.now() };
+  state.sessions.unshift(s);
+  state.currentSession = s;
+  state.messages = [];
+  renderSessions();
+  renderMessages();
+}
+
+// ═══ Messages ═══
+function renderMessages() {
+  const el = document.getElementById('messages');
+  if (state.messages.length === 0) {
+    el.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">🧬</div>
+        <h2>mssclaw</h2>
+        <p>Ask anything. Press Cmd+N for new session.</p>
+      </div>`;
+    document.getElementById('header-title').textContent = state.currentSession?.title || 'New Chat';
+    return;
+  }
+  document.getElementById('header-title').textContent = state.currentSession?.title || 'Chat';
+  el.innerHTML = state.messages.map((m, i) => `
+    <div class="message ${m.role}">
+      ${formatContent(m.content)}
+      ${m.meta ? `<div class="meta">${m.meta}</div>` : ''}
+    </div>
+  `).join('');
+  el.scrollTop = el.scrollHeight;
+}
+
+function formatContent(text) {
+  return text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/\n/g, '<br>');
+}
+
+// ═══ Send ═══
+async function sendMessage() {
+  const input = document.getElementById('user-input');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  input.style.height = 'auto';
+
+  addMessage('user', text);
+  const btn = document.getElementById('send-btn');
+  btn.disabled = true;
+  btn.textContent = '...';
+
+  try {
+    const resp = await fetch('http://localhost:5100/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, model: state.model, history: state.messages.slice(-6) }),
+    });
+    if (!resp.ok) throw new Error(`${resp.status}`);
+    const data = await resp.json();
+    addMessage('assistant', data.reply || data.response || JSON.stringify(data), data.meta);
+  } catch (e) {
+    addMessage('assistant', `⚠️ Agent not connected (port 5100). Error: ${e.message}\n\nStart agent: mssclaw serve`);
+  }
+  btn.disabled = false;
+  btn.textContent = 'Send';
+}
+
+function addMessage(role, content, meta) {
+  state.messages.push({ role, content, meta: meta || `[${state.model}]` });
+  renderMessages();
+  save();
+}
+
+// ═══ Handlers ═══
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  if (e.key === 'n' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); newSession(); }
+}
+
+function switchModel(model) {
+  state.model = model;
+  document.getElementById('stats-model').textContent = model;
+}
+
+function toggleMode(mode) {
+  state.mode = mode;
+  document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  // Future: switch between chat/vault/status/models views
+}
+
+// ═══ Auto-resize textarea ═══
+document.getElementById('user-input').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
+
+init();
+</script>
+</body>
+</html>
