@@ -63,7 +63,7 @@ class DeltaMonitor:
 
         if self.agent:
             ds = self.agent.delta.snapshot()
-            ts = self.agent.heat_tax.snapshot()
+            ts = self.agent.tax.snapshot()  # agent.tax, not agent.heat_tax
             bridge = self.agent.l2bridge.level.name
 
             delta = ds.get("current_delta", 1.0) or 0
