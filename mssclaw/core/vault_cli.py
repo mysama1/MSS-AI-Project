@@ -247,6 +247,7 @@ USAGE = """mssclaw vault — 极简密码管理
   export [json|csv]        导出
   import [url_filter]     从Chrome/Edge导入密码
   health                  安全体检
+  stats                   统计面板
   backup [restore PATH]   备份/恢复
   audit                    审计日志"""
 
@@ -284,6 +285,9 @@ def main():
         cmd_audit()
     elif cmd == "health":
         cmd_health()
+    elif cmd == "stats":
+        from mssclaw.core.vault_stats import cmd_stats
+        cmd_stats()
     elif cmd == "backup":
         cmd_backup(args[1] if len(args) > 1 else None, args[2] if len(args) > 2 else None)
     else:
