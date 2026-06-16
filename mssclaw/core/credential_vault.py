@@ -223,21 +223,34 @@ class CredentialVault:
         self._add_audit("delete", key, success=deleted, detail="" if deleted else "not found")
         return deleted
 
-    def list_keys(self, category: str = None) -> list:
+    def list_keys(self, category: str = None, query: str = None) -> list:
+        """列出凭证 (可选按分类/搜索过滤)."""
         if self._locked:
             return []
-        query = "SELECT key, category, tags, created_at, updated_at, last_accessed FROM vault"
+        query_sql = "SELECT key, category, tags, created_at, updated_at, last_accessed FROM vault"
         params = ()
+        conditions = []
         if category:
-            query += " WHERE category=?"
-            params = (category,)
+            conditions.append("category=?")
+            params += (category,)
+        if query:
+            conditions.append("(key LIKE ? OR tags LIKE ?)")
+            like = f"%{query}%"
+            params += (like, like)
+        if conditions:
+            query_sql += " WHERE " + " AND ".join(conditions)
+        query_sql += " ORDER BY updated_at DESC"
         try:
             with sqlite3.connect(str(self._db_path)) as conn:
-                rows = conn.execute(query, params).fetchall()
+                rows = conn.execute(query_sql, params).fetchall()
         except Exception:
             return []
         return [{"key": r[0], "category": r[1], "tags": json.loads(r[2] or "[]"),
                  "created_at": r[3], "updated_at": r[4], "last_accessed": r[5]} for r in rows]
+
+    def search(self, query: str) -> list:
+        """模糊搜索凭证 (key+标签)."""
+        return self.list_keys(query=query)
 
     # ── Audit ──
 

@@ -93,8 +93,8 @@ def cmd_get(key: str):
         print(f"❌ 未找到 {key}")
 
 
-def cmd_list(category: str = None):
-    """列出所有凭证."""
+def cmd_list(category: str = None, query: str = None):
+    """列出/搜索凭证."""
     v = _get_vault()
     if v.is_locked:
         cmd_unlock()
@@ -103,7 +103,7 @@ def cmd_list(category: str = None):
         print("❌ 未解锁")
         return
 
-    keys = v.list_keys(category=category)
+    keys = v.list_keys(category=category, query=query)
     if not keys:
         print("(空)")
         return
@@ -112,6 +112,11 @@ def cmd_list(category: str = None):
         icon = {"api_key": "🔌", "password": "🔑", "token": "🎫", "personal_info": "🪪"}.get(k["category"], "📌")
         tags = f" [{','.join(k['tags'])}]" if k.get("tags") else ""
         print(f"  {icon} {k['key']} ({k['category']}){tags}")
+
+
+def cmd_search(query: str):
+    """模糊搜索."""
+    cmd_list(category=None, query=query)
 
 
 def cmd_delete(key: str):
@@ -241,7 +246,8 @@ USAGE = """mssclaw vault — 极简密码管理
   lock                     锁定
   add <key> [value]        添加 (无value则隐藏输入)
   get <key>                获取
-  list [category]          列出
+  list [category] [query] 列出/搜索
+  search <query>          模糊搜索
   delete <key>             删除
   gen <key> [category]     生成强密码并存入
   export [json|csv]        导出
@@ -271,7 +277,9 @@ def main():
     elif cmd == "get" and len(args) >= 2:
         cmd_get(args[1])
     elif cmd == "list":
-        cmd_list(args[1] if len(args) > 1 else None)
+        cmd_list(args[1] if len(args) > 1 else None, args[2] if len(args) > 2 else None)
+    elif cmd == "search" and len(args) >= 2:
+        cmd_search(args[1])
     elif cmd == "delete" and len(args) >= 2:
         cmd_delete(args[1])
     elif cmd == "gen" and len(args) >= 2:
