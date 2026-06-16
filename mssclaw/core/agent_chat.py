@@ -71,6 +71,15 @@ def chat_loop(model: str = "qwen2.5:7b"):
     register_builtin_tools(tools)
     tools_enabled = True
 
+    # Shell: auto init
+    agent._shell_mode = "off"
+    try:
+        from mssclaw.core.backend_selector import BackendSelector
+        agent._shell_core = BackendSelector(vault).select_core()
+        has_shell_core = agent._shell_core is not None
+    except Exception:
+        has_shell_core = False
+
     # Try vault
     vault_path = Path.home() / ".mssclaw" / "vault.db"
     has_vault = vault_path.exists()
@@ -183,6 +192,11 @@ def chat_loop(model: str = "qwen2.5:7b"):
                     idx = modes.index(current)
                     agent._shell_mode = modes[(idx + 1) % len(modes)]
                 print(c(f"  Shell mode: {agent._shell_mode} (off|auto=FULL_DUAL|dual|check=CORE_CHECK)", "dim"))
+                if has_shell_core:
+                    model_name = getattr(agent._shell_core, 'model', getattr(agent._shell_core, '__name__', 'mss-ai'))
+                    print(c(f"    Core: {model_name} ready", "dim"))
+                else:
+                    print(c(f"    Core: unavailable (no mss-ai model)", "dim"))
                 continue
             else:
                 print(c("  Commands: /clear /save /load /model /vault /tools /shell /absorb /quit", "dim"))
