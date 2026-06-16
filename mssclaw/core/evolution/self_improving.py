@@ -3,8 +3,10 @@ mssclaw/core/self_improving.py
 
 Hermes-inspired: Generalized Learning Loop + FTS5 Search + Cron Scheduler.
 
+v1.1: FTS5 jieba CJK tokenizer integration.
+
 1. SkillLearner    — 泛化学习循环 (从 VideoPromptAgent 中提取)
-2. FTS5KB          — SQLite FTS5 知识库全文搜索
+2. FTS5KB          — SQLite FTS5 知识库全文搜索 (v1.1: jieba CJK)
 3. CronScheduler   — 定时任务调度器
 
 Usage:
@@ -122,73 +124,125 @@ class SkillLearner:
 
 
 # ══════════════════════════════════════════
-# 2. FTS5KB — SQLite FTS5 全文搜索知识库
+# 2. FTS5KB — SQLite FTS5 全文搜索知识库 (v1.1: jieba CJK)
 # ══════════════════════════════════════════
 
 class FTS5KB:
-    """FTS5 知识库 — Hermes-inspired session search.
+    """FTS5 知识库 — jieba 分词 + FTS5 全文索引.
+
+    v1.1 改进:
+      - 索引前用 jieba 分词 (解决 '' 空格分词对 CJK 无效)
+      - search() 输入也先分词再构造 FTS5 MATCH 查询
+      - 保留 LIKE fallback 作为兜底
 
     Usage:
         kb = FTS5KB("data/fts5_kb.db")
         kb.index("h001", "A1公理: 信息具有意义层级", ["axiom","L0"])
-        results = kb.search("意义层级")
+        results = kb.search("意义层级")  # → jieba → FTS5 MATCH
     """
 
     def __init__(self, db_path: str = "data/fts5_kb.db"):
         self._conn = sqlite3.connect(db_path, check_same_thread=False)
         self._lock = threading.Lock()
+        self._jieba = None
         self._conn.execute("PRAGMA journal_mode=WAL")
+        # Single table: tokens column stores jieba-segmented text for CJK search
         self._conn.execute("""
             CREATE VIRTUAL TABLE IF NOT EXISTS kb_fts USING fts5(
-                entry_id, title, content, tags,
-                tokenize='unicode61 remove_diacritics 0'
+                entry_id, title, content, tokens, tags,
+                tokenize='unicode61'
             )
         """)
         self._conn.commit()
 
+    def _get_jieba(self):
+        """懒加载 jieba."""
+        if self._jieba is None:
+            try:
+                import jieba
+                jieba.setLogLevel(20)  # 抑制 jieba 日志
+                self._jieba = jieba
+            except ImportError:
+                self._jieba = False
+        return self._jieba if self._jieba else None
+
+    def _tokenize_cjk(self, text: str) -> str:
+        """CJK 分词: jieba cut → 空格连接."""
+        jieba = self._get_jieba()
+        if jieba is None:
+            return text  # fallback: 原样返回
+        tokens = jieba.cut(text)
+        return " ".join(t for t in tokens if t.strip())
+
     def index(self, entry_id: str, title: str, content: str, tags: list = None):
-        """索引一条知识条目."""
+        """索引一条知识条目 (jieba 分词写入 tokens 列)."""
         tags_str = ",".join(tags) if tags else ""
+        tokens = self._tokenize_cjk(title + " " + content)
+
         with self._lock:
             self._conn.execute(
-                "INSERT OR REPLACE INTO kb_fts(entry_id, title, content, tags) VALUES (?,?,?,?)",
-                (entry_id, title, content, tags_str)
+                "INSERT OR REPLACE INTO kb_fts(entry_id, title, content, tokens, tags) VALUES (?,?,?,?,?)",
+                (entry_id, title, content, tokens, tags_str)
             )
             self._conn.commit()
 
     def search(self, query: str, limit: int = 10) -> list[dict]:
-        """全文搜索. 返回匹配条目."""
+        """全文搜索 (jieba 分词 + FTS5 MATCH).
+
+        策略:
+          1. jieba 分词 → FTS5 MATCH (tokens 列 + content 列)
+          2. 无 jieba → 空格分词 FTS5 (英文有效)
+          3. 0 结果 → LIKE fallback
+        """
         with self._lock:
+            jieba = self._get_jieba()
+
+            # 策略 1: jieba 分词 + FTS5 MATCH
+            if jieba:
+                tokens = list(jieba.cut(query))
+                tokens = [t.strip() for t in tokens if t.strip() and len(t.strip()) >= 1]
+                if tokens:
+                    fts5_query = " OR ".join(tokens)
+                    try:
+                        rows = self._conn.execute(
+                            "SELECT entry_id, title, content, tags, rank FROM kb_fts "
+                            "WHERE kb_fts MATCH ? ORDER BY rank LIMIT ?",
+                            (fts5_query, limit)
+                        ).fetchall()
+                        if rows:
+                            return [{"entry_id": r[0], "title": r[1], "content": r[2][:200],
+                                     "tags": r[3], "rank": r[4]} for r in rows]
+                    except sqlite3.OperationalError:
+                        pass  # 特殊字符导致 MATCH 失败 → fallback
+
+            # 策略 2: 空格分词 FTS5 (英文/数字) + 简单中文单字
             terms = [t for t in query.strip().split() if t]
-            if not terms:
-                return []
-            # Use simple FTS5 query with each term
-            fts5_query = " OR ".join(terms)
-            try:
-                rows = self._conn.execute(
-                    "SELECT entry_id, title, content, tags, rank FROM kb_fts WHERE kb_fts MATCH ? ORDER BY rank LIMIT ?",
-                    (fts5_query, limit)
-                ).fetchall()
-                if not rows and len(terms) == 1:
-                    # Fallback: LIKE search for single Chinese terms
-                    rows = self._conn.execute(
-                        "SELECT entry_id, title, content, tags, 0 as rank FROM kb_fts WHERE content LIKE ? LIMIT ?",
-                        (f"%{terms[0]}%", limit)
-                    ).fetchall()
-                return [{"entry_id": r[0], "title": r[1], "content": r[2][:200],
-                         "tags": r[3], "rank": r[4]} for r in rows]
-            except sqlite3.OperationalError:
-                # LIKE fallback for all
-                pattern = "%".join(terms)
+            if terms:
+                fts5_query = " OR ".join(terms)
                 try:
                     rows = self._conn.execute(
-                        "SELECT entry_id, title, content, tags, 0 as rank FROM kb_fts WHERE content LIKE ? LIMIT ?",
-                        (f"%{pattern}%", limit)
+                        "SELECT entry_id, title, content, tags, rank FROM kb_fts "
+                        "WHERE kb_fts MATCH ? ORDER BY rank LIMIT ?",
+                        (fts5_query, limit)
                     ).fetchall()
-                except:
-                    rows = []
-                return [{"entry_id": r[0], "title": r[1], "content": r[2][:200],
-                         "tags": r[3], "rank": r[4]} for r in rows]
+                    if rows:
+                        return [{"entry_id": r[0], "title": r[1], "content": r[2][:200],
+                                 "tags": r[3], "rank": r[4]} for r in rows]
+                except sqlite3.OperationalError:
+                    pass
+
+            # 策略 3: LIKE fallback
+            pattern = f"%{query}%"
+            try:
+                rows = self._conn.execute(
+                    "SELECT entry_id, title, content, tags, 0 as rank FROM kb_fts "
+                    "WHERE content LIKE ? OR title LIKE ? OR tokens LIKE ? LIMIT ?",
+                    (pattern, pattern, pattern, limit)
+                ).fetchall()
+            except Exception:
+                rows = []
+            return [{"entry_id": r[0], "title": r[1], "content": r[2][:200],
+                     "tags": r[3], "rank": r[4]} for r in rows]
 
     def delete(self, entry_id: str):
         with self._lock:
@@ -197,7 +251,7 @@ class FTS5KB:
 
     def stats(self) -> dict:
         count = self._conn.execute("SELECT COUNT(*) FROM kb_fts").fetchone()[0]
-        return {"total_entries": count}
+        return {"total_entries": count, "jieba_enabled": self._get_jieba() is not None}
 
     def close(self):
         self._conn.close()

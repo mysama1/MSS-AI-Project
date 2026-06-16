@@ -1,15 +1,15 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 """
-mssclaw_daemon.py — Layer 2 守护进程
-持续监控 Gateway 健康，崩溃自动恢复 + 指数退避 + 洪水保护
+mssclaw_daemon.py 鈥?Layer 2 瀹堟姢杩涚▼
+鎸佺画鐩戞帶 Gateway 鍋ュ悍锛屽穿婧冭嚜鍔ㄦ仮澶?+ 鎸囨暟閫€閬?+ 娲按淇濇姢
 
-用法:
-  python mssclaw_daemon.py status     # 健康仪表盘 (json)
-  python mssclaw_daemon.py monitor    # 前台监控模式 (每30s一次检查)
-  python mssclaw_daemon.py monitor --daemon  # 后台守护模式
+鐢ㄦ硶:
+  python mssclaw_daemon.py status     # 鍋ュ悍浠〃鐩?(json)
+  python mssclaw_daemon.py monitor    # 鍓嶅彴鐩戞帶妯″紡 (姣?0s涓€娆℃鏌?
+  python mssclaw_daemon.py monitor --daemon  # 鍚庡彴瀹堟姢妯″紡
 
-依赖: NSSM 服务 (MSSclawGateway) 已安装并运行
-      Gateway /health 端点 (127.0.0.1:50942)
+渚濊禆: NSSM 鏈嶅姟 (MSSclawGateway) 宸插畨瑁呭苟杩愯
+      Gateway /health 绔偣 (127.0.0.1:50942)
 """
 import sys, os, time, json, signal, threading, logging
 from pathlib import Path
@@ -17,7 +17,7 @@ from pathlib import Path
 # Add project root
 sys.path.insert(0, r"E:\AI_Workspace\MSS-AI\project")
 
-from mssclaw.core.watchdog import (
+from mssclaw.core.reliability.watchdog import (
     GatewayWatchdog, MAX_CRASHES_IN_WINDOW, CRASH_WINDOW_SEC,
     MAX_BACKOFF_MS, CREATE_BREAKAWAY_FROM_JOB, RESTART_BACKOFF
 )
@@ -90,13 +90,13 @@ def monitor_loop(once=False):
             logger.warning(f"[{check_count}] Gateway DOWN (consecutive={consecutive_failures}, crashes_in_window={len(crash_window)})")
             
             if len(crash_window) >= MAX_CRASHES_IN_WINDOW:
-                logger.critical(f"CRASH FLOOD: {len(crash_window)} crashes in {CRASH_WINDOW_SEC}s → CIRCUIT BREAK")
+                logger.critical(f"CRASH FLOOD: {len(crash_window)} crashes in {CRASH_WINDOW_SEC}s 鈫?CIRCUIT BREAK")
                 logger.critical("Manual intervention required. Daemon stopping.")
                 return False
             
             # Determine backoff
             idx = min(consecutive_failures - 1, len(RESTART_BACKOFF) - 1)
-            backoff_s = RESTART_BACKOFF[idx] / 1000.0  # ms → s
+            backoff_s = RESTART_BACKOFF[idx] / 1000.0  # ms 鈫?s
             logger.error(f"Attempting restart in {backoff_s:.0f}s (backoff level {idx+1})")
             
             time.sleep(backoff_s)

@@ -20,6 +20,7 @@ import time
 
 from .heat_tax import HeatTaxBudget, HeatTaxLevel, HeatTaxAbort
 from .heat_tax_fuse import HeatTaxFuseGroup  # v1.1
+from .l2_bridge import L2Bridge, BridgeLevel  # v1.3 Sprint 3
 from .gradient_theft_detector import GradientTheftDetector  # v1.2
 from .cweight_gate import CWeightGate  # v1.2
 from .delta import DeltaProtocol
@@ -75,6 +76,10 @@ class MSSAgent:
                 delta_check=lambda: (self.delta.snapshot().get("current_delta") or 0.5),
                 audit_dir=fuse_audit_dir,
             )
+
+        # v1.3 Sprint 3: L2 双向桥 — 热税↔Δ 自适应耦合
+        self.l2bridge = L2Bridge()
+        self.l2bridge.link(self.tax, self.delta)
 
         # v1.2: R-001 梯度窃用检测 + C-Weight 抉择门控
         self.r001 = GradientTheftDetector(strictness=0.7)
@@ -224,6 +229,18 @@ class MSSAgent:
         diversity = self.memory.diversity_score()
         current_delta = self.delta.tick(task_hash, novelty, diversity)
 
+        # v1.3 Sprint 3: L2 bridge — 自适应阈值 + 危机阻断
+        bridge_level = self.l2bridge.step()
+        if bridge_level == BridgeLevel.CRISIS:
+            self.abort_count += 1
+            return AgentResult(
+                aborted=True,
+                reason=f"L2 Bridge CRISIS: delta={current_delta:.3f}, tax_total={self.tax.total():.2f}",
+                content="",
+                heat_tax=self.tax.snapshot(),
+                delta=current_delta,
+            )
+
         # v1.1: Attempt fuse reset if conditions allow
         self.tax.reset_fuse_if_cooled()
 
@@ -252,6 +269,9 @@ class MSSAgent:
         }
         if self.tax.fuse:
             report["fuse"] = self.tax.fuse.stats()
+
+        # v1.3: L2 bridge
+        report["l2_bridge"] = self.l2bridge.stats()
         return report
 
     def reset(self):
@@ -260,3 +280,160 @@ class MSSAgent:
         self.delta = DeltaProtocol(min_delta=self.delta.min_delta)
         self.run_count = 0
         self.abort_count = 0
+
+
+# ════════════════════════════════════════════════════════════
+# Agent 配置系统 (原 agent_config.py, 已合并)
+# ════════════════════════════════════════════════════════════
+
+import json as _json
+
+
+class DomainMode:
+    DAILY = "daily"
+    TECH = "tech"
+    PHILOSOPHY = "philosophy"
+    COMBAT = "combat"
+
+
+class HybridTier:
+    FLOW = "T1"
+    CORE = "T2"
+    HEAL = "T2.5"
+    COMBAT = "T3"
+
+
+@dataclass
+class HeatTaxBudgetConfig:
+    max_tokens_per_turn: int = 500
+    max_tokens_per_session: int = 20000
+    l2_ratio_warning: float = 0.3
+    on_budget_exceeded: str = "warn"  # warn|truncate|heal
+
+
+@dataclass
+class DeltaConfig:
+    bluff_absolute_threshold: int = 2
+    perform_philo_ref_threshold: int = 4
+    perform_daily_ref_threshold: int = 0
+    similarity_threshold: float = 0.55
+    drift_length_ratio: float = 20.0
+    overfeed_char_threshold: int = 800
+    overfeed_short_threshold: int = 100
+    heal_consecutive_reds: int = 2
+    heal_cooldown_rounds: int = 5
+
+
+@dataclass
+class AutoDomainConfig:
+    enabled: bool = True
+    sample_rounds: int = 3
+    confidence_threshold: float = 0.5
+
+
+@dataclass
+class AgentConfig:
+    name: str = "mss-agent"
+    version: str = "1.0.0"
+    domain: str = DomainMode.DAILY
+    hybrid_tier: str = HybridTier.FLOW
+    heat_tax: HeatTaxBudgetConfig = field(default_factory=HeatTaxBudgetConfig)
+    delta: DeltaConfig = field(default_factory=DeltaConfig)
+    auto_domain: AutoDomainConfig = field(default_factory=AutoDomainConfig)
+    enable_fewshot_injection: bool = True
+    enable_delta_audit: bool = True
+    enable_heat_tax_accounting: bool = True
+    enable_domain_auto_detect: bool = True
+    verbose: bool = False
+
+    @classmethod
+    def preset(cls, name: str) -> "AgentConfig":
+        presets = {
+            DomainMode.DAILY: cls(
+                domain=DomainMode.DAILY, hybrid_tier=HybridTier.FLOW,
+                heat_tax=HeatTaxBudgetConfig(max_tokens_per_turn=300),
+                delta=DeltaConfig(perform_daily_ref_threshold=0, overfeed_char_threshold=600)),
+            DomainMode.TECH: cls(
+                domain=DomainMode.TECH, hybrid_tier=HybridTier.FLOW,
+                heat_tax=HeatTaxBudgetConfig(max_tokens_per_turn=800),
+                delta=DeltaConfig(bluff_absolute_threshold=1, overfeed_char_threshold=1000)),
+            DomainMode.PHILOSOPHY: cls(
+                domain=DomainMode.PHILOSOPHY, hybrid_tier=HybridTier.CORE,
+                heat_tax=HeatTaxBudgetConfig(max_tokens_per_turn=1200),
+                delta=DeltaConfig(perform_philo_ref_threshold=4, perform_daily_ref_threshold=2)),
+            DomainMode.COMBAT: cls(
+                domain=DomainMode.COMBAT, hybrid_tier=HybridTier.COMBAT,
+                heat_tax=HeatTaxBudgetConfig(max_tokens_per_turn=2000),
+                delta=DeltaConfig(heal_consecutive_reds=3)),
+        }
+        return presets.get(name, cls())
+
+    @classmethod
+    def from_yaml(cls, path: str) -> "AgentConfig":
+        try:
+            import yaml
+        except ImportError:
+            raise ImportError("pip install pyyaml to use YAML configs")
+        with open(path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+        return cls._from_dict(data)
+
+    @classmethod
+    def from_json(cls, path: str) -> "AgentConfig":
+        with open(path, "r", encoding="utf-8") as f:
+            data = _json.load(f)
+        return cls._from_dict(data)
+
+    @classmethod
+    def _from_dict(cls, data: dict) -> "AgentConfig":
+        ht = data.get("heat_tax", {})
+        dl = data.get("delta", {})
+        ad = data.get("auto_domain", {})
+        return cls(
+            name=data.get("name", "mss-agent"),
+            version=data.get("version", "1.0.0"),
+            domain=data.get("domain", DomainMode.DAILY),
+            hybrid_tier=data.get("hybrid_tier", HybridTier.FLOW),
+            heat_tax=HeatTaxBudgetConfig(**ht) if ht else HeatTaxBudgetConfig(),
+            delta=DeltaConfig(**dl) if dl else DeltaConfig(),
+            auto_domain=AutoDomainConfig(**ad) if ad else AutoDomainConfig(),
+            enable_fewshot_injection=data.get("enable_fewshot_injection", True),
+            enable_delta_audit=data.get("enable_delta_audit", True),
+            enable_heat_tax_accounting=data.get("enable_heat_tax_accounting", True),
+            enable_domain_auto_detect=data.get("enable_domain_auto_detect", True),
+            verbose=data.get("verbose", False))
+
+    def to_dict(self) -> dict:
+        return {
+            "name": self.name, "version": self.version,
+            "domain": self.domain, "hybrid_tier": self.hybrid_tier,
+            "heat_tax": {"max_tokens_per_turn": self.heat_tax.max_tokens_per_turn,
+                        "max_tokens_per_session": self.heat_tax.max_tokens_per_session,
+                        "l2_ratio_warning": self.heat_tax.l2_ratio_warning,
+                        "on_budget_exceeded": self.heat_tax.on_budget_exceeded},
+            "delta": {"bluff_absolute_threshold": self.delta.bluff_absolute_threshold,
+                     "perform_philo_ref_threshold": self.delta.perform_philo_ref_threshold,
+                     "perform_daily_ref_threshold": self.delta.perform_daily_ref_threshold,
+                     "similarity_threshold": self.delta.similarity_threshold,
+                     "drift_length_ratio": self.delta.drift_length_ratio,
+                     "overfeed_char_threshold": self.delta.overfeed_char_threshold,
+                     "overfeed_short_threshold": self.delta.overfeed_short_threshold,
+                     "heal_consecutive_reds": self.delta.heal_consecutive_reds,
+                     "heal_cooldown_rounds": self.delta.heal_cooldown_rounds},
+            "auto_domain": {"enabled": self.auto_domain.enabled,
+                           "sample_rounds": self.auto_domain.sample_rounds,
+                           "confidence_threshold": self.auto_domain.confidence_threshold},
+            "enable_fewshot_injection": self.enable_fewshot_injection,
+            "enable_delta_audit": self.enable_delta_audit,
+            "enable_heat_tax_accounting": self.enable_heat_tax_accounting,
+            "enable_domain_auto_detect": self.enable_domain_auto_detect,
+            "verbose": self.verbose,
+        }
+
+    def to_json(self, path: Optional[str] = None) -> str:
+        data = self.to_dict()
+        text = _json.dumps(data, ensure_ascii=False, indent=2)
+        if path:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(text)
+        return text

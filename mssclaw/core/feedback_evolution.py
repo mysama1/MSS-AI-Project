@@ -233,3 +233,85 @@ class FeedbackEvolution:
             "top_patterns": sorted(self._pattern_counts.items(), key=lambda x: -x[1])[:5],
             "latest_adaptations": [a.__dict__ for a in self._adaptations[-5:]],
         }
+
+    # ═══ 5. EVOLUTION BRIDGE — 连接 L2 反馈环 ═══
+
+    def trigger_evolution(self, agents: dict = None) -> list:
+        """触发一次完整进化循环: 分析 → 适应 → 推送.
+
+        Args:
+            agents: {agent_name: agent_instance} 字典, agent 需有 receive_adaptation() 方法
+        Returns:
+            本次产出的 Adaptation 列表
+        """
+        if not self.ready_to_evolve():
+            return []
+
+        adaptations = self.analyze_and_adapt()
+        if not adaptations:
+            return []
+
+        # 推送到注册的 agents
+        if agents:
+            for agent_name, agent in agents.items():
+                if hasattr(agent, 'receive_adaptation'):
+                    applied = agent.receive_adaptation(adaptations)
+                    if applied > 0:
+                        self._log(f"Pushed {applied} adaptations to {agent_name}")
+
+        return adaptations
+
+    def _log(self, msg: str) -> None:
+        """内部日志."""
+        if not hasattr(self, '_log_entries'):
+            self._log_entries: list = []
+        self._log_entries.append({"time": time.time(), "msg": msg})
+
+
+class EvolutionBridge:
+    """演化桥接器 — 连接 FeedbackEvolution 到所有 Agent.
+
+    定期触发 analyze_and_adapt() 并将 Adaptation 推送到注册的 Agent.
+    这是 L2 意义层到 L0 执行层的完整闭环。
+
+    Usage:
+        bridge = EvolutionBridge(evo_engine)
+        bridge.register_agent("Code-Agent", code_agent)
+        bridge.register_agent("Plan-Agent", plan_agent)
+        bridge.tick()  # 每次任务后调用, 自动判断是否触发演化
+    """
+
+    def __init__(self, evolution_engine: FeedbackEvolution = None, 
+                 min_interval_seconds: float = 300):
+        self.evo = evolution_engine or FeedbackEvolution()
+        self.agents: dict = {}
+        self.min_interval = min_interval_seconds
+        self._last_evolution: float = 0
+        self._tick_count: int = 0
+
+    def register_agent(self, name: str, agent) -> None:
+        """注册一个 Agent 到演化桥."""
+        self.agents[name] = agent
+
+    def tick(self) -> int:
+        """每次任务后调用. 自动判断是否触发演化. 返回 applied 数."""
+        self._tick_count += 1
+
+        # 每 N 个 tick 或超过 min_interval 秒触发
+        now = time.time()
+        if (self._tick_count % 10 == 0 or 
+            (now - self._last_evolution) > self.min_interval):
+            if self.evo.ready_to_evolve():
+                adaptations = self.evo.trigger_evolution(self.agents)
+                self._last_evolution = now
+                return len(adaptations)
+
+        return 0
+
+    def status(self) -> dict:
+        return {
+            "agents_registered": len(self.agents),
+            "ticks": self._tick_count,
+            "last_evolution": self._last_evolution,
+            "evo_status": self.evo.status(),
+        }

@@ -1,16 +1,15 @@
-"""
+﻿"""
 DEEP-010: MSSclaw Performance Baseline
 
-测量:
-  1. 模块导入时间 (101 py files)
-  2. SwarmBus 路由延迟 (1/10/100 agents)
-  3. HeatTax charge 开销
-  4. GuardianEngine scan 延迟
-  5. Delta tick 开销
-  6. AuditAgent 审计速度 (per KB)
-  7. 总回归时间
-
-输出: perf_baseline.json (版本化, 可对比)
+娴嬮噺:
+  1. 妯″潡瀵煎叆鏃堕棿 (101 py files)
+  2. SwarmBus 璺敱寤惰繜 (1/10/100 agents)
+  3. HeatTax charge 寮€閿€
+  4. GuardianEngine scan 寤惰繜
+  5. Delta tick 寮€閿€
+  6. AuditAgent 瀹¤閫熷害 (per KB)
+  7. 鎬诲洖褰掓椂闂?
+杈撳嚭: perf_baseline.json (鐗堟湰鍖? 鍙姣?
 """
 from __future__ import annotations
 
@@ -47,7 +46,7 @@ def timeit(name: str, fn, *args, iterations: int = 100, **kwargs) -> dict:
 
 
 def bench_swarmbus():
-    """SwarmBus routing latency — simplified."""
+    """SwarmBus routing latency 鈥?simplified."""
     from mssclaw.swarm.swarm import SwarmBus
     from mssclaw.swarm.protocol import Message, MessageHeader, MessageType
 
@@ -169,7 +168,7 @@ def bench_imports():
         "mssclaw.core.delta",
         "mssclaw.core.guardian_engine",
         "mssclaw.core.meaning_temperature",
-        "mssclaw.core.tsp_bridge",
+        "mssclaw.core.swarm.tsp_bridge",
         "mssclaw.swarm.swarm",
         "mssclaw.swarm.protocol",
         "mssclaw.agents.audit",

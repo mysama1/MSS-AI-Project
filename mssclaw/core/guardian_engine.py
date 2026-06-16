@@ -151,17 +151,44 @@ class GuardianEngine:
 
     # ── 扫描 ──
 
-    def scan(self, text: str) -> GuardianResult:
+    def scan(self, text: str, original_msg: str = "") -> GuardianResult:
         """扫描文本，返回守卫检测结果。
 
         Args:
             text: 待检测文本
+            original_msg: 用户原始消息 (非空时启用三级漂移检测)
 
         Returns:
             GuardianResult: density, violations, hit_guardians, score
         """
         if not text:
-            return GuardianResult(density=0.0, score=1.0)  # empty = clean
+            return GuardianResult(density=0.0, score=1.0)
+
+        # ── Layer 0 (S-024): Drift check ──
+        drift_severity = 0.0
+        if original_msg:
+            from .drift_guard import DriftGuard
+            _drift = getattr(self, '_drift_guard', None)
+            if _drift is None:
+                self._drift_guard = DriftGuard()
+                _drift = self._drift_guard
+            drift_report = _drift.scan(original_msg, text)
+            if drift_report.quarantined:
+                # 漂移隔离 → 分数强制归零
+                return GuardianResult(
+                    density=0.0,
+                    score=0.0,
+                    hit_guardians=[f"DRIFT_L{s.level}" for s in drift_report.signals if s.detected],
+                    violations=[{
+                        "word": f"drift_{s.name}",
+                        "severity": "hard",
+                        "drift_evidence": s.evidence[:120]
+                    } for s in drift_report.signals if s.detected],
+                )
+            drift_severity = max(
+                (s.severity for s in drift_report.signals if s.detected),
+                default=0.0
+            )
 
         # ── Layer 1: Guardian check ──
         hit_guardians = []

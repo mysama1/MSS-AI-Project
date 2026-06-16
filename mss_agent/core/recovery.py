@@ -1,3 +1,3 @@
-# Shim: re-exports from mssclaw. Deprecated in v0.4.0.
-from mssclaw.core.recovery import *
+﻿# Shim: re-exports from mssclaw. Deprecated in v0.4.0.
+from mssclaw.core.reliability.recovery import *
 

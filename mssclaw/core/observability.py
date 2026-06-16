@@ -691,10 +691,142 @@ def create_observability_stack(trace_dir: str = "", tombstone_dir: str = "") -> 
     viz = DecisionTreeVisualizer(trace)
     dashboard = DashboardUpdater()
     tombstones = TombstoneBrowser(tombstone_dir)
+    exporter = OTLPExporter(trace) if OTLPExporter is not None else None
 
     return {
         "trace": trace,
         "visualizer": viz,
         "dashboard": dashboard,
         "tombstones": tombstones,
+        "exporter": exporter,
     }
+
+
+# ════════════════════════════════════════════════════════════
+# OpenTelemetry 导出器 — 对标 LangSmith OTLP 标准
+# ════════════════════════════════════════════════════════════
+
+class OTLPExporter:
+    """OTLP (OpenTelemetry Protocol) 导出器.
+
+    将 MSSclaw Trace/Span 转换为 OpenTelemetry 兼容格式,
+    无外部依赖 — 纯 JSON over HTTP/JSON 输出.
+    对接: Jaeger / Grafana Tempo / SigNoz / OpenTelemetry Collector.
+
+    Usage:
+        exporter = OTLPExporter(trace_manager)
+        # 每个 Span 结束即推送
+        exporter.push_span(span)
+        # 或批量导出全量 traces
+        exporter.export_all()
+    """
+
+    # OTLP/JSON 格式版本
+    OTLP_JSON_VERSION = "1.0.0"
+    SERVICE_NAME = "mssclaw-agent"
+
+    def __init__(self, trace_manager: TraceManager = None,
+                 endpoint: str = "",
+                 export_dir: str = ""):
+        self.trace = trace_manager or TraceManager()
+        self.endpoint = endpoint  # OTLP Collector endpoint
+        self.export_dir = export_dir or os.path.join(
+            os.path.dirname(__file__), "..", "..", "data", "otel_export"
+        )
+        self._sent_count: int = 0
+        self._spans: list[dict] = []
+
+    def span_to_otlp(self, span: Span) -> dict:
+        """将 MSSclaw Span 转换为 OTLP/JSON ResourceSpan."""
+        import datetime as _dt
+        # started_at 是 float Unix timestamp
+        started_ts = span.started_at if isinstance(span.started_at, (int, float)) else time.time()
+        ended_ts = span.ended_at if span.ended_at else started_ts
+        started_ns = int(started_ts * 1_000_000_000)
+        ended_ns = int(ended_ts * 1_000_000_000)
+        span_id = str(span.id)[:16].ljust(16, '0')
+        trace_id = (span.parent_id or str(span.id)).ljust(32, '0')[:32]
+        parent = span.parent_id[:16].ljust(16, '0') if span.parent_id else ""
+
+        attrs = [
+            {"key": "service.name", "value": {"stringValue": self.SERVICE_NAME}},
+            {"key": "span.status", "value": {"stringValue": span.status.value}},
+            {"key": "span.name", "value": {"stringValue": span.name}},
+            {"key": "agent", "value": {"stringValue": span.agent_name}},
+            {"key": "duration_ms", "value": {"doubleValue": span.duration_ms}},
+            {"key": "heat_tax", "value": {"doubleValue": span.heat_tax_at_start}},
+            {"key": "delta", "value": {"doubleValue": span.delta_at_start}},
+        ]
+        if span.error:
+            attrs.append({"key": "error", "value": {"stringValue": span.error[:256]}})
+        for k, v in (span.metadata or {}).items():
+            attrs.append({"key": str(k), "value": {"stringValue": str(v)[:256]}})
+
+        return {
+            "resourceSpans": [{
+                "resource": {"attributes": [
+                    {"key": "service.name", "value": {"stringValue": self.SERVICE_NAME}},
+                ]},
+                "scopeSpans": [{
+                    "scope": {"name": span.name, "version": "1.0"},
+                    "spans": [{
+                        "traceId": trace_id,
+                        "spanId": span_id,
+                        "parentSpanId": parent,
+                        "name": span.name,
+                        "kind": 1,
+                        "startTimeUnixNano": str(started_ns),
+                        "endTimeUnixNano": str(ended_ns),
+                        "attributes": attrs,
+                        "status": {
+                            "code": 1 if span.status in (SpanStatus.SUCCEEDED, SpanStatus.STARTED) else 2
+                        },
+                    }]
+                }]
+            }]
+        }
+
+    @staticmethod
+    def _iso_to_nano(iso_str: str) -> int:
+        """ISO timestamp → Unix nanoseconds."""
+        try:
+            dt = datetime.fromisoformat(iso_str.replace('Z', '+00:00'))
+            return int(dt.timestamp() * 1_000_000_000)
+        except Exception:
+            return int(time.time() * 1_000_000_000)
+
+    def push_span(self, span: Span) -> None:
+        """推送单个 Span 到缓冲."""
+        otlp_data = self.span_to_otlp(span)
+        self._spans.append(otlp_data)
+        self._sent_count += 1
+        if len(self._spans) >= 50:
+            self.flush()
+
+    def export_all(self) -> int:
+        """导出所有 traces 为 OTLP/JSON."""
+        spans_data = []
+        for span in self.trace.get_all_spans():
+            spans_data.append(self.span_to_otlp(span))
+        return self._write_export(spans_data)
+
+    def flush(self) -> int:
+        """冲刷缓冲到磁盘."""
+        count = self._write_export(self._spans)
+        self._spans.clear()
+        return count
+
+    def _write_export(self, spans_data: list) -> int:
+        if not spans_data:
+            return 0
+        os.makedirs(self.export_dir, exist_ok=True)
+        ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+        fname = f"otel_spans_{ts}_{uuid.uuid4().hex[:6]}.json"
+        fpath = os.path.join(self.export_dir, fname)
+        with open(fpath, "w", encoding="utf-8") as f:
+            json.dump({"resourceSpans": [s["resourceSpans"][0] for s in spans_data]}, f, indent=2)
+        return len(spans_data)
+
+    @property
+    def buffered(self) -> int:
+        return len(self._spans)
