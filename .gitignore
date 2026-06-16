@@ -32,3 +32,14 @@ Thumbs.db
 .env
 .venv/
 venv/
+
+# Rust build artifacts
+*.rlib
+*.rmeta
+build-script-build*.exe
+indoc-*.dll
+pyo3_macros-*.dll
+serde_derive-*.dll
+mssclaw_rs-*.exe
+dep-graph.bin
+query-cache.bin
