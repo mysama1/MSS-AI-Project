@@ -1,11 +1,34 @@
+# Python
 __pycache__/
-.mss/
-.run/
-.vdp_reports/
 *.pyc
-*.pdf
-*.jsonl
-*.bak
+*.pyo
+*.egg-info/
 dist/
-*.whl
-*.tar.gz
+build/
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data
+data/
+logs/
+*.db
+*.db.backups/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+*.tmp
+*.log
+*.zip
+
+# Environment
+.env
+.venv/
+venv/
