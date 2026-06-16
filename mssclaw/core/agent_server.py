@@ -60,6 +60,33 @@ class AgentAPIHandler(BaseHTTPRequestHandler):
             if not prompt:
                 return self._error("prompt required")
 
+            # MSS Defense Pipeline: 输入前检测
+            try:
+                from mssclaw.core.defense_pipeline import DefensePipeline
+                defense = DefensePipeline()
+                result = defense.defend(prompt)
+                if result["verdict"] == "blocked":
+                    return self._json({
+                        "output": f"🛡️ BLOCKED: {result.get('message', 'Security threat detected')}",
+                        "aborted": True,
+                        "delta": 0,
+                        "elapsed_ms": 0,
+                        "bridge": "DEFENSE",
+                        "heat_tax": 0,
+                    }, status=403)
+                if result["verdict"] == "quarantined":
+                    self._json({
+                        "output": f"⚠️ QUARANTINED: {result.get('message', '')}",
+                        "aborted": True,
+                        "delta": 0,
+                        "elapsed_ms": 0,
+                        "bridge": "DEFENSE",
+                        "heat_tax": 0,
+                    }, status=403)
+                    return
+            except ImportError:
+                pass  # Defense not loaded — allow
+
             style = body.get("style", "auto")
             semantic = body.get("semantic", False)
 
