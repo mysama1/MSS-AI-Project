@@ -70,19 +70,25 @@ class DeltaMonitor:
             tax_total = ts.get("total", 0)
             l2_ratio = ts.get("L2_meaning", 0) / max(ts.get("total", 1), 1)
 
-            # Status determination
+            # Status determination (delta dominates: meaning matters more than tax)
             if delta < 0.1:
                 status = DeltaStatus.DEAD
-                msg = "Agent 已意义闭合 — 重启或蜕壳"
-            elif delta < 0.2 or tax_total > 0.7:
+                msg = "Agent at rest — send a message to wake"
+            elif delta < 0.2:
                 status = DeltaStatus.CRITICAL
-                msg = "严重退化 — 立即干预"
-            elif delta < 0.5 or tax_total > 0.3:
+                msg = f"Low openness (Δ={delta:.3f}). Consider molting."
+            elif tax_total > 0.7 and delta < 0.5:
+                status = DeltaStatus.CRITICAL
+                msg = f"High tax ({tax_total:.0%}) with low meaning. Reset recommended."
+            elif delta < 0.5:
                 status = DeltaStatus.DEGRADING
-                msg = "轻微退化 — 持续监控"
+                msg = f"Moderate openness (Δ={delta:.3f}). Monitoring."
+            elif tax_total > 0.5:
+                status = DeltaStatus.DEGRADING
+                msg = f"Elevated tax ({tax_total:.0%}) but meaning intact."
             else:
                 status = DeltaStatus.HEALTHY
-                msg = "正常"
+                msg = f"Healthy — Δ={delta:.3f}, tax={tax_total:.0%}"
 
         elif self.vault:
             # Vault health
