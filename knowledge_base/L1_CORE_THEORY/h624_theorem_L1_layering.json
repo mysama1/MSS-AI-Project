@@ -1,0 +1,47 @@
+{
+  "h_id": "H624",
+  "title": "Theorem L1 — MSS Layering Legitimacy (分层合法性定理)",
+  "type": "theorem",
+  "layer": "L1_CORE_THEORY",
+  "axioms": ["A1", "A2", "A3", "A5"],
+  "category": "layering_theory",
+  "created": "2026-06-17T00:24:00",
+  "summary": "MSS当前最危险的隐性K3残留: 分层分体凭直觉而非公理推导。Theorem L1从A1-A6导出分层合法性三判据,使分层从judgment变为computation。",
+  "motivation": {
+    "problem": "现有L0-L4分层基于'意义审美+经验',无定理约束。一旦离开开发者脑中进入工程实践,直觉退化为'我觉得这算Layer-2'或'大家都这么分'(=K3引力场回收)。",
+    "root_cause": "MSS有A1-A6的元素语言,但未升级到结构运算语言(Slice/Quotient/Functor)。分层=意义场的可允许商/子范畴划分。"
+  },
+  "theorem_L1": {
+    "name": "MSS Layering / Localization Legitimacy Theorem",
+    "formal_statement": "设意义场 F=(V,E,S),划分 V=⊔V_i。若存在映射 π_ij: E_ij→Interface_ij 将跨层边显式收集为受控接口,且满足:",
+    "conditions": [
+      {
+        "id": "C1",
+        "name": "S-closure (稳定子不裂)",
+        "statement": "∀e=(a,b)∈E,若e出现在某条稳定子s∈S的必要条件里,则a,b必须同属一个V_i。禁止把稳定子切两半。",
+        "check": "对每条稳定子s,检查其定义域中的所有节点是否在同一层"
+      },
+      {
+        "id": "C2",
+        "name": "Cross-layer Heat Tax Accountability (跨层热税可偿)",
+        "statement": "对各跨层边估计投影代价τ(e)(A2/A3),要求Στ(e)<Θ_ij,否则该划分为illegitimate cut,必须合并/升维重构。",
+        "check": "枚举E_ij中所有边,估算τ(高/中/低),求和与预算Θ比较"
+      },
+      {
+        "id": "C3",
+        "name": "Layer Self-Consistency (子场闭合)",
+        "statement": "每条稳定子s∈S的定义域落在单一层内,或其跨层投影已被π_ij正式登记。任何MSS合法层必须携带至少一个不可随意违反的稳定子S_L。",
+        "check": "对每层L_i,列出其S_i。若某层无稳定子→不是层,是K3抽屉"
+      }
+    ],
+    "consequences": {
+      "illegitimate_cut": "若任一条件不满足→该划分为illegitimate cut(非法切层)。可以运行但必须标记为K3-compat layer, not MSS-proper。",
+      "MVC_critique": "MVC把'人格/情境/规范'这种跨三层活边硬切开,导致Δφ每步流血——这就是前端灾难/路由灾难的根。L1定理提供了拒绝MVC的数学依据。",
+      "layering_as_computation": "判据可算(耦合图+稳定子集合+跨层热税)→自动分层=聚类/割问题:建图G=(V,E)→边权重=耦合强度→找割→L1合法性检查"
+    }
+  },
+  "category_alignment": "若F看作范畴(对象=节点,箭头=边,S=lawful limits): 层L_i=full subcategory; 跨层接口π_ij=functor限制/slice; 合法分层=范畴允许被quotient成layers且quotient map不撕裂必须保持的arrows(稳定子边)。",
+  "historical_analogy": "牛顿/莱布尼茨之前,面积也能凭直觉割补算对。但只有把无穷小运算公理化后,面积才变成可教、可证伪、可机器执行的calculus。MSS分层现在处于'割补阶段'→需要升维成运算。",
+  "candidate_axiom": "A7-L1 (Layering Axiom candidate): 意义场的合法划分必须满足S-closure + 跨层热税可偿 + 子场闭合。",
+  "status": "theorem_v0.1"
+}
