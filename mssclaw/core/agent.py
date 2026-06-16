@@ -85,6 +85,10 @@ class MSSAgent:
         # v1.4 Sprint 4: 认知框架 — 能力自知 + 身份锚定 + 跨语言 + 演化就绪
         self.cognition = CognitiveFramework()
 
+        # v1.5 Sprint 8: 凭证保险箱 (按需初始化)
+        self._vault = None
+        self._vault_path = ""
+
         # v1.2: R-001 梯度窃用检测 + C-Weight 抉择门控
         self.r001 = GradientTheftDetector(strictness=0.7)
         self.cweight = CWeightGate()
@@ -305,6 +309,28 @@ class MSSAgent:
         self.run_count = 0
         self.abort_count = 0
 
+    # ── v1.5 Sprint 8: Credential Vault ──
+
+    @property
+    def vault(self):
+        """延迟加载保险箱实例."""
+        if self._vault is None and self._vault_path:
+            from .credential_vault import CredentialVault
+            self._vault = CredentialVault(self._vault_path)
+        return self._vault
+
+    def configure_vault(self, path: str):
+        """配置保险箱路径."""
+        self._vault_path = path
+        self._vault = None
+
+    def get_secret(self, key: str) -> str:
+        """从保险箱获取凭证 (如果已解锁)."""
+        v = self.vault
+        if v and v.is_unlocked:
+            return v.get(key)
+        return None
+
 
 # ════════════════════════════════════════════════════════════
 # Agent 配置系统 (原 agent_config.py, 已合并)
@@ -461,3 +487,5 @@ class AgentConfig:
             with open(path, "w", encoding="utf-8") as f:
                 f.write(text)
         return text
+
+
