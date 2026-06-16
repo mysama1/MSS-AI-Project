@@ -1,0 +1,38 @@
+{
+  "h_id": "H623",
+  "title": "MSS开发行为诊断: 无头苍蝇与苍蝇打转",
+  "type": "theory",
+  "layer": "L1_CORE_THEORY",
+  "axioms": ["A1", "A2", "A3", "A5", "A6"],
+  "category": "development_methodology",
+  "created": "2026-06-17T00:05:00",
+  "summary": "AI开发中'想到什么做什么'和'反复试错'的MSS诊断。根因非意志力,而是意义场坍塌:A5缺失(无稳定子目标锚点)、A3缺失(无热税预算反馈)、A6未激活(矛盾被压抑而非升维)。提出三个最小干预工具。",
+  "diagnosis": {
+    "headless_fly": "目标意义场只有'点'而非'场'——线性目标易漂移,无边界约束,任何方向都'合理'。A5规范路径缺失。",
+    "fly_circling": "矛盾被压抑而非升维——同一低维空间重复试错。A6升维协议未激活。反馈回路稀疏(只有编译/测试/用户反馈),无A3连续热税仪表盘。",
+    "root_cause": "K3开发范式的'意义真空'——目标无拓扑结构,行为无实时审计,矛盾无升维出口"
+  },
+  "three_interventions": [
+    {
+      "name": "热税计时器(HeatTaxTimer)",
+      "function": "记录每个开发活动的时间和效率估算。当rollingAvg(efficiency,30min)<0.3时弹出提醒。",
+      "implementation": "Python CLI, ~150行, 可立即落地"
+    },
+    {
+      "name": "目标锚点插件(GoalAnchor)",
+      "function": "IDE侧边栏显示当前开发目标的意义场: 稳定子+进度+热税。任何时候抬头都知道'我在哪、要去哪、还剩多少燃料'。",
+      "implementation": "VS Code extension或CLI status命令"
+    },
+    {
+      "name": "矛盾升维快捷键(DimensionEscalator)",
+      "function": "检测到同一行为重复N次→自动触发升维建议: 换工具/换角度/换人/换问题。",
+      "implementation": "Keybind + LLM分析, 可集成到mssclaw"
+    }
+  ],
+  "dev_goal_formalization": {
+    "stable_edges": "不可变核心需求(A1)",
+    "norm_paths": "预设行为路径,每步有热税预算(A5+A3)",
+    "escalation_protocol": "超预算或低效→自动触发升维(A6)"
+  },
+  "status": "draft"
+}
