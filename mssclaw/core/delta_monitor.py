@@ -67,8 +67,8 @@ class DeltaMonitor:
             bridge = self.agent.l2bridge.level.name
 
             delta = ds.get("current_delta", 1.0) or 0
-            tax_total = ts.get("total", 0)
-            l2_ratio = ts.get("L2_meaning", 0) / max(ts.get("total", 1), 1)
+            tax_total = min(1.0, ts.get("total", 0))  # cap at 1.0
+            l2_ratio = min(1.0, ts.get("L2_meaning", 0) / max(ts.get("total", 1), 1, 1))  # cap at 1.0
 
             # Status determination (delta dominates: meaning matters more than tax)
             if delta < 0.1:
