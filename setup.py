@@ -18,6 +18,7 @@ setup(
             "mss-agent=mss_agent.cli:main",
             "mss-vault=mss_agent.vault_cli:main",
             "mss-agent-serve=mss_agent.agent_serve:main",
+            "mssclaw=mssclaw.cli:main",
         ],
     },
     python_requires=">=3.10",
