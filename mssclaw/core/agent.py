@@ -21,6 +21,7 @@ import time
 from .heat_tax import HeatTaxBudget, HeatTaxLevel, HeatTaxAbort
 from .heat_tax_fuse import HeatTaxFuseGroup  # v1.1
 from .l2_bridge import L2Bridge, BridgeLevel  # v1.3 Sprint 3
+from .cognitive_framework import CognitiveFramework, CogStatus  # v1.4 Sprint 4
 from .gradient_theft_detector import GradientTheftDetector  # v1.2
 from .cweight_gate import CWeightGate  # v1.2
 from .delta import DeltaProtocol
@@ -80,6 +81,9 @@ class MSSAgent:
         # v1.3 Sprint 3: L2 双向桥 — 热税↔Δ 自适应耦合
         self.l2bridge = L2Bridge()
         self.l2bridge.link(self.tax, self.delta)
+
+        # v1.4 Sprint 4: 认知框架 — 能力自知 + 身份锚定 + 跨语言 + 演化就绪
+        self.cognition = CognitiveFramework()
 
         # v1.2: R-001 梯度窃用检测 + C-Weight 抉择门控
         self.r001 = GradientTheftDetector(strictness=0.7)
@@ -244,6 +248,23 @@ class MSSAgent:
         # v1.1: Attempt fuse reset if conditions allow
         self.tax.reset_fuse_if_cooled()
 
+        # v1.4 Sprint 4: Cognitive self-assessment
+        cog = self.cognition.assess(
+            task_prompt=prompt,
+            delta_history=self.delta.history,
+            tax=self.tax,
+        )
+        if cog.status == CogStatus.CRISIS:
+            self.abort_count += 1
+            return AgentResult(
+                aborted=True,
+                reason=f"Cognitive CRISIS: evolution_pressure={cog.evolution_pressure:.2f}, "
+                       f"identity_stability={cog.identity_stability:.2f}",
+                content="",
+                heat_tax=self.tax.snapshot(),
+                delta=current_delta,
+            )
+
         # Store in memory
         self.memory.store(prompt, current_delta)
 
@@ -272,6 +293,9 @@ class MSSAgent:
 
         # v1.3: L2 bridge
         report["l2_bridge"] = self.l2bridge.stats()
+
+        # v1.4: Cognitive framework
+        report["cognition"] = self.cognition.stats()
         return report
 
     def reset(self):

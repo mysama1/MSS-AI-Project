@@ -25,7 +25,7 @@ import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from mssclaw.core.tsp_bridge import (
+from mssclaw.core.swarm.tsp_bridge import (
     TSPBridge, Frame, OpCode, Flag, SandboxContext, ZeroCopyBuffer,
     MAGIC, HEADER_SIZE, HEADER_FMT, MAX_PAYLOAD,
 )
