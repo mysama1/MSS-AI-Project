@@ -248,7 +248,6 @@ def builtin_list_dir(path: str = ".") -> str:
 def builtin_run_command(command: str) -> str:
     """执行安全命令 (白名单)."""
     import subprocess
-    # Whitelist: only safe commands
     safe_commands = ["dir", "echo", "date", "time", "whoami", "hostname",
                      "ls", "pwd", "cat", "head", "wc", "uname"]
     cmd_parts = command.strip().split()
@@ -265,6 +264,27 @@ def builtin_run_command(command: str) -> str:
         return "Error: command timed out"
     except Exception as e:
         return f"Error: {e}"
+
+
+def builtin_kb_search(query: str) -> str:
+    """搜索 MSS 知识库 (618条目)."""
+    import os as _os
+    try:
+        kb_root = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), "..", "knowledge_base")
+        import sys as _sys
+        _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+        _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), ".."))
+        import kb_search
+        kb = kb_search.KBSearch()
+        results = kb.search(query, top_k=5)
+        if not results:
+            return f"No results for '{query}'"
+        lines = [f"Found {len(results)} results:"]
+        for r in results:
+            lines.append(f"  [{r.h_id}] {r.layer.split('_')[0]} {r.title[:60]}")
+        return "\n".join(lines)
+    except Exception as e:
+        return f"KB unavailable: {e}"
 
 
 def register_builtin_tools(registry: ToolRegistry):
@@ -289,7 +309,7 @@ def register_builtin_tools(registry: ToolRegistry):
         "List files in a directory",
         {"type": "object", "properties": {"path": {"type": "string"}}},
         category="file")
-    registry.register("run_command", builtin_run_command,
-        "Run a safe shell command (dir/ls/echo/date only)",
-        {"type": "object", "properties": {"command": {"type": "string"}}},
-        category="system")
+    registry.register("kb_search", builtin_kb_search,
+        "Search the MSS knowledge base (618 entries across L0-L4 layers)",
+        {"type": "object", "properties": {"query": {"type": "string"}}},
+        category="safe")
