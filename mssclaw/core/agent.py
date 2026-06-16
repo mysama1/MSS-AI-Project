@@ -334,16 +334,21 @@ class MSSAgent:
             yield f"[ABORTED: budget exceeded]"
             return
 
-        # 调用 LLM (流式 + 节奏 + 可选折叠)
+        # 调用 LLM (智能路由: 自动选择最优流式模式)
         if not hasattr(self.llm, 'stream'):
             output = self.llm(prompt)
             yield output
-        elif semantic:
-            from .semantic_styler import SemanticStreamStyler
-            raw = self.llm.stream(prompt)
-            styled = SemanticStreamStyler(raw, base_style=style)
+        elif semantic and fold:
+            from .deep_fold import deep_stream
             output_parts = []
-            for chunk in styled:
+            for chunk in deep_stream(self, prompt, style=style, fold=True):
+                output_parts.append(chunk)
+                yield chunk
+            output = "".join(output_parts)
+        elif semantic:
+            from .smart_router import routed_stream
+            output_parts = []
+            for chunk in routed_stream(self, prompt):
                 output_parts.append(chunk)
                 yield chunk
             output = "".join(output_parts)
