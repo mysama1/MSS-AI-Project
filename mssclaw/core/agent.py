@@ -311,12 +311,14 @@ class MSSAgent:
 
     # ── v1.6 Sprint 22: Streaming support ──
 
-    def run_stream(self, prompt: str):
+    def run_stream(self, prompt: str, style: str = "prose"):
         """
-        流式执行任务 — 逐 token 输出.
+        流式执行任务 — 带节奏控制的优雅输出.
+
+        style: "prose"|"code"|"poetry"|"chat"|"explain"
 
         用法:
-            for token in agent.run_stream("写一首诗"):
+            for token in agent.run_stream("写一首诗", style="poetry"):
                 print(token, end="", flush=True)
         """
         t0 = time.time()
@@ -334,16 +336,23 @@ class MSSAgent:
             yield f"[ABORTED: budget exceeded]"
             return
 
-        # 调用 LLM (流式)
+        # 调用 LLM (流式 + 节奏控制)
         if not hasattr(self.llm, 'stream'):
-            # Fallback: non-streaming
             output = self.llm(prompt)
             yield output
         else:
+            from .stream_styler import StreamStyler
+            raw_stream = self.llm.stream(prompt)
+            styled = StreamStyler(raw_stream, mode=style)
             output_parts = []
-            for token in self.llm.stream(prompt):
-                output_parts.append(token)
-                yield token
+            for chunk in styled:
+                if chunk.startswith("[") and chunk.endswith("]"):
+                    # Error/abort message, pass through unstyled
+                    output_parts.append(chunk)
+                    yield chunk
+                else:
+                    output_parts.append(chunk)
+                    yield chunk
             output = "".join(output_parts)
 
         # L2 bridge + delta + memory (same as run)
