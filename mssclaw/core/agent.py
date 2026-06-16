@@ -473,6 +473,18 @@ class MSSAgent:
             elapsed_ms=elapsed,
         )
 
+    # ── v1.8 Sprint 39: Session Persistence ──
+
+    def save_session(self, path: str = None) -> str:
+        from .session_persist import SessionPersistence
+        if path:
+            return SessionPersistence.save(self, path)
+        return SessionPersistence.auto_save(self)
+
+    def load_session(self, path: str) -> bool:
+        from .session_persist import SessionPersistence
+        return SessionPersistence.load(self, path)
+
     def run_with_docs(self, prompt: str, chunks: list) -> AgentResult:
         """
         带文档上下文的任务执行 (RAG).
