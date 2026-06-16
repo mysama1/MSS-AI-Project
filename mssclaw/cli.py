@@ -20,6 +20,7 @@ USAGE = """mssclaw — MSS AI Framework
   kb         知识库搜索 (618条目)
   absorb <描述>  吸收外部Agent/技能
   library     统一库管理
+  models      模型目录
   health     系统健康检查
   status     全系统状态面板
   version    版本信息
@@ -328,6 +329,7 @@ def main():
         "kb": cmd_kb,
         "absorb": cmd_absorb,
         "library": lambda r: __import__('mssclaw.core.library_manager', fromlist=['cmd_library']).cmd_library(r),
+        "models": lambda r: __import__('mssclaw.core.model_catalog', fromlist=['cmd_models']).cmd_models(r),
         "health": cmd_health,
         "status": cmd_status,
         "version": cmd_version,
