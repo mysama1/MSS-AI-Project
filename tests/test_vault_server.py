@@ -1,7 +1,14 @@
 """Sprint 19: Vault HTTP API 测试."""
 from __future__ import annotations
-import sys, os, tempfile, time, json, threading
+import sys, os, tempfile, time, json, threading, pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+# Vault server tests use HTTPServer which suffers Windows Job Object SIGKILL.
+# Run manually: python -m pytest tests/test_vault_server.py --run-vault-server
+pytestmark = pytest.mark.skipif(
+    sys.platform == "win32" and "--run-vault-server" not in sys.argv,
+    reason="Vault server tests skip on Windows (Job Object SIGKILL). Use --run-vault-server to override."
+)
 
 
 def test_vault_server_api():
