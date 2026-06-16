@@ -52,6 +52,7 @@ class LibraryManager:
             "tools": {},
             "skills": {},
             "kb": {},
+            "models": {},
             "immunity": {},
             "agents": {},
             "sessions": {},
@@ -86,6 +87,7 @@ class LibraryManager:
         self._scan_tools()
         self._scan_skills()
         self._scan_kb()
+        self._scan_models()
 
     def _scan_tools(self):
         try:
@@ -121,6 +123,19 @@ class LibraryManager:
             self.register("kb", "kb_main", "MSS Knowledge Base",
                          description="618 entries across 7 layers",
                          tags=["knowledge", "mss", "research"])
+        except Exception:
+            pass
+
+    def _scan_models(self):
+        try:
+            from .model_library import ModelLibrary
+            ml = ModelLibrary()
+            for entry in ml.list_all():
+                self.register(
+                    "models", entry.name, entry.name,
+                    description=f"{entry.size_gb}GB | ctx={entry.context_length} | {entry.format}",
+                    tags=entry.tags,
+                )
         except Exception:
             pass
 
