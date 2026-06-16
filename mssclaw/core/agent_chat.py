@@ -49,7 +49,7 @@ def chat_loop(model: str = "qwen2.5:7b"):
     print(c(f"║   Model: {model:<24s} ║", "cyan"))
     print(c("╚══════════════════════════════════╝", "cyan"))
     print()
-    print(c("  /clear  /save  /load  /model <name>  /vault  /tools  /absorb <desc>  /quit", "dim"))
+    print(c("  /clear  /save  /load  /model <name>  /vault  /tools  /absorb <desc>  /shell  /quit", "dim"))
     print()
 
     # Create agent
@@ -172,8 +172,20 @@ def chat_loop(model: str = "qwen2.5:7b"):
                 for d in result['report']['details']:
                     print(c(f"    {d}", "dim"))
                 continue
+            elif cmd[0] == "shell":
+                if not hasattr(agent, '_shell_mode'):
+                    agent._shell_mode = "off"
+                modes = ["off", "auto", "dual", "check"]
+                current = agent._shell_mode
+                if len(cmd) > 1 and cmd[1] in modes:
+                    agent._shell_mode = cmd[1]
+                else:
+                    idx = modes.index(current)
+                    agent._shell_mode = modes[(idx + 1) % len(modes)]
+                print(c(f"  Shell mode: {agent._shell_mode} (off|auto=FULL_DUAL|dual|check=CORE_CHECK)", "dim"))
+                continue
             else:
-                print(c("  Commands: /clear /save /load /model /vault /quit", "dim"))
+                print(c("  Commands: /clear /save /load /model /vault /tools /shell /absorb /quit", "dim"))
                 continue
 
         # Build context from history
