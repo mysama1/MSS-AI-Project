@@ -14,6 +14,7 @@ import sys, os
 USAGE = """mssclaw — MSS AI Framework
 
   init       一键环境初始化
+  auto-layer  自动分层 (L0->L3)
   mcp         MCP协议客户端
   defend      闭环防御管线
   vaccine     疫苗效力评估
@@ -331,6 +332,7 @@ def main():
     rest = args[1:]
 
     commands = {
+        "auto-layer": lambda r: __import__('mssclaw.core.auto_layering', fromlist=['cmd_auto_layer']).cmd_auto_layer(r),
         "mcp": lambda r: __import__('mssclaw.core.mcp_client', fromlist=['cmd_mcp']).cmd_mcp(r),
         "defend": lambda r: __import__('mssclaw.core.defense_pipeline', fromlist=['cmd_defend']).cmd_defend(r),
         "vaccine": lambda r: __import__('mssclaw.core.vaccine_efficacy', fromlist=['cmd_vaccine']).cmd_vaccine(r),
