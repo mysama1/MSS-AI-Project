@@ -14,6 +14,7 @@ import sys, os
 USAGE = """mssclaw — MSS AI Framework
 
   init       一键环境初始化
+  mcp         MCP协议客户端
   defend      闭环防御管线
   vaccine     疫苗效力评估
   classify    逻辑病毒分类
@@ -330,6 +331,7 @@ def main():
     rest = args[1:]
 
     commands = {
+        "mcp": lambda r: __import__('mssclaw.core.mcp_client', fromlist=['cmd_mcp']).cmd_mcp(r),
         "defend": lambda r: __import__('mssclaw.core.defense_pipeline', fromlist=['cmd_defend']).cmd_defend(r),
         "vaccine": lambda r: __import__('mssclaw.core.vaccine_efficacy', fromlist=['cmd_vaccine']).cmd_vaccine(r),
         "classify": lambda r: __import__('mssclaw.core.virus_taxonomy', fromlist=['cmd_classify']).cmd_classify(r),
