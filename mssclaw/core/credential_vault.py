@@ -177,6 +177,13 @@ class CredentialVault:
             return False
         self._touch()
         self._add_audit("put", key, success=True, detail=category)
+        # Auto-backup on write
+        if getattr(self, '_auto_backup', True):
+            try:
+                from .vault_health import VaultHealth
+                VaultHealth.backup(self)
+            except Exception:
+                pass
         return True
 
     def get(self, key: str) -> Optional[str]:

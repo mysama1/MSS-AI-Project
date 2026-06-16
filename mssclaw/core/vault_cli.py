@@ -172,6 +172,66 @@ def cmd_audit():
         print(f"  {status} {r['action']:15s} {r['key']:20s} {r.get('detail', '')}")
 
 
+def cmd_health():
+    """安全体检."""
+    from mssclaw.core.vault_health import VaultHealth
+    v = _get_vault()
+    if v.is_locked:
+        cmd_unlock()
+        v = _get_vault()
+
+    report = VaultHealth.check(v)
+    print(f"📊 总条目: {report['total_entries']}")
+    print(f"🛡️  健康分: {report['health_score']}/100 (Grade {report['grade']})")
+    print(f"   ✅ 健康: {report['healthy_count']}")
+
+    if report['weak_passwords']:
+        print(f"\n⚠️  弱密码 ({len(report['weak_passwords'])}):")
+        for w in report['weak_passwords']:
+            print(f"   - {w['key']}: {w['warning']}")
+
+    if report['duplicate_passwords']:
+        print(f"\n🔄 重复密码 ({len(report['duplicate_passwords'])}):")
+        for d in report['duplicate_passwords']:
+            print(f"   - {d['key1']} = {d['key2']}")
+
+    if report['stale_passwords']:
+        print(f"\n⏰ 过期密码 ({len(report['stale_passwords'])}):")
+        for s in report['stale_passwords']:
+            print(f"   - {s['key']}: {s['days_old']}天未更新")
+
+    if not report['weak_passwords'] and not report['duplicate_passwords'] and not report['stale_passwords']:
+        print("\n   🎉 全部健康!")
+
+
+def cmd_backup(subcmd: str = None, path: str = None):
+    """备份 / 恢复."""
+    from mssclaw.core.vault_health import VaultHealth
+    v = _get_vault()
+
+    if subcmd == "restore" and path:
+        if VaultHealth.restore(v, path):
+            print(f"✅ 已从 {path} 恢复")
+        else:
+            print("❌ 恢复失败")
+        return
+
+    if subcmd == "list":
+        backups = VaultHealth.list_backups(v)
+        if not backups:
+            print("(无备份)")
+        for b in backups:
+            print(f"  {b['time']}  {b['size_kb']}KB  {b['path']}")
+        return
+
+    # Default: backup
+    path = VaultHealth.backup(v)
+    if path:
+        print(f"✅ 已备份到 {path}")
+    else:
+        print("❌ 备份失败")
+
+
 # ═══════════════════════════════════════════
 
 USAGE = """mssclaw vault — 极简密码管理
@@ -186,6 +246,8 @@ USAGE = """mssclaw vault — 极简密码管理
   gen <key> [category]     生成强密码并存入
   export [json|csv]        导出
   import [url_filter]     从Chrome/Edge导入密码
+  health                  安全体检
+  backup [restore PATH]   备份/恢复
   audit                    审计日志"""
 
 
@@ -220,6 +282,10 @@ def main():
         cmd_import(args[1] if len(args) > 1 else None)
     elif cmd == "audit":
         cmd_audit()
+    elif cmd == "health":
+        cmd_health()
+    elif cmd == "backup":
+        cmd_backup(args[1] if len(args) > 1 else None, args[2] if len(args) > 2 else None)
     else:
         print(USAGE)
 
