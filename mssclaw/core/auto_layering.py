@@ -16,6 +16,17 @@ import ast, json
 from pathlib import Path
 from collections import defaultdict
 from typing import Dict, List, Tuple, Set
+import sys
+
+# stdlib modules to filter from auto-layering
+STDLIB_MODULES = {
+    'typing', 'dataclasses', 'time', 'json', '__future__', 'os', 'sys',
+    'pathlib', 'enum', 'collections', 'functools', 'itertools', 're',
+    'math', 'random', 'hashlib', 'subprocess', 'threading', 'queue',
+    'abc', 'copy', 'warnings', 'logging', 'traceback', 'textwrap',
+    'io', 'csv', 'base64', 'datetime', 'inspect', 'ast', 'importlib',
+    'ctypes', 'socket', 'urllib', 'http', 'ssl',
+}
 
 
 def build_coupling_matrix(project_root: str) -> Tuple[dict, dict]:
@@ -85,6 +96,9 @@ def auto_layering(project_root: str, num_layers: int = 4) -> dict:
         centrality[node] = out_deg + in_deg
 
     sorted_nodes = sorted(centrality.items(), key=lambda x: -x[1])
+    # Filter stdlib
+    sorted_nodes = [(n, c) for n, c in sorted_nodes if n not in STDLIB_MODULES]
+    n = len(sorted_nodes)
     layer_size = max(1, n // num_layers)
 
     layers = {}
