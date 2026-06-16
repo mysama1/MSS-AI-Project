@@ -19,6 +19,7 @@ USAGE = """mssclaw — MSS AI Framework
   demo       全栈演示
   kb         知识库搜索 (618条目)
   health     系统健康检查
+  status     全系统状态面板
   version    版本信息
 
 示例:
@@ -203,7 +204,77 @@ def cmd_health(args_rest):
 
 def cmd_version(args_rest):
     print(f"MSSclaw v{VERSION}")
-    print(f"114 tests | Sprints 0-34 | GitHub: mysama1/MSS-AI-Project")
+    print(f"{117} tests | Sprints 0-{61} | GitHub: mysama1/MSS-AI-Project")
+
+
+def cmd_status(args_rest):
+    """全系统状态面板."""
+    from mssclaw.core.delta_monitor import DeltaMonitor
+    from mssclaw.core.process_monitor import ProcessMonitor
+    from mssclaw.core.agent import MSSAgent
+    from mssclaw.core.llm_backend import create_backend
+    from pathlib import Path
+    import time, os
+
+    print("╔══════════════════════════════════════════╗")
+    print(f"║  MSS System Status  {time.strftime('%H:%M:%S'):>22s} ║")
+    print("╠══════════════════════════════════════════╣")
+
+    # Process
+    pm = ProcessMonitor()
+    pr = pm.check()
+    s_icon = "🟢" if pr["status"] == "HEALTHY" else "🟡"
+    print(f"║ {s_icon} Processes: {pr['total']} | Orphans: {pr['orphans']} | CPU: {pr['high_cpu']}")
+
+    # Services
+    svc = pr["services"]
+    for name, running in svc.items():
+        print(f"║   {'✅' if running else '❌'} {name}")
+
+    print("╠══════════════════════════════════════════╣")
+
+    # Vault
+    vp = Path.home() / ".mssclaw" / "vault.db"
+    if vp.exists():
+        size = vp.stat().st_size / 1024
+        bp = vp.parent / f"{vp.name}.backups"
+        bu = len(list(bp.glob("vault_*.db"))) if bp.exists() else 0
+        print(f"║ 🔐 Vault: {size:.0f}KB | Backups: {bu}")
+    else:
+        print(f"║ 🔐 Vault: not initialized")
+
+    # Sessions
+    sp = Path.home() / ".mssclaw" / "sessions"
+    if sp.exists():
+        ss = len(list(sp.glob("*.json")))
+        if ss:
+            print(f"║ 💾 Sessions: {ss}")
+
+    # KB
+    kb_path = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) / ".." / "knowledge_base"
+    if kb_path.exists():
+        layers = [d for d in kb_path.iterdir() if d.is_dir() and not d.name.startswith(".")]
+        print(f"║ 📚 KB: {len(layers)} layers")
+
+    # Delta
+    agent = MSSAgent(name="status-check", llm=create_backend("auto"))
+    dm = DeltaMonitor(agent=agent)
+    dh = dm.check()
+    d_icon = "🟢" if dh["delta_status"] == "healthy" else "🟡"
+    print(f"║ {d_icon} Delta: {dh['delta']:.3f} ({dh['delta_status']})")
+
+    print("╠══════════════════════════════════════════╣")
+
+    # Git
+    try:
+        import subprocess
+        r = subprocess.run(["git", "log", "--oneline", "-1"], capture_output=True, text=True, cwd=os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        if r.stdout:
+            print(f"║ 📦 Git: {r.stdout.strip()[:45]}")
+    except Exception:
+        pass
+
+    print("╚══════════════════════════════════════════╝")
 
 
 def main():
@@ -222,6 +293,7 @@ def main():
         "demo": cmd_demo,
         "kb": cmd_kb,
         "health": cmd_health,
+        "status": cmd_status,
         "version": cmd_version,
     }
 
