@@ -1,0 +1,25 @@
+{
+  "h_id": "H627",
+  "title": "意义场工程学 — Prompt Engineering的MSS升维",
+  "type": "theory",
+  "layer": "L1_CORE_THEORY",
+  "axioms": ["A1", "A2", "A3", "A5", "A6"],
+  "category": "meaning_field_engineering",
+  "created": "2026-06-17T00:38:00",
+  "summary": "传统提示词工程的本质是MSS意义场工程的'野生版'——工程师不自觉地实践了A1(稳定子)/A5(规范场)/A3(热税)/A2(投影)/A6(升维),但无公理体系所以不可复现/不可审计/不可组合。MSS将其升维为: 定义意义场拓扑→配置投影规则→运行审计→迭代优化。",
+  "mapping": {
+    "system_prompt": {"mss": "设定稳定子S+规范场", "axiom": "A5"},
+    "few_shot_examples": {"mss": "提供规范路径", "axiom": "A5"},
+    "temperature_sampling": {"mss": "调节热税预算T_s", "axiom": "A3"},
+    "chain_of_thought": {"mss": "强制升维路径", "axiom": "A6"},
+    "roleplay": {"mss": "构建人格吸引子", "axiom": "A1"},
+    "context_window": {"mss": "投影边界控制(限制Δφ累积)", "axiom": "A2"}
+  },
+  "k3_vs_mss": {
+    "k3_prompt_engineering": "写字符串+调参数+试错+模型依赖+不可解释",
+    "mss_meaning_field_engineering": "构建意义场拓扑(节点+边+稳定子)+定理驱动设计+L1分层检查+模型无关+每步Δφ可审计"
+  },
+  "example": "角色扮演从字符串→稳定子拓扑: identity/style/theme/taboo → stable_edges → normative_paths → heat_budget → projection_rules",
+  "analogy": "炼金术→化学, 占星→天文学, 提示词手艺→意义场工程学",
+  "next": "Theorem L1应用于现有提示词模板, 检查分层合法性"
+}
