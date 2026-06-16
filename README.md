@@ -1,8 +1,15 @@
-# MSS-Agent v0.3.0
+# mssclaw v0.3.0
 
 **世界上第一个内置「意义场自检」的开源 Agent 框架**
 
-不只是另一个 Agent 框架。MSS-Agent 在 LangChain/CrewAI/AutoGen 的基础上增加了他们都没有的东西：
+```
+mssclaw (框架平台)
+├── mss-ai models     ← 本地模型 (mss-ai-v3.4.3-balanced等)
+├── Agent 引擎         ← L2护城河 + 流式 + 工具 + RAG
+├── Vault 保险箱       ← 密码管理全栈
+├── Library 库系统     ← 工具库/技能库/知识库/免疫库/模型库
+└── CLI 统一入口       ← mssclaw vault|chat|serve|absorb|library
+```
 
 ## 🛡️ L2 独有护城河 (行业 0/40)
 - 🔥 **A3 热税预算** — 自动拒绝无意义任务
