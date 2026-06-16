@@ -18,6 +18,7 @@ USAGE = """mssclaw — MSS AI Framework
   serve      启动双服务 (Agent:5100 + Vault:5099)
   demo       全栈演示
   kb         知识库搜索 (618条目)
+  absorb <描述>  吸收外部Agent/技能
   health     系统健康检查
   status     全系统状态面板
   version    版本信息
@@ -204,7 +205,39 @@ def cmd_health(args_rest):
 
 def cmd_version(args_rest):
     print(f"MSSclaw v{VERSION}")
-    print(f"{117} tests | Sprints 0-{61} | GitHub: mysama1/MSS-AI-Project")
+    print(f"{117} tests | Sprints 0-{62} | GitHub: mysama1/MSS-AI-Project")
+
+
+def cmd_absorb(args_rest):
+    """吸收外部Agent/技能."""
+    if not args_rest:
+        print("mssclaw absorb <description>")
+        print("  e.g. mssclaw absorb 'A code review agent for Python'")
+        return
+
+    desc = " ".join(args_rest)
+    from mssclaw.core.agent import MSSAgent
+    from mssclaw.core.llm_backend import create_backend
+    from mssclaw.core.agent_absorber import AgentAbsorber
+    from mssclaw.core.digest_engine import DigestEngine
+
+    agent = MSSAgent(name="target", llm=create_backend("auto"))
+    engine = DigestEngine(agent)
+
+    print(f"Absorbing: {desc[:60]}...")
+    result = engine.absorb_and_digest(desc)
+
+    absorbed = result["absorbed"]
+    report = result["report"]
+
+    print(f"  Agent: {absorbed['name']} (role={absorbed['role']}, style={absorbed['style']})")
+    print(f"  Caps: {absorbed['capabilities']}")
+    print(f"  Tools: {absorbed['tools']}")
+    print(f"  HeatTax: {absorbed['heat_tax']:.2f} | Delta: {absorbed['delta_min']:.2f}")
+    print()
+    print(f"  Applied: {report['applied']} | Conflicts: {report['conflicts']} | Skipped: {report['skipped']}")
+    for d in report.get("details", []):
+        print(f"    {d}")
 
 
 def cmd_status(args_rest):
@@ -292,6 +325,7 @@ def main():
         "serve": cmd_serve,
         "demo": cmd_demo,
         "kb": cmd_kb,
+        "absorb": cmd_absorb,
         "health": cmd_health,
         "status": cmd_status,
         "version": cmd_version,
