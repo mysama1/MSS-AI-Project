@@ -272,6 +272,24 @@ def cmd_library(args_rest):
         for r in results:
             print(f"  [{r.library}] {r.key}: {r.name} [{','.join(r.tags)}]")
 
+    elif cmd == "export":
+        import json as _j
+        manifest = {
+            "name": "mssclaw", "version": "0.3.0",
+            "exported_at": time.time(),
+            "libraries": {}
+        }
+        for lib, entries in lm._libraries.items():
+            manifest["libraries"][lib] = [
+                {"key": e.key, "name": e.name, "tags": e.tags, "refs": e.references}
+                for e in entries.values()
+            ]
+        path = Path.home() / ".mssclaw" / "ecosystem.json"
+        path.parent.mkdir(exist_ok=True)
+        path.write_text(_j.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"Exported to {path}")
+        print(f"  {sum(len(e) for e in manifest['libraries'].values())} entries across {len(manifest['libraries'])} libraries")
+
     elif cmd == "deps" and query:
         deps = lm.dependencies(query)
         if "error" in deps:
