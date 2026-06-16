@@ -1,0 +1,23 @@
+---
+name: Bug Report
+about: Report a bug in mssclaw
+title: "[Bug] "
+labels: bug
+---
+
+**Describe the bug**
+A clear description of what happened.
+
+**To Reproduce**
+```bash
+mssclaw ...
+```
+
+**Expected behavior**
+What should have happened.
+
+**Environment**
+- OS: Windows/Linux/macOS
+- Python version: `python --version`
+- mssclaw version: `mssclaw version`
+- Ollama: running? models?

@@ -1,5 +1,5 @@
 [console_scripts]
 mss-agent = mss_agent.cli:main
 mss-agent-serve = mss_agent.agent_serve:main
-mss-vault = mss_agent.vault_cli:main
+mss-vault = mssclaw.core.vault_cli:main
 mssclaw = mssclaw.cli:main

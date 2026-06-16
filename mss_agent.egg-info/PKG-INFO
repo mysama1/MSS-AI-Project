@@ -1,21 +1,18 @@
 Metadata-Version: 2.4
 Name: mss-agent
-Version: 0.3.0
-Summary: MSS-Agent: 内置意义场自检 + 流式呼吸感 + 本地加密保险箱的开源Agent框架
+Version: 0.3.9
+Summary: MSS-Agent: AI Agent framework with meaning-field self-check, streaming, and local encrypted vault
 Home-page: https://github.com/mysama1/MSS-AI-Project
 Author: MSS-AI Project
 License: MIT
 Classifier: Development Status :: 4 - Beta
 Classifier: Intended Audience :: Developers
 Classifier: License :: OSI Approved :: MIT License
-Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.10
 Classifier: Programming Language :: Python :: 3.11
 Classifier: Programming Language :: Python :: 3.12
-Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
-License-File: LICENSE
 Requires-Dist: requests>=2.28
 Requires-Dist: cryptography>=41.0
 Provides-Extra: llm
@@ -29,106 +26,78 @@ Dynamic: description
 Dynamic: description-content-type
 Dynamic: home-page
 Dynamic: license
-Dynamic: license-file
 Dynamic: provides-extra
 Dynamic: requires-dist
 Dynamic: requires-python
 Dynamic: summary
 
-# MSS-Agent v0.3.0
+# mssclaw v0.3.0
 
 **世界上第一个内置「意义场自检」的开源 Agent 框架**
 
-不只是另一个 Agent 框架。MSS-Agent 在 LangChain/CrewAI/AutoGen 的基础上增加了他们都没有的东西：
+```
+mssclaw (框架平台)
+├── mss-ai models     ← 本地模型 (mss-ai-v3.4.3等, 9 models)
+├── Agent 引擎         ← L2护城河 + 6流式模式 + 10工具 + RAG
+├── Vault 保险箱       ← 密码管理全栈 (AES-256-GCM)
+├── Library 库系统     ← 8库643条目统一管理
+│   ├── tools(10) + skills(5) + models(30) + kb(618)
+│   └── immunity + agents + sessions + custom
+├── Multi-Model 编排   ← Shell模式(壳+核) + Pipeline + AutoRoute
+└── CLI               ← vault|chat|serve|absorb|library|models|status
+```
 
-- 🔥 **A3 热税预算** — 自动拒绝无意义任务，节省 90%+ 无效推理
-- Δ **意义开放度检测** — 实时监控 Agent 是否陷入循环/闭合
-- 🛡️ **规范场 + 幻觉盾** — 双重防线防止不安全输出
-- 🧠 **认知框架** — Agent 知道自己的能力边界和身份
-- 🔐 **本地加密保险箱** — AES-256 凭证管理，Zero-Trust
-- 🎭 **流式呼吸感** — 5 种节奏 + 语义感知 + 深度折叠
-- 🔧 **MSS 工具调用** — 每个工具调用过 L2 安检
-- 📚 **RAG 管道** — BM25+意义密度检索，零外部依赖
-- 🔄 **多Agent流水线** — Writer→Reviewer→Refiner
-- 🛡️ **容错后端** — 重试+降级+熔断
+## 🛡️ L2 独有护城河
+- 🔥 A3 热税预算  — 自动拒绝无意义任务
+- Δ 意义开放度检测  — 实时监控闭合/循环
+- 🛡️ 规范场+幻觉盾  — 31规则+4类检测
+- 🧠 认知框架  — 能力自知+身份锚定+演化就绪
+- 📊 Δ 健康监控  — 不只"活着", 要"有意义"
 
-**行业评分**: 核心能力 26/40 + L2 护城河 34/40 = **60/80** (领先 LangChain 22分)
+## 🤖 Agent 核心能力
+- LLM 后端: Ollama + OpenAI兼容
+- 流式输出: 6模式+语义感知+深度折叠+速度对齐
+- 工具调用: 10内置工具+L2安检 (safe|file|office)
+- RAG 管道: BM25+密度, 零外部依赖
+- 多Agent流水线: Writer→Reviewer→Refiner
+- 容错: 重试+降级+熔断
+- 记忆: 三层存储+自动凝聚
+- 评测: 道评分 valid−pseudo×2.0 (MSS独有)
 
-## 快速开始
+## 🔐 MSS Vault 全栈
+- 加密: AES-256-GCM, Zero-Trust
+- CLI: `mss-vault` 15+命令
+- Web面板: http://127.0.0.1:5099
+- HTTP API: RESTful
+- 导入: Chrome/Edge 一键迁移
+- 备份: 自动+旋转
 
+## 🌐 全球模型目录 (30 models)
+- Cloud(18): GPT-4o, Claude 3.5, Gemini 2.0/2.5, DeepSeek V3/R1, Grok-2...
+- Local(9): Ollama自动扫描
+- MSS(3): mss-ai-v3.4.3-balanced/slim, mss-ai-v3.4.2-production
+
+## 🧬 MSS 独有特性
+| 特性 | 同行 |
+|---|---|
+| L2 意义场护城河 | ❌ |
+| 语义流式+折叠+路由 | ❌ |
+| 道评分评测 | ❌ |
+| 技能编译器(吸收→消化) | ❌ |
+| 逻辑病毒检测+群体免疫 | ❌ |
+| Shell双模型(壳+核) | ❌ |
+| 多模型智能编排 | ⚠️ 部分 |
+| 统一库管理+跨库检索 | ❌ |
+
+## 🚀 快速开始
 ```bash
 pip install mss-agent
-
-# 密码管理器
-mss-vault setup
-mss-vault add github_token ghp_xxx
-mss-vault serve                    # Web面板: http://127.0.0.1:5099
-
-# Agent (需要 Ollama)
-ollama pull qwen2.5:7b
-mss-agent-serve --model qwen2.5:7b  # API: http://127.0.0.1:5100
+mss-vault quickstart
+mssclaw chat --model qwen2.5:7b
+mssclaw serve --all
 ```
 
-## Python API
-
-```python
-from mssclaw.core.agent import MSSAgent
-from mssclaw.core.llm_backend import OllamaBackend
-
-# 创建 Agent (真 LLM)
-agent = MSSAgent("poet", llm=OllamaBackend("qwen2.5:7b"))
-
-# 流式输出 (语义感知节奏)
-for token in agent.run_stream("写一首五言绝句", semantic=True):
-    print(token, end="", flush=True)
-```
-
-## 架构
-
-```
-┌─────────────────────────────────────────────────────┐
-│  L2 五维护城河                                       │
-│  HeatTax ↔ Delta ↔ NormativeField ↔ HallucinationShield ↔ CognitiveFramework │
-│         ↕              ↕                      ↕                       ↕       │
-│      L2Bridge    NormShieldBridge    DriftCompactionGuard        assess()     │
-├─────────────────────────────────────────────────────┤
-│  流式输出: SmartRouter → SemanticStyler → DeepFold   │
-│  LLM后端: OllamaBackend / OpenAIBackend              │
-├─────────────────────────────────────────────────────┤
-│  凭证保险箱: CredentialVault + Toolkit + CLI + Web   │
-│  备份/健康/统计/搜索/Chrome导入/HTTP API             │
-└─────────────────────────────────────────────────────┘
-```
-
-## CLI 命令
-
-| 命令 | 功能 |
-|---|---|
-| `mss-vault setup` | 初始化保险箱 |
-| `mss-vault add/get/list/search` | 凭证管理 |
-| `mss-vault gen <key>` | 生成强密码 |
-| `mss-vault import` | 从Chrome导入 |
-| `mss-vault health/stats` | 健康检查/统计 |
-| `mss-vault serve` | Web面板 (127.0.0.1:5099) |
-| `mss-agent-serve` | Agent API (127.0.0.1:5100) |
-
-## 流式模式
-
-| 模式 | 效果 |
-|---|---|
-| `chat` | ⚡ 极速对话 (L0) |
-| `prose` | 📖 自然标点停顿 (L1) |
-| `poetry` | 🐌 诗歌节奏 (L2 + 语义) |
-| `explain` | 📝 深度解释 + 自动折叠 (L2) |
-| `code` | 🔧 代码慢速精准 (L2) |
-
-## Docker
-
-```bash
-docker build -t mssclaw .
-docker-compose up -d
-```
-
-## License
-
-MIT
+## 📊 开发统计
+- 81 Sprints | 117 Tests | 81 Commits
+- v0.3.0 | GitHub: mysama1/MSS-AI-Project
+- License: MIT
