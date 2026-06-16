@@ -1,141 +1,312 @@
-<!DOCTYPE html><html lang="zh" data-theme="dark"><head>
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>mssclaw — AI Agent</title>
+<meta name="description" content="mssclaw — AI Agent with meaning-field self-check">
+<title>mssclaw v0.3.9</title>
 <style>
-  :root{--bg:#111;--side:#18181b;--card:#25252b;--bdr:#2e2e38;--tx:#e4e4e7;
-  --dim:#71717a;--ac:#7c3aed;--ac2:#6d28d9;--ok:#22c55e;--warn:#eab308;--bad:#ef4444;
-  --r:8px;--f:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--m:'Cascadia Code',Consolas,monospace}
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font:14px/1.5 var(--f);background:var(--bg);color:var(--tx);display:flex;height:100vh;overflow:hidden}
-  /* Sidebar */
-  #sb{width:260px;min-width:260px;background:var(--side);display:flex;flex-direction:column;border-right:1px solid var(--bdr)}
-  #sb-top{padding:16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between}
-  #sb-top h1{font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px;color:var(--tx)}
-  #sb-top .ver{font-size:10px;color:var(--dim);margin-top:1px}
-  .btn{background:var(--ac);color:#fff;border:none;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;transition:.15s}.btn:hover{background:var(--ac2)}.btn:disabled{opacity:.5}
-  .btn-ghost{background:transparent;color:var(--dim);border:1px solid var(--bdr);padding:5px 10px;border-radius:6px;font-size:12px;cursor:pointer}.btn-ghost:hover{color:var(--tx);border-color:var(--ac)}
-  #sessions{flex:1;overflow-y:auto;padding:8px}
-  .sess{padding:8px 10px;margin-bottom:2px;border-radius:6px;font-size:13px;color:var(--dim);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .12s}.sess:hover{background:var(--card);color:var(--tx)}.sess.sel{background:var(--ac);color:#fff}
-  #sb-bot{padding:12px 16px;border-top:1px solid var(--bdr);display:flex;flex-direction:column;gap:8px}
-  #sb-bot select{width:100%;padding:8px;border-radius:6px;border:1px solid var(--bdr);background:var(--card);color:var(--tx);font-size:13px;outline:none}
-  #sb-status{font-size:11px;color:var(--dim);display:flex;align-items:center;gap:4px}
-  .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}.dot.on{background:var(--ok)}.dot.off{background:var(--bad)}
-  /* Main */
-  #main{flex:1;display:flex;flex-direction:column;min-width:0}
-  #header{padding:10px 20px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:12px;font-size:13px}
-  #header .title{font-weight:600;flex:1}
-  #msgs{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px}
-  .welcome{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--dim);gap:8px}
-  .welcome .icon{font-size:40px;margin-bottom:8px}
-  .welcome h2{font-size:18px;font-weight:600;color:var(--tx)}
-  .welcome p{font-size:13px}
-  .welcome .hints{margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-  .welcome .hint{background:var(--card);border:1px solid var(--bdr);padding:6px 14px;border-radius:20px;font-size:12px;color:var(--dim);cursor:pointer;transition:.12s}.welcome .hint:hover{color:var(--tx);border-color:var(--ac)}
-  .msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:14px;line-height:1.6;animation:in .15s ease-out}@keyframes in{from{opacity:0;transform:translateY(6px)}}
-  .msg.user{align-self:flex-end;background:var(--ac);border-bottom-right-radius:4px}
-  .msg.ai{align-self:flex-start;background:var(--card);border-bottom-left-radius:4px}
-  .msg pre{background:#000;padding:10px 14px;border-radius:6px;overflow-x:auto;font:13px var(--m);margin:8px 0;border:1px solid var(--bdr)}
-  .msg code{font:13px var(--m);background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px}
-  .msg pre code{background:0;padding:0;border-radius:0}
-  .msg-footer{font-size:10px;color:var(--dim);margin-top:6px;display:flex;gap:10px}
-  .stream .msg:last-child:after{content:'▊';animation:blink 1s steps(1) infinite;margin-left:2px}@keyframes blink{50%{opacity:0}}
-  .sheet{position:fixed;top:0;right:0;width:380px;height:100vh;background:var(--side);border-left:1px solid var(--bdr);z-index:10;overflow-y:auto;padding:20px;display:none}.sheet.open{display:block}
-  .sheet h3{font-size:14px;margin-bottom:16px}
-  .metric{background:var(--card);padding:12px 16px;border-radius:var(--r);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}.metric .l{font-size:13px;color:var(--dim)}.metric .v{font-size:16px;font-weight:700}
-  /* Input */
-  #inp-row{padding:12px 20px;border-top:1px solid var(--bdr);display:flex;gap:8px;align-items:flex-end}
-  #inp-row textarea{flex:1;padding:10px 14px;border-radius:var(--r);border:1px solid var(--bdr);background:var(--card);color:var(--tx);font:14px var(--f);resize:none;height:42px;max-height:120px;outline:none;transition:border-color .15s}
-  #inp-row textarea:focus{border-color:var(--ac)}
-  #stats{font-size:10px;color:var(--dim);padding:4px 20px;display:flex;gap:14px}
-  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:0}::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:3px}
+  :root{
+    --bg:#09090b;--surface:#18181b;--card:#27272a;--border:#3f3f46;--muted:#52525b;
+    --tx:#fafafa;--dim:#a1a1aa;--accent:#8b5cf6;--accent-hover:#7c3aed;--accent-dim:rgba(139,92,246,.15);
+    --ok:#22c55e;--warn:#eab308;--err:#ef4444;--info:#3b82f6;
+    --radius-sm:6px;--radius:10px;--radius-lg:14px;--radius-full:9999px;
+    --space-xs:4px;--space-sm:8px;--space:12px;--space-md:16px;--space-lg:24px;
+    --font-sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --font-mono:'Cascadia Code','JetBrains Mono',Consolas,monospace;
+    --transition:150ms ease;
+    --shadow:0 1px 3px rgba(0,0,0,.3),0 1px 2px rgba(0,0,0,.2);
+    --shadow-lg:0 4px 14px rgba(0,0,0,.4);
+  }
+  [data-theme="light"]{--bg:#fff;--surface:#f4f4f5;--card:#e4e4e7;--border:#d4d4d8;--muted:#a1a1aa;--tx:#18181b;--dim:#71717a;--accent-dim:rgba(139,92,246,.1);--shadow:0 1px 3px rgba(0,0,0,.1);--shadow-lg:0 4px 14px rgba(0,0,0,.15)}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px;-webkit-text-size-adjust:100%}
+  body{font-family:var(--font-sans);font-size:14px;line-height:1.5;color:var(--tx);background:var(--bg);display:flex;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  
+  /* Layout */
+  #sidebar{width:280px;min-width:280px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:10}
+  #sidebar-header{padding:var(--space-md);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+  #sidebar-header .brand{display:flex;align-items:center;gap:var(--space-sm)}
+  #sidebar-header .brand-icon{width:28px;height:28px;background:var(--accent);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:16px}
+  #sidebar-header h1{font-size:15px;font-weight:700;letter-spacing:-.01em}
+  #sidebar-header .ver{font-size:11px;color:var(--dim);line-height:1}
+  
+  #session-list{flex:1;overflow-y:auto;padding:var(--space-sm)}
+  .session{padding:var(--space-sm) var(--space);margin-bottom:2px;border-radius:var(--radius-sm);font-size:13px;color:var(--dim);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all var(--transition);border:1px solid transparent;user-select:none}
+  .session:hover{background:var(--card);color:var(--tx);border-color:var(--border)}
+  .session.active{background:var(--accent-dim);color:var(--accent);border-color:var(--accent);font-weight:500}
+  .session:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:var(--radius-sm)}
+  
+  #sidebar-footer{padding:var(--space);border-top:1px solid var(--border);display:flex;flex-direction:column;gap:var(--space-sm)}
+  #sidebar-footer select{appearance:none;width:100%;padding:var(--space-sm) var(--space);border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--card);color:var(--tx);font-size:13px;cursor:pointer;outline:none;transition:border-color var(--transition);background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a1a1aa' d='M6 8L1 3h10z'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 8px center;padding-right:28px}
+  #sidebar-footer select:hover{border-color:var(--muted)}
+  #sidebar-footer select:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-dim)}
+  #status-bar{display:flex;align-items:center;gap:var(--space-sm);font-size:11px;color:var(--dim);padding:var(--space-xs) 0}
+  .status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;transition:background var(--transition)}.status-dot.on{background:var(--ok)}.status-dot.off{background:var(--err)}
+  .status-dot.pulse{animation:pulse 2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  
+  /* Main area */
+  #main{flex:1;display:flex;flex-direction:column;min-width:0;position:relative}
+  #top-bar{padding:var(--space-sm) var(--space-lg);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:var(--space);min-height:44px}
+  #top-bar .session-title{font-weight:600;font-size:14px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;user-select:none}
+  .icon-btn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--dim);cursor:pointer;transition:all var(--transition);font-size:14px}
+  .icon-btn:hover{color:var(--tx);border-color:var(--muted);background:var(--card)}
+  .icon-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .icon-btn.active{color:var(--accent);border-color:var(--accent);background:var(--accent-dim)}
+  
+  #messages{flex:1;overflow-y:auto;padding:var(--space-lg);display:flex;flex-direction:column;gap:var(--space-md);scroll-behavior:smooth}
+  .welcome{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;color:var(--dim);gap:var(--space)}
+  .welcome-icon{font-size:44px;line-height:1;margin-bottom:var(--space-sm)}
+  .welcome h2{font-size:20px;font-weight:700;color:var(--tx);letter-spacing:-.02em}
+  .welcome p{font-size:13px;max-width:320px}
+  .quick-hints{display:flex;gap:var(--space-sm);flex-wrap:wrap;justify-content:center;margin-top:var(--space-md)}
+  .quick-hint{padding:var(--space-sm) var(--space);background:var(--card);border:1px solid var(--border);border-radius:var(--radius-full);font-size:12px;color:var(--dim);cursor:pointer;transition:all var(--transition);white-space:nowrap}
+  .quick-hint:hover{color:var(--tx);border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow)}
+  .quick-hint:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  
+  .message{max-width:82%;padding:var(--space) var(--space-md);border-radius:var(--radius-lg);font-size:14px;line-height:1.6;animation:msg-in .2s ease-out;position:relative}
+  @keyframes msg-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .message.user{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:var(--radius-sm)}
+  .message.ai{align-self:flex-start;background:var(--card);border:1px solid var(--border);border-bottom-left-radius:var(--radius-sm)}
+  .message.ai.error{border-color:var(--err);background:rgba(239,68,68,.08)}
+  .message pre{background:#000;padding:var(--space) var(--space-md);border-radius:var(--radius-sm);overflow-x:auto;font:13px/1.5 var(--font-mono);margin:var(--space-sm) 0;border:1px solid var(--border)}
+  .message code{font:13px var(--font-mono);background:rgba(255,255,255,.1);padding:1px 5px;border-radius:3px}
+  .message pre code{background:none;padding:0;border-radius:0}
+  .message-footer{font-size:10px;color:var(--dim);margin-top:var(--space-sm);display:flex;gap:var(--space);align-items:center;flex-wrap:wrap}
+  .message.user .message-footer{color:rgba(255,255,255,.5)}
+  .streaming .message:last-child:after{content:'▊';animation:cursor-blink 1s steps(1) infinite;margin-left:2px;color:var(--accent)}@keyframes cursor-blink{50%{opacity:0}}
+  
+  #bottom-stats{padding:var(--space-xs) var(--space-lg);font-size:10px;color:var(--dim);display:flex;gap:var(--space-md);border-top:1px solid var(--border);overflow-x:auto}
+  #bottom-stats span{white-space:nowrap}
+  
+  #input-bar{padding:var(--space) var(--space-lg);border-top:1px solid var(--border);display:flex;gap:var(--space-sm);align-items:flex-end}
+  #input-bar textarea{flex:1;padding:var(--space-sm) var(--space);border-radius:var(--radius);border:1px solid var(--border);background:var(--card);color:var(--tx);font:14px var(--font-sans);resize:none;height:42px;max-height:120px;outline:none;transition:border-color var(--transition);line-height:1.5}
+  #input-bar textarea:hover{border-color:var(--muted)}
+  #input-bar textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+  #input-bar textarea::placeholder{color:var(--muted)}
+  .btn-primary{padding:var(--space-sm) var(--space-md);border:none;border-radius:var(--radius-sm);background:var(--accent);color:#fff;font-size:14px;font-weight:600;cursor:pointer;transition:all var(--transition);white-space:nowrap;display:flex;align-items:center;gap:var(--space-xs)}
+  .btn-primary:hover{background:var(--accent-hover);transform:translateY(-1px);box-shadow:var(--shadow)}
+  .btn-primary:active{transform:translateY(0)}
+  .btn-primary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+  
+  /* Slide panels */
+  .panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:20;display:none;animation:fade-in .15s}@keyframes fade-in{from{opacity:0}}
+  .panel-overlay.open{display:block}
+  .slide-panel{position:fixed;top:0;right:0;width:380px;max-width:90vw;height:100vh;background:var(--surface);border-left:1px solid var(--border);z-index:21;overflow-y:auto;padding:var(--space-lg);display:none;animation:slide-in .2s ease-out}@keyframes slide-in{from{transform:translateX(100%)}}
+  .slide-panel.open{display:block}
+  .slide-panel h3{font-size:16px;font-weight:700;margin-bottom:var(--space-md);display:flex;align-items:center;gap:var(--space-sm)}
+  .slide-panel .close-btn{position:absolute;top:var(--space);right:var(--space)}
+  
+  .metric-row{background:var(--card);padding:var(--space) var(--space-md);border-radius:var(--radius-sm);margin-bottom:var(--space-sm);display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border)}
+  .metric-row .metric-label{font-size:13px;color:var(--dim)}
+  .metric-row .metric-value{font-size:16px;font-weight:700}
+  .metric-row .metric-value.ok{color:var(--ok)}.metric-row .metric-value.warn{color:var(--warn)}.metric-row .metric-value.err{color:var(--err)}
+  
+  /* Toast */
+  #toast{position:fixed;bottom:var(--space-lg);right:var(--space-lg);z-index:100;display:flex;flex-direction:column;gap:var(--space-sm)}
+  .toast-item{background:var(--card);border:1px solid var(--border);padding:var(--space) var(--space-md);border-radius:var(--radius-sm);font-size:13px;box-shadow:var(--shadow-lg);animation:toast-in .3s ease-out;max-width:320px}@keyframes toast-in{from{opacity:0;transform:translateX(20px)}}
+  .toast-item.success{border-left:3px solid var(--ok)}.toast-item.error{border-left:3px solid var(--err)}
+  
+  /* Scrollbar */
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--muted)}
+  
+  /* Keyboard shortcut overlay */
+  #shortcuts-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;display:none;align-items:center;justify-content:center}
+  #shortcuts-overlay.open{display:flex}
+  #shortcuts-dialog{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-lg);min-width:360px;box-shadow:var(--shadow-lg)}
+  #shortcuts-dialog h3{font-size:16px;margin-bottom:var(--space-md)}
+  #shortcuts-dialog kbd{background:var(--card);border:1px solid var(--border);padding:2px 8px;border-radius:4px;font:12px var(--font-mono);color:var(--tx)}
+  .shortcut-row{display:flex;justify-content:space-between;align-items:center;padding:var(--space-xs) 0;font-size:13px}
+  .shortcut-row .key{display:flex;gap:4px}
 </style></head><body>
 
-<aside id="sb">
-  <div id="sb-top"><div><h1>🧬 mssclaw</h1><div class="ver">v0.3.9 · Agent</div></div><button class="btn" onclick="newChat()" title="New session (Ctrl+N)">+</button></div>
-  <div id="sessions"></div>
-  <div id="sb-bot">
-    <select id="mdl" onchange="setModel(this.value)"><option>qwen2.5:7b</option><option>phi3:mini</option><option>mss-ai-v3.4.3-balanced</option></select>
-    <div id="sb-status"><span class="dot on"></span><span id="status-text">Agent Online</span></div>
+<aside id="sidebar" role="navigation" aria-label="Session sidebar">
+  <div id="sidebar-header">
+    <div class="brand"><div class="brand-icon" aria-hidden="true">🧬</div><div><h1>mssclaw</h1><div class="ver">v0.3.9</div></div></div>
+    <button class="icon-btn" onclick="newChat()" title="New session" aria-label="Create new chat session">＋</button>
+  </div>
+  <div id="session-list" role="listbox" aria-label="Chat sessions"></div>
+  <div id="sidebar-footer">
+    <select id="model-select" onchange="setModel(this.value)" aria-label="Select AI model">
+      <option value="qwen2.5:7b">qwen2.5:7b</option>
+      <option value="phi3:mini">phi3:mini</option>
+      <option value="mss-ai-v3.4.3-balanced">mss-ai-v3.4.3</option>
+    </select>
+    <div id="status-bar"><span class="status-dot pulse on" id="agent-dot"></span><span id="agent-label">Agent Online</span></div>
   </div>
 </aside>
 
 <main id="main">
-  <div id="header">
-    <span class="title" id="title">New Chat</span>
-    <button class="btn-ghost" onclick="toggleSheet('health-sheet')">📊</button>
-    <button class="btn-ghost" onclick="toggleSheet('models-sheet')">🤖</button>
+  <div id="top-bar">
+    <span class="session-title" id="session-title">mssclaw</span>
+    <button class="icon-btn" onclick="togglePanel('health')" title="System Health" aria-label="View system health">📊</button>
+    <button class="icon-btn" onclick="togglePanel('models')" title="Ollama Models" aria-label="View models">🤖</button>
+    <button class="icon-btn" onclick="toggleShortcuts()" title="Keyboard Shortcuts" aria-label="Keyboard shortcuts">⌨</button>
+    <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle dark/light theme">🌓</button>
   </div>
-  <div id="msgs"><div class="welcome"><div class="icon">🧬</div><h2>mssclaw — Meaning Supremacy System</h2><p>AI Agent with heat-tax budget, delta openness, meaning-field self-check</p><div class="hints"><span class="hint" onclick="quick('解释什么是热税')">🔥 What is heat tax?</span><span class="hint" onclick="quick('解释A6矛盾升维公理')">📐 A6 Axiom</span><span class="hint" onclick="quick('mssclaw有哪些功能')">🛠️ Features</span></div></div></div>
-  <div id="stats"><span id="stats-delta">Δ -=</span><span id="stats-tax">Tax = -</span><span id="stats-model">qwen2.5:7b</span><span id="stats-sess">0 sessions</span></div>
-  <div id="inp-row"><textarea id="inp" placeholder="Message mssclaw... (Enter to send)" rows="1" onkeydown="k(event)" oninput="this.style.height='42px';this.style.height=Math.min(this.scrollHeight,120)+'px'"></textarea><button class="btn" id="send-btn" onclick="send()">Send</button></div>
+
+  <div id="messages" role="log" aria-live="polite" aria-label="Conversation">
+    <div class="welcome">
+      <div class="welcome-icon" aria-hidden="true">🧬</div>
+      <h2>mssclaw — Meaning Supremacy System</h2>
+      <p>AI Agent with built-in meaning-field self-check. Heat-tax budget, delta openness, L2 bridge.</p>
+      <div class="quick-hints">
+        <button class="quick-hint" onclick="quickSend('Explain heat tax (A3 axiom) in simple terms')">🔥 Heat Tax</button>
+        <button class="quick-hint" onclick="quickSend('What is the A6 contradiction elevation axiom?')">📐 A6 Axiom</button>
+        <button class="quick-hint" onclick="quickSend('List all mssclaw features')">🛠️ Features</button>
+        <button class="quick-hint" onclick="quickSend('Write a haiku about AI')">🎨 Create</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="bottom-stats">
+    <span id="stat-delta">Δ 0.00</span><span id="stat-tax">Tax 0%</span>
+    <span id="stat-model">qwen2.5:7b</span><span id="stat-sessions">0 sessions</span>
+    <span id="stat-bridge">STABLE</span>
+  </div>
+
+  <div id="input-bar">
+    <textarea id="chat-input" placeholder="Message mssclaw... (Enter send · Shift+Enter new line · Ctrl+N new · ? shortcuts)" rows="1" aria-label="Chat input" onkeydown="onInputKey(event)" oninput="autoResize(this)"></textarea>
+    <button class="btn-primary" id="send-btn" onclick="sendMessage()">Send</button>
+  </div>
 </main>
 
-<div id="health-sheet" class="sheet"><h3>📊 System Health</h3><div id="health-data"></div></div>
-<div id="models-sheet" class="sheet"><h3>🤖 Ollama Models</h3><div id="models-data"></div></div>
+<!-- Health panel -->
+<div class="panel-overlay" id="health-overlay" onclick="togglePanel('health')"></div>
+<div class="slide-panel" id="health-panel"><button class="icon-btn close-btn" onclick="togglePanel('health')" aria-label="Close health panel">✕</button><h3>📊 System Health</h3><div id="health-content"><p style="color:var(--dim)">Loading...</p></div></div>
+
+<!-- Models panel -->
+<div class="panel-overlay" id="models-overlay" onclick="togglePanel('models')"></div>
+<div class="slide-panel" id="models-panel"><button class="icon-btn close-btn" onclick="togglePanel('models')" aria-label="Close models panel">✕</button><h3>🤖 Ollama Models</h3><div id="models-content"><p style="color:var(--dim)">Loading...</p></div></div>
+
+<div id="shortcuts-overlay" onclick="toggleShortcuts()">
+  <div id="shortcuts-dialog" onclick="event.stopPropagation()">
+    <h3>⌨ Keyboard Shortcuts</h3>
+    <div class="shortcut-row"><span>Send message</span><span class="key"><kbd>Enter</kbd></span></div>
+    <div class="shortcut-row"><span>New line</span><span class="key"><kbd>Shift</kbd>+<kbd>Enter</kbd></span></div>
+    <div class="shortcut-row"><span>New session</span><span class="key"><kbd>Ctrl</kbd>+<kbd>N</kbd></span></div>
+    <div class="shortcut-row"><span>Toggle theme</span><span class="key"><kbd>Ctrl</kbd>+<kbd>T</kbd></span></div>
+    <div class="shortcut-row"><span>Shortcuts</span><span class="key"><kbd>?</kbd></span></div>
+    <p style="margin-top:var(--space);font-size:11px;color:var(--dim)">Click outside or press <kbd>Esc</kbd> to close</p>
+  </div>
+</div>
+
+<div id="toast"></div>
 
 <script>
 const API='http://127.0.0.1:5100',OLLAMA='http://localhost:11434/api/tags';
-let st={sessions:JSON.parse(localStorage.mss||'[]'),cur:null,msgs:[],model:'qwen2.5:7b',sending:false};
+const ST={sessions:[],cur:null,msgs:[],model:'qwen2.5:7b',sending:false,theme:'dark'};
+
+// ═══ Init ═══
+const raw=localStorage.getItem('mss_v2');
+ST.sessions=raw?JSON.parse(raw):[{id:'s1',title:'New Chat',msgs:[],ts:Date.now()}];
+ST.cur=ST.sessions[0];ST.msgs=ST.cur.msgs||[];
 
 function init(){
-  if(!st.sessions.length)st.sessions=[{id:'s1',title:'New Chat',msgs:[],ts:Date.now()}];
-  st.cur=st.sessions[0];st.msgs=st.cur.msgs;render();check();
-  setInterval(check,15000);
+  const el=id=>document.getElementById(id);
+  renderSessions();renderMessages();checkHealth();
+  setInterval(checkHealth,20000);
+  el('chat-input').focus();
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){closePanels();closeShortcuts()}
+    if(e.key==='?'&&!e.ctrlKey&&!e.metaKey&&document.activeElement===el('chat-input')){e.preventDefault();toggleShortcuts()}
+    if(e.key==='t'&&e.ctrlKey){e.preventDefault();toggleTheme()}
+  });
 }
-function save(){if(st.cur){st.cur.msgs=st.msgs;st.cur.title=st.msgs.length?st.msgs[0].content.slice(0,30):'New Chat'}localStorage.mss=JSON.stringify(st.sessions)}
-function render(){
-  let h=st.sessions.map(s=>`<div class="sess${s.id===st.cur.id?' sel':''}" onclick="switchChat('${s.id}')">${s.title||'New Chat'}</div>`).join('');
-  document.getElementById('sessions').innerHTML=h;
-  let mh;
-  if(!st.msgs.length)mh='<div class="welcome"><div class="icon">🧬</div><h2>mssclaw</h2><p>AI Agent ready. Start a conversation.</p></div>';
-  else mh=st.msgs.map((m,i)=>`<div class="msg ${m.role}">${fmt(m.content)}${m.meta?`<div class="msg-footer">${m.meta}</div>`:''}</div>`).join('');
-  document.getElementById('msgs').innerHTML=mh;document.getElementById('msgs').scrollTop=document.getElementById('msgs').scrollHeight;
-  document.getElementById('title').textContent=st.cur.title||'New Chat';
-  document.getElementById('stats-sess').textContent=st.sessions.length+' sessions';
+
+// ═══ Data ═══
+function save(){if(ST.cur){ST.cur.msgs=ST.msgs;if(ST.msgs.length)ST.cur.title=ST.msgs[0].content.slice(0,40)}localStorage.setItem('mss_v2',JSON.stringify(ST.sessions))}
+
+// ═══ Render ═══
+function renderSessions(){
+  document.getElementById('session-list').innerHTML=ST.sessions.map((s,i)=>`<div class="session${s.id===ST.cur.id?' active':''}" role="option" tabindex="0" onclick="switchSession('${s.id}')" onkeydown="if(event.key==='Enter')switchSession('${s.id}')">${s.title||'New Chat'}</div>`).join('');
+}
+function renderMessages(){
+  const el=document.getElementById('messages');
+  if(!ST.msgs.length){el.innerHTML='<div class="welcome"><div class="welcome-icon">🧬</div><h2>mssclaw</h2><p>Agent ready. Start a conversation.</p></div>';return}
+  el.innerHTML=ST.msgs.map(m=>`<div class="message ${m.role}${m.error?' error':''}">${fmt(m.content)}${m.meta?`<div class="message-footer">${m.meta}</div>`:''}</div>`).join('');
+  el.scrollTop=el.scrollHeight;
+  document.getElementById('session-title').textContent=ST.cur.title||'New Chat';
+  document.getElementById('stat-sessions').textContent=ST.sessions.length+' sessions';
+  document.getElementById('stat-model').textContent=ST.model;
 }
 function fmt(t){return String(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/```(\w*)\n?([\s\S]*?)```/g,'<pre><code>$2</code></pre>').replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}
 
-function newChat(){save();let s={id:'s'+Date.now(),title:'New Chat',msgs:[],ts:Date.now()};st.sessions.unshift(s);st.cur=s;st.msgs=[];render()}
-function switchChat(id){save();st.cur=st.sessions.find(s=>s.id===id);st.msgs=st.cur.msgs;render()}
-function quick(txt){document.getElementById('inp').value=txt;send()}
-function setModel(m){st.model=m;document.getElementById('stats-model').textContent=m}
+// ═══ Actions ═══
+function newChat(){save();const s={id:'s'+Date.now(),title:'New Chat',msgs:[],ts:Date.now()};ST.sessions.unshift(s);ST.cur=s;ST.msgs=[];renderSessions();renderMessages();document.getElementById('chat-input').focus()}
+function switchSession(id){save();ST.cur=ST.sessions.find(s=>s.id===id);if(!ST.cur)return;ST.msgs=ST.cur.msgs||[];renderSessions();renderMessages()}
+function setModel(m){ST.model=m}
+function quickSend(txt){document.getElementById('chat-input').value=txt;sendMessage()}
 
-async function send(){
-  let inp=document.getElementById('inp'),txt=inp.value.trim();if(!txt||st.sending)return;inp.value='';inp.style.height='42px';
-  st.sending=true;let btn=document.getElementById('send-btn');btn.disabled=true;btn.textContent='...';
-  document.getElementById('msgs').classList.add('stream');
-  st.msgs.push({role:'user',content:txt});render();
+async function sendMessage(){
+  const inp=document.getElementById('chat-input'),txt=inp.value.trim();if(!txt||ST.sending)return;
+  inp.value='';inp.style.height='42px';ST.sending=true;
+  const btn=document.getElementById('send-btn');btn.disabled=true;btn.innerHTML='<span>...</span>';
+  document.getElementById('messages').classList.add('streaming');
+  ST.msgs.push({role:'user',content:txt});renderMessages();
   try{
-    let r=await fetch(API+'/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:txt})});
-    if(!r.ok)throw new Error(r.status);
-    let d=await r.json();
-    st.msgs.push({role:'ai',content:d.output||d.response||'[empty]',meta:`Δ=${d.delta||'?'} · ${d.bridge||'?'} · ${d.elapsed_ms||0}ms · tax=${d.heat_tax||0}`});
-    render();save();
-  }catch(e){st.msgs.push({role:'ai',content:`⚠️ Agent offline.\n\nStart: \`mssclaw serve\``});render()}
-  st.sending=false;btn.disabled=false;btn.textContent='Send';document.getElementById('msgs').classList.remove('stream');
+    const r=await fetch(API+'/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:txt})});
+    if(!r.ok)throw new Error(`HTTP ${r.status}`);
+    const d=await r.json();
+    ST.msgs.push({role:'ai',content:d.output||d.response||'[no response]',meta:`Δ ${(d.delta||0).toFixed(3)} · ${d.bridge||'?'} · ${d.elapsed_ms||0}ms · tax ${d.heat_tax||0}`});
+    document.getElementById('stat-delta').textContent=`Δ ${(d.delta||0).toFixed(3)}`;
+    document.getElementById('stat-tax').textContent=`Tax ${(d.tax_burden||0)*100|0}%`;
+    document.getElementById('stat-bridge').textContent=d.bridge||'?';
+  }catch(e){
+    const isConn=String(e).includes('Failed to fetch')||String(e).includes('NetworkError');
+    ST.msgs.push({role:'ai',content:isConn?'⚠️ Agent offline.\n\nRun: mssclaw serve':`⚠️ Error: ${e.message}`,error:true});
+  }
+  renderMessages();save();ST.sending=false;
+  btn.disabled=false;btn.innerHTML='Send';
+  document.getElementById('messages').classList.remove('streaming');
+  document.getElementById('chat-input').focus();
 }
 
-async function check(){
+// ═══ Health ═══
+async function checkHealth(){
   try{
-    let r=await fetch(API+'/health');let d=await r.json();
-    document.getElementById('sb-status').innerHTML=`<span class="dot ${d.alive?'on':'off'}"></span><span>${d.alive?'Agent Online':'Offline'}</span>`;
-    document.getElementById('stats-delta').textContent=`Δ ${(d.delta||0).toFixed(2)}`;
-    document.getElementById('stats-tax').textContent=`Tax ${((d.tax_burden||0)*100).toFixed(0)}%`;
-    document.getElementById('health-data').innerHTML=`
-      <div class="metric"><span class="l">Status</span><span class="v" style="color:${d.alive?'var(--ok)':'var(--bad)'}">${d.alive?'ONLINE':'OFFLINE'}</span></div>
-      <div class="metric"><span class="l">Δ Openness</span><span class="v" style="color:${d.delta>0.3?'var(--ok)':'var(--warn)'}">${(d.delta||0).toFixed(3)}</span></div>
-      <div class="metric"><span class="l">Tax Burden</span><span class="v">${((d.tax_burden||0)*100).toFixed(1)}%</span></div>
-      <div class="metric"><span class="l">L2 Bridge</span><span class="v">${d.bridge||'?'}</span></div>
-      <div class="metric" style="font-size:12px;color:var(--dim)"><span>${d.message||''}</span></div>`;
-  }catch(e){document.getElementById('sb-status').innerHTML='<span class="dot off"></span><span>Offline</span>'}
+    const r=await fetch(API+'/health');const d=await r.json();
+    const dot=document.getElementById('agent-dot'),label=document.getElementById('agent-label');
+    if(d.alive){dot.className='status-dot pulse on';label.textContent='Agent Online'}
+    else{dot.className='status-dot off';label.textContent='Agent Offline'}
+    document.getElementById('stat-delta').textContent=`Δ ${(d.delta||0).toFixed(3)}`;
+    document.getElementById('stat-tax').textContent=`Tax ${((d.tax_burden||0)*100).toFixed(0)}%`;
+    document.getElementById('stat-bridge').textContent=d.bridge||'?';
+    document.getElementById('health-content').innerHTML=`
+      <div class="metric-row"><span class="metric-label">Status</span><span class="metric-value ${d.alive?'ok':'err'}">${d.alive?'ONLINE':'OFFLINE'}</span></div>
+      <div class="metric-row"><span class="metric-label">Δ Openness</span><span class="metric-value ${d.delta>0.3?'ok':'warn'}">${(d.delta||0).toFixed(4)}</span></div>
+      <div class="metric-row"><span class="metric-label">Tax Burden</span><span class="metric-value">${((d.tax_burden||0)*100).toFixed(1)}%</span></div>
+      <div class="metric-row"><span class="metric-label">L2 Bridge</span><span class="metric-value ok">${d.bridge||'STABLE'}</span></div>
+      <div class="metric-row" style="font-size:12px;color:var(--dim);border:none;background:none"><span>${d.message||''}</span></div>`;
+  }catch(e){document.getElementById('agent-dot').className='status-dot off';document.getElementById('agent-label').textContent='Offline'}
   try{
-    let r=await fetch(OLLAMA);let d=await r.json();
-    document.getElementById('models-data').innerHTML=d.models.map(m=>`<div class="metric"><div><div style="font-weight:600;font-size:13px">${m.name}</div><div style="font-size:11px;color:var(--dim)">${(m.size/1e9).toFixed(1)}GB</div></div><span style="color:var(--ok);font-size:11px">● Ready</span></div>`).join('');
+    const r=await fetch(OLLAMA);const d=await r.json();
+    document.getElementById('models-content').innerHTML=d.models.map(m=>`<div class="metric-row"><div><div style="font-weight:600;font-size:13px">${m.name}</div><div style="font-size:11px;color:var(--dim)">${(m.size/1e9).toFixed(1)}GB · ${m.details?.parameter_size||'?'}</div></div><span class="metric-value ok">Ready</span></div>`).join('');
   }catch(e){}
 }
 
-function toggleSheet(id){let s=document.getElementById(id);s.classList.toggle('open')}
-function k(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}if(e.key==='n'&&(e.ctrlKey||e.metaKey)){e.preventDefault();newChat()}}
+// ═══ UI ═══
+function togglePanel(name){
+  const panel=document.getElementById(name+'-panel'),overlay=document.getElementById(name+'-overlay');
+  const open=!panel.classList.contains('open');
+  closePanels();
+  if(open){panel.classList.add('open');overlay.classList.add('open');if(name==='health')checkHealth()}
+}
+function closePanels(){document.querySelectorAll('.slide-panel,.panel-overlay').forEach(el=>el.classList.remove('open'))}
+function toggleShortcuts(){document.getElementById('shortcuts-overlay').classList.toggle('open')}
+function closeShortcuts(){document.getElementById('shortcuts-overlay').classList.remove('open')}
+function toggleTheme(){
+  ST.theme=ST.theme==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',ST.theme);
+  localStorage.setItem('mss_theme',ST.theme);
+}
+function autoResize(el){el.style.height='42px';el.style.height=Math.min(el.scrollHeight,120)+'px'}
+function onInputKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}
+  if(e.key==='n'&&e.ctrlKey){e.preventDefault();newChat()}
+}
+function toast(msg,type=''){const el=document.getElementById('toast'),d=document.createElement('div');d.className=`toast-item ${type}`;d.textContent=msg;el.appendChild(d);setTimeout(()=>{d.style.opacity='0';d.style.transition='opacity .3s';setTimeout(()=>d.remove(),300)},3000)}
 
+// Load saved theme
+const saved=localStorage.getItem('mss_theme');if(saved){ST.theme=saved;document.documentElement.setAttribute('data-theme',saved)}
 init();
 </script></body></html>
