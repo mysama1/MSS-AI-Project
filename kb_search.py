@@ -19,7 +19,7 @@ from dataclasses import dataclass, field
 from typing import List, Optional
 
 KB_ROOT = r'E:\AI_Workspace\MSS-AI\project\knowledge_base'
-LAYERS = ['L0_FOUNDATION', 'L1_CORE_THEORY', 'L2_APPLIED_THEORY', 'L3_STRATEGIC', 'L4_META']
+LAYERS = ['L0_FOUNDATION', 'L0_META', 'L1_CORE_THEORY', 'L2_APPLIED_THEORY', 'L3_STRATEGIC', 'L4_META', 'supplementary']
 
 @dataclass
 class SearchResult:
