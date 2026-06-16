@@ -1,0 +1,1 @@
+{"h_id": "H64", "title": "H64: 价值梯度定理", "category": "theorem", "t_value": 0.78, "version": "1.0", "date": "2026-06-06", "source": "Bundled in H62 (v15.1)", "axioms": ["A3", "A5"], "summary": "价值判断的方向由意义密度梯度∇ρ决定。价值不是静态属性，而是意义场的梯度场。", "content": "See parent entry H62.\n\n价值判断的方向由意义密度梯度∇ρ决定。价值不是静态属性，而是意义场的梯度场。"}

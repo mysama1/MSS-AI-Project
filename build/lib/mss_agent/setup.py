@@ -2,15 +2,19 @@ from setuptools import setup, find_packages
 
 setup(
     name="mss-agent",
-    version="0.2.1",
+    version="0.3.8",
     description="MSS-Agent: 世界上第一个内置'意义场自检'的开源 Agent 框架",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="MSS-AI Project",
     url="https://github.com/mysama1/MSS-AI-Project",
     license="MIT",
-    packages=find_packages() + ['mss_agent'],
-    package_dir={'mss_agent': '.'},
+    packages=["mss_agent", "mss_agent.core", "mss_agent.examples",
+              "mss_agent.llm", "mss_agent.mcp", "mss_agent.protocols"],
+    package_data={
+        "mss_agent.core": ["*.py"],
+    },
+    package_dir={"mss_agent": "."},
     entry_points={
         "console_scripts": [
             "mss-agent=mss_agent.cli:main",
@@ -21,7 +25,7 @@ setup(
     extras_require={
         "llm": ["openai>=1.0"],
         "deepseek": ["openai>=1.0"],
-        "mcp": [],  # stdlib-only MCP client
+        "mcp": [],
         "dev": ["pytest", "black"],
     },
     classifiers=[

@@ -1,0 +1,1 @@
+{"h_id": "H68", "title": "H68: 政治意义论", "category": "theorem", "t_value": 0.78, "version": "1.0", "date": "2026-06-06", "source": "Bundled in H65 (v15.1)", "axioms": ["A3", "A5"], "summary": "合法性=意义共识的拓扑覆盖度。权力=意义场控制节点的出度与介数中心性。", "content": "See parent entry H65.\n\n合法性=意义共识的拓扑覆盖度。权力=意义场控制节点的出度与介数中心性。"}

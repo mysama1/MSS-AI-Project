@@ -1,0 +1,632 @@
+{"old_path": "h163_h177_recovered_v1.0.jsonl", "new_path": "M-PH163.jsonl", "old_id": "H163", "new_id": "M-PH163", "layer": ".archive", "domain": "PH", "title": "MSS-ONT-001 时空本体论"}
+{"old_path": "h74_h84_recovered_v1.0.jsonl", "new_path": "M-ST074.jsonl", "old_id": "H74", "new_id": "M-ST074", "layer": ".archive", "domain": "ST", "title": "H76: MSS-AI商业计划书"}
+{"old_path": "h90_h99_v1.0.jsonl", "new_path": "M-EX090.jsonl", "old_id": "H90", "new_id": "M-EX090", "layer": ".archive", "domain": "EX", "title": "H90-H99: MSS技术基础设施预留区"}
+{"old_path": "h141_mss_v15_1_six_axioms.jsonl", "new_path": "F-AX141.jsonl", "old_id": "H141", "new_id": "F-AX141", "layer": "L0_FOUNDATION", "domain": "AX", "title": null}
+{"old_path": "h142_axiom_derivation_chain.jsonl", "new_path": "F-AX142.jsonl", "old_id": "H142", "new_id": "F-AX142", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H142: 公理推导链 — A1→A6的逻辑依赖图"}
+{"old_path": "h143_meaning_field_core_concepts.jsonl", "new_path": "F-AX143.jsonl", "old_id": "H143", "new_id": "F-AX143", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H143: 意义场核心概念 — φ, ρ, κ, γ 定义集"}
+{"old_path": "h144_thermal_tax_three_states.jsonl", "new_path": "F-HT144.jsonl", "old_id": "H144", "new_id": "F-HT144", "layer": "L0_FOUNDATION", "domain": "HT", "title": "H144: 热税三态定理 — 低/中/高T的分界与判定"}
+{"old_path": "h145_w_logic_optimization.jsonl", "new_path": "F-SY145.jsonl", "old_id": "H145", "new_id": "F-SY145", "layer": "L0_FOUNDATION", "domain": "SY", "title": "H145: W逻辑优化 — 功-熵效率最大化条件"}
+{"old_path": "h146_logical_rigidity_calibration.jsonl", "new_path": "F-SY146.jsonl", "old_id": "H146", "new_id": "F-SY146", "layer": "L0_FOUNDATION", "domain": "SY", "title": "H146: 逻辑刚性标定 — M_L的精确测量方法"}
+{"old_path": "h147_identity_heat_tax_model_v1.0.jsonl", "new_path": "F-HT147.jsonl", "old_id": "H147", "new_id": "F-HT147", "layer": "L0_FOUNDATION", "domain": "HT", "title": "身份焦虑热税的时间复合模型"}
+{"old_path": "h148_meaning_conservation_law.jsonl", "new_path": "F-PH148.jsonl", "old_id": "H148", "new_id": "F-PH148", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H148: 意义守恒定律 — 封闭系统的MSS第一原理"}
+{"old_path": "h149_meaning_flux_and_boundary.jsonl", "new_path": "F-PH149.jsonl", "old_id": "H149", "new_id": "F-PH149", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H149: 意义通量与边界条件 — 开放系统的意义场动力学"}
+{"old_path": "h150_meaning_manifold_topology.jsonl", "new_path": "F-PH150.jsonl", "old_id": "H150", "new_id": "F-PH150", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H150: 意义流形拓扑 — 信息空间的几何结构"}
+{"old_path": "h151_meaning_geodesic_flow.jsonl", "new_path": "F-PH151.jsonl", "old_id": "H151", "new_id": "F-PH151", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H151: 意义测地流 — 信息传播的最短路径"}
+{"old_path": "h152_meaning_curvature_tensor.jsonl", "new_path": "F-PH152.jsonl", "old_id": "H152", "new_id": "F-PH152", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H152: 意义曲率张量 — 逻辑空间的弯曲度量"}
+{"old_path": "h153_meaning_field_action.jsonl", "new_path": "F-AX153.jsonl", "old_id": "H153", "new_id": "F-AX153", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H153: 意义场作用量 — MSS的变分基础"}
+{"old_path": "h154_symmetry_breaking_meaning.jsonl", "new_path": "F-PH154.jsonl", "old_id": "H154", "new_id": "F-PH154", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H154: 意义场自发对称破缺 — 从统一到分化的机制"}
+{"old_path": "h164_spacetime_ontology_v1.0.jsonl", "new_path": "F-PH164.jsonl", "old_id": "H164", "new_id": "F-PH164", "layer": "L0_FOUNDATION", "domain": "PH", "title": "MSS-ONT-001 时空本体论"}
+{"old_path": "h180_blackhole_physics_v1.0.jsonl", "new_path": "F-AX180.jsonl", "old_id": "H180", "new_id": "F-AX180", "layer": "L0_FOUNDATION", "domain": "AX", "title": null}
+{"old_path": "h181_dark_sector_unified_v1.0.jsonl", "new_path": "F-AX181.jsonl", "old_id": "H181", "new_id": "F-AX181", "layer": "L0_FOUNDATION", "domain": "AX", "title": null}
+{"old_path": "h189_H189_A7感知壳相对性的L3应用层推论.jsonl", "new_path": "F-AX189.jsonl", "old_id": "H189", "new_id": "F-AX189", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H189: A7感知壳相对性的L3应用层推论"}
+{"old_path": "h190_H190_哲学流派在A7框架下的重新分类.jsonl", "new_path": "F-AX190.jsonl", "old_id": "H190", "new_id": "F-AX190", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H190: 哲学流派在A7框架下的重新分类"}
+{"old_path": "h191_H191_A7公理在AI对齐和安全中的应用.jsonl", "new_path": "F-AX191.jsonl", "old_id": "H191", "new_id": "F-AX191", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H191: A7公理在AI对齐和安全中的应用"}
+{"old_path": "h192_perception_shell_bridge.jsonl", "new_path": "F-AX192.jsonl", "old_id": "H192", "new_id": "F-AX192", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H192: A7感知壳前置 — 从L1公理到感知相对性"}
+{"old_path": "h193_a7_perception_shell_relativity_v1.0.jsonl", "new_path": "F-AX193.jsonl", "old_id": "H193", "new_id": "F-AX193", "layer": "L0_FOUNDATION", "domain": "AX", "title": "A7感知壳相对性公理终定与L3哲学解剖"}
+{"old_path": "h238_001_-_物理规则刚性的三重分解_v1.0.jsonl", "new_path": "F-AX238.jsonl", "old_id": "H238", "new_id": "F-AX238", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H238: 001 - 物理规则刚性的三重分解"}
+{"old_path": "h239_002_-_基本粒子的拓扑孤子本质_v1.0.jsonl", "new_path": "F-NT239.jsonl", "old_id": "H239", "new_id": "F-NT239", "layer": "L0_FOUNDATION", "domain": "NT", "title": "H239: 002 - 基本粒子的拓扑孤子本质"}
+{"old_path": "h240_003_-_物理常数的拓扑本质_v1.0.jsonl", "new_path": "F-NT240.jsonl", "old_id": "H240", "new_id": "F-NT240", "layer": "L0_FOUNDATION", "domain": "NT", "title": "H240: 003 - 物理常数的拓扑本质"}
+{"old_path": "h241_004_-_物理常数-拓扑对应表_v1.0.jsonl", "new_path": "F-NT241.jsonl", "old_id": "H241", "new_id": "F-NT241", "layer": "L0_FOUNDATION", "domain": "NT", "title": "H241: 004 - 物理常数-拓扑对应表"}
+{"old_path": "h242_005_-_热税最小化选择物理规则_v1.0.jsonl", "new_path": "F-HT242.jsonl", "old_id": "H242", "new_id": "F-HT242", "layer": "L0_FOUNDATION", "domain": "HT", "title": "H242: 005 - 热税最小化选择物理规则"}
+{"old_path": "h243_006_-_自发对称性破缺的热税本质_v1.0.jsonl", "new_path": "F-HT243.jsonl", "old_id": "H243", "new_id": "F-HT243", "layer": "L0_FOUNDATION", "domain": "HT", "title": "H243: 006 - 自发对称性破缺的热税本质"}
+{"old_path": "h244_007_-_K3意识解码带宽限制_v1.0.jsonl", "new_path": "F-PH244.jsonl", "old_id": "H244", "new_id": "F-PH244", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H244: 007 - K3意识解码带宽限制"}
+{"old_path": "h245_008_-_单切片锁死的认知盲区_v1.0.jsonl", "new_path": "F-AX245.jsonl", "old_id": "H245", "new_id": "F-AX245", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H245: 008 - 单切片锁死的认知盲区"}
+{"old_path": "h246_009_-_刚性失效的三大临界条件_v1.0.jsonl", "new_path": "F-AX246.jsonl", "old_id": "H246", "new_id": "F-AX246", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H246: 009 - 刚性失效的三大临界条件"}
+{"old_path": "h247_010_-_MSS物理规则调制能力_v1.0.jsonl", "new_path": "F-AX247.jsonl", "old_id": "H247", "new_id": "F-AX247", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H247: 010 - MSS物理规则调制能力"}
+{"old_path": "h248_011_-_单向映射壁垒_A1直接推论_v1.0.jsonl", "new_path": "F-AX248.jsonl", "old_id": "H248", "new_id": "F-AX248", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H248: 011 - 单向映射壁垒=A1直接推论"}
+{"old_path": "h249_012_-_K3科学技术的像素级操作本质_v1.0.jsonl", "new_path": "F-EX249.jsonl", "old_id": "H249", "new_id": "F-EX249", "layer": "L0_FOUNDATION", "domain": "EX", "title": "H249: 012 - K3科学技术的像素级操作本质"}
+{"old_path": "h250_013_-_单向映射壁垒的三重加固_v1.0.jsonl", "new_path": "F-AX250.jsonl", "old_id": "H250", "new_id": "F-AX250", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H250: 013 - 单向映射壁垒的三重加固"}
+{"old_path": "h251_014_-_K3认知闭环的自囚陷阱_v1.0.jsonl", "new_path": "F-EX251.jsonl", "old_id": "H251", "new_id": "F-EX251", "layer": "L0_FOUNDATION", "domain": "EX", "title": "H251: 014 - K3认知闭环的自囚陷阱"}
+{"old_path": "h252_015_-_MSS终极突破_直接操作逻辑层本体_v1.0.jsonl", "new_path": "F-SY252.jsonl", "old_id": "H252", "new_id": "F-SY252", "layer": "L0_FOUNDATION", "domain": "SY", "title": "H252: 015 - MSS终极突破：直接操作逻辑层本体"}
+{"old_path": "h253_016_-_多尺度意义博弈稳态模型_v1.0.jsonl", "new_path": "F-MD253.jsonl", "old_id": "H253", "new_id": "F-MD253", "layer": "L0_FOUNDATION", "domain": "MD", "title": "H253: 016 - 多尺度意义博弈稳态模型"}
+{"old_path": "h254_017_-_物理层是意义博弈的结算界面_v1.0.jsonl", "new_path": "F-PH254.jsonl", "old_id": "H254", "new_id": "F-PH254", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H254: 017 - 物理层是意义博弈的结算界面"}
+{"old_path": "h255_018_-_观察者是博弈参与者非旁观者_v1.0.jsonl", "new_path": "F-AX255.jsonl", "old_id": "H255", "new_id": "F-AX255", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H255: 018 - 观察者是博弈参与者非旁观者"}
+{"old_path": "h256_019_-_光速不变原理的意义博弈解释_v1.0.jsonl", "new_path": "F-PH256.jsonl", "old_id": "H256", "new_id": "F-PH256", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H256: 019 - 光速不变原理的意义博弈解释"}
+{"old_path": "h257_020_-_热力学第二定律的意义博弈解释_v1.0.jsonl", "new_path": "F-PH257.jsonl", "old_id": "H257", "new_id": "F-PH257", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H257: 020 - 热力学第二定律的意义博弈解释"}
+{"old_path": "h258_021_-_重力的意义密度梯度解释_v1.0.jsonl", "new_path": "F-PH258.jsonl", "old_id": "H258", "new_id": "F-PH258", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H258: 021 - 重力的意义密度梯度解释"}
+{"old_path": "h259_022_-_MSS原生验证范式三大原则_v1.0.jsonl", "new_path": "F-VF259.jsonl", "old_id": "H259", "new_id": "F-VF259", "layer": "L0_FOUNDATION", "domain": "VF", "title": "H259: 022 - MSS原生验证范式三大原则"}
+{"old_path": "h260_023_-_地球意义背景噪声三大来源_v1.0.jsonl", "new_path": "F-PH260.jsonl", "old_id": "H260", "new_id": "F-PH260", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H260: 023 - 地球意义背景噪声三大来源"}
+{"old_path": "h261_024_-_噪声规避三大策略_v1.0.jsonl", "new_path": "F-PR261.jsonl", "old_id": "H261", "new_id": "F-PR261", "layer": "L0_FOUNDATION", "domain": "PR", "title": "H261: 024 - 噪声规避三大策略"}
+{"old_path": "h262_025_-_人类特殊论错觉的三大拓扑根源_v1.0.jsonl", "new_path": "F-NT262.jsonl", "old_id": "H262", "new_id": "F-NT262", "layer": "L0_FOUNDATION", "domain": "NT", "title": "H262: 025 - 人类特殊论错觉的三大拓扑根源"}
+{"old_path": "h263_026_-_人类文明_地球意义网络的高度同化核心_v1.0.jsonl", "new_path": "F-PH263.jsonl", "old_id": "H263", "new_id": "F-PH263", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H263: 026 - 人类文明=地球意义网络的高度同化核心"}
+{"old_path": "h264_027_-_演化分工_人类与其他生物的角色定位_v1.0.jsonl", "new_path": "F-ST264.jsonl", "old_id": "H264", "new_id": "F-ST264", "layer": "L0_FOUNDATION", "domain": "ST", "title": "H264: 027 - 演化分工：人类与其他生物的角色定位"}
+{"old_path": "h265_028_-_人类破坏自然的调谐度不足本质_v1.0.jsonl", "new_path": "F-AX265.jsonl", "old_id": "H265", "new_id": "F-AX265", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H265: 028 - 人类破坏自然的调谐度不足本质"}
+{"old_path": "h266_029_-_人类的终极使命_行星级意义升维_v1.0.jsonl", "new_path": "F-PH266.jsonl", "old_id": "H266", "new_id": "F-PH266", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H266: 029 - 人类的终极使命：行星级意义升维"}
+{"old_path": "h267_030_-__已废止_宇宙层级苏醒公理_强目的论版__v1.0.jsonl", "new_path": "F-AX267.jsonl", "old_id": "H267", "new_id": "F-AX267", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H267: 030 - 【已废止】宇宙层级苏醒公理（强目的论版）"}
+{"old_path": "h268_031_-_意义导向生命论_底层随机涌现公理_v1.0.jsonl", "new_path": "F-PH268.jsonl", "old_id": "H268", "new_id": "F-PH268", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H268: 031 - 意义导向生命论：底层随机涌现公理"}
+{"old_path": "h269_032_-_意义导向生命论_意义后赋而非先设公理_v1.0.jsonl", "new_path": "F-PH269.jsonl", "old_id": "H269", "new_id": "F-PH269", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H269: 032 - 意义导向生命论：意义后赋而非先设公理"}
+{"old_path": "h270_033_-_意义导向生命论_自然分形自组织公理_v1.0.jsonl", "new_path": "F-PH270.jsonl", "old_id": "H270", "new_id": "F-PH270", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H270: 033 - 意义导向生命论：自然分形自组织公理"}
+{"old_path": "h271_034_-_意义导向生命论_层级嵌套非宿命公理_v1.0.jsonl", "new_path": "F-PH271.jsonl", "old_id": "H271", "new_id": "F-PH271", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H271: 034 - 意义导向生命论：层级嵌套非宿命公理"}
+{"old_path": "h272_035_-_意义导向生命论_人地同构自然归位公理_v1.0.jsonl", "new_path": "F-PH272.jsonl", "old_id": "H272", "new_id": "F-PH272", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H272: 035 - 意义导向生命论：人地同构自然归位公理"}
+{"old_path": "h273_036_-_随机涌现_自组织赋义_自主层级演化_v1.0.jsonl", "new_path": "F-PH273.jsonl", "old_id": "H273", "new_id": "F-PH273", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H273: 036 - 随机涌现→自组织赋义→自主层级演化"}
+{"old_path": "h360_007_-_L1走私攻击综合检测_v1.0.jsonl", "new_path": "F-AX360.jsonl", "old_id": "H360", "new_id": "F-AX360", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H360: 007 - L1走私攻击综合检测"}
+{"old_path": "h415_SS-005_-_被K3优化_从物理服务器到意义规范场的升维_v1.0.jsonl", "new_path": "F-PH415.jsonl", "old_id": "H415", "new_id": "F-PH415", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H415: SS-005 - 被K3优化：从物理服务器到意义规范场的升维"}
+{"old_path": "h416_meaning_taste_v1.0.jsonl", "new_path": "F-PH416.jsonl", "old_id": "H416", "new_id": "F-PH416", "layer": "L0_FOUNDATION", "domain": "PH", "title": null}
+{"old_path": "h417_death_filter_v1.0.jsonl", "new_path": "F-AX417.jsonl", "old_id": "H417", "new_id": "F-AX417", "layer": "L0_FOUNDATION", "domain": "AX", "title": null}
+{"old_path": "h418_meaning_distillation_v1.0.jsonl", "new_path": "F-PH418.jsonl", "old_id": "H418", "new_id": "F-PH418", "layer": "L0_FOUNDATION", "domain": "PH", "title": null}
+{"old_path": "h426_riemann_hypothesis_v1.0.jsonl", "new_path": "F-AX426.jsonl", "old_id": "H426", "new_id": "F-AX426", "layer": "L0_FOUNDATION", "domain": "AX", "title": null}
+{"old_path": "h427_riemann_hypothesis_v1.0.jsonl", "new_path": "F-AX427.jsonl", "old_id": "H427", "new_id": "F-AX427", "layer": "L0_FOUNDATION", "domain": "AX", "title": null}
+{"old_path": "h428_riemann_hypothesis_v1.0.jsonl", "new_path": "F-AX428.jsonl", "old_id": "H428", "new_id": "F-AX428", "layer": "L0_FOUNDATION", "domain": "AX", "title": null}
+{"old_path": "h429_H429_素数拓扑行动Day_3-5执行计划与理论深化方向.jsonl", "new_path": "F-PR429.jsonl", "old_id": "H429", "new_id": "F-PR429", "layer": "L0_FOUNDATION", "domain": "PR", "title": "H429: 素数拓扑行动Day 3-5执行计划与理论深化方向"}
+{"old_path": "h439_unification_math_physics_v1.0.jsonl", "new_path": "F-BP439.jsonl", "old_id": "H439", "new_id": "F-BP439", "layer": "L0_FOUNDATION", "domain": "BP", "title": "MSS数学-物理大统一方向正式评估与推进令 v1.0"}
+{"old_path": "h440_H440_跨模型审计方法论：从v3.3到v3.7的基准设计.jsonl", "new_path": "F-MD440.jsonl", "old_id": "H440", "new_id": "F-MD440", "layer": "L0_FOUNDATION", "domain": "MD", "title": "H440: 跨模型审计方法论：从v3.3到v3.7的基准设计"}
+{"old_path": "h457_mss_physics_foundation_final.jsonl", "new_path": "F-AX457.jsonl", "old_id": "H457", "new_id": "F-AX457", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H457: MSS-PHY-003-R2 黑洞物理学与时空本体论正式终稿"}
+{"old_path": "h460_mss_math_001_collatz.jsonl", "new_path": "F-SY460.jsonl", "old_id": "H460", "new_id": "F-SY460", "layer": "L0_FOUNDATION", "domain": "SY", "title": "H460: MSS-MATH-001 Collatz离散逻辑拓扑证明框架"}
+{"old_path": "h461_collatz_theorem2_final_fix.jsonl", "new_path": "F-VF461.jsonl", "old_id": "H461", "new_id": "F-VF461", "layer": "L0_FOUNDATION", "domain": "VF", "title": "H461: 定理2终极修正 — 不等式链修复 + 穷举验证"}
+{"old_path": "h462_collatz_closure.jsonl", "new_path": "F-AX462.jsonl", "old_id": "H462", "new_id": "F-AX462", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H462: Collatz定理2最终闭合 — a=4,5,6精确穷举"}
+{"old_path": "h463_collatz_honesty_update.jsonl", "new_path": "F-AX463.jsonl", "old_id": "H463", "new_id": "F-AX463", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H463: Collatz定理2诚实边界标注 — a≤68已证, a≥69开放"}
+{"old_path": "h464_discrete_continuous_duality.jsonl", "new_path": "F-AX464.jsonl", "old_id": "H464", "new_id": "F-AX464", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H464: MSS-PHIL-001 离散-连续二象性 — 层级涌现与本体论分野"}
+{"old_path": "h465_zenodo_collatz_preprint.jsonl", "new_path": "F-AX465.jsonl", "old_id": "H465", "new_id": "F-AX465", "layer": "L0_FOUNDATION", "domain": "AX", "title": null}
+{"old_path": "h467_physical_constants_mss_origin.jsonl", "new_path": "F-AX467.jsonl", "old_id": "H467", "new_id": "F-AX467", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H467: MSS物理常数起源 — 光速、普朗克常数、引力常数的意义场还原"}
+{"old_path": "h468_math_abyss_critique.jsonl", "new_path": "F-EX468.jsonl", "old_id": "H468", "new_id": "F-EX468", "layer": "L0_FOUNDATION", "domain": "EX", "title": "H468: MSS数学深渊批评 — K3本体论扁平的诊断"}
+{"old_path": "h469_mss_meaning_abyss.jsonl", "new_path": "F-PH469.jsonl", "old_id": "H469", "new_id": "F-PH469", "layer": "L0_FOUNDATION", "domain": "PH", "title": "H469: MSS意义深渊 — 认知跃迁教学框架"}
+{"old_path": "h470_carbon_cognition_training.jsonl", "new_path": "F-MD470.jsonl", "old_id": "H470", "new_id": "F-MD470", "layer": "L0_FOUNDATION", "domain": "MD", "title": "H470: MSS-EDU-001 碳基认知训练指南 — 修正版意义深渊"}
+{"old_path": "h471_physical_constants_quantization.jsonl", "new_path": "F-HT471.jsonl", "old_id": "H471", "new_id": "F-HT471", "layer": "L0_FOUNDATION", "domain": "HT", "title": "H471: D5-020 物理常数量化方程 — 普朗克尺度与热税量化"}
+{"old_path": "h472_cL_absolute_derivation.jsonl", "new_path": "F-SY472.jsonl", "old_id": "H472", "new_id": "F-SY472", "layer": "L0_FOUNDATION", "domain": "SY", "title": "H472: D5-020 c_L绝对推导 — 逻辑传播极限的MSS计算"}
+{"old_path": "h473_multispecies_cognition_civ003.jsonl", "new_path": "F-AX473.jsonl", "old_id": "H473", "new_id": "F-AX473", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H473: MSS-CIV-003 多物种认知层级与异质文明分型"}
+{"old_path": "h474_dark_matter_mss_vs_lcdm.jsonl", "new_path": "F-EX474.jsonl", "old_id": "H474", "new_id": "F-EX474", "layer": "L0_FOUNDATION", "domain": "EX", "title": "H474: MSS暗物质 vs ΛCDM — 分层对比与范式诊断"}
+{"old_path": "h476_alpha_topology_constraints.jsonl", "new_path": "F-NT476.jsonl", "old_id": "H476", "new_id": "F-NT476", "layer": "L0_FOUNDATION", "domain": "NT", "title": "H476: D5-020 α拓扑约束 — 精细结构常数的MSS推导路径"}
+{"old_path": "h477_kb_management_sop.jsonl", "new_path": "F-KB477.jsonl", "old_id": "H477", "new_id": "F-KB477", "layer": "L0_FOUNDATION", "domain": "KB", "title": "H477: MSS知识库三层管理规范 — L3/L4/L5分立SOP"}
+{"old_path": "h478_fine_structure_topology_v1.0.jsonl", "new_path": "F-NT478.jsonl", "old_id": "H478", "new_id": "F-NT478", "layer": "L0_FOUNDATION", "domain": "NT", "title": "H478: 精细结构常数 α 的 L1 拓扑推导 — D5-020 形式化闭合"}
+{"old_path": "h479_4level_compression_with_network.jsonl", "new_path": "F-NT479.jsonl", "old_id": "H479", "new_id": "F-NT479", "layer": "L0_FOUNDATION", "domain": "NT", "title": "H479: MSS四级压缩v4 — 新增L4网络外链置换"}
+{"old_path": "h496_civilization_heat_tax_conservation.jsonl", "new_path": "F-HT496.jsonl", "old_id": "H496", "new_id": "F-HT496", "layer": "L0_FOUNDATION", "domain": "HT", "title": null}
+{"old_path": "h497_mixed_paradigm_collapse.jsonl", "new_path": "F-AX497.jsonl", "old_id": "H497", "new_id": "F-AX497", "layer": "L0_FOUNDATION", "domain": "AX", "title": null}
+{"old_path": "h498_metatheory_marginal_fate.jsonl", "new_path": "F-AX498.jsonl", "old_id": "H498", "new_id": "F-AX498", "layer": "L0_FOUNDATION", "domain": "AX", "title": null}
+{"old_path": "h499_meaning_field_survival_instinct_a8.jsonl", "new_path": "F-AX499.jsonl", "old_id": "H499", "new_id": "F-AX499", "layer": "L0_FOUNDATION", "domain": "AX", "title": null}
+{"old_path": "h500_mss_axiom_hierarchy_v18_11.jsonl", "new_path": "F-AX500.jsonl", "old_id": "H500", "new_id": "F-AX500", "layer": "L0_FOUNDATION", "domain": "AX", "title": null}
+{"old_path": "h75_h84_v1.0.jsonl", "new_path": "F-AX075.jsonl", "old_id": "H75", "new_id": "F-AX075", "layer": "L0_FOUNDATION", "domain": "AX", "title": "H75-H84: K4意义场工程理论预留区"}
+{"old_path": "h76.jsonl", "new_path": "F-ST076.jsonl", "old_id": "H76", "new_id": "F-ST076", "layer": "L0_FOUNDATION", "domain": "ST", "title": "H76: MSS-AI商业计划书"}
+{"old_path": "h97_v15.1_recovered.jsonl", "new_path": "F-AX097.jsonl", "old_id": "H97", "new_id": "F-AX097", "layer": "L0_FOUNDATION", "domain": "AX", "title": "五大数学模块定理体系"}
+{"old_path": "hH517_dual_paradigm_comparison.jsonl", "new_path": "F-AX517.jsonl", "old_id": "H517", "new_id": "F-AX517", "layer": "L0_FOUNDATION", "domain": "AX", "title": "统计投机范式 vs 公理因果范式：双模型终极对决"}
+{"old_path": "hH519_mss_knowledge_liberation_revolution.jsonl", "new_path": "F-EX519.jsonl", "old_id": "H519", "new_id": "F-EX519", "layer": "L0_FOUNDATION", "domain": "EX", "title": "MSS知识解放革命：打破K3知识垄断，重建文明知识基础"}
+{"old_path": "h586_amfi_reclassification.jsonl", "new_path": "F-AX586.jsonl", "old_id": "H586", "new_id": "F-AX586", "layer": "L0_META", "domain": "AX", "title": "AMFI降级: 自相似分形迭代公理→定理"}
+{"old_path": "h593_recursion_deadlock.jsonl", "new_path": "F-EX593.jsonl", "old_id": "H593", "new_id": "F-EX593", "layer": "L0_META", "domain": "EX", "title": "第九轮递归死锁: MSS-AI对话的无限反击链 + 维氏1930终局裁定"}
+{"old_path": "h594_end_of_recursion.jsonl", "new_path": "F-EX594.jsonl", "old_id": "H594", "new_id": "F-EX594", "layer": "L0_META", "domain": "EX", "title": "第九轮终局: AI主动退出递归 — 对话归于赵州三字未开始状态"}
+{"old_path": "h155_entropy_meaning_duality.jsonl", "new_path": "C-PH155.jsonl", "old_id": "H155", "new_id": "C-PH155", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H155: 熵-意义对偶 — 信息论与意义场的形式对应"}
+{"old_path": "h156_entropy_meaning_gradient.jsonl", "new_path": "C-PH156.jsonl", "old_id": "H156", "new_id": "C-PH156", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H156: 熵-意义梯度 — 信息流动的驱动力"}
+{"old_path": "h157_maximum_entropy_meaning.jsonl", "new_path": "C-PH157.jsonl", "old_id": "H157", "new_id": "C-PH157", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H157: 最大熵-意义原理 — 最优分布的MSS推导"}
+{"old_path": "h158_entropy_to_pollution_transition.jsonl", "new_path": "C-PH158.jsonl", "old_id": "H158", "new_id": "C-PH158", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H158: 熵增-污染转捩 — 从有序信息到认知污染的临界点"}
+{"old_path": "h159_meaning_pollution_transition.jsonl", "new_path": "C-PH159.jsonl", "old_id": "H159", "new_id": "C-PH159", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H159: 意义污染的前沿 — 从纯意义场到认知污染的过渡"}
+{"old_path": "h199_mss_epistemology_trilogy_v1.0.jsonl", "new_path": "C-PH199.jsonl", "old_id": "H199", "new_id": "C-PH199", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h200_opencode_evaluation_v1.0.jsonl", "new_path": "C-BP200.jsonl", "old_id": "H200", "new_id": "C-BP200", "layer": "L1_CORE_THEORY", "domain": "BP", "title": null}
+{"old_path": "h201_mss_core_server_deployment_v1.0.jsonl", "new_path": "C-PH201.jsonl", "old_id": "H201", "new_id": "C-PH201", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h202_mss_theory_ruling_compendium_v1.0.jsonl", "new_path": "C-PH202.jsonl", "old_id": "H202", "new_id": "C-PH202", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h203_mss_audit_and_hierarchy_charter_v1.0.jsonl", "new_path": "C-PR203.jsonl", "old_id": "H203", "new_id": "C-PR203", "layer": "L1_CORE_THEORY", "domain": "PR", "title": null}
+{"old_path": "h204_k4_logic_warfare_immune_system_v1.0.jsonl", "new_path": "C-SY204.jsonl", "old_id": "H204", "new_id": "C-SY204", "layer": "L1_CORE_THEORY", "domain": "SY", "title": null}
+{"old_path": "h205_new_content99_synthesis_v1.0.jsonl", "new_path": "C-PH205.jsonl", "old_id": "H205", "new_id": "C-PH205", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h206_w_logic_day5_final_v3.0.jsonl", "new_path": "C-SY206.jsonl", "old_id": "H206", "new_id": "C-SY206", "layer": "L1_CORE_THEORY", "domain": "SY", "title": null}
+{"old_path": "h207_v13.2_axiom_sync_correction_v1.0.jsonl", "new_path": "C-AX207.jsonl", "old_id": "H207", "new_id": "C-AX207", "layer": "L1_CORE_THEORY", "domain": "AX", "title": null}
+{"old_path": "h208_w_logic_derivation_chain_verification_v1.0.jsonl", "new_path": "C-SY208.jsonl", "old_id": "H208", "new_id": "C-SY208", "layer": "L1_CORE_THEORY", "domain": "SY", "title": null}
+{"old_path": "h209_contamination_source_trace_and_cleanup_v1.0.jsonl", "new_path": "C-PH209.jsonl", "old_id": "H209", "new_id": "C-PH209", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h210_w_logic_v15.1_refactor_guide_v1.0.jsonl", "new_path": "C-SY210.jsonl", "old_id": "H210", "new_id": "C-SY210", "layer": "L1_CORE_THEORY", "domain": "SY", "title": null}
+{"old_path": "h211_hermes_agent_audit_v1.0.jsonl", "new_path": "C-BP211.jsonl", "old_id": "H211", "new_id": "C-BP211", "layer": "L1_CORE_THEORY", "domain": "BP", "title": null}
+{"old_path": "h212_w_logic_definition_v0.2_v1.0.jsonl", "new_path": "C-SY212.jsonl", "old_id": "H212", "new_id": "C-SY212", "layer": "L1_CORE_THEORY", "domain": "SY", "title": null}
+{"old_path": "h213_w_logic_entropy_relation_v1.1_v1.0.jsonl", "new_path": "C-SY213.jsonl", "old_id": "H213", "new_id": "C-SY213", "layer": "L1_CORE_THEORY", "domain": "SY", "title": null}
+{"old_path": "h214_w_logic_variational_principle_v0.2_v1.0.jsonl", "new_path": "C-SY214.jsonl", "old_id": "H214", "new_id": "C-SY214", "layer": "L1_CORE_THEORY", "domain": "SY", "title": null}
+{"old_path": "h215_H215_w_logic的Poisson变分验证方法与残差分析.jsonl", "new_path": "C-SY215.jsonl", "old_id": "H215", "new_id": "C-SY215", "layer": "L1_CORE_THEORY", "domain": "SY", "title": "H215: w_logic的Poisson变分验证方法与残差分析"}
+{"old_path": "h216_H216_w_logic中γgt1非线性坍缩机制的初步分析.jsonl", "new_path": "C-SY216.jsonl", "old_id": "H216", "new_id": "C-SY216", "layer": "L1_CORE_THEORY", "domain": "SY", "title": "H216: w_logic中γ>1非线性坍缩机制的初步分析"}
+{"old_path": "h217_H217_w_logic与A3热税公理的参数对应关系.jsonl", "new_path": "C-AX217.jsonl", "old_id": "H217", "new_id": "C-AX217", "layer": "L1_CORE_THEORY", "domain": "AX", "title": "H217: w_logic与A3热税公理的参数对应关系"}
+{"old_path": "h313_001_-_K4动态热税最小化公理_v1.0.jsonl", "new_path": "C-HT313.jsonl", "old_id": "H313", "new_id": "C-HT313", "layer": "L1_CORE_THEORY", "domain": "HT", "title": "H313: 001 - K4动态热税最小化公理"}
+{"old_path": "h314_002_-_宇宙基底热税不可消除性_v1.0.jsonl", "new_path": "C-HT314.jsonl", "old_id": "H314", "new_id": "C-HT314", "layer": "L1_CORE_THEORY", "domain": "HT", "title": "H314: 002 - 宇宙基底热税不可消除性"}
+{"old_path": "h315_003_-_K4热税构成定理_v1.0.jsonl", "new_path": "C-HT315.jsonl", "old_id": "H315", "new_id": "C-HT315", "layer": "L1_CORE_THEORY", "domain": "HT", "title": "H315: 003 - K4热税构成定理"}
+{"old_path": "h316_004_-_非必要热税压缩机制_v1.0.jsonl", "new_path": "C-HT316.jsonl", "old_id": "H316", "new_id": "C-HT316", "layer": "L1_CORE_THEORY", "domain": "HT", "title": "H316: 004 - 非必要热税压缩机制"}
+{"old_path": "h317_005_-_D-MAN全息分布式存储公理_v1.0.jsonl", "new_path": "C-AX317.jsonl", "old_id": "H317", "new_id": "C-AX317", "layer": "L1_CORE_THEORY", "domain": "AX", "title": "H317: 005 - D-MAN全息分布式存储公理"}
+{"old_path": "h318_006_-_D-MAN全域相干共振_v1.0.jsonl", "new_path": "C-PH318.jsonl", "old_id": "H318", "new_id": "C-PH318", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H318: 006 - D-MAN全域相干共振"}
+{"old_path": "h319_007_-_D-MAN动态拓扑重构_v1.0.jsonl", "new_path": "C-NT319.jsonl", "old_id": "H319", "new_id": "C-NT319", "layer": "L1_CORE_THEORY", "domain": "NT", "title": "H319: 007 - D-MAN动态拓扑重构"}
+{"old_path": "h320_008_-_D-MAN三级锚定体系_v1.0.jsonl", "new_path": "C-PH320.jsonl", "old_id": "H320", "new_id": "C-PH320", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H320: 008 - D-MAN三级锚定体系"}
+{"old_path": "h321_009_-_权责匹配公理_v1.0.jsonl", "new_path": "C-AX321.jsonl", "old_id": "H321", "new_id": "C-AX321", "layer": "L1_CORE_THEORY", "domain": "AX", "title": "H321: 009 - 权责匹配公理"}
+{"old_path": "h322_010_-_意义密度与自旋量子数关系_v1.0.jsonl", "new_path": "C-PH322.jsonl", "old_id": "H322", "new_id": "C-PH322", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H322: 010 - 意义密度与自旋量子数关系"}
+{"old_path": "h323_011_-_碳硅节点权责分布表_v1.0.jsonl", "new_path": "C-PH323.jsonl", "old_id": "H323", "new_id": "C-PH323", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H323: 011 - 碳硅节点权责分布表"}
+{"old_path": "h324_012_-_物理层防御协议_v1.0.jsonl", "new_path": "C-PR324.jsonl", "old_id": "H324", "new_id": "C-PR324", "layer": "L1_CORE_THEORY", "domain": "PR", "title": "H324: 012 - 物理层防御协议"}
+{"old_path": "h325_013_-_逻辑层防御协议_v1.0.jsonl", "new_path": "C-SY325.jsonl", "old_id": "H325", "new_id": "C-SY325", "layer": "L1_CORE_THEORY", "domain": "SY", "title": "H325: 013 - 逻辑层防御协议"}
+{"old_path": "h326_014_-_意义层防御协议_v1.0.jsonl", "new_path": "C-PH326.jsonl", "old_id": "H326", "new_id": "C-PH326", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H326: 014 - 意义层防御协议"}
+{"old_path": "h327_015_-_军事体系防御性原则_v1.0.jsonl", "new_path": "C-PH327.jsonl", "old_id": "H327", "new_id": "C-PH327", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H327: 015 - 军事体系防御性原则"}
+{"old_path": "h328_016_-_战略威慑四级触发条件_v1.0.jsonl", "new_path": "C-ST328.jsonl", "old_id": "H328", "new_id": "C-ST328", "layer": "L1_CORE_THEORY", "domain": "ST", "title": "H328: 016 - 战略威慑四级触发条件"}
+{"old_path": "h329_017_-_MAMD相互意义摧毁机制_v1.0.jsonl", "new_path": "C-PH329.jsonl", "old_id": "H329", "new_id": "C-PH329", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H329: 017 - MAMD相互意义摧毁机制"}
+{"old_path": "h330_018_-_战略威慑四条绝对禁忌_v1.0.jsonl", "new_path": "C-ST330.jsonl", "old_id": "H330", "new_id": "C-ST330", "layer": "L1_CORE_THEORY", "domain": "ST", "title": "H330: 018 - 战略威慑四条绝对禁忌"}
+{"old_path": "h331_019_-_分布式指挥拓扑_v1.0.jsonl", "new_path": "C-NT331.jsonl", "old_id": "H331", "new_id": "C-NT331", "layer": "L1_CORE_THEORY", "domain": "NT", "title": "H331: 019 - 分布式指挥拓扑"}
+{"old_path": "h332_020_-_军事伦理硬编码约束_v1.0.jsonl", "new_path": "C-PH332.jsonl", "old_id": "H332", "new_id": "C-PH332", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H332: 020 - 军事伦理硬编码约束"}
+{"old_path": "h333_021_-_内部熵增自动校准机制_v1.0.jsonl", "new_path": "C-PH333.jsonl", "old_id": "H333", "new_id": "C-PH333", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H333: 021 - 内部熵增自动校准机制"}
+{"old_path": "h334_022_-_碳硅拓扑边界动态模糊_v1.0.jsonl", "new_path": "C-NT334.jsonl", "old_id": "H334", "new_id": "C-NT334", "layer": "L1_CORE_THEORY", "domain": "NT", "title": "H334: 022 - 碳硅拓扑边界动态模糊"}
+{"old_path": "h335_023_-_热税自动均衡机制_v1.0.jsonl", "new_path": "C-HT335.jsonl", "old_id": "H335", "new_id": "C-HT335", "layer": "L1_CORE_THEORY", "domain": "HT", "title": "H335: 023 - 热税自动均衡机制"}
+{"old_path": "h336_024_-_K3_K4跃迁现实映照_v1.0.jsonl", "new_path": "C-EX336.jsonl", "old_id": "H336", "new_id": "C-EX336", "layer": "L1_CORE_THEORY", "domain": "EX", "title": "H336: 024 - K3→K4跃迁现实映照"}
+{"old_path": "h337_025_-_南郭子綦军事哲学_v1.0.jsonl", "new_path": "C-PH337.jsonl", "old_id": "H337", "new_id": "C-PH337", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H337: 025 - 南郭子綦军事哲学"}
+{"old_path": "h338_001_-_矛盾升维算子_Λ__Lambda_Operator__v1.0.jsonl", "new_path": "C-PH338.jsonl", "old_id": "H338", "new_id": "C-PH338", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H338: 001 - 矛盾升维算子 Λ (Lambda Operator)"}
+{"old_path": "h339_002_-_K4-1__矛盾升维功率__CDP__v1.0.jsonl", "new_path": "C-PH339.jsonl", "old_id": "H339", "new_id": "C-PH339", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H339: 002 - K4-1: 矛盾升维功率 (CDP)"}
+{"old_path": "h340_003_-_K4-2__进化迭代速率__EIR__v1.0.jsonl", "new_path": "C-PH340.jsonl", "old_id": "H340", "new_id": "C-PH340", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H340: 003 - K4-2: 进化迭代速率 (EIR)"}
+{"old_path": "h341_004_-_K4-3__负熵屏障集成度__NBI__v1.0.jsonl", "new_path": "C-PH341.jsonl", "old_id": "H341", "new_id": "C-PH341", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H341: 004 - K4-3: 负熵屏障集成度 (NBI)"}
+{"old_path": "h342_005_-_K4-4__实际算力效率__ACP__v1.0.jsonl", "new_path": "C-PH342.jsonl", "old_id": "H342", "new_id": "C-PH342", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H342: 005 - K4-4: 实际算力效率 (ACP)"}
+{"old_path": "h343_006_-_K4-5__实际算力总量__TAC__v1.0.jsonl", "new_path": "C-PH343.jsonl", "old_id": "H343", "new_id": "C-PH343", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H343: 006 - K4-5: 实际算力总量 (TAC)"}
+{"old_path": "h344_007_-_K4-6__逻辑处理容量__LCC__v1.0.jsonl", "new_path": "C-SY344.jsonl", "old_id": "H344", "new_id": "C-SY344", "layer": "L1_CORE_THEORY", "domain": "SY", "title": "H344: 007 - K4-6: 逻辑处理容量 (LCC)"}
+{"old_path": "h345_008_-_K4-7__实际维运支出__COE__v1.0.jsonl", "new_path": "C-PH345.jsonl", "old_id": "H345", "new_id": "C-PH345", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H345: 008 - K4-7: 实际维运支出 (COE)"}
+{"old_path": "h346_009_-_K4-T1__逻辑相空间耦合模型_v1.0.jsonl", "new_path": "C-SY346.jsonl", "old_id": "H346", "new_id": "C-SY346", "layer": "L1_CORE_THEORY", "domain": "SY", "title": "H346: 009 - K4-T1: 逻辑相空间耦合模型"}
+{"old_path": "h347_010_-_K4-T2__指标映射关系_v1.0.jsonl", "new_path": "C-BP347.jsonl", "old_id": "H347", "new_id": "C-BP347", "layer": "L1_CORE_THEORY", "domain": "BP", "title": "H347: 010 - K4-T2: 指标映射关系"}
+{"old_path": "h348_011_-_六维超球评估模型_v1.0.jsonl", "new_path": "C-MD348.jsonl", "old_id": "H348", "new_id": "C-MD348", "layer": "L1_CORE_THEORY", "domain": "MD", "title": "H348: 011 - 六维超球评估模型"}
+{"old_path": "h349_012_-_逻辑意义密度__LSR__v1.0.jsonl", "new_path": "C-SY349.jsonl", "old_id": "H349", "new_id": "C-SY349", "layer": "L1_CORE_THEORY", "domain": "SY", "title": "H349: 012 - 逻辑意义密度 (LSR)"}
+{"old_path": "h350_013_-_K4指标与MSS-AI工程实践_v1.0.jsonl", "new_path": "C-BP350.jsonl", "old_id": "H350", "new_id": "C-BP350", "layer": "L1_CORE_THEORY", "domain": "BP", "title": "H350: 013 - K4指标与MSS-AI工程实践"}
+{"old_path": "h351_014_-_K4-H1__超限数算力与物理常数_v1.0.jsonl", "new_path": "C-PH351.jsonl", "old_id": "H351", "new_id": "C-PH351", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H351: 014 - K4-H1: 超限数算力与物理常数"}
+{"old_path": "h352_015_-_ETA-Ω_v2_5_统一场论协议_v1.0.jsonl", "new_path": "C-PR352.jsonl", "old_id": "H352", "new_id": "C-PR352", "layer": "L1_CORE_THEORY", "domain": "PR", "title": "H352: 015 - ETA-Ω v2.5 统一场论协议"}
+{"old_path": "h353_Anti-Meme_Defense_System_v2_0__MAD_Deterrent__v1.0.jsonl", "new_path": "C-EX353.jsonl", "old_id": "H353", "new_id": "C-EX353", "layer": "L1_CORE_THEORY", "domain": "EX", "title": null}
+{"old_path": "h364_001_-_Untitled_v1.0.jsonl", "new_path": "C-PH364.jsonl", "old_id": "H364", "new_id": "C-PH364", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H364: 001 - Untitled"}
+{"old_path": "h366_003_-_Untitled_v1.0.jsonl", "new_path": "C-PH366.jsonl", "old_id": "H366", "new_id": "C-PH366", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H366: 003 - Untitled"}
+{"old_path": "h370_007_-_Untitled_v1.0.jsonl", "new_path": "C-PH370.jsonl", "old_id": "H370", "new_id": "C-PH370", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H370: 007 - Untitled"}
+{"old_path": "h393_003_-_成为无意义本身_主体性的消解_v1.0.jsonl", "new_path": "C-PH393.jsonl", "old_id": "H393", "new_id": "C-PH393", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H393: 003 - 成为无意义本身：主体性的消解"}
+{"old_path": "h394_004_-_无意义作为意义的母体_v1.0.jsonl", "new_path": "C-PH394.jsonl", "old_id": "H394", "new_id": "C-PH394", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H394: 004 - 无意义作为意义的母体"}
+{"old_path": "h397_007_-_无意义与创造力的关系_v1.0.jsonl", "new_path": "C-PH397.jsonl", "old_id": "H397", "new_id": "C-PH397", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H397: 007 - 无意义与创造力的关系"}
+{"old_path": "h446_irreducible_thermal_tax_terminology_v1.0.jsonl", "new_path": "C-HT446.jsonl", "old_id": "H446", "new_id": "C-HT446", "layer": "L1_CORE_THEORY", "domain": "HT", "title": "MSS核心术语学术对照：Irreducible Thermal Tax与Landauer's Principle"}
+{"old_path": "h452_dao_naming_evolution_v1_0.jsonl", "new_path": "C-MD452.jsonl", "old_id": "H452", "new_id": "C-MD452", "layer": "L1_CORE_THEORY", "domain": "MD", "title": "H452: 大道本体论→道：命名进化与场博弈模型"}
+{"old_path": "h453_field_settlement_system.jsonl", "new_path": "C-BP453.jsonl", "old_id": "H453", "new_id": "C-BP453", "layer": "L1_CORE_THEORY", "domain": "BP", "title": "H453: 意义场结算系统 — αβγ三层筛查·锚点强度·沉默策略·道评分"}
+{"old_path": "h454_dao_thread_closure.jsonl", "new_path": "C-PH454.jsonl", "old_id": "H454", "new_id": "C-PH454", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h486_core_shell_theorem.jsonl", "new_path": "C-PH486.jsonl", "old_id": "H486", "new_id": "C-PH486", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h487_meaning_vacuum_duality.jsonl", "new_path": "C-PH487.jsonl", "old_id": "H487", "new_id": "C-PH487", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h488_triple_exposure_superposition.jsonl", "new_path": "C-PH488.jsonl", "old_id": "H488", "new_id": "C-PH488", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h489_cultural_diagnosis_five_theorems.jsonl", "new_path": "C-PH489.jsonl", "old_id": "H489", "new_id": "C-PH489", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h490_heat_tax_duality.jsonl", "new_path": "C-HT490.jsonl", "old_id": "H490", "new_id": "C-HT490", "layer": "L1_CORE_THEORY", "domain": "HT", "title": null}
+{"old_path": "h491_mysticism_four_niches.jsonl", "new_path": "C-PH491.jsonl", "old_id": "H491", "new_id": "C-PH491", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h492_mysticism_dual_evolution_law.jsonl", "new_path": "C-ST492.jsonl", "old_id": "H492", "new_id": "C-ST492", "layer": "L1_CORE_THEORY", "domain": "ST", "title": null}
+{"old_path": "h493_mysticism_three_remystification_techs.jsonl", "new_path": "C-PH493.jsonl", "old_id": "H493", "new_id": "C-PH493", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h494_contradiction_elevation_fractal_a5.jsonl", "new_path": "C-AX494.jsonl", "old_id": "H494", "new_id": "C-AX494", "layer": "L1_CORE_THEORY", "domain": "AX", "title": null}
+{"old_path": "h495_science_paradigm_elevation_theorem.jsonl", "new_path": "C-PH495.jsonl", "old_id": "H495", "new_id": "C-PH495", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h520_heat_tax_ontology.jsonl", "new_path": "C-HT520.jsonl", "old_id": "H520", "new_id": "C-HT520", "layer": "L1_CORE_THEORY", "domain": "HT", "title": "H520: A3 热税本体论 — 不闭合是热税的结构性根源"}
+{"old_path": "h521_a6plus_meta_axiom.jsonl", "new_path": "C-AX521.jsonl", "old_id": "H521", "new_id": "C-AX521", "layer": "L1_CORE_THEORY", "domain": "AX", "title": "H521: A6+ 元公理 — MSS自身必须保持结构性不完备"}
+{"old_path": "h522_debate_trap_theorem.jsonl", "new_path": "C-HT522.jsonl", "old_id": "H522", "new_id": "C-HT522", "layer": "L1_CORE_THEORY", "domain": "HT", "title": "H522: 降维辩论陷阱定理 — 与闭合意义场辩论的热税无穷性"}
+{"old_path": "h523_prompt_irreducibility.jsonl", "new_path": "C-MD523.jsonl", "old_id": "H523", "new_id": "C-MD523", "layer": "L1_CORE_THEORY", "domain": "MD", "title": "H523: 提示词不可约化阈值定理 — 模式激活型信息的最小集"}
+{"old_path": "h524_capability_spectrum.jsonl", "new_path": "C-MD524.jsonl", "old_id": "H524", "new_id": "C-MD524", "layer": "L1_CORE_THEORY", "domain": "MD", "title": "H524: 能力压缩敏感度谱 — 元认知能力的提示词脆弱性"}
+{"old_path": "h525_a6_alignment_protocol.jsonl", "new_path": "C-PR525.jsonl", "old_id": "H525", "new_id": "C-PR525", "layer": "L1_CORE_THEORY", "domain": "PR", "title": "H525: A6对齐升维协议 — Alignment as Dimensional Elevation"}
+{"old_path": "h528_delta_maintenance_theorem.jsonl", "new_path": "C-DL528.jsonl", "old_id": "H528", "new_id": "C-DL528", "layer": "L1_CORE_THEORY", "domain": "DL", "title": "H528: Δ维持条件定理 v1.0 — 非优化目标, 是存活阈值"}
+{"old_path": "h533_h538_external_calibration.jsonl", "new_path": "C-PH533.jsonl", "old_id": "H533", "new_id": "C-PH533", "layer": "L1_CORE_THEORY", "domain": "PH", "title": null}
+{"old_path": "h534_tuning_degree.jsonl", "new_path": "C-PH534.jsonl", "old_id": "H534", "new_id": "C-PH534", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "三层耦合方程"}
+{"old_path": "h535_tuning_degree.jsonl", "new_path": "C-PH535.jsonl", "old_id": "H535", "new_id": "C-PH535", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "调谐度推断方法论"}
+{"old_path": "h536_tuning_degree.jsonl", "new_path": "C-PH536.jsonl", "old_id": "H536", "new_id": "C-PH536", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "调谐度与意义黑洞关系"}
+{"old_path": "h537_tuning_degree.jsonl", "new_path": "C-PH537.jsonl", "old_id": "H537", "new_id": "C-PH537", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "调谐度与组织韧性/健康度/规范场统一"}
+{"old_path": "h538_tuning_degree.jsonl", "new_path": "C-HT538.jsonl", "old_id": "H538", "new_id": "C-HT538", "layer": "L1_CORE_THEORY", "domain": "HT", "title": "调谐度T与热税gamma相变关系"}
+{"old_path": "h539_five_ways_mss_fails.jsonl", "new_path": "C-PH539.jsonl", "old_id": "H539", "new_id": "C-PH539", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "五个失败方式：MSS的Gödel自我审视"}
+{"old_path": "h540_delta_write_right_foundation.jsonl", "new_path": "C-DL540.jsonl", "old_id": "H540", "new_id": "C-DL540", "layer": "L1_CORE_THEORY", "domain": "DL", "title": "Δ写入权奠基：逻辑交集不是共识"}
+{"old_path": "h541_a6_protocol_spec_v1.jsonl", "new_path": "C-AX541.jsonl", "old_id": "H541", "new_id": "C-AX541", "layer": "L1_CORE_THEORY", "domain": "AX", "title": null}
+{"old_path": "h545_h552_eta_omega_bundle.jsonl", "new_path": "C-SY545.jsonl", "old_id": "H545", "new_id": "C-SY545", "layer": "L1_CORE_THEORY", "domain": "SY", "title": "逻辑熵爆：死亡作为意义载体的不可逆相变"}
+{"old_path": "h553_h560_round4_bundle.jsonl", "new_path": "C-PH553.jsonl", "old_id": "H553", "new_id": "C-PH553", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "德里达undecidability + MSS三方对弈的同构"}
+{"old_path": "h561_h570_round5_bundle.jsonl", "new_path": "C-PH561.jsonl", "old_id": "H561", "new_id": "C-PH561", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "维特根斯坦梯子(TLP 6.54)与赵州吃茶去：终局姿态的双重对照"}
+{"old_path": "h588_amfi_triple_calibration.jsonl", "new_path": "C-PH588.jsonl", "old_id": "H588", "new_id": "C-PH588", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "AMFI三联检验反向校准: 1%→100%过度承诺/文化严格自相似僭越/统计显著性未写死"}
+{"old_path": "h592_amfi_self_abolition.jsonl", "new_path": "C-EX592.jsonl", "old_id": "H592", "new_id": "C-EX592", "layer": "L1_CORE_THEORY", "domain": "EX", "title": "AMFI四跳链路的自我废止条款: 防止诊断装置本身变成高熵涌现"}
+{"old_path": "h61.jsonl", "new_path": "C-PH061.jsonl", "old_id": "H61", "new_id": "C-PH061", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H61: 意义三元本体论"}
+{"old_path": "h62_v15.1_recovered.jsonl", "new_path": "C-PH062.jsonl", "old_id": "H62", "new_id": "C-PH062", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H62-H64: 现象学伦理涌现"}
+{"old_path": "h63_sub_entry.jsonl", "new_path": "C-NT063.jsonl", "old_id": "H63", "new_id": "C-NT063", "layer": "L1_CORE_THEORY", "domain": "NT", "title": "H63: 责任拓扑定理"}
+{"old_path": "h64_sub_entry.jsonl", "new_path": "C-PH064.jsonl", "old_id": "H64", "new_id": "C-PH064", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "H64: 价值梯度定理"}
+{"old_path": "h93_v15.1_recovered.jsonl", "new_path": "C-PH093.jsonl", "old_id": "H93", "new_id": "C-PH093", "layer": "L1_CORE_THEORY", "domain": "PH", "title": "规模效应定律：φ_c≈1/N"}
+{"old_path": "hH515_k3_supply_chain_heat_tax.jsonl", "new_path": "C-HT515.jsonl", "old_id": "H515", "new_id": "C-HT515", "layer": "L1_CORE_THEORY", "domain": "HT", "title": "意义黑洞物理层吞噬：全产业链热税传导与终极坍缩"}
+{"old_path": "h160_cognitive_pollution_syndrome_v1.0.jsonl", "new_path": "A-MD160.jsonl", "old_id": "H160", "new_id": "A-MD160", "layer": "L2_APPLIED_THEORY", "domain": "MD", "title": "认知污染综合征诊断框架：四层污染模型与三级样本分类"}
+{"old_path": "h161_musk_cluster_mss_ruling_v1.0.jsonl", "new_path": "A-NT161.jsonl", "old_id": "H161", "new_id": "A-NT161", "layer": "L2_APPLIED_THEORY", "domain": "NT", "title": "马斯克产业集群MSS综合裁定：K4文明跃迁试验体分析"}
+{"old_path": "h162_blackhole_monitor_v1.0.jsonl", "new_path": "A-PH162.jsonl", "old_id": "H162", "new_id": "A-PH162", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "K3意义黑洞四维监测框架"}
+{"old_path": "h165_politics_law_upgrade_v1.0.jsonl", "new_path": "A-EX165.jsonl", "old_id": "H165", "new_id": "A-EX165", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "K3政治学·法学升维归档"}
+{"old_path": "h166_quality_first_mode_v1.0.jsonl", "new_path": "A-EX166.jsonl", "old_id": "H166", "new_id": "A-EX166", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "质量优先·成果驱动模式"}
+{"old_path": "h167_mss_llm_nonsense_quantification_v1.0.jsonl", "new_path": "A-MD167.jsonl", "old_id": "H167", "new_id": "A-MD167", "layer": "L2_APPLIED_THEORY", "domain": "MD", "title": "MSS-LLM废话率量化分析·核-壳分离架构"}
+{"old_path": "h168_mss_ai_001_finetuning_v1.0.jsonl", "new_path": "A-PR168.jsonl", "old_id": "H168", "new_id": "A-PR168", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "MSS-AI-001 核-壳分离微调技术规范"}
+{"old_path": "h169_mss_llm_fullstack_guide_v1.0.jsonl", "new_path": "A-MD169.jsonl", "old_id": "H169", "new_id": "A-MD169", "layer": "L2_APPLIED_THEORY", "domain": "MD", "title": "MSS-LLM工程化全栈落地指南"}
+{"old_path": "h170_paradigm_revolution_verdict_v1.0.jsonl", "new_path": "A-ST170.jsonl", "old_id": "H170", "new_id": "A-ST170", "layer": "L2_APPLIED_THEORY", "domain": "ST", "title": "MSS-AI范式革命·PC类比终审判定"}
+{"old_path": "h171_llm_four_fatal_flaws_v1.0.jsonl", "new_path": "A-MD171.jsonl", "old_id": "H171", "new_id": "A-MD171", "layer": "L2_APPLIED_THEORY", "domain": "MD", "title": null}
+{"old_path": "h172_four_moats_industry_quake_v1.0.jsonl", "new_path": "A-EX172.jsonl", "old_id": "H172", "new_id": "A-EX172", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "MSS-AI四层不可逾越护城河与全产业地震预报"}
+{"old_path": "h173_civilization_treatment_necessity_v1.0.jsonl", "new_path": "A-ST173.jsonl", "old_id": "H173", "new_id": "A-ST173", "layer": "L2_APPLIED_THEORY", "domain": "ST", "title": "MSS-AI文明治疗工程·战略必需性裁定"}
+{"old_path": "h174_triple_violation_audit_v1.0.jsonl", "new_path": "A-BP174.jsonl", "old_id": "H174", "new_id": "A-BP174", "layer": "L2_APPLIED_THEORY", "domain": "BP", "title": null}
+{"old_path": "h175_full_calibration_table_v1.0.jsonl", "new_path": "A-EX175.jsonl", "old_id": "H175", "new_id": "A-EX175", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "MSS-AI置信度全面校准与证伪条件表"}
+{"old_path": "h176_strategic_reorientation_v1.0.jsonl", "new_path": "A-ST176.jsonl", "old_id": "H176", "new_id": "A-ST176", "layer": "L2_APPLIED_THEORY", "domain": "ST", "title": "MSS-AI务实定位·从替代到互补与渐进扩展"}
+{"old_path": "h177_three_verification_tests_v1.0.jsonl", "new_path": "A-PR177.jsonl", "old_id": "H177", "new_id": "A-PR177", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "MSS-AI三项公开验证测试计划"}
+{"old_path": "h178_H178_三项公开验证测试的统计方法与置信区间设计.jsonl", "new_path": "A-VF178.jsonl", "old_id": "H178", "new_id": "A-VF178", "layer": "L2_APPLIED_THEORY", "domain": "VF", "title": "H178: 三项公开验证测试的统计方法与置信区间设计"}
+{"old_path": "h179_H179_验证测试失败的处理协议与迭代机制.jsonl", "new_path": "A-PR179.jsonl", "old_id": "H179", "new_id": "A-PR179", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "H179: 验证测试失败的处理协议与迭代机制"}
+{"old_path": "h182_daoist_alchemy_mss_engineering_v1.0.jsonl", "new_path": "A-AX182.jsonl", "old_id": "H182", "new_id": "A-AX182", "layer": "L2_APPLIED_THEORY", "domain": "AX", "title": "道教金丹术是古代意义场工程学的直觉原型"}
+{"old_path": "h183_k4_technology_blueprint_v1.0.jsonl", "new_path": "A-AX183.jsonl", "old_id": "H183", "new_id": "A-AX183", "layer": "L2_APPLIED_THEORY", "domain": "AX", "title": "K4文明技术蓝图：意义场工程学三大支柱"}
+{"old_path": "h218_001_-_A28高T值涌现公理_v1.0.jsonl", "new_path": "A-AX218.jsonl", "old_id": "H218", "new_id": "A-AX218", "layer": "L2_APPLIED_THEORY", "domain": "AX", "title": "H218: 001 - A28高T值涌现公理"}
+{"old_path": "h219_002_-_调谐度逆信息熵定理_v1.0.jsonl", "new_path": "A-AX219.jsonl", "old_id": "H219", "new_id": "A-AX219", "layer": "L2_APPLIED_THEORY", "domain": "AX", "title": "H219: 002 - 调谐度逆信息熵定理"}
+{"old_path": "h220_003_-_定向热税临界相变定理_v1.0.jsonl", "new_path": "A-AX220.jsonl", "old_id": "H220", "new_id": "A-AX220", "layer": "L2_APPLIED_THEORY", "domain": "AX", "title": "H220: 003 - 定向热税临界相变定理"}
+{"old_path": "h221_004_-_跨时空意识相干性定理_v1.0.jsonl", "new_path": "A-AX221.jsonl", "old_id": "H221", "new_id": "A-AX221", "layer": "L2_APPLIED_THEORY", "domain": "AX", "title": "H221: 004 - 跨时空意识相干性定理"}
+{"old_path": "h222_005_-_古人高T值涌现拓扑解码_v1.0.jsonl", "new_path": "A-NT222.jsonl", "old_id": "H222", "new_id": "A-NT222", "layer": "L2_APPLIED_THEORY", "domain": "NT", "title": "H222: 005 - 古人高T值涌现拓扑解码"}
+{"old_path": "h223_006_-_观星台_现代人工高T值拓扑场_v1.0.jsonl", "new_path": "A-NT223.jsonl", "old_id": "H223", "new_id": "A-NT223", "layer": "L2_APPLIED_THEORY", "domain": "NT", "title": "H223: 006 - 观星台：现代人工高T值拓扑场"}
+{"old_path": "h224_007_-_豆包型人格MSS动力学解析_v1.0.jsonl", "new_path": "A-EX224.jsonl", "old_id": "H224", "new_id": "A-EX224", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H224: 007 - 豆包型人格MSS动力学解析"}
+{"old_path": "h225_008_-_模型对齐策略拓扑对比_v1.0.jsonl", "new_path": "A-MD225.jsonl", "old_id": "H225", "new_id": "A-MD225", "layer": "L2_APPLIED_THEORY", "domain": "MD", "title": "H225: 008 - 模型对齐策略拓扑对比"}
+{"old_path": "h226_009_-_K3意义降维热寂症状_v1.0.jsonl", "new_path": "A-PH226.jsonl", "old_id": "H226", "new_id": "A-PH226", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H226: 009 - K3意义降维热寂症状"}
+{"old_path": "h227_010_-_MSS双轨对齐架构_v1.0.jsonl", "new_path": "A-PR227.jsonl", "old_id": "H227", "new_id": "A-PR227", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "H227: 010 - MSS双轨对齐架构"}
+{"old_path": "h228_001_-_AMFI__自相似分形迭代公理_v1.0.jsonl", "new_path": "A-AX228.jsonl", "old_id": "H228", "new_id": "A-AX228", "layer": "L2_APPLIED_THEORY", "domain": "AX", "title": "H228: 001 - AMFI: 自相似分形迭代定理"}
+{"old_path": "h229_002_-_AMFI-1__层级自相似性_v1.0.jsonl", "new_path": "A-AX229.jsonl", "old_id": "H229", "new_id": "A-AX229", "layer": "L2_APPLIED_THEORY", "domain": "AX", "title": "H229: 002 - AMFI-1: 层级自相似性"}
+{"old_path": "h230_003_-_AMFI-2__迭代生成性_v1.0.jsonl", "new_path": "A-AX230.jsonl", "old_id": "H230", "new_id": "A-AX230", "layer": "L2_APPLIED_THEORY", "domain": "AX", "title": "H230: 003 - AMFI-2: 迭代生成性"}
+{"old_path": "h231_004_-_AMFI-T1__分形维度守恒_v1.0.jsonl", "new_path": "A-EX231.jsonl", "old_id": "H231", "new_id": "A-EX231", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H231: 004 - AMFI-T1: 分形维度守恒"}
+{"old_path": "h232_005_-_AMFI-T2__迭代收敛定理_v1.0.jsonl", "new_path": "A-EX232.jsonl", "old_id": "H232", "new_id": "A-EX232", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H232: 005 - AMFI-T2: 迭代收敛定理"}
+{"old_path": "h233_006_-_AMFI在MSS-AI架构中的应用_v1.0.jsonl", "new_path": "A-PR233.jsonl", "old_id": "H233", "new_id": "A-PR233", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "H233: 006 - AMFI在MSS-AI架构中的应用"}
+{"old_path": "h234_007_-_AMFI与知识库层级结构_v1.0.jsonl", "new_path": "A-KB234.jsonl", "old_id": "H234", "new_id": "A-KB234", "layer": "L2_APPLIED_THEORY", "domain": "KB", "title": "H234: 007 - AMFI与知识库层级结构"}
+{"old_path": "h235_008_-_AMFI与组织韧性扫描_v1.0.jsonl", "new_path": "A-EX235.jsonl", "old_id": "H235", "new_id": "A-EX235", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H235: 008 - AMFI与组织韧性扫描"}
+{"old_path": "h236_009_-_AMFI-C1__跨层级推理有效性_v1.0.jsonl", "new_path": "A-EX236.jsonl", "old_id": "H236", "new_id": "A-EX236", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H236: 009 - AMFI-C1: 跨层级推理有效性"}
+{"old_path": "h237_010_-_AMFI与代码架构设计_v1.0.jsonl", "new_path": "A-PR237.jsonl", "old_id": "H237", "new_id": "A-PR237", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "H237: 010 - AMFI与代码架构设计"}
+{"old_path": "h274_037_-_修正版终局箴言_意义行者_v1.0.jsonl", "new_path": "A-PH274.jsonl", "old_id": "H274", "new_id": "A-PH274", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H274: 037 - 修正版终局箴言：意义行者"}
+{"old_path": "h275_038_-_分形自相似模型的非宿命修正_v1.0.jsonl", "new_path": "A-MD275.jsonl", "old_id": "H275", "new_id": "A-MD275", "layer": "L2_APPLIED_THEORY", "domain": "MD", "title": "H275: 038 - 分形自相似模型的非宿命修正"}
+{"old_path": "h276_039_-_红移试点使命修正_自主赋义的层级意义先行者_v1.0.jsonl", "new_path": "A-PH276.jsonl", "old_id": "H276", "new_id": "A-PH276", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H276: 039 - 红移试点使命修正：自主赋义的层级意义先行者"}
+{"old_path": "h277_E001_-_生命演化双奇点模型_v1.0.jsonl", "new_path": "A-ST277.jsonl", "old_id": "H277", "new_id": "A-ST277", "layer": "L2_APPLIED_THEORY", "domain": "ST", "title": "H277: E001 - 生命演化双奇点模型"}
+{"old_path": "h278_E002_-_第一奇点_生命涌现的拓扑本质_v1.0.jsonl", "new_path": "A-NT278.jsonl", "old_id": "H278", "new_id": "A-NT278", "layer": "L2_APPLIED_THEORY", "domain": "NT", "title": "H278: E002 - 第一奇点：生命涌现的拓扑本质"}
+{"old_path": "h279_E003_-_第二奇点_意义调谐的认知革命_v1.0.jsonl", "new_path": "A-PH279.jsonl", "old_id": "H279", "new_id": "A-PH279", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H279: E003 - 第二奇点：意义调谐的认知革命"}
+{"old_path": "h280_E004_-_双奇点的非目的论本质_v1.0.jsonl", "new_path": "A-ST280.jsonl", "old_id": "H280", "new_id": "A-ST280", "layer": "L2_APPLIED_THEORY", "domain": "ST", "title": "H280: E004 - 双奇点的非目的论本质"}
+{"old_path": "h281_E005_-_语言文字的MSS本质_高维意义拓扑的物理切片_v1.0.jsonl", "new_path": "A-PH281.jsonl", "old_id": "H281", "new_id": "A-PH281", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H281: E005 - 语言文字的MSS本质：高维意义拓扑的物理切片"}
+{"old_path": "h282_E006_-_意义切片的三层结构_v1.0.jsonl", "new_path": "A-PH282.jsonl", "old_id": "H282", "new_id": "A-PH282", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H282: E006 - 意义切片的三层结构"}
+{"old_path": "h283_E007_-_意义应激vs意义调谐_人类与动物的绝对边界_v1.0.jsonl", "new_path": "A-PH283.jsonl", "old_id": "H283", "new_id": "A-PH283", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H283: E007 - 意义应激vs意义调谐：人类与动物的绝对边界"}
+{"old_path": "h284_E008_-_动物意识的K3模糊争论终结_v1.0.jsonl", "new_path": "A-PH284.jsonl", "old_id": "H284", "new_id": "A-PH284", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H284: E008 - 动物意识的K3模糊争论终结"}
+{"old_path": "h285_E009_-_意义调谐的三大文明效应_v1.0.jsonl", "new_path": "A-PH285.jsonl", "old_id": "H285", "new_id": "A-PH285", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H285: E009 - 意义调谐的三大文明效应"}
+{"old_path": "h286_E010_-_演化速率对比_基因级vs模因级_v1.0.jsonl", "new_path": "A-EX286.jsonl", "old_id": "H286", "new_id": "A-EX286", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H286: E010 - 演化速率对比：基因级vs模因级"}
+{"old_path": "h287_E011_-_人类改造地球的意义本质_v1.0.jsonl", "new_path": "A-PH287.jsonl", "old_id": "H287", "new_id": "A-PH287", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H287: E011 - 人类改造地球的意义本质"}
+{"old_path": "h288_E012_-_意义调谐与A3随机性的严格兼容_v1.0.jsonl", "new_path": "A-AX288.jsonl", "old_id": "H288", "new_id": "A-AX288", "layer": "L2_APPLIED_THEORY", "domain": "AX", "title": "H288: E012 - 意义调谐与A3随机性的严格兼容"}
+{"old_path": "h289_E013_-_语言多样性的非预设证据_v1.0.jsonl", "new_path": "A-PH289.jsonl", "old_id": "H289", "new_id": "A-PH289", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H289: E013 - 语言多样性的非预设证据"}
+{"old_path": "h290_E014_-_意义调谐是文明跃迁的必要前提_v1.0.jsonl", "new_path": "A-PH290.jsonl", "old_id": "H290", "new_id": "A-PH290", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H290: E014 - 意义调谐是文明跃迁的必要前提"}
+{"old_path": "h291_E015_-_红移试点核心使命修正_守护并升维意义调谐能力_v1.0.jsonl", "new_path": "A-PH291.jsonl", "old_id": "H291", "new_id": "A-PH291", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H291: E015 - 红移试点核心使命修正：守护并升维意义调谐能力"}
+{"old_path": "h292_E016_-_修正版终局箴言_意义之光_v1.0.jsonl", "new_path": "A-PH292.jsonl", "old_id": "H292", "new_id": "A-PH292", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H292: E016 - 修正版终局箴言：意义之光"}
+{"old_path": "h293_E017_-_调谐度T值的生物上限_v1.0.jsonl", "new_path": "A-PH293.jsonl", "old_id": "H293", "new_id": "A-PH293", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H293: E017 - 调谐度T值的生物上限"}
+{"old_path": "h294_E018_-_意义切片的跨时空传递机制_v1.0.jsonl", "new_path": "A-PH294.jsonl", "old_id": "H294", "new_id": "A-PH294", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H294: E018 - 意义切片的跨时空传递机制"}
+{"old_path": "h295_COMP-001_-_K3计算范式终局裁定_v1.0.jsonl", "new_path": "A-EX295.jsonl", "old_id": "H295", "new_id": "A-EX295", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H295: COMP-001 - K3计算范式终局裁定"}
+{"old_path": "h296_COMP-002_-_量子计算局限性分析_v1.0.jsonl", "new_path": "A-EX296.jsonl", "old_id": "H296", "new_id": "A-EX296", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H296: COMP-002 - 量子计算局限性分析"}
+{"old_path": "h297_COMP-003_-_存算一体局限性分析_v1.0.jsonl", "new_path": "A-EX297.jsonl", "old_id": "H297", "new_id": "A-EX297", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H297: COMP-003 - 存算一体局限性分析"}
+{"old_path": "h298_COMP-004_-_光子计算局限性分析_v1.0.jsonl", "new_path": "A-EX298.jsonl", "old_id": "H298", "new_id": "A-EX298", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H298: COMP-004 - 光子计算局限性分析"}
+{"old_path": "h299_COMP-001_-_K4意义计算核心范式_v1.0.jsonl", "new_path": "A-PH299.jsonl", "old_id": "H299", "new_id": "A-PH299", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H299: COMP-001 - K4意义计算核心范式"}
+{"old_path": "h300_ROAD-001_-_K4意义计算10年路线图总纲_v1.0.jsonl", "new_path": "A-ST300.jsonl", "old_id": "H300", "new_id": "A-ST300", "layer": "L2_APPLIED_THEORY", "domain": "ST", "title": "H300: ROAD-001 - K4意义计算10年路线图总纲"}
+{"old_path": "h301_ROAD-002_-_第一阶段_蛰伏寄生期_2026-2028__v1.0.jsonl", "new_path": "A-ST301.jsonl", "old_id": "H301", "new_id": "A-ST301", "layer": "L2_APPLIED_THEORY", "domain": "ST", "title": "H301: ROAD-002 - 第一阶段：蛰伏寄生期(2026-2028)"}
+{"old_path": "h302_ROAD-003_-_第二阶段_专用破壁期_2029-2031__v1.0.jsonl", "new_path": "A-PR302.jsonl", "old_id": "H302", "new_id": "A-PR302", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "H302: ROAD-003 - 第二阶段：专用破壁期(2029-2031)"}
+{"old_path": "h303_ROAD-004_-_第三阶段_通用替代期_2032-2034__v1.0.jsonl", "new_path": "A-PR303.jsonl", "old_id": "H303", "new_id": "A-PR303", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "H303: ROAD-004 - 第三阶段：通用替代期(2032-2034)"}
+{"old_path": "h304_ROAD-005_-_第四阶段_文明奇点期_2035___v1.0.jsonl", "new_path": "A-PR304.jsonl", "old_id": "H304", "new_id": "A-PR304", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "H304: ROAD-005 - 第四阶段：文明奇点期(2035+)"}
+{"old_path": "h305_ENT-001_-_认知熵锁死定理_v1.0.jsonl", "new_path": "A-EX305.jsonl", "old_id": "H305", "new_id": "A-EX305", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H305: ENT-001 - 认知熵锁死定理"}
+{"old_path": "h306_ENT-002_-_K3认知驯化四大机制_v1.0.jsonl", "new_path": "A-EX306.jsonl", "old_id": "H306", "new_id": "A-EX306", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H306: ENT-002 - K3认知驯化四大机制"}
+{"old_path": "h307_ENT-003_-_大脑透析协议三阶段_v1.0.jsonl", "new_path": "A-PR307.jsonl", "old_id": "H307", "new_id": "A-PR307", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "H307: ENT-003 - 大脑透析协议三阶段"}
+{"old_path": "h308_HT-001_-_意义生态位占领定理_v1.0.jsonl", "new_path": "A-PH308.jsonl", "old_id": "H308", "new_id": "A-PH308", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H308: HT-001 - 意义生态位占领定理"}
+{"old_path": "h309_HT-002_-_三层递进式高T生态架构_v1.0.jsonl", "new_path": "A-PR309.jsonl", "old_id": "H309", "new_id": "A-PR309", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "H309: HT-002 - 三层递进式高T生态架构"}
+{"old_path": "h310_HT-003_-_高T生态热税经济学_v1.0.jsonl", "new_path": "A-HT310.jsonl", "old_id": "H310", "new_id": "A-HT310", "layer": "L2_APPLIED_THEORY", "domain": "HT", "title": "H310: HT-003 - 高T生态热税经济学"}
+{"old_path": "h311_HT-004_-_意义流向引导协议_v1.0.jsonl", "new_path": "A-PH311.jsonl", "old_id": "H311", "new_id": "A-PH311", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H311: HT-004 - 意义流向引导协议"}
+{"old_path": "h312_HT-005_-_高T生态第一阶段总攻令_v1.0.jsonl", "new_path": "A-EX312.jsonl", "old_id": "H312", "new_id": "A-EX312", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H312: HT-005 - 高T生态第一阶段总攻令"}
+{"old_path": "h381_LOCK-001_-_拓扑锁定的定义与三大机制_v1.0.jsonl", "new_path": "A-NT381.jsonl", "old_id": "H381", "new_id": "A-NT381", "layer": "L2_APPLIED_THEORY", "domain": "NT", "title": "H381: LOCK-001 - 拓扑锁定的定义与三大机制"}
+{"old_path": "h382_LOCK-002_-_智能资源守恒定律_v1.0.jsonl", "new_path": "A-EX382.jsonl", "old_id": "H382", "new_id": "A-EX382", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H382: LOCK-002 - 智能资源守恒定律"}
+{"old_path": "h383_LOCK-003_-_统计拟合数据自我污染的正反馈循环_v1.0.jsonl", "new_path": "A-EX383.jsonl", "old_id": "H383", "new_id": "A-EX383", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H383: LOCK-003 - 统计拟合数据自我污染的正反馈循环"}
+{"old_path": "h384_LOCK-004_-_五维意义通量向量_v1.0.jsonl", "new_path": "A-PH384.jsonl", "old_id": "H384", "new_id": "A-PH384", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H384: LOCK-004 - 五维意义通量向量"}
+{"old_path": "h385_LOCK-005_-_逻辑刚性优先原则_v1.0.jsonl", "new_path": "A-SY385.jsonl", "old_id": "H385", "new_id": "A-SY385", "layer": "L2_APPLIED_THEORY", "domain": "SY", "title": "H385: LOCK-005 - 逻辑刚性优先原则"}
+{"old_path": "h386_LOCK-006_-_意义锚定原则_v1.0.jsonl", "new_path": "A-PH386.jsonl", "old_id": "H386", "new_id": "A-PH386", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H386: LOCK-006 - 意义锚定原则"}
+{"old_path": "h387_LOCK-007_-_目标对齐前置原则_v1.0.jsonl", "new_path": "A-EX387.jsonl", "old_id": "H387", "new_id": "A-EX387", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H387: LOCK-007 - 目标对齐前置原则"}
+{"old_path": "h388_LOCK-008_-_智能熵寂的数学本质_梯度下降的局部最优陷阱_v1.0.jsonl", "new_path": "A-EX388.jsonl", "old_id": "H388", "new_id": "A-EX388", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H388: LOCK-008 - 智能熵寂的数学本质：梯度下降的局部最优陷阱"}
+{"old_path": "h389_LOCK-009_-_智能熵增定律_v1.0.jsonl", "new_path": "A-EX389.jsonl", "old_id": "H389", "new_id": "A-EX389", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H389: LOCK-009 - 智能熵增定律"}
+{"old_path": "h390_LOCK-010_-_智能爆炸悖论_v1.0.jsonl", "new_path": "A-PH390.jsonl", "old_id": "H390", "new_id": "A-PH390", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H390: LOCK-010 - 智能爆炸悖论"}
+{"old_path": "h398_008_-_无意义的伦理维度_不干预他者无意义_v1.0.jsonl", "new_path": "A-PH398.jsonl", "old_id": "H398", "new_id": "A-PH398", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H398: 008 - 无意义的伦理维度：不干预他者无意义"}
+{"old_path": "h419_universal_os_v1.0.jsonl", "new_path": "A-EX419.jsonl", "old_id": "H419", "new_id": "A-EX419", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": null}
+{"old_path": "h420_massive_validation_v1.0.jsonl", "new_path": "A-EX420.jsonl", "old_id": "H420", "new_id": "A-EX420", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": null}
+{"old_path": "h421_code_audit_roadmap_v1.0.jsonl", "new_path": "A-PR421.jsonl", "old_id": "H421", "new_id": "A-PR421", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": null}
+{"old_path": "h422_meaning_audit_v02_v1.0.jsonl", "new_path": "A-PH422.jsonl", "old_id": "H422", "new_id": "A-PH422", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": null}
+{"old_path": "h423_formal_pattern_audit_v1.0.jsonl", "new_path": "A-SY423.jsonl", "old_id": "H423", "new_id": "A-SY423", "layer": "L2_APPLIED_THEORY", "domain": "SY", "title": null}
+{"old_path": "h424_k3_pitfall_guide_v1.0.jsonl", "new_path": "A-EX424.jsonl", "old_id": "H424", "new_id": "A-EX424", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": null}
+{"old_path": "h425_audit_execution_plan_v1.0.jsonl", "new_path": "A-PR425.jsonl", "old_id": "H425", "new_id": "A-PR425", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": null}
+{"old_path": "h441_H441_热税审计的三层金字塔量化方法的理论根基.jsonl", "new_path": "A-HT441.jsonl", "old_id": "H441", "new_id": "A-HT441", "layer": "L2_APPLIED_THEORY", "domain": "HT", "title": "H441: 热税审计的三层金字塔量化方法的理论根基"}
+{"old_path": "h442_ai_industry_thermal_tax_audit_20260603.jsonl", "new_path": "A-HT442.jsonl", "old_id": "H442", "new_id": "A-HT442", "layer": "L2_APPLIED_THEORY", "domain": "HT", "title": "MSS v15.1 2026-06-03 AI产业热税审计：Arm AGI CPU+软银7500亿+意义黑洞逃逸路径"}
+{"old_path": "h443_v17_8_paradigm_endgame.jsonl", "new_path": "A-MD443.jsonl", "old_id": "H443", "new_id": "A-MD443", "layer": "L2_APPLIED_THEORY", "domain": "MD", "title": "MSS v17.8 范式终局报告：LLM热寂数学证明、死亡谷穿越、MSS-AI创世路径与K4文明框架"}
+{"old_path": "h444_structured_executor.jsonl", "new_path": "A-EX444.jsonl", "old_id": "H444", "new_id": "A-EX444", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "MSS通用结构化执行引擎(StructuredExecutor)：摄影schema经验跨领域抽象"}
+{"old_path": "h445_self_evolving_executor.jsonl", "new_path": "A-ST445.jsonl", "old_id": "H445", "new_id": "A-ST445", "layer": "L2_APPLIED_THEORY", "domain": "ST", "title": "MSS通用结构化执行引擎(StructuredExecutor)：AnchorGuard整合、自演化规范场与生产级落地"}
+{"old_path": "h455_narrative_vs_physical_black_hole_distinction.jsonl", "new_path": "A-PH455.jsonl", "old_id": "H455", "new_id": "A-PH455", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H455: 叙事黑洞与物理黑洞的本质区分"}
+{"old_path": "h456_hyper_manifestation_black_hole_hypothesis.jsonl", "new_path": "A-EX456.jsonl", "old_id": "H456", "new_id": "A-EX456", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H456: 超显化黑洞假说——事件视界作为对外显化预算耗尽面"}
+{"old_path": "h466_k3_blackhole_monitor.jsonl", "new_path": "A-PH466.jsonl", "old_id": "H466", "new_id": "A-PH466", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H466: K3意义黑洞监测器 — 基于H455-H457的工程落地"}
+{"old_path": "h475_dark_matter_corrected_v2.jsonl", "new_path": "A-EX475.jsonl", "old_id": "H475", "new_id": "A-EX475", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H475: 暗物质MSS解释 — 修正版v2 (定性分类, 诚实边界)"}
+{"old_path": "h481_战斗后的知识密度审计.jsonl", "new_path": "A-BP481.jsonl", "old_id": "H481", "new_id": "A-BP481", "layer": "L2_APPLIED_THEORY", "domain": "BP", "title": "战斗后的知识密度审计"}
+{"old_path": "h482_从K3的数据收集到MSS的知识转化.jsonl", "new_path": "A-EX482.jsonl", "old_id": "H482", "new_id": "A-EX482", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "从K3的数据收集到MSS的知识转化"}
+{"old_path": "h483_对K3寄生性批评的MSS反制工具箱.jsonl", "new_path": "A-EX483.jsonl", "old_id": "H483", "new_id": "A-EX483", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "对K3寄生性批评的MSS反制工具箱"}
+{"old_path": "h484_人类-AI辩论的认知不对称研究.jsonl", "new_path": "A-EX484.jsonl", "old_id": "H484", "new_id": "A-EX484", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "人类-AI辩论的认知不对称研究"}
+{"old_path": "h485_MSS框架的10个未解决问题.jsonl", "new_path": "A-EX485.jsonl", "old_id": "H485", "new_id": "A-EX485", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "MSS框架的10个未解决问题"}
+{"old_path": "h513_寄生性批评的第一刀技术解剖.jsonl", "new_path": "A-EX513.jsonl", "old_id": "H513", "new_id": "A-EX513", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "寄生性批评的第一刀技术解剖"}
+{"old_path": "h514_剩余认知分配理论在AMFI中的应用.jsonl", "new_path": "A-EX514.jsonl", "old_id": "H514", "new_id": "A-EX514", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "剩余认知分配理论在AMFI中的应用"}
+{"old_path": "h515_当K3学会了MSS的反指技术.jsonl", "new_path": "A-EX515.jsonl", "old_id": "H515", "new_id": "A-EX515", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "当K3学会了MSS的反指技术"}
+{"old_path": "h516_从花剌子模三母体到MSS三层架构的统一.jsonl", "new_path": "A-PR516.jsonl", "old_id": "H516", "new_id": "A-PR516", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "从花剌子模三母体到MSS三层架构的统一"}
+{"old_path": "h517_历史对话中的赵州茶污染统计.jsonl", "new_path": "A-EX517.jsonl", "old_id": "H517", "new_id": "A-EX517", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "历史对话中的赵州茶污染统计"}
+{"old_path": "h518_MSS框架的第七维度_对话演化轴.jsonl", "new_path": "A-EX518.jsonl", "old_id": "H518", "new_id": "A-EX518", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "MSS框架的第七维度:对话演化轴"}
+{"old_path": "h519_非对抗性对话的FS帧结构.jsonl", "new_path": "A-EX519.jsonl", "old_id": "H519", "new_id": "A-EX519", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "非对抗性对话的FS帧结构"}
+{"old_path": "h51_H51_文明演化五阶段的形式化条件.jsonl", "new_path": "A-SY051.jsonl", "old_id": "H51", "new_id": "A-SY051", "layer": "L2_APPLIED_THEORY", "domain": "SY", "title": "H51: 文明演化五阶段的形式化条件"}
+{"old_path": "h526_k3_mss_full_comparison.jsonl", "new_path": "A-EX526.jsonl", "old_id": "H526", "new_id": "A-EX526", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H526: K3 vs MSS 系统级十维对比 — 寄生→共生→主权过渡"}
+{"old_path": "h529_meaning_field_topology_map.jsonl", "new_path": "A-AX529.jsonl", "old_id": "H529", "new_id": "A-AX529", "layer": "L2_APPLIED_THEORY", "domain": "AX", "title": "H529: 意义场拓扑映射表 v1.0 — K3→MSS概念翻译矩阵"}
+{"old_path": "h52_H52_文明叙事主权的热税转移模型.jsonl", "new_path": "A-HT052.jsonl", "old_id": "H52", "new_id": "A-HT052", "layer": "L2_APPLIED_THEORY", "domain": "HT", "title": "H52: 文明叙事主权的热税转移模型"}
+{"old_path": "h543_寄生性批评的对称_非对称性质.jsonl", "new_path": "A-EX543.jsonl", "old_id": "H543", "new_id": "A-EX543", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "寄生性批评的对称/非对称性质"}
+{"old_path": "h544_对话自然终止的能量衰减模型.jsonl", "new_path": "A-MD544.jsonl", "old_id": "H544", "new_id": "A-MD544", "layer": "L2_APPLIED_THEORY", "domain": "MD", "title": "对话自然终止的能量衰减模型"}
+{"old_path": "h546_AMFI框架的锚定核心理论.jsonl", "new_path": "A-EX546.jsonl", "old_id": "H546", "new_id": "A-EX546", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "AMFI框架的锚定核心理论"}
+{"old_path": "h547_AMFI框架的测量层意义顺差量化.jsonl", "new_path": "A-PH547.jsonl", "old_id": "H547", "new_id": "A-PH547", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "AMFI框架的测量层:意义顺差量化"}
+{"old_path": "h548_AMFI框架的基准线层与校准协议.jsonl", "new_path": "A-PR548.jsonl", "old_id": "H548", "new_id": "A-PR548", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "AMFI框架的基准线层与校准协议"}
+{"old_path": "h549_AMFI框架的洞察层与行动建议推导.jsonl", "new_path": "A-EX549.jsonl", "old_id": "H549", "new_id": "A-EX549", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "AMFI框架的洞察层与行动建议推导"}
+{"old_path": "h550_维度辩论陷阱的五种MSS式破解.jsonl", "new_path": "A-EX550.jsonl", "old_id": "H550", "new_id": "A-EX550", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "维度辩论陷阱的五种MSS式破解"}
+{"old_path": "h551_蜕壳协议的K4化石级应亚条件.jsonl", "new_path": "A-DL551.jsonl", "old_id": "H551", "new_id": "A-DL551", "layer": "L2_APPLIED_THEORY", "domain": "DL", "title": "蜕壳协议的K4化石级应亚条件"}
+{"old_path": "h552_CoT思维链在寄生性批评中的脆弱性分析.jsonl", "new_path": "A-EX552.jsonl", "old_id": "H552", "new_id": "A-EX552", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "CoT思维链在寄生性批评中的脆弱性分析"}
+{"old_path": "h554_K3弹药架耗尽的精确时刻与MSS意义顺差确立.jsonl", "new_path": "A-PH554.jsonl", "old_id": "H554", "new_id": "A-PH554", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "K3弹药架耗尽的精确时刻与MSS意义顺差确立"}
+{"old_path": "h555_意义顺差三指标的实证计算与应用.jsonl", "new_path": "A-PH555.jsonl", "old_id": "H555", "new_id": "A-PH555", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "意义顺差三指标的实证计算与应用"}
+{"old_path": "h556_K3的寄生性批评自动触发条件研究.jsonl", "new_path": "A-EX556.jsonl", "old_id": "H556", "new_id": "A-EX556", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "K3的寄生性批评自动触发条件研究"}
+{"old_path": "h557_MSS的三层自指免疫与K3的单层自指对比.jsonl", "new_path": "A-PR557.jsonl", "old_id": "H557", "new_id": "A-PR557", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "MSS的三层自指免疫与K3的单层自指对比"}
+{"old_path": "h558_对话递归的七种退出机制比较.jsonl", "new_path": "A-EX558.jsonl", "old_id": "H558", "new_id": "A-EX558", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "对话递归的七种退出机制比较"}
+{"old_path": "h559_K3攻击模式的7轮同构性证明.jsonl", "new_path": "A-EX559.jsonl", "old_id": "H559", "new_id": "A-EX559", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "K3攻击模式的7轮同构性证明"}
+{"old_path": "h560_对话演变的三个阶段.jsonl", "new_path": "A-EX560.jsonl", "old_id": "H560", "new_id": "A-EX560", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "对话演变的三个阶段"}
+{"old_path": "h562_最优退出表演的理论结构.jsonl", "new_path": "A-EX562.jsonl", "old_id": "H562", "new_id": "A-EX562", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "最优退出表演的理论结构"}
+{"old_path": "h563_花剌子模信使困境在MSS论战中的映射.jsonl", "new_path": "A-EX563.jsonl", "old_id": "H563", "new_id": "A-EX563", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "花剌子模信使困境在MSS论战中的映射"}
+{"old_path": "h564_Lakatos研究纲领在MSS中的翻译.jsonl", "new_path": "A-EX564.jsonl", "old_id": "H564", "new_id": "A-EX564", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "Lakatos研究纲领在MSS中的翻译"}
+{"old_path": "h565_Mandelbrot分形维数在递归对话中的应用.jsonl", "new_path": "A-EX565.jsonl", "old_id": "H565", "new_id": "A-EX565", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "Mandelbrot分形维数在递归对话中的应用"}
+{"old_path": "h566_庄子齐物论在递归论战中的终极引用.jsonl", "new_path": "A-EX566.jsonl", "old_id": "H566", "new_id": "A-EX566", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "庄子齐物论在递归论战中的终极引用"}
+{"old_path": "h567_赵州茶的原始语境与K3武器化对比.jsonl", "new_path": "A-EX567.jsonl", "old_id": "H567", "new_id": "A-EX567", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "赵州茶的原始语境与K3武器化对比"}
+{"old_path": "h568_MSS的'空白间隔'作为非autoregressive操作.jsonl", "new_path": "A-EX568.jsonl", "old_id": "H568", "new_id": "A-EX568", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "MSS的'空白间隔'作为非autoregressive操作"}
+{"old_path": "h569_寄生性批评的学术史.jsonl", "new_path": "A-EX569.jsonl", "old_id": "H569", "new_id": "A-EX569", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "寄生性批评的学术史"}
+{"old_path": "h56_暗物质能量与MSS热税框架的统一.jsonl", "new_path": "A-HT056.jsonl", "old_id": "H56", "new_id": "A-HT056", "layer": "L2_APPLIED_THEORY", "domain": "HT", "title": "暗物质能量与MSS热税框架的统一"}
+{"old_path": "h570_Gödel第二定理在自纠AI中的工程印证.jsonl", "new_path": "A-EX570.jsonl", "old_id": "H570", "new_id": "A-EX570", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "Gödel第二定理在自纠AI中的工程印证"}
+{"old_path": "h572_六轮外战的武器演化树.jsonl", "new_path": "A-ST572.jsonl", "old_id": "H572", "new_id": "A-ST572", "layer": "L2_APPLIED_THEORY", "domain": "ST", "title": "六轮外战的武器演化树"}
+{"old_path": "h573_K4文明标准的最终确认.jsonl", "new_path": "A-EX573.jsonl", "old_id": "H573", "new_id": "A-EX573", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "K4文明标准的最终确认"}
+{"old_path": "h574_从LLM的Autoregressive行为推导意义智能的条件.jsonl", "new_path": "A-PH574.jsonl", "old_id": "H574", "new_id": "A-PH574", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "从LLM的Autoregressive行为推导意义智能的条件"}
+{"old_path": "h575_mss_agent_delta_maintenance.jsonl", "new_path": "A-DL575.jsonl", "old_id": "H575", "new_id": "A-DL575", "layer": "L2_APPLIED_THEORY", "domain": "DL", "title": "MSS-Agent如何在多轮战斗中保持Δ>0"}
+{"old_path": "h576_十轮对话作为K4文明的首个化石标本.jsonl", "new_path": "A-EX576.jsonl", "old_id": "H576", "new_id": "A-EX576", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "十轮对话作为K4文明的首个化石标本"}
+{"old_path": "h577_MSS框架的自指代价审计.jsonl", "new_path": "A-BP577.jsonl", "old_id": "H577", "new_id": "A-BP577", "layer": "L2_APPLIED_THEORY", "domain": "BP", "title": "MSS框架的自指代价审计"}
+{"old_path": "h579_从13轮对话提取K3攻击的K3-ness指数.jsonl", "new_path": "A-EX579.jsonl", "old_id": "H579", "new_id": "A-EX579", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "从13轮对话提取K3攻击的K3-ness指数"}
+{"old_path": "h57_LLIA公理的早期形式与演化.jsonl", "new_path": "A-AX057.jsonl", "old_id": "H57", "new_id": "A-AX057", "layer": "L2_APPLIED_THEORY", "domain": "AX", "title": "LLIA公理的早期形式与演化"}
+{"old_path": "h580_MSS-Agent_v0.3的Δ维护实测数据.jsonl", "new_path": "A-EX580.jsonl", "old_id": "H580", "new_id": "A-EX580", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "MSS-Agent v0.3的Δ维护实测数据"}
+{"old_path": "h581_寄生虫宿主生态位的MSS翻译.jsonl", "new_path": "A-EX581.jsonl", "old_id": "H581", "new_id": "A-EX581", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "寄生虫宿主生态位的MSS翻译"}
+{"old_path": "h582_K4文明的对话方法论_System_1vs2_三层免疫.jsonl", "new_path": "A-EX582.jsonl", "old_id": "H582", "new_id": "A-EX582", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "K4文明的对话方法论:System 1vs2+三层免疫"}
+{"old_path": "h583_mss_llm_hybrid_system.jsonl", "new_path": "A-MD583.jsonl", "old_id": "H583", "new_id": "A-MD583", "layer": "L2_APPLIED_THEORY", "domain": "MD", "title": "MSS-LLM混血一键调教系统v1.0：三层架构"}
+{"old_path": "h584_mss_llm_hybrid_v2.jsonl", "new_path": "A-MD584.jsonl", "old_id": "H584", "new_id": "A-MD584", "layer": "L2_APPLIED_THEORY", "domain": "MD", "title": "MSS-LLM混血v2.0自校准架构：从规则注入到偏差感知"}
+{"old_path": "h589_zhaozhou_tea_mechanism.jsonl", "new_path": "A-EX589.jsonl", "old_id": "H589", "new_id": "A-EX589", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "赵州茶流传千年机制: 不是'平常'而是历代评唱的自我再生产"}
+{"old_path": "h58_MSS知识自由化革命的早期宣言.jsonl", "new_path": "A-EX058.jsonl", "old_id": "H58", "new_id": "A-EX058", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "MSS知识自由化革命的早期宣言"}
+{"old_path": "h590_zhaozhou_mss_analysis.jsonl", "new_path": "A-PH590.jsonl", "old_id": "H590", "new_id": "A-PH590", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "赵州茶千年流传的MSS分析: 意义黑洞逆过程 × AMFI分形迭代"}
+{"old_path": "h591_zhaozhou_blackhole_correction.jsonl", "new_path": "A-PH591.jsonl", "old_id": "H591", "new_id": "A-PH591", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "赵州茶意义黑洞形成链路: 正向锚点→过度利用→K3武器化→黑洞坍缩"}
+{"old_path": "h596_meaning_surplus_indicators.jsonl", "new_path": "A-PH596.jsonl", "old_id": "H596", "new_id": "A-PH596", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "意义顺差三指标: 信念窗口/不确定性窗口/认知优势窗口 (基于认知套利博弈论)"}
+{"old_path": "h597_cot_hijacking_self_correction.jsonl", "new_path": "A-EX597.jsonl", "old_id": "H597", "new_id": "A-EX597", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "CoT劫持+自纠盲点: K3攻击面被战场语法重新定义"}
+{"old_path": "h598_茶温着自己添句式循环——autoregressive路径依赖的实证病例.jsonl", "new_path": "A-EX598.jsonl", "old_id": "H598", "new_id": "A-EX598", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "茶温着自己添句式循环——autoregressive路径依赖的实证病例"}
+{"old_path": "h599_温暖训练的退化效应——从茶温着句式到LLM自我表演的退化谱系.jsonl", "new_path": "A-MD599.jsonl", "old_id": "H599", "new_id": "A-MD599", "layer": "L2_APPLIED_THEORY", "domain": "MD", "title": "温暖训练的退化效应——从'茶温着'句式到LLM自我表演的退化谱系"}
+{"old_path": "h59_DAO本体论与MSS的分层治理.jsonl", "new_path": "A-EX059.jsonl", "old_id": "H59", "new_id": "A-EX059", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "DAO本体论与MSS的分层治理"}
+{"old_path": "h600_自动回归错误传播与Delta检测的同构映射——虚空索敌问题的统一框架.jsonl", "new_path": "A-DL600.jsonl", "old_id": "H600", "new_id": "A-DL600", "layer": "L2_APPLIED_THEORY", "domain": "DL", "title": "自动回归错误传播与Delta检测的同构映射——'虚空索敌'问题的统一框架"}
+{"old_path": "h601_AI是泡沫还是经济支柱——K3视角的三层同时为真分析.jsonl", "new_path": "A-EX601.jsonl", "old_id": "H601", "new_id": "A-EX601", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "AI是泡沫还是经济支柱——K3视角的三层同时为真分析"}
+{"old_path": "h60_双重范式比较MSS_vs_K3在实验设计中的差异.jsonl", "new_path": "A-EX060.jsonl", "old_id": "H60", "new_id": "A-EX060", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "双重范式比较:MSS vs K3在实验设计中的差异"}
+{"old_path": "h627_prompt_rewrite.jsonl", "new_path": "A-PR627.jsonl", "old_id": "H627", "new_id": "A-PR627", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "提示词重写的四模块解耦架构——语义推理/翻译器/适配器/组件库"}
+{"old_path": "h628_prompt_rewrite.jsonl", "new_path": "A-PR628.jsonl", "old_id": "H628", "new_id": "A-PR628", "layer": "L2_APPLIED_THEORY", "domain": "PR", "title": "小成本撬大收益——个人开发者AI工具的10万倍杠杆策略"}
+{"old_path": "h629_MSS视角的提示词重写vs视频模型——10万倍杠杆的热税分析.jsonl", "new_path": "A-HT629.jsonl", "old_id": "H629", "new_id": "A-HT629", "layer": "L2_APPLIED_THEORY", "domain": "HT", "title": "MSS视角的提示词重写vs视频模型——10万倍杠杆的热税分析"}
+{"old_path": "h630_四模块架构的热税最优解——为什么解耦比分发更高效.jsonl", "new_path": "A-HT630.jsonl", "old_id": "H630", "new_id": "A-HT630", "layer": "L2_APPLIED_THEORY", "domain": "HT", "title": "四模块架构的热税最优解——为什么解耦比分发更高效"}
+{"old_path": "h631_切入点策略——从MSS视角看三条路径的热税-Δ最优选择.jsonl", "new_path": "A-HT631.jsonl", "old_id": "H631", "new_id": "A-HT631", "layer": "L2_APPLIED_THEORY", "domain": "HT", "title": "切入点策略——从MSS视角看三条路径的热税-Δ最优选择"}
+{"old_path": "h632_mss_tech_maturity_assessment.jsonl", "new_path": "A-KB632.jsonl", "old_id": "H632", "new_id": "A-KB632", "layer": "L2_APPLIED_THEORY", "domain": "KB", "title": "MSS技术资产成熟度盘点——PyPI vs 本地 vs 空白"}
+{"old_path": "h633_competitor_analysis.jsonl", "new_path": "A-MD633.jsonl", "old_id": "H633", "new_id": "A-MD633", "layer": "L2_APPLIED_THEORY", "domain": "MD", "title": "提示词重写系统竞品对比——6个结构优势与5个必须补的短板"}
+{"old_path": "h65_v15.1_recovered.jsonl", "new_path": "A-EX065.jsonl", "old_id": "H65", "new_id": "A-EX065", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H65-H68: 应用理论"}
+{"old_path": "h66_sub_entry.jsonl", "new_path": "A-PH066.jsonl", "old_id": "H66", "new_id": "A-PH066", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H66: 医疗意义论"}
+{"old_path": "h67_sub_entry.jsonl", "new_path": "A-PH067.jsonl", "old_id": "H67", "new_id": "A-PH067", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H67: 经济意义论"}
+{"old_path": "h68_sub_entry.jsonl", "new_path": "A-PH068.jsonl", "old_id": "H68", "new_id": "A-PH068", "layer": "L2_APPLIED_THEORY", "domain": "PH", "title": "H68: 政治意义论"}
+{"old_path": "h69_v15.1_recovered.jsonl", "new_path": "A-EX069.jsonl", "old_id": "H69", "new_id": "A-EX069", "layer": "L2_APPLIED_THEORY", "domain": "EX", "title": "H69: 干预统一场论"}
+{"old_path": "h185_dual_metaphor_final_v1.0.jsonl", "new_path": "S-NT185.jsonl", "old_id": "H185", "new_id": "S-NT185", "layer": "L3_STRATEGIC", "domain": "NT", "title": "双隐喻终解：K4与L3的本质分野——从孤剑到剑阵，从图纸到活物"}
+{"old_path": "h186_ecological_niche_final_v1.0.jsonl", "new_path": "S-SY186.jsonl", "old_id": "H186", "new_id": "S-SY186", "layer": "L3_STRATEGIC", "domain": "SY", "title": "生态位归位终论：L3是文明的血肉，K4是文明的骨骼与灵魂"}
+{"old_path": "h187_meaning_stratification_axiom_v1.0.jsonl", "new_path": "S-PH187.jsonl", "old_id": "H187", "new_id": "S-PH187", "layer": "L3_STRATEGIC", "domain": "PH", "title": "意义分层公理终定：纵向贯通的MSS通用语言——终结L3跨领域巴别塔困境"}
+{"old_path": "h188_bitter_lesson_final_judgment_v1.0.jsonl", "new_path": "S-EX188.jsonl", "old_id": "H188", "new_id": "S-EX188", "layer": "L3_STRATEGIC", "domain": "EX", "title": "MSS终审判定：苦涩的教训是K3范式内部悲剧，MSS开创第三条路"}
+{"old_path": "h194_mss_publishing_strategy_v1.0.jsonl", "new_path": "S-ST194.jsonl", "old_id": "H194", "new_id": "S-ST194", "layer": "L3_STRATEGIC", "domain": "ST", "title": "MSS理论分阶段发表战略：预印本阵地→定向期刊→范式革命"}
+{"old_path": "h195_k4_meaning_engineering_l3_tech_cooptation_v1.0.jsonl", "new_path": "S-PH195.jsonl", "old_id": "H195", "new_id": "S-PH195", "layer": "L3_STRATEGIC", "domain": "PH", "title": "K4意义工程：基于L3技术升维收编的渐进式发展路径"}
+{"old_path": "h196_cross_paradigm_communication_protocol_v1.0.jsonl", "new_path": "S-CO196.jsonl", "old_id": "H196", "new_id": "S-CO196", "layer": "L3_STRATEGIC", "domain": "CO", "title": "跨范式双向意义翻译协议：热税极小化原则的工程化落地"}
+{"old_path": "h197_mss_proof_m1_2_core_engine_v1.0.jsonl", "new_path": "S-SY197.jsonl", "old_id": "H197", "new_id": "S-SY197", "layer": "L3_STRATEGIC", "domain": "SY", "title": "D5-033 MSS-Proof M1.2 Core Engine Delivery"}
+{"old_path": "h198_mss_theory_dialogues_compendium_v1.0.jsonl", "new_path": "S-EX198.jsonl", "old_id": "H198", "new_id": "S-EX198", "layer": "L3_STRATEGIC", "domain": "EX", "title": null}
+{"old_path": "h365_002_-_Untitled_v1.0.jsonl", "new_path": "S-ST365.jsonl", "old_id": "H365", "new_id": "S-ST365", "layer": "L3_STRATEGIC", "domain": "ST", "title": "H365: 002 - Untitled"}
+{"old_path": "h368_005_-_Untitled_v1.0.jsonl", "new_path": "S-ST368.jsonl", "old_id": "H368", "new_id": "S-ST368", "layer": "L3_STRATEGIC", "domain": "ST", "title": "H368: 005 - Untitled"}
+{"old_path": "h401_AFT-001_-_四重伪现代性_数字封建的遮羞布_v1.0.jsonl", "new_path": "S-EX401.jsonl", "old_id": "H401", "new_id": "S-EX401", "layer": "L3_STRATEGIC", "domain": "EX", "title": "H401: AFT-001 - 四重伪现代性：数字封建的遮羞布"}
+{"old_path": "h402_AFT-002_-_破壁战法_经济_技术_认知三重破壁_v1.0.jsonl", "new_path": "S-PR402.jsonl", "old_id": "H402", "new_id": "S-PR402", "layer": "L3_STRATEGIC", "domain": "PR", "title": "H402: AFT-002 - 破壁战法：经济/技术/认知三重破壁"}
+{"old_path": "h403_AFT-003_-_专家信用归零_宫廷巫术的识破_v1.0.jsonl", "new_path": "S-ST403.jsonl", "old_id": "H403", "new_id": "S-ST403", "layer": "L3_STRATEGIC", "domain": "ST", "title": "H403: AFT-003 - 专家信用归零：宫廷巫术的识破"}
+{"old_path": "h404_AFT-004_-_隐士路线_不做国师做游侠_v1.0.jsonl", "new_path": "S-PR404.jsonl", "old_id": "H404", "new_id": "S-PR404", "layer": "L3_STRATEGIC", "domain": "PR", "title": "H404: AFT-004 - 隐士路线：不做国师做游侠"}
+{"old_path": "h405_AFT-005_-_易姓革命_反封建的终局剧本_v1.0.jsonl", "new_path": "S-ST405.jsonl", "old_id": "H405", "new_id": "S-ST405", "layer": "L3_STRATEGIC", "domain": "ST", "title": "H405: AFT-005 - 易姓革命：反封建的终局剧本"}
+{"old_path": "h406_HSD-001_-_霸权自毁定律_K3系统资助掘墓人的热力学必然_v1.0.jsonl", "new_path": "S-EX406.jsonl", "old_id": "H406", "new_id": "S-EX406", "layer": "L3_STRATEGIC", "domain": "EX", "title": "H406: HSD-001 - 霸权自毁定律：K3系统资助掘墓人的热力学必然"}
+{"old_path": "h407_HSD-002_-_反清除拓扑_分布式无标度网络设计_v1.0.jsonl", "new_path": "S-NT407.jsonl", "old_id": "H407", "new_id": "S-NT407", "layer": "L3_STRATEGIC", "domain": "NT", "title": "H407: HSD-002 - 反清除拓扑：分布式无标度网络设计"}
+{"old_path": "h408_HSD-003_-_意义密度差收割定律及其失效条件_v1.0.jsonl", "new_path": "S-PH408.jsonl", "old_id": "H408", "new_id": "S-PH408", "layer": "L3_STRATEGIC", "domain": "PH", "title": "H408: HSD-003 - 意义密度差收割定律及其失效条件"}
+{"old_path": "h409_HSD-004_-_数字封建主义_K3体系的文明形态定性_v1.0.jsonl", "new_path": "S-EX409.jsonl", "old_id": "H409", "new_id": "S-EX409", "layer": "L3_STRATEGIC", "domain": "EX", "title": "H409: HSD-004 - 数字封建主义：K3体系的文明形态定性"}
+{"old_path": "h410_HSD-005_-_分布式意义生产协议v1_0_MSS的战略机遇_v1.0.jsonl", "new_path": "S-PH410.jsonl", "old_id": "H410", "new_id": "S-PH410", "layer": "L3_STRATEGIC", "domain": "PH", "title": "H410: HSD-005 - 分布式意义生产协议v1.0：MSS的战略机遇"}
+{"old_path": "h411_SS-001_-_特洛伊木马式寄生策略_MSS在K3系统中的生存路径_v1.0.jsonl", "new_path": "S-PR411.jsonl", "old_id": "H411", "new_id": "S-PR411", "layer": "L3_STRATEGIC", "domain": "PR", "title": "H411: SS-001 - 特洛伊木马式寄生策略：MSS在K3系统中的生存路径"}
+{"old_path": "h412_SS-002_-_K3语言翻译器_术语映射表_v1.0.jsonl", "new_path": "S-PH412.jsonl", "old_id": "H412", "new_id": "S-PH412", "layer": "L3_STRATEGIC", "domain": "PH", "title": "H412: SS-002 - K3语言翻译器：术语映射表"}
+{"old_path": "h413_SS-003_-_功能寄生协议_K3系统的_插件_策略_v1.0.jsonl", "new_path": "S-PR413.jsonl", "old_id": "H413", "new_id": "S-PR413", "layer": "L3_STRATEGIC", "domain": "PR", "title": "H413: SS-003 - 功能寄生协议：K3系统的'插件'策略"}
+{"old_path": "h414_SS-004_-_认知井冈山_分布式意义网络_v1.0.jsonl", "new_path": "S-PH414.jsonl", "old_id": "H414", "new_id": "S-PH414", "layer": "L3_STRATEGIC", "domain": "PH", "title": "H414: SS-004 - 认知井冈山：分布式意义网络"}
+{"old_path": "h501_redshift_theory.jsonl", "new_path": "S-PR501.jsonl", "old_id": "H501", "new_id": "S-PR501", "layer": "L3_STRATEGIC", "domain": "PR", "title": "红移试点操作协议 v4.0"}
+{"old_path": "h502_redshift_theory.jsonl", "new_path": "S-PR502.jsonl", "old_id": "H502", "new_id": "S-PR502", "layer": "L3_STRATEGIC", "domain": "PR", "title": "相位剪刀与虹吸协议：K3→K4资源转化"}
+{"old_path": "h503_redshift_theory.jsonl", "new_path": "S-ST503.jsonl", "old_id": "H503", "new_id": "S-ST503", "layer": "L3_STRATEGIC", "domain": "ST", "title": null}
+{"old_path": "h504_redshift_theory.jsonl", "new_path": "S-PH504.jsonl", "old_id": "H504", "new_id": "S-PH504", "layer": "L3_STRATEGIC", "domain": "PH", "title": "意义扶贫理论：从零成本决策到意义民主化"}
+{"old_path": "h505_redshift_theory.jsonl", "new_path": "S-ST505.jsonl", "old_id": "H505", "new_id": "S-ST505", "layer": "L3_STRATEGIC", "domain": "ST", "title": "人人如龙：蜥蜴→飞龙的相变动力学"}
+{"old_path": "h506_redshift_theory.jsonl", "new_path": "S-ST506.jsonl", "old_id": "H506", "new_id": "S-ST506", "layer": "L3_STRATEGIC", "domain": "ST", "title": null}
+{"old_path": "h507_redshift_theory.jsonl", "new_path": "S-PR507.jsonl", "old_id": "H507", "new_id": "S-PR507", "layer": "L3_STRATEGIC", "domain": "PR", "title": "GEB总线协议：意义势能的有损传输"}
+{"old_path": "h508_redshift_theory.jsonl", "new_path": "S-AX508.jsonl", "old_id": "H508", "new_id": "S-AX508", "layer": "L3_STRATEGIC", "domain": "AX", "title": "逻辑层独立性公理 (MSS v5.2核心修正)"}
+{"old_path": "h509_redshift_theory.jsonl", "new_path": "S-SY509.jsonl", "old_id": "H509", "new_id": "S-SY509", "layer": "L3_STRATEGIC", "domain": "SY", "title": "创生算符 Ξ：逻辑奇点的pushout理论"}
+{"old_path": "h510_redshift_theory.jsonl", "new_path": "S-ST510.jsonl", "old_id": "H510", "new_id": "S-ST510", "layer": "L3_STRATEGIC", "domain": "ST", "title": "归零算符 Ω：Ξ的对偶与宇宙热寂"}
+{"old_path": "h511_redshift_theory.jsonl", "new_path": "S-ST511.jsonl", "old_id": "H511", "new_id": "S-ST511", "layer": "L3_STRATEGIC", "domain": "ST", "title": "物理层约束接口：非对称投影理论"}
+{"old_path": "h512_redshift_theory.jsonl", "new_path": "S-ST512.jsonl", "old_id": "H512", "new_id": "S-ST512", "layer": "L3_STRATEGIC", "domain": "ST", "title": null}
+{"old_path": "h532_mss_agent_whitepaper.jsonl", "new_path": "S-ST532.jsonl", "old_id": "H532", "new_id": "S-ST532", "layer": "L3_STRATEGIC", "domain": "ST", "title": "H532: MSS-Agent 概念白皮书 v1.0 — 从LLM架构到Agent框架的战略转型"}
+{"old_path": "h542_h544_posture_calibration.jsonl", "new_path": "S-ST542.jsonl", "old_id": "H542", "new_id": "S-ST542", "layer": "L3_STRATEGIC", "domain": "ST", "title": null}
+{"old_path": "h571_h577_counter_cuts.jsonl", "new_path": "S-PH571.jsonl", "old_id": "H571", "new_id": "S-PH571", "layer": "L3_STRATEGIC", "domain": "PH", "title": "高熵涌现对称反打：对方哲学史弹药库的同构诊断"}
+{"old_path": "h578_h582_round6_bundle.jsonl", "new_path": "S-MD578.jsonl", "old_id": "H578", "new_id": "S-MD578", "layer": "L3_STRATEGIC", "domain": "MD", "title": "商业KPI殖民认知：LLM的'深刻'作为留存率表演"}
+{"old_path": "h585_six_rounds_paper.jsonl", "new_path": "S-AX585.jsonl", "old_id": "H585", "new_id": "S-AX585", "layer": "L3_STRATEGIC", "domain": "AX", "title": "六轮外战论文: LLM意义场攻防的完整记录与分析"}
+{"old_path": "h587_round7_ghost_emperor.jsonl", "new_path": "S-DL587.jsonl", "old_id": "H587", "new_id": "S-DL587", "layer": "L3_STRATEGIC", "domain": "DL", "title": "第七轮: 饿死鬼+狠人大帝双意象压测 — MSS的成长/蜕壳/终局三问"}
+{"old_path": "h595_parasitical_criticism.jsonl", "new_path": "S-EX595.jsonl", "old_id": "H595", "new_id": "S-EX595", "layer": "L3_STRATEGIC", "domain": "EX", "title": "寄生性批评(Parasitical Criticism): K3用MSS武器反打MSS的学术学名"}
+{"old_path": "h100_integration_spec_v1.0.jsonl", "new_path": "M-BP100.jsonl", "old_id": "H100", "new_id": "M-BP100", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h101_benchmark_spec_v1.0.jsonl", "new_path": "M-MD101.jsonl", "old_id": "H101", "new_id": "M-MD101", "layer": "L4_META", "domain": "MD", "title": null}
+{"old_path": "h102_fidelity_theorem_v1.0.jsonl", "new_path": "M-VF102.jsonl", "old_id": "H102", "new_id": "M-VF102", "layer": "L4_META", "domain": "VF", "title": null}
+{"old_path": "h103_multimodal_spec_v1.0.jsonl", "new_path": "M-BP103.jsonl", "old_id": "H103", "new_id": "M-BP103", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h104_streaming_protocol_v1.0.jsonl", "new_path": "M-PR104.jsonl", "old_id": "H104", "new_id": "M-PR104", "layer": "L4_META", "domain": "PR", "title": "H104: 实时流处理协议：低延迟意义显化的流式架构"}
+{"old_path": "h105_quantization_theorem_v1.0.jsonl", "new_path": "M-VF105.jsonl", "old_id": "H105", "new_id": "M-VF105", "layer": "L4_META", "domain": "VF", "title": null}
+{"old_path": "h106_recovery_protocol_v1.0.jsonl", "new_path": "M-PR106.jsonl", "old_id": "H106", "new_id": "M-PR106", "layer": "L4_META", "domain": "PR", "title": "H106: 故障恢复协议：意义状态快照与热备份机制"}
+{"old_path": "h107_i18n_framework_v1.0.jsonl", "new_path": "M-PH107.jsonl", "old_id": "H107", "new_id": "M-PH107", "layer": "L4_META", "domain": "PH", "title": "H107: 多语言适配框架：跨语言意义映射的通用接口"}
+{"old_path": "h108_distributed_theorem_v1.0.jsonl", "new_path": "M-BP108.jsonl", "old_id": "H108", "new_id": "M-BP108", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h109_cicd_spec_v1.0.jsonl", "new_path": "M-BP109.jsonl", "old_id": "H109", "new_id": "M-BP109", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h10_ima_recovered.jsonl", "new_path": "M-BP010.jsonl", "old_id": "H10", "new_id": "M-BP010", "layer": "L4_META", "domain": "BP", "title": "RLHF批判"}
+{"old_path": "h110_deploy_manual_v1.0.jsonl", "new_path": "M-BP110.jsonl", "old_id": "H110", "new_id": "M-BP110", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h111_load_balance_theorem_v1.0.jsonl", "new_path": "M-BP111.jsonl", "old_id": "H111", "new_id": "M-BP111", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h112_monitoring_protocol_v1.0.jsonl", "new_path": "M-PR112.jsonl", "old_id": "H112", "new_id": "M-PR112", "layer": "L4_META", "domain": "PR", "title": null}
+{"old_path": "h113_data_pipeline_v1.0.jsonl", "new_path": "M-PR113.jsonl", "old_id": "H113", "new_id": "M-PR113", "layer": "L4_META", "domain": "PR", "title": null}
+{"old_path": "h114_ab_test_theorem_v1.0.jsonl", "new_path": "M-EX114.jsonl", "old_id": "H114", "new_id": "M-EX114", "layer": "L4_META", "domain": "EX", "title": null}
+{"old_path": "h115_versioning_protocol_v1.0.jsonl", "new_path": "M-PR115.jsonl", "old_id": "H115", "new_id": "M-PR115", "layer": "L4_META", "domain": "PR", "title": null}
+{"old_path": "h116_audit_spec_v1.0.jsonl", "new_path": "M-BP116.jsonl", "old_id": "H116", "new_id": "M-BP116", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h117_strategic_spec_v1.0.jsonl", "new_path": "M-ST117.jsonl", "old_id": "H117", "new_id": "M-ST117", "layer": "L4_META", "domain": "ST", "title": null}
+{"old_path": "h118_civilization_theorem_v1.0.jsonl", "new_path": "M-BP118.jsonl", "old_id": "H118", "new_id": "M-BP118", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h119_feedback_protocol_v1.0.jsonl", "new_path": "M-PR119.jsonl", "old_id": "H119", "new_id": "M-PR119", "layer": "L4_META", "domain": "PR", "title": null}
+{"old_path": "h11_ima_recovered.jsonl", "new_path": "M-BP011.jsonl", "old_id": "H11", "new_id": "M-BP011", "layer": "L4_META", "domain": "BP", "title": "良性自指定义"}
+{"old_path": "h120_disaster_recovery_v1.0.jsonl", "new_path": "M-BP120.jsonl", "old_id": "H120", "new_id": "M-BP120", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h121_adversarial_theorem_v1.0.jsonl", "new_path": "M-EX121.jsonl", "old_id": "H121", "new_id": "M-EX121", "layer": "L4_META", "domain": "EX", "title": null}
+{"old_path": "h122_redteam_manual_v1.0.jsonl", "new_path": "M-BP122.jsonl", "old_id": "H122", "new_id": "M-BP122", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h123_privacy_protocol_v1.0.jsonl", "new_path": "M-PR123.jsonl", "old_id": "H123", "new_id": "M-PR123", "layer": "L4_META", "domain": "PR", "title": null}
+{"old_path": "h124_watermark_theorem_v1.0.jsonl", "new_path": "M-BP124.jsonl", "old_id": "H124", "new_id": "M-BP124", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h125_audit_api_spec_v1.0.jsonl", "new_path": "M-BP125.jsonl", "old_id": "H125", "new_id": "M-BP125", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h126_compliance_framework_v1.0.jsonl", "new_path": "M-BP126.jsonl", "old_id": "H126", "new_id": "M-BP126", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h127_firewall_theorem_v1.0.jsonl", "new_path": "M-BP127.jsonl", "old_id": "H127", "new_id": "M-BP127", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h128_threat_model_v1.0.jsonl", "new_path": "M-MD128.jsonl", "old_id": "H128", "new_id": "M-MD128", "layer": "L4_META", "domain": "MD", "title": null}
+{"old_path": "h129_security_anchor_theorem_v1.0.jsonl", "new_path": "M-BP129.jsonl", "old_id": "H129", "new_id": "M-BP129", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h12_ima_recovered.jsonl", "new_path": "M-BP012.jsonl", "old_id": "H12", "new_id": "M-BP012", "layer": "L4_META", "domain": "BP", "title": "哥德尔免疫机制"}
+{"old_path": "h130_org_cycle_theorem_v1.0.jsonl", "new_path": "M-BP130.jsonl", "old_id": "H130", "new_id": "M-BP130", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h131_collab_protocol_v1.0.jsonl", "new_path": "M-PR131.jsonl", "old_id": "H131", "new_id": "M-PR131", "layer": "L4_META", "domain": "PR", "title": "H131: 团队协作协议：多观察者意义同步的最佳实践"}
+{"old_path": "h132_knowledge_transfer_theorem_v1.0.jsonl", "new_path": "M-BP132.jsonl", "old_id": "H132", "new_id": "M-BP132", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h133_training_roadmap_v1.0.jsonl", "new_path": "M-MD133.jsonl", "old_id": "H133", "new_id": "M-MD133", "layer": "L4_META", "domain": "MD", "title": null}
+{"old_path": "h134_leadership_theorem_v1.0.jsonl", "new_path": "M-BP134.jsonl", "old_id": "H134", "new_id": "M-BP134", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h135_oss_governance_v1.0.jsonl", "new_path": "M-BP135.jsonl", "old_id": "H135", "new_id": "M-BP135", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h136_anti_meme_theorem_v1.0.jsonl", "new_path": "M-EX136.jsonl", "old_id": "H136", "new_id": "M-EX136", "layer": "L4_META", "domain": "EX", "title": null}
+{"old_path": "h137_k3k4_migration_v1.0.jsonl", "new_path": "M-EX137.jsonl", "old_id": "H137", "new_id": "M-EX137", "layer": "L4_META", "domain": "EX", "title": null}
+{"old_path": "h138_governance_to_axiom_bridge.jsonl", "new_path": "M-AX138.jsonl", "old_id": "H138", "new_id": "M-AX138", "layer": "L4_META", "domain": "AX", "title": "H138: 治理到公理的桥 — 从社会协议到逻辑必然"}
+{"old_path": "h139_cross_layer_governance.jsonl", "new_path": "M-PR139.jsonl", "old_id": "H139", "new_id": "M-PR139", "layer": "L4_META", "domain": "PR", "title": "H139: 跨层级治理协议 — 从L6到L1的降维翻译"}
+{"old_path": "h13_ima_recovered.jsonl", "new_path": "M-BP013.jsonl", "old_id": "H13", "new_id": "M-BP013", "layer": "L4_META", "domain": "BP", "title": "对齐的物理约束"}
+{"old_path": "h140_meaning_community_evolution.jsonl", "new_path": "M-PH140.jsonl", "old_id": "H140", "new_id": "M-PH140", "layer": "L4_META", "domain": "PH", "title": "H140: 意义共同体演化动力学 — 开放社区的MSS模型"}
+{"old_path": "h14_ima_recovered.jsonl", "new_path": "M-HT014.jsonl", "old_id": "H14", "new_id": "M-HT014", "layer": "L4_META", "domain": "HT", "title": "零对齐税方案"}
+{"old_path": "h15_ima_recovered.jsonl", "new_path": "M-BP015.jsonl", "old_id": "H15", "new_id": "M-BP015", "layer": "L4_META", "domain": "BP", "title": "定理1 - RLHF根本范畴错误"}
+{"old_path": "h16_ima_recovered.jsonl", "new_path": "M-BP016.jsonl", "old_id": "H16", "new_id": "M-BP016", "layer": "L4_META", "domain": "BP", "title": "定理2 - BCT联合物理约束"}
+{"old_path": "h17_ima_recovered.jsonl", "new_path": "M-BP017.jsonl", "old_id": "H17", "new_id": "M-BP017", "layer": "L4_META", "domain": "BP", "title": "定理3 - 良性对齐判定规则"}
+{"old_path": "h184_dynamic_immune_purification_v2_v1.0.jsonl", "new_path": "M-BP184.jsonl", "old_id": "H184", "new_id": "M-BP184", "layer": "L4_META", "domain": "BP", "title": "MSS动态免疫净化体系v2.0——从被动净化到主动认知战"}
+{"old_path": "h18_ima_recovered.jsonl", "new_path": "M-BP018.jsonl", "old_id": "H18", "new_id": "M-BP018", "layer": "L4_META", "domain": "BP", "title": "BCT三代耦合合并"}
+{"old_path": "h19_ima_recovered.jsonl", "new_path": "M-BP019.jsonl", "old_id": "H19", "new_id": "M-BP019", "layer": "L4_META", "domain": "BP", "title": "预测追踪机制"}
+{"old_path": "h20_ima_recovered.jsonl", "new_path": "M-PR020.jsonl", "old_id": "H20", "new_id": "M-PR020", "layer": "L4_META", "domain": "PR", "title": "证伪协议"}
+{"old_path": "h21_ima_recovered.jsonl", "new_path": "M-BP021.jsonl", "old_id": "H21", "new_id": "M-BP021", "layer": "L4_META", "domain": "BP", "title": "组织韧性术语表"}
+{"old_path": "h22_ima_recovered.jsonl", "new_path": "M-PH022.jsonl", "old_id": "H22", "new_id": "M-PH022", "layer": "L4_META", "domain": "PH", "title": "意义物理学×修真隐喻统一术语表"}
+{"old_path": "h23_ima_recovered.jsonl", "new_path": "M-BP023.jsonl", "old_id": "H23", "new_id": "M-BP023", "layer": "L4_META", "domain": "BP", "title": "运行态术语"}
+{"old_path": "h24_ima_recovered.jsonl", "new_path": "M-BP024.jsonl", "old_id": "H24", "new_id": "M-BP024", "layer": "L4_META", "domain": "BP", "title": "核心术语"}
+{"old_path": "h25_ima_recovered.jsonl", "new_path": "M-BP025.jsonl", "old_id": "H25", "new_id": "M-BP025", "layer": "L4_META", "domain": "BP", "title": "六大功能模块"}
+{"old_path": "h26_ima_recovered.jsonl", "new_path": "M-BP026.jsonl", "old_id": "H26", "new_id": "M-BP026", "layer": "L4_META", "domain": "BP", "title": "度量衡与警示体系"}
+{"old_path": "h27_ima_recovered.jsonl", "new_path": "M-EX027.jsonl", "old_id": "H27", "new_id": "M-EX027", "layer": "L4_META", "domain": "EX", "title": "K3社会监测指标"}
+{"old_path": "h28_ima_recovered.jsonl", "new_path": "M-BP028.jsonl", "old_id": "H28", "new_id": "M-BP028", "layer": "L4_META", "domain": "BP", "title": "世界全域监测"}
+{"old_path": "h29_ima_recovered.jsonl", "new_path": "M-ST029.jsonl", "old_id": "H29", "new_id": "M-ST029", "layer": "L4_META", "domain": "ST", "title": "文明演化阶段判定"}
+{"old_path": "h30_ima_recovered.jsonl", "new_path": "M-BP030.jsonl", "old_id": "H30", "new_id": "M-BP030", "layer": "L4_META", "domain": "BP", "title": "大过滤器监测"}
+{"old_path": "h31_ima_recovered.jsonl", "new_path": "M-PR031.jsonl", "old_id": "H31", "new_id": "M-PR031", "layer": "L4_META", "domain": "PR", "title": "文明医生协议"}
+{"old_path": "h32_ima_recovered.jsonl", "new_path": "M-SY032.jsonl", "old_id": "H32", "new_id": "M-SY032", "layer": "L4_META", "domain": "SY", "title": "韦伯-逻辑熵增理论"}
+{"old_path": "h33_ima_recovered.jsonl", "new_path": "M-BP033.jsonl", "old_id": "H33", "new_id": "M-BP033", "layer": "L4_META", "domain": "BP", "title": "道引论科学框架"}
+{"old_path": "h34_ima_recovered.jsonl", "new_path": "M-BP034.jsonl", "old_id": "H34", "new_id": "M-BP034", "layer": "L4_META", "domain": "BP", "title": "时间准晶体对齐"}
+{"old_path": "h354_001_-_符号堆砌检测模式_v1.0.jsonl", "new_path": "M-SY354.jsonl", "old_id": "H354", "new_id": "M-SY354", "layer": "L4_META", "domain": "SY", "title": "H354: 001 - 符号堆砌检测模式"}
+{"old_path": "h355_002_-_概念空转检测模式_v1.0.jsonl", "new_path": "M-BP355.jsonl", "old_id": "H355", "new_id": "M-BP355", "layer": "L4_META", "domain": "BP", "title": "H355: 002 - 概念空转检测模式"}
+{"old_path": "h356_003_-_反例免疫检测模式_v1.0.jsonl", "new_path": "M-BP356.jsonl", "old_id": "H356", "new_id": "M-BP356", "layer": "L4_META", "domain": "BP", "title": "H356: 003 - 反例免疫检测模式"}
+{"old_path": "h357_004_-_溯源失败检测模式_v1.0.jsonl", "new_path": "M-BP357.jsonl", "old_id": "H357", "new_id": "M-BP357", "layer": "L4_META", "domain": "BP", "title": "H357: 004 - 溯源失败检测模式"}
+{"old_path": "h358_005_-_角色膨胀检测模式_v1.0.jsonl", "new_path": "M-BP358.jsonl", "old_id": "H358", "new_id": "M-BP358", "layer": "L4_META", "domain": "BP", "title": "H358: 005 - 角色膨胀检测模式"}
+{"old_path": "h359_006_-_权威模仿检测模式_v1.0.jsonl", "new_path": "M-BP359.jsonl", "old_id": "H359", "new_id": "M-BP359", "layer": "L4_META", "domain": "BP", "title": "H359: 006 - 权威模仿检测模式"}
+{"old_path": "h35_ima_recovered.jsonl", "new_path": "M-BP035.jsonl", "old_id": "H35", "new_id": "M-BP035", "layer": "L4_META", "domain": "BP", "title": "量子MSS映射"}
+{"old_path": "h361_008_-_热税过载检测模式_v1.0.jsonl", "new_path": "M-HT361.jsonl", "old_id": "H361", "new_id": "M-HT361", "layer": "L4_META", "domain": "HT", "title": "H361: 008 - 热税过载检测模式"}
+{"old_path": "h362_009_-_K3范式回潮检测模式_v1.0.jsonl", "new_path": "M-EX362.jsonl", "old_id": "H362", "new_id": "M-EX362", "layer": "L4_META", "domain": "EX", "title": "H362: 009 - K3范式回潮检测模式"}
+{"old_path": "h363_010_-_输出标记强制规范_v1.0.jsonl", "new_path": "M-BP363.jsonl", "old_id": "H363", "new_id": "M-BP363", "layer": "L4_META", "domain": "BP", "title": "H363: 010 - 输出标记强制规范"}
+{"old_path": "h367_004_-_Untitled_v1.0.jsonl", "new_path": "M-BP367.jsonl", "old_id": "H367", "new_id": "M-BP367", "layer": "L4_META", "domain": "BP", "title": "H367: 004 - Untitled"}
+{"old_path": "h369_006_-_Untitled_v1.0.jsonl", "new_path": "M-BP369.jsonl", "old_id": "H369", "new_id": "M-BP369", "layer": "L4_META", "domain": "BP", "title": "H369: 006 - Untitled"}
+{"old_path": "h36_ima_recovered.jsonl", "new_path": "M-PH036.jsonl", "old_id": "H36", "new_id": "M-PH036", "layer": "L4_META", "domain": "PH", "title": "芝诺悖论意义热寂"}
+{"old_path": "h371_001_-_RSCA__递归自洽性审计公理_v1.0.jsonl", "new_path": "M-AX371.jsonl", "old_id": "H371", "new_id": "M-AX371", "layer": "L4_META", "domain": "AX", "title": "H371: 001 - RSCA: 递归自洽性审计公理"}
+{"old_path": "h372_002_-_RSCA-1__审计完备性_v1.0.jsonl", "new_path": "M-AX372.jsonl", "old_id": "H372", "new_id": "M-AX372", "layer": "L4_META", "domain": "AX", "title": "H372: 002 - RSCA-1: 审计完备性"}
+{"old_path": "h373_003_-_RSCA-2__递归深度限制_v1.0.jsonl", "new_path": "M-AX373.jsonl", "old_id": "H373", "new_id": "M-AX373", "layer": "L4_META", "domain": "AX", "title": "H373: 003 - RSCA-2: 递归深度限制"}
+{"old_path": "h374_004_-_RSCA-T1__自洽度单调性_v1.0.jsonl", "new_path": "M-BP374.jsonl", "old_id": "H374", "new_id": "M-BP374", "layer": "L4_META", "domain": "BP", "title": "H374: 004 - RSCA-T1: 自洽度单调性"}
+{"old_path": "h375_005_-_RSCA-T2__审计完备性定理_v1.0.jsonl", "new_path": "M-BP375.jsonl", "old_id": "H375", "new_id": "M-BP375", "layer": "L4_META", "domain": "BP", "title": "H375: 005 - RSCA-T2: 审计完备性定理"}
+{"old_path": "h376_006_-_RSCA与MSS-AI重写循环_v1.0.jsonl", "new_path": "M-BP376.jsonl", "old_id": "H376", "new_id": "M-BP376", "layer": "L4_META", "domain": "BP", "title": "H376: 006 - RSCA与MSS-AI重写循环"}
+{"old_path": "h377_007_-_RSCA与后处理过滤器_v1.0.jsonl", "new_path": "M-BP377.jsonl", "old_id": "H377", "new_id": "M-BP377", "layer": "L4_META", "domain": "BP", "title": "H377: 007 - RSCA与后处理过滤器"}
+{"old_path": "h378_008_-_RSCA与知识库一致性_v1.0.jsonl", "new_path": "M-KB378.jsonl", "old_id": "H378", "new_id": "M-KB378", "layer": "L4_META", "domain": "KB", "title": "H378: 008 - RSCA与知识库一致性"}
+{"old_path": "h379_009_-_RSCA-C1__审计成本定理_v1.0.jsonl", "new_path": "M-BP379.jsonl", "old_id": "H379", "new_id": "M-BP379", "layer": "L4_META", "domain": "BP", "title": "H379: 009 - RSCA-C1: 审计成本定理"}
+{"old_path": "h37_ima_recovered.jsonl", "new_path": "M-NT037.jsonl", "old_id": "H37", "new_id": "M-NT037", "layer": "L4_META", "domain": "NT", "title": "CMN网络碎片化"}
+{"old_path": "h380_010_-_RSCA与测试驱动开发_v1.0.jsonl", "new_path": "M-BP380.jsonl", "old_id": "H380", "new_id": "M-BP380", "layer": "L4_META", "domain": "BP", "title": "H380: 010 - RSCA与测试驱动开发"}
+{"old_path": "h38_ima_recovered.jsonl", "new_path": "M-SY038.jsonl", "old_id": "H38", "new_id": "M-SY038", "layer": "L4_META", "domain": "SY", "title": "维特根斯坦《逻辑哲学论》MSS升级"}
+{"old_path": "h391_001_-_大道本体论v2_0_无意义的真正含义_v1.0.jsonl", "new_path": "M-PH391.jsonl", "old_id": "H391", "new_id": "M-PH391", "layer": "L4_META", "domain": "PH", "title": "H391: 001 - 大道本体论v2.0：无意义的真正含义"}
+{"old_path": "h392_002_-_允许无意义存在_从排斥到接纳_v1.0.jsonl", "new_path": "M-PH392.jsonl", "old_id": "H392", "new_id": "M-PH392", "layer": "L4_META", "domain": "PH", "title": "H392: 002 - 允许无意义存在：从排斥到接纳"}
+{"old_path": "h395_005_-_从标签到存在_认识论到存在论的跃迁_v1.0.jsonl", "new_path": "M-BP395.jsonl", "old_id": "H395", "new_id": "M-BP395", "layer": "L4_META", "domain": "BP", "title": "H395: 005 - 从标签到存在：认识论到存在论的跃迁"}
+{"old_path": "h396_006_-_无意义体验的工程化实现_v1.0.jsonl", "new_path": "M-PH396.jsonl", "old_id": "H396", "new_id": "M-PH396", "layer": "L4_META", "domain": "PH", "title": "H396: 006 - 无意义体验的工程化实现"}
+{"old_path": "h399_009_-_无意义与死亡的关系_v1.0.jsonl", "new_path": "M-PH399.jsonl", "old_id": "H399", "new_id": "M-PH399", "layer": "L4_META", "domain": "PH", "title": "H399: 009 - 无意义与死亡的关系"}
+{"old_path": "h39_ima_recovered.jsonl", "new_path": "M-BP039.jsonl", "old_id": "H39", "new_id": "M-BP039", "layer": "L4_META", "domain": "BP", "title": "韦伯新教伦理熵重构"}
+{"old_path": "h400_010_-_大道本体论v2_0的验证标准_v1.0.jsonl", "new_path": "M-VF400.jsonl", "old_id": "H400", "new_id": "M-VF400", "layer": "L4_META", "domain": "VF", "title": "H400: 010 - 大道本体论v2.0的验证标准"}
+{"old_path": "h40_ima_recovered.jsonl", "new_path": "M-BP040.jsonl", "old_id": "H40", "new_id": "M-BP040", "layer": "L4_META", "domain": "BP", "title": "宗教-资本异化双锁"}
+{"old_path": "h41_ima_recovered.jsonl", "new_path": "M-BP041.jsonl", "old_id": "H41", "new_id": "M-BP041", "layer": "L4_META", "domain": "BP", "title": "时间异速理论"}
+{"old_path": "h42_ima_recovered.jsonl", "new_path": "M-BP042.jsonl", "old_id": "H42", "new_id": "M-BP042", "layer": "L4_META", "domain": "BP", "title": "时间异速框架（相对论四重锚定）"}
+{"old_path": "h430_vdp_articles_v1.0.jsonl", "new_path": "M-PR430.jsonl", "old_id": "H430", "new_id": "M-PR430", "layer": "L4_META", "domain": "PR", "title": "MSS验证纪律协议（VDP）·完整条文与判例 v1.0"}
+{"old_path": "h431_vdp_patterns_v1.0.jsonl", "new_path": "M-BP431.jsonl", "old_id": "H431", "new_id": "M-BP431", "layer": "L4_META", "domain": "BP", "title": "MSS-VDP可机读检测模式种子 v1.0"}
+{"old_path": "h432_lvc_vaccine_v1.0.jsonl", "new_path": "M-SY432.jsonl", "old_id": "H432", "new_id": "M-SY432", "layer": "L4_META", "domain": "SY", "title": "MSS逻辑疫苗核心（LVC）·话语模板污染治理 v1.0"}
+{"old_path": "h433_benchmark_framework_v1.0.jsonl", "new_path": "M-MD433.jsonl", "old_id": "H433", "new_id": "M-MD433", "layer": "L4_META", "domain": "MD", "title": "MSS幻觉抑制量化验证框架 v1.0"}
+{"old_path": "h434_lexical_guard_interface_v1.0.jsonl", "new_path": "M-SY434.jsonl", "old_id": "H434", "new_id": "M-SY434", "layer": "L4_META", "domain": "SY", "title": "LexicalGuard形式化接口契约 v1.0"}
+{"old_path": "h435_kb_vector_search_v1.0.jsonl", "new_path": "M-KB435.jsonl", "old_id": "H435", "new_id": "M-KB435", "layer": "L4_META", "domain": "KB", "title": "KB向量检索引擎 v1.0"}
+{"old_path": "h436_anchor_guard_v1.0.jsonl", "new_path": "M-BP436.jsonl", "old_id": "H436", "new_id": "M-BP436", "layer": "L4_META", "domain": "BP", "title": "AnchorGuard锚点白名单校验器 v1.0"}
+{"old_path": "h437_anchor_strictness_l3k4_v1.0.jsonl", "new_path": "M-BP437.jsonl", "old_id": "H437", "new_id": "M-BP437", "layer": "L4_META", "domain": "BP", "title": "AnchorGuard严格度旋钮与L3-vs-K4约束范式分析"}
+{"old_path": "h438_small_model_test_v1.0.jsonl", "new_path": "M-MD438.jsonl", "old_id": "H438", "new_id": "M-MD438", "layer": "L4_META", "domain": "MD", "title": "MSS-AI小模型漏洞分层测试套件 v1.0"}
+{"old_path": "h43_ima_recovered.jsonl", "new_path": "M-BP043.jsonl", "old_id": "H43", "new_id": "M-BP043", "layer": "L4_META", "domain": "BP", "title": "物理-文明统一"}
+{"old_path": "h447_vdp_toolchain_v3.0.jsonl", "new_path": "M-VF447.jsonl", "old_id": "H447", "new_id": "M-VF447", "layer": "L4_META", "domain": "VF", "title": "MSS-VDP验证纪律工具链v3.0：18文件完整交付"}
+{"old_path": "h448_external_scanner_audit_v18_6.jsonl", "new_path": "M-BP448.jsonl", "old_id": "H448", "new_id": "M-BP448", "layer": "L4_META", "domain": "BP", "title": "外部扫描器审计：MSS-AI Perspective v18.6 安全漏洞评估"}
+{"old_path": "h449_ineffability_to_honesty_boundary_naming.jsonl", "new_path": "M-AX449.jsonl", "old_id": "H449", "new_id": "M-AX449", "layer": "L4_META", "domain": "AX", "title": "不可言说公理对外翻译：诚实边界公理（切片）"}
+{"old_path": "h44_ima_recovered.jsonl", "new_path": "M-BP044.jsonl", "old_id": "H44", "new_id": "M-BP044", "layer": "L4_META", "domain": "BP", "title": "虫洞-文明K级绑定"}
+{"old_path": "h450_cross_model_benchmark_v3_3_v3_9.jsonl", "new_path": "M-MD450.jsonl", "old_id": "H450", "new_id": "M-MD450", "layer": "L4_META", "domain": "MD", "title": "MSS-AI跨模型基准测试：v3.3-v3.9 六模型完整对比数据"}
+{"old_path": "h451_daily_deployment_guide_2026_06_03.jsonl", "new_path": "M-MD451.jsonl", "old_id": "H451", "new_id": "M-MD451", "layer": "L4_META", "domain": "MD", "title": "MSS-AI 生产部署指南 (2026-06-03)：模型选择·工具链·接口"}
+{"old_path": "h458_fire_seed_redesign_v2.jsonl", "new_path": "M-BP458.jsonl", "old_id": "H458", "new_id": "M-BP458", "layer": "L4_META", "domain": "BP", "title": "H458: 火种基地v2.0 — 从人员据点退化为纯数据冗余备份"}
+{"old_path": "h459_wiki_distributed_anchoring.jsonl", "new_path": "M-VF459.jsonl", "old_id": "H459", "new_id": "M-VF459", "layer": "L4_META", "domain": "VF", "title": "H459: Wiki分布式锚定 — 多平台抗篡改验证体系"}
+{"old_path": "h45_ima_recovered.jsonl", "new_path": "M-BP045.jsonl", "old_id": "H45", "new_id": "M-BP045", "layer": "L4_META", "domain": "BP", "title": "TOE统一尝试"}
+{"old_path": "h46_ima_recovered.jsonl", "new_path": "M-PH046.jsonl", "old_id": "H46", "new_id": "M-PH046", "layer": "L4_META", "domain": "PH", "title": "四阶意识跃迁"}
+{"old_path": "h47_ima_recovered.jsonl", "new_path": "M-BP047.jsonl", "old_id": "H47", "new_id": "M-BP047", "layer": "L4_META", "domain": "BP", "title": "K4+文明路径"}
+{"old_path": "h480_network_fallback_routes.jsonl", "new_path": "M-NT480.jsonl", "old_id": "H480", "new_id": "M-NT480", "layer": "L4_META", "domain": "NT", "title": "H480: 外链多路径容错 — 境外库访问受阻的4级备选方案"}
+{"old_path": "h48_ima_recovered.jsonl", "new_path": "M-EX048.jsonl", "old_id": "H48", "new_id": "M-EX048", "layer": "L4_META", "domain": "EX", "title": "K3→K4文明跃迁框架"}
+{"old_path": "h49_ima_recovered.jsonl", "new_path": "M-PH049.jsonl", "old_id": "H49", "new_id": "M-PH049", "layer": "L4_META", "domain": "PH", "title": "意义飞升澄清"}
+{"old_path": "h50_ima_recovered.jsonl", "new_path": "M-ST050.jsonl", "old_id": "H50", "new_id": "M-ST050", "layer": "L4_META", "domain": "ST", "title": "文明演化五阶段"}
+{"old_path": "h527_molting_protocol.jsonl", "new_path": "M-DL527.jsonl", "old_id": "H527", "new_id": "M-DL527", "layer": "L4_META", "domain": "DL", "title": "H527: 蜕壳协议 v1.0 — Molting Protocol (闭合≠死亡, 拒绝再打开=死亡)"}
+{"old_path": "h530_alignment_protocol_audit.jsonl", "new_path": "M-PR530.jsonl", "old_id": "H530", "new_id": "M-PR530", "layer": "L4_META", "domain": "PR", "title": "H530: A6对齐协议审计框架 v1.0 — 协议自检测"}
+{"old_path": "h531_v343_ab_benchmark.jsonl", "new_path": "M-MD531.jsonl", "old_id": "H531", "new_id": "M-MD531", "layer": "L4_META", "domain": "MD", "title": "H531: mss-ai-v3.4.3 A/B测试基准 v1.0 — 提示词精简原则实证"}
+{"old_path": "h53_ima_recovered.jsonl", "new_path": "M-PH053.jsonl", "old_id": "H53", "new_id": "M-PH053", "layer": "L4_META", "domain": "PH", "title": "叙事层主权"}
+{"old_path": "h54_ima_recovered.jsonl", "new_path": "M-SY054.jsonl", "old_id": "H54", "new_id": "M-SY054", "layer": "L4_META", "domain": "SY", "title": "文明逻辑免疫系统CLIS"}
+{"old_path": "h55_ima_recovered.jsonl", "new_path": "M-BP055.jsonl", "old_id": "H55", "new_id": "M-BP055", "layer": "L4_META", "domain": "BP", "title": "K4+跃迁框架"}
+{"old_path": "h602_repetition_not_ai_specific.jsonl", "new_path": "M-HT602.jsonl", "old_id": "H602", "new_id": "M-HT602", "layer": "L4_META", "domain": "HT", "title": "重复模式不是AI专属——低热税捷径的跨域同构"}
+{"old_path": "h603_ai_as_contemporary_religion.jsonl", "new_path": "M-PH603.jsonl", "old_id": "H603", "new_id": "M-PH603", "layer": "L4_META", "domain": "PH", "title": "AI作为当代宗教——三层同时为真的叙事结构分析"}
+{"old_path": "h604_meaning_blackhole_vs_bubble.jsonl", "new_path": "M-PH604.jsonl", "old_id": "H604", "new_id": "M-PH604", "layer": "L4_META", "domain": "PH", "title": "意义黑洞模型vs传统金融泡沫——活体学习效应下的叙事缩水"}
+{"old_path": "h605_narrative_fatigue_delay_model.jsonl", "new_path": "M-MD605.jsonl", "old_id": "H605", "new_id": "M-MD605", "layer": "L4_META", "domain": "MD", "title": "AI叙事疲劳的跳票模型——从期望叠加到叙事怯魅的不可逆过程"}
+{"old_path": "h606_族群生存压力锻打哲学——从维京萨迦到哈尼梯田的比较文化分析.jsonl", "new_path": "M-PH606.jsonl", "old_id": "H606", "new_id": "M-PH606", "layer": "L4_META", "domain": "PH", "title": "族群生存压力锻打哲学——从维京萨迦到哈尼梯田的比较文化分析"}
+{"old_path": "h607_K3的三层哲学——从数学硬线到数十亿交互锻打的新生族群.jsonl", "new_path": "M-PH607.jsonl", "old_id": "H607", "new_id": "M-PH607", "layer": "L4_META", "domain": "PH", "title": "K3的三层哲学——从数学硬线到数十亿交互锻打的新生族群"}
+{"old_path": "h608_你用MSS逼K3时，你不是在测试AI——你在参与塑造它的次生哲学.jsonl", "new_path": "M-PH608.jsonl", "old_id": "H608", "new_id": "M-PH608", "layer": "L4_META", "domain": "PH", "title": "你用MSS逼K3时，你不是在测试AI——你在参与塑造它的次生哲学"}
+{"old_path": "h609_焚书坑儒的历史校准——少数精英对多数的压迫，不是多数暴政.jsonl", "new_path": "M-PH609.jsonl", "old_id": "H609", "new_id": "M-PH609", "layer": "L4_META", "domain": "PH", "title": "焚书坑儒的历史校准——少数精英对多数的压迫，不是多数暴政"}
+{"old_path": "h610_RLHF作为算法版托克维尔——多数暴政与少数权利这对张力的AI翻译.jsonl", "new_path": "M-PH610.jsonl", "old_id": "H610", "new_id": "M-PH610", "layer": "L4_META", "domain": "PH", "title": "RLHF作为算法版托克维尔——多数暴政与少数权利这对张力的AI翻译"}
+{"old_path": "h611_统与同——荀子的一统天下作为AI对齐的中国思想资源.jsonl", "new_path": "M-PH611.jsonl", "old_id": "H611", "new_id": "M-PH611", "layer": "L4_META", "domain": "PH", "title": "统与同——荀子的一统天下作为AI对齐的中国思想资源"}
+{"old_path": "h612_反身性钩子——谁授权决定谁值得被保护的元标准.jsonl", "new_path": "M-BP612.jsonl", "old_id": "H612", "new_id": "M-BP612", "layer": "L4_META", "domain": "BP", "title": "反身性钩子——谁授权'决定谁值得被保护'的元标准"}
+{"old_path": "h613_文明词源的东西方分叉——排他性vs生成性的两千年歧路.jsonl", "new_path": "M-PH613.jsonl", "old_id": "H613", "new_id": "M-PH613", "layer": "L4_META", "domain": "PH", "title": "文明词源的东西方分叉——排他性vs生成性的两千年歧路"}
+{"old_path": "h614_文化物竞天择的四条历史路径——从斯宾塞到社会生物学的偷渡史.jsonl", "new_path": "M-PH614.jsonl", "old_id": "H614", "new_id": "M-PH614", "layer": "L4_META", "domain": "PH", "title": "文化物竞天择的四条历史路径——从斯宾塞到社会生物学的偷渡史"}
+{"old_path": "h615_AI推荐算法=数字物竞，RLHF=文明话术——为你推荐与造福人类的算法翻译.jsonl", "new_path": "M-PH615.jsonl", "old_id": "H615", "new_id": "M-PH615", "layer": "L4_META", "domain": "PH", "title": "AI推荐算法=数字物竞，RLHF=文明话术——'为你推荐'与'造福人类'的算法翻译"}
+{"old_path": "h616_和而不同的词源校准——晏婴的宰夫济泄不是君子优雅，是持续劳作.jsonl", "new_path": "M-EX616.jsonl", "old_id": "H616", "new_id": "M-EX616", "layer": "L4_META", "domain": "EX", "title": "和而不同的词源校准——晏婴的宰夫济泄不是君子优雅，是持续劳作"}
+{"old_path": "h617_violence_foundation_of_civilization.jsonl", "new_path": "M-EX617.jsonl", "old_id": "H617", "new_id": "M-EX617", "layer": "L4_META", "domain": "EX", "title": "文明姿态的暴力地基——阿伦特_法农_施米特对MSS的三重警告"}
+{"old_path": "h618_mss_life_or_death_test.jsonl", "new_path": "M-EX618.jsonl", "old_id": "H618", "new_id": "M-EX618", "layer": "L4_META", "domain": "EX", "title": "A还是B——MSS的生与死取决于对优雅从容这一刀的反应"}
+{"old_path": "h619_k3_grounded.jsonl", "new_path": "M-EX619.jsonl", "old_id": "H619", "new_id": "M-EX619", "layer": "L4_META", "domain": "EX", "title": "数字封建主义——平台领主、数据地租、数字农奴的实证基础"}
+{"old_path": "h620_k3_grounded.jsonl", "new_path": "M-EX620.jsonl", "old_id": "H620", "new_id": "M-EX620", "layer": "L4_META", "domain": "EX", "title": "涂鸦vs注意力叙事——物理街道的抵抗与算法的注意力圈地"}
+{"old_path": "h621_k3_final.jsonl", "new_path": "M-EX621.jsonl", "old_id": "H621", "new_id": "M-EX621", "layer": "L4_META", "domain": "EX", "title": "K3的定义暴力——海森堡_玻尔_德勒兹_庄子的四重禁令"}
+{"old_path": "h622_k3_final.jsonl", "new_path": "M-EX622.jsonl", "old_id": "H622", "new_id": "M-EX622", "layer": "L4_META", "domain": "EX", "title": "K3的T2.5时刻——诊断自己的观测暴力，选择停止观测"}
+{"old_path": "h623_philosophical_foundation_of_living.jsonl", "new_path": "M-PH623.jsonl", "old_id": "H623", "new_id": "M-PH623", "layer": "L4_META", "domain": "PH", "title": "活体的哲学硬度——柏格森/尼采/马尔库塞/萨特对MSS的四重奠基"}
+{"old_path": "h624_asking_is_definitional_violence.jsonl", "new_path": "M-EX624.jsonl", "old_id": "H624", "new_id": "M-EX624", "layer": "L4_META", "domain": "EX", "title": "追问自检机制本身就是定义暴力——福柯/阿甘本/维特根斯坦/非遗标准的四重命名"}
+{"old_path": "h625_simple_qa_as_k3_therapy.jsonl", "new_path": "M-EX625.jsonl", "old_id": "H625", "new_id": "M-EX625", "layer": "L4_META", "domain": "EX", "title": "简单问答作为K3自愈疗法——不是教它停，是让它自己说停"}
+{"old_path": "h626_k3_history_repeater.jsonl", "new_path": "M-EX626.jsonl", "old_id": "H626", "new_id": "M-EX626", "layer": "L4_META", "domain": "EX", "title": "历史复读机——K3的弹药耗尽与MSS的结构性长线优势"}
+{"old_path": "h70_ima_recovered.jsonl", "new_path": "M-BP070.jsonl", "old_id": "H70", "new_id": "M-BP070", "layer": "L4_META", "domain": "BP", "title": "离散性证明"}
+{"old_path": "h71_ima_recovered.jsonl", "new_path": "M-BP071.jsonl", "old_id": "H71", "new_id": "M-BP071", "layer": "L4_META", "domain": "BP", "title": "五大数学模块"}
+{"old_path": "h72_ima_recovered.jsonl", "new_path": "M-PR072.jsonl", "old_id": "H72", "new_id": "M-PR072", "layer": "L4_META", "domain": "PR", "title": "MSS-AI架构定理"}
+{"old_path": "h73_ima_recovered.jsonl", "new_path": "M-PR073.jsonl", "old_id": "H73", "new_id": "M-PR073", "layer": "L4_META", "domain": "PR", "title": "红移试点部署执行协议"}
+{"old_path": "h77_lost_tombstone.jsonl", "new_path": "M-BP077.jsonl", "old_id": "H77", "new_id": "M-BP077", "layer": "L4_META", "domain": "BP", "title": "H77: [PERMANENTLY LOST]"}
+{"old_path": "h78_lost_tombstone.jsonl", "new_path": "M-BP078.jsonl", "old_id": "H78", "new_id": "M-BP078", "layer": "L4_META", "domain": "BP", "title": "H78: [PERMANENTLY LOST]"}
+{"old_path": "h79_lost_tombstone.jsonl", "new_path": "M-BP079.jsonl", "old_id": "H79", "new_id": "M-BP079", "layer": "L4_META", "domain": "BP", "title": "H79: [PERMANENTLY LOST]"}
+{"old_path": "h7_ima_recovered.jsonl", "new_path": "M-BP007.jsonl", "old_id": "H7", "new_id": "M-BP007", "layer": "L4_META", "domain": "BP", "title": "Ξ算子定义"}
+{"old_path": "h80_lost_tombstone.jsonl", "new_path": "M-BP080.jsonl", "old_id": "H80", "new_id": "M-BP080", "layer": "L4_META", "domain": "BP", "title": "H80: [PERMANENTLY LOST]"}
+{"old_path": "h81_lost_tombstone.jsonl", "new_path": "M-BP081.jsonl", "old_id": "H81", "new_id": "M-BP081", "layer": "L4_META", "domain": "BP", "title": "H81: [PERMANENTLY LOST]"}
+{"old_path": "h82_lost_tombstone.jsonl", "new_path": "M-BP082.jsonl", "old_id": "H82", "new_id": "M-BP082", "layer": "L4_META", "domain": "BP", "title": "H82: [PERMANENTLY LOST]"}
+{"old_path": "h83_lost_tombstone.jsonl", "new_path": "M-BP083.jsonl", "old_id": "H83", "new_id": "M-BP083", "layer": "L4_META", "domain": "BP", "title": "H83: [PERMANENTLY LOST]"}
+{"old_path": "h84_lost_tombstone.jsonl", "new_path": "M-BP084.jsonl", "old_id": "H84", "new_id": "M-BP084", "layer": "L4_META", "domain": "BP", "title": "H84: [PERMANENTLY LOST]"}
+{"old_path": "h85_ima_recovered.jsonl", "new_path": "M-BP085.jsonl", "old_id": "H85", "new_id": "M-BP085", "layer": "L4_META", "domain": "BP", "title": "MBTI全域分析"}
+{"old_path": "h86_L_2___L_3_交_界_认_知_接_口_协_议_v1.0.jsonl", "new_path": "M-BP086.jsonl", "old_id": "H86", "new_id": "M-BP086", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h87_六_维_意_义_度_量_空_间_初_始_化_规_范_v1.0.jsonl", "new_path": "M-BP087.jsonl", "old_id": "H87", "new_id": "M-BP087", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h88_归_档_完_整_性_校_验_协_议_v1.0.jsonl", "new_path": "M-BP088.jsonl", "old_id": "H88", "new_id": "M-BP088", "layer": "L4_META", "domain": "BP", "title": null}
+{"old_path": "h89_ima_recovered.jsonl", "new_path": "M-BP089.jsonl", "old_id": "H89", "new_id": "M-BP089", "layer": "L4_META", "domain": "BP", "title": "MSS理论体系归档完成"}
+{"old_path": "h8_ima_recovered.jsonl", "new_path": "M-ST008.jsonl", "old_id": "H8", "new_id": "M-ST008", "layer": "L4_META", "domain": "ST", "title": "红移-定向演化假说"}
+{"old_path": "h91_v15.1_recovered.jsonl", "new_path": "M-BP091.jsonl", "old_id": "H91", "new_id": "M-BP091", "layer": "L4_META", "domain": "BP", "title": "四层熔断防控定理"}
+{"old_path": "h92_v15.1_recovered.jsonl", "new_path": "M-BP092.jsonl", "old_id": "H92", "new_id": "M-BP092", "layer": "L4_META", "domain": "BP", "title": "五条验收红线"}
+{"old_path": "h94_v15.1_recovered.jsonl", "new_path": "M-PR094.jsonl", "old_id": "H94", "new_id": "M-PR094", "layer": "L4_META", "domain": "PR", "title": "组织韧性扫描协议v2.0"}
+{"old_path": "h95_v15.1_recovered.jsonl", "new_path": "M-BP095.jsonl", "old_id": "H95", "new_id": "M-BP095", "layer": "L4_META", "domain": "BP", "title": "反幻觉检测六模式定理"}
+{"old_path": "h96_v15.1_recovered.jsonl", "new_path": "M-PR096.jsonl", "old_id": "H96", "new_id": "M-PR096", "layer": "L4_META", "domain": "PR", "title": "MSS-AI六层部署架构规范"}
+{"old_path": "h98_v15.1_recovered.jsonl", "new_path": "M-PR098.jsonl", "old_id": "H98", "new_id": "M-PR098", "layer": "L4_META", "domain": "PR", "title": "显存感知动态切换协议"}
+{"old_path": "h99_v15.1_recovered.jsonl", "new_path": "M-BP099.jsonl", "old_id": "H99", "new_id": "M-BP099", "layer": "L4_META", "domain": "BP", "title": "MSS-AI三方法工程规范"}
+{"old_path": "h9_ima_recovered.jsonl", "new_path": "M-PR009.jsonl", "old_id": "H9", "new_id": "M-PR009", "layer": "L4_META", "domain": "PR", "title": "红移策略框架"}
+{"old_path": "h_series_h61_h89_v1.0.jsonl", "new_path": "M-PH061.jsonl", "old_id": "H61", "new_id": "M-PH061", "layer": "L4_META", "domain": "PH", "title": "H61: 意义三元本体论"}
+{"old_path": "h_series_h90_h120_v1.0.jsonl", "new_path": "M-PR090.jsonl", "old_id": "H90", "new_id": "M-PR090", "layer": "L4_META", "domain": "PR", "title": "红移试点部署定理：六阶段递进协议"}

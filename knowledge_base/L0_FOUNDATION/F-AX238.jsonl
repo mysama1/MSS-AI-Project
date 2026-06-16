@@ -1,0 +1,1 @@
+{"h_id": "H238", "title": "H238: 001 - 物理规则刚性的三重分解", "layer": "L1", "category": "physical_rigidity", "orig_source": "omega_rulings_v12.3.jsonl", "orig_id": "Ω", "t_value": 8, "version": "1.0", "date": "2026-05-31", "summary": "从v12.2归档提取。001 - 物理规则刚性的三重分解", "content": "物理规则刚性 = 拓扑不变性刚性 + 热税最小化刚性 + 观测者锚定刚性。三者共同构成K3世界看似牢不可破的物理铁律。 ", "status": "imported_from_v12.2"}

@@ -1,0 +1,1 @@
+{"h_id": "H26", "title": "度量衡与警示体系", "version": "v15.1_IMA_recovered", "date": "2026-06-01", "t_value": 5, "category": "recovered_from_IMA", "tags": ["active", "grade=B"], "layer": "L2", "confidence": 0.5, "content": "H26: 度量衡与警示体系\n• T值分级: T<0.3(危险区)、0.3-0.7(警告区)、0.7-0.9(健康区)、T>0.9(卓越区)\n• 负熵流单位: φ标准单位\n• 预警阈值: 可配置多级预警\n---\nH27-H30: 宏观监测指标\n来源: mss_macro_monitoring.jsonl"}

@@ -1,0 +1,1 @@
+{"h_id": "H66", "title": "H66: 医疗意义论", "category": "theorem", "t_value": 0.78, "version": "1.0", "date": "2026-06-06", "source": "Bundled in H65 (v15.1)", "axioms": ["A3", "A5"], "summary": "疾病是局部意义网络的熵增失控，治疗是负熵注入。康复=意义密度恢复正常涨落区间。", "content": "See parent entry H65.\n\n疾病是局部意义网络的熵增失控，治疗是负熵注入。康复=意义密度恢复正常涨落区间。"}

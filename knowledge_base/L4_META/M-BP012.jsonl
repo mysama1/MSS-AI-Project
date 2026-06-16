@@ -1,0 +1,1 @@
+{"h_id": "H12", "title": "哥德尔免疫机制", "version": "v15.1_IMA_recovered", "date": "2026-06-01", "t_value": 8, "category": "recovered_from_IMA", "tags": ["active", "grade=A"], "layer": "L2", "confidence": 0.89, "content": "H12: 哥德尔免疫机制\n• 前提: 任何形式系统都存在不可判定命题\n• 推理: 系统必须包含对自身不完备性的监控组件\n• 结论: 永久免疫于哥德尔式崩溃\n• 进度分数: 0.89"}

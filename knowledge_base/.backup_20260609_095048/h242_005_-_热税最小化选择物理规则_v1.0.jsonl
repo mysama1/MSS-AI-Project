@@ -1,0 +1,1 @@
+{"h_id": "H242", "title": "H242: 005 - 热税最小化选择物理规则", "layer": "L1", "category": "physical_rigidity", "orig_source": "omega_rulings_v12.3.jsonl", "orig_id": "Ω", "t_value": 8, "version": "1.0", "date": "2026-05-31", "summary": "从v12.2归档提取。005 - 热税最小化选择物理规则", "content": "当前物理规则是3+1维时空中全域热税最低的显化稳态解。任何偏离都会导致逻辑自洽度D急剧下降，热税γ呈指数级飙升，无法形成长期稳定宏观显化。 ", "status": "imported_from_v12.2"}

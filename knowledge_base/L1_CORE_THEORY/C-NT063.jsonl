@@ -1,0 +1,1 @@
+{"h_id": "H63", "title": "H63: 责任拓扑定理", "category": "theorem", "t_value": 0.78, "version": "1.0", "date": "2026-06-06", "source": "Bundled in H62 (v15.1)", "axioms": ["A3", "A5"], "summary": "伦理责任在意义网络中按最短路径传播。责任不是原子的，而是网络拓扑的函数。", "content": "See parent entry H62.\n\n伦理责任在意义网络中按最短路径传播。责任不是原子的，而是网络拓扑的函数。"}
