@@ -8,7 +8,7 @@
 body{font:14px/1.5 system-ui,sans-serif;color:var(--tx);background:var(--bg);height:100vh;overflow:hidden}
 ::selection{background:var(--ac);color:#fff}
 
-/* Sidebar ‚Äî CSS transform, no layout shift */
+/* Sidebar ‚Ä?CSS transform, no layout shift */
 #sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--sidebar-w);background:var(--side);border-right:1px solid var(--bdr);z-index:10;display:flex;flex-direction:column;transform:translateX(0);transition:transform .25s cubic-bezier(.4,0,.2,1)}
 #sidebar.closed{transform:translateX(calc(var(--sidebar-w)*-1))}
 .side-head{padding:12px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:8px;min-height:44px}
@@ -25,7 +25,7 @@ body{font:14px/1.5 system-ui,sans-serif;color:var(--tx);background:var(--bg);hei
 #toggle-sidebar{position:fixed;left:var(--sidebar-w);top:50%;transform:translateY(-50%);z-index:20;width:18px;height:40px;background:var(--side);border:1px solid var(--bdr);border-left:none;border-radius:0 6px 6px 0;cursor:pointer;color:var(--dim);font-size:10px;display:flex;align-items:center;justify-content:center;transition:all .25s cubic-bezier(.4,0,.2,1);opacity:.6}#toggle-sidebar:hover{opacity:1;width:22px}
 #sidebar.closed~#toggle-sidebar{left:0}
 
-/* Main area ‚Äî margin adjusts with sidebar */
+/* Main area ‚Ä?margin adjusts with sidebar */
 #main{margin-left:var(--sidebar-w);height:100vh;display:flex;flex-direction:column;transition:margin-left .25s cubic-bezier(.4,0,.2,1)}
 #sidebar.closed~#main{margin-left:0}
 .top-bar{display:flex;align-items:center;gap:8px;padding:6px 16px;border-bottom:1px solid var(--bdr);min-height:40px}
@@ -67,7 +67,7 @@ body{font:14px/1.5 system-ui,sans-serif;color:var(--tx);background:var(--bg);hei
     <div class="side-st"><span class="dot g pulse" id="agent-dot"></span><span id="agent-label">Agent Online</span></div>
   </div>
 </div>
-<button id="toggle-sidebar" onclick="App.toggleSidebar()">‚óÅ</button>
+<button id="toggle-sidebar" onclick="App.toggleSidebar()">‚ó?/button>
 
 <main id="main">
   <div class="top-bar"><span class="tt" id="chat-title">mssclaw</span><button class="btn" onclick="App.showPanel('health')">üìä</button><button class="btn" onclick="App.showPanel('models')">ü§ñ</button><button class="btn" onclick="App.toggleTheme()">üåì</button></div>
@@ -76,12 +76,12 @@ body{font:14px/1.5 system-ui,sans-serif;color:var(--tx);background:var(--bg);hei
   <div id="input-bar"><div id="drag-handle"></div><textarea id="ta" placeholder="Message (Enter send ¬∑ Ctrl+N new ¬∑ Ctrl+B sidebar)" rows="1" onkeydown="App.keyHandler(event)"></textarea><button id="send-btn" onclick="App.send()">Send</button></div>
 </main>
 
-<div class="overlay" id="health-ov" onclick="App.hidePanels()"></div><div class="panel" id="health-pn"><button class="btn" style="position:absolute;top:12px;right:12px" onclick="App.hidePanels()">‚úï</button><h3>üìä Health</h3><div id="health-data"></div></div>
-<div class="overlay" id="models-ov" onclick="App.hidePanels()"></div><div class="panel" id="models-pn"><button class="btn" style="position:absolute;top:12px;right:12px" onclick="App.hidePanels()">‚úï</button><h3>ü§ñ Models</h3><div id="models-data"></div></div>
+<div class="overlay" id="health-ov" onclick="App.hidePanels()"></div><div class="panel" id="health-pn"><button class="btn" style="position:absolute;top:12px;right:12px" onclick="App.hidePanels()">‚ú?/button><h3>üìä Health</h3><div id="health-data"></div></div>
+<div class="overlay" id="models-ov" onclick="App.hidePanels()"></div><div class="panel" id="models-pn"><button class="btn" style="position:absolute;top:12px;right:12px" onclick="App.hidePanels()">‚ú?/button><h3>ü§ñ Models</h3><div id="models-data"></div></div>
 
 <script>
 // ===== MSS Agent Frontend App =====
-// IIFE pattern ‚Äî no global pollution, state-driven rendering
+// IIFE pattern ‚Ä?no global pollution, state-driven rendering
 var App = (function(){
   var API='http://127.0.0.1:5100', OLLAMA='http://localhost:11434/api/tags';
   
@@ -96,15 +96,15 @@ var App = (function(){
   
   // === Init ===
   function init(){
-    var raw = localStorage.getItem('mss_v7');
+    var raw = null; // A2: state loaded from L1 Agent, not local storage
     state.sessions = raw ? JSON.parse(raw) : [{id:'s1',title:'Chat',msgs:[],ts:Date.now()}];
     state.current = state.sessions[0];
     state.messages = state.current.msgs || [];
     
     // Restore settings
-    if (localStorage.getItem('mss_sidebar') === 'closed') toggleSidebar(false);
-    else el('toggle-sidebar').textContent = '‚óÅ';
-    var th = localStorage.getItem('mss_theme');
+    if (null /* A2: sidebar state from L1 */ === 'closed') toggleSidebar(false);
+    else el('toggle-sidebar').textContent = '‚ó?;
+    var th = null /* A2: theme from L1 */;
     if (th) document.documentElement.setAttribute('data-theme', th);
     
     renderAll();
@@ -220,7 +220,7 @@ var App = (function(){
       finish();
     })
     .catch(function(e){
-      state.messages.push({role:'agent', content:'‚ö† Agent offline. Run: mssclaw serve'});
+      state.messages.push({role:'agent', content:'‚ö?Agent offline. Run: mssclaw serve'});
       finish();
     });
     
@@ -269,10 +269,10 @@ var App = (function(){
   function toggleSidebar(force){
     var sb = el('sidebar');
     var open = typeof force === 'boolean' ? force : !sb.classList.contains('closed');
-    if (!open){ sb.classList.add('closed'); el('toggle-sidebar').textContent = '‚ñ∑'; }
-    else { sb.classList.remove('closed'); el('toggle-sidebar').textContent = '‚óÅ'; }
+    if (!open){ sb.classList.add('closed'); el('toggle-sidebar').textContent = '‚ñ?; }
+    else { sb.classList.remove('closed'); el('toggle-sidebar').textContent = '‚ó?; }
     state.sidebarOpen = !sb.classList.contains('closed');
-    localStorage.setItem('mss_sidebar', state.sidebarOpen ? 'open' : 'closed');
+    /* A2: sidebar state managed by L1 Agent */
   }
   
   function showPanel(n){
@@ -290,7 +290,7 @@ var App = (function(){
   function toggleTheme(){
     var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', t);
-    localStorage.setItem('mss_theme', t);
+    /* A2: theme managed by L1 Agent */
   }
   
   function keyHandler(e){
