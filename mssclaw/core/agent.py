@@ -410,7 +410,7 @@ class MSSAgent:
             return v.get(key)
         return None
 
-    # ── v1.7 Sprint 35: Tool Calling ──
+    # ── v1.7 Sprint 35-36: Tool Calling + RAG ──
 
     def run_with_tools(self, prompt: str, tools):
         """
@@ -472,6 +472,22 @@ class MSSAgent:
             heat_tax=self.tax.snapshot(), delta=current_delta,
             elapsed_ms=elapsed,
         )
+
+    def run_with_docs(self, prompt: str, chunks: list) -> AgentResult:
+        """
+        带文档上下文的任务执行 (RAG).
+
+        chunks: DocChunk list from DocRetriever.search()
+        """
+        from .rag_pipeline import rag_context
+        context = rag_context(chunks)
+        augmented_prompt = (
+            f"Use the following context to answer the question.\n\n"
+            f"Context:\n{context}\n\n"
+            f"Question: {prompt}\n\n"
+            f"Answer (cite sources as [doc#chunk]):"
+        )
+        return self.run(augmented_prompt)
 
 
 # ════════════════════════════════════════════════════════════
