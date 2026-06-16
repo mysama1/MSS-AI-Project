@@ -255,6 +255,7 @@ USAGE = """mssclaw vault — 极简密码管理
   health                  安全体检
   stats                   统计面板
   backup [restore PATH]   备份/恢复
+  serve [--port N]        启动HTTP API服务
   audit                    审计日志"""
 
 
@@ -298,6 +299,16 @@ def main():
         cmd_stats()
     elif cmd == "backup":
         cmd_backup(args[1] if len(args) > 1 else None, args[2] if len(args) > 2 else None)
+    elif cmd == "serve":
+        from mssclaw.core.vault_server import serve_vault
+        port = 5099
+        no_auth = False
+        for i, a in enumerate(args[1:], 1):
+            if a == "--port" and len(args) > i+1:
+                port = int(args[i+1])
+            elif a == "--no-auth":
+                no_auth = True
+        serve_vault(port=port, auth_required=not no_auth)
     else:
         print(USAGE)
 
