@@ -49,7 +49,7 @@ def chat_loop(model: str = "qwen2.5:7b"):
     print(c(f"║   Model: {model:<24s} ║", "cyan"))
     print(c("╚══════════════════════════════════╝", "cyan"))
     print()
-    print(c("  /clear  /save  /load  /model <name>  /vault  /quit", "dim"))
+    print(c("  /clear  /save  /load  /model <name>  /vault  /tools  /quit", "dim"))
     print()
 
     # Create agent
@@ -64,6 +64,12 @@ def chat_loop(model: str = "qwen2.5:7b"):
                 print(c(f"  Model switched to: {model}", "yellow"))
 
     agent = MSSAgent(name="chat-agent", llm=be)
+
+    # Tools
+    from mssclaw.core.tool_registry import ToolRegistry, register_builtin_tools
+    tools = ToolRegistry()
+    register_builtin_tools(tools)
+    tools_enabled = True
 
     # Try vault
     vault_path = Path.home() / ".mssclaw" / "vault.db"
@@ -138,6 +144,11 @@ def chat_loop(model: str = "qwen2.5:7b"):
                 else:
                     print(c("  No vault found. Run: mss-vault setup", "yellow"))
                 continue
+            elif cmd[0] == "tools":
+                tools_enabled = not tools_enabled
+                status = "ON" if tools_enabled else "OFF"
+                print(c(f"  Tools: {status} ({len(tools._tools)} available)", "dim"))
+                continue
             else:
                 print(c("  Commands: /clear /save /load /model /vault /quit", "dim"))
                 continue
@@ -146,7 +157,15 @@ def chat_loop(model: str = "qwen2.5:7b"):
         context = ""
         for h in history[-6:]:  # last 3 exchanges
             context += f"User: {h['user']}\nAssistant: {h['assistant'][:300]}\n"
-        prompt = f"{context}User: {user_input}\nAssistant:"
+        # Try tool call first (if enabled)
+        tool_result = None
+        if tools_enabled:
+            tool_prompt = f"{context}User: {user_input}\n"
+            tool_prompt += f"Available tools: {tools.get_descriptions()}\n"
+            tool_prompt += "If you need a tool, respond JSON: {\"tool\": \"name\", \"params\": {}}\n"
+            prompt = f"{tool_prompt}Assistant:"
+        else:
+            prompt = f"{context}User: {user_input}\nAssistant:"
 
         # Stream response
         print(c("Agent: ", "blue"), end="", flush=True)
@@ -167,6 +186,22 @@ def chat_loop(model: str = "qwen2.5:7b"):
         bridge = agent.l2bridge.level.name
         meta = f"  [{elapsed:.1f}s | {bridge}]"
         print(c(f"\n{meta}", "dim"))
+
+        # Try to parse tool call from response
+        if tools_enabled:
+            import json as _json, re as _re
+            try:
+                match = _re.search(r'\{[^{}]*"tool"[^{}]*\}', response)
+                if match:
+                    call = _json.loads(match.group())
+                    t_name = call.get("tool", "")
+                    t_params = call.get("params", {})
+                    if t_name in tools._tools:
+                        t_result = tools.call(t_name, t_params)
+                        icon = "✅" if t_result["success"] else "❌"
+                        print(c(f"  {icon} Tool: {t_name} → {t_result.get('result', t_result.get('error', ''))}", "cyan"))
+            except Exception:
+                pass
 
         # Save to history
         history.append({
