@@ -87,6 +87,22 @@
   /* Minimized mode: hide top bar and stats */
   
   
+
+  /* Pop-out floating window */
+  #popout-window{position:fixed;bottom:80px;right:20px;width:420px;height:520px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.5);z-index:50;display:none;flex-direction:column;resize:both;overflow:hidden;min-width:320px;min-height:320px}
+  #popout-window.open{display:flex}
+  #popout-window .pop-header{padding:8px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;cursor:move;user-select:none;font-size:12px;font-weight:600;min-height:36px}
+  #popout-window .pop-body{flex:1;overflow-y:auto;padding:12px}
+  #popout-window .pop-input{padding:8px 12px;border-top:1px solid var(--border)}
+  #popout-window .pop-input textarea{width:100%;padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--tx);font:13px system-ui;resize:none;height:36px;max-height:80px;outline:none}
+  #popout-window .resize-handle{position:absolute;top:0;left:0;right:0;height:6px;cursor:n-resize;background:transparent}
+  #popout-window .msg{max-width:95%}
+
+  /* Draggable input area */
+  #input-bar{position:relative}
+  #input-resize-handle{position:absolute;top:-4px;left:0;right:0;height:8px;cursor:n-resize;z-index:5}
+  #input-bar textarea{transition:height .1s}
+  #input-bar.resizing textarea{transition:none}
 </style></head><body>
 
 <aside id="sidebar">
@@ -137,7 +153,18 @@ const raw=localStorage.getItem('mss_v3');
 ST.sessions=raw?JSON.parse(raw):[{id:'s1',title:'Chat',msgs:[],ts:Date.now()}];
 ST.cur=ST.sessions[0];ST.msgs=ST.cur.msgs||[];
 
-// â•â•â•?Init â•â•â•?function init(){
+// â•â•â•?Init â•â•â•?
+let popDrag={active:false,x:0,y:0};
+function popout(){document.getElementById("popout-window").classList.toggle("open")}
+function startDragPop(e){popDrag.active=true;popDrag.x=e.clientX;popDrag.y=e.clientY;document.addEventListener("mousemove",dragPop);document.addEventListener("mouseup",()=>{popDrag.active=false;document.removeEventListener("mousemove",dragPop)})}
+function dragPop(e){if(!popDrag.active)return;const w=document.getElementById("popout-window");w.style.left=(w.offsetLeft+e.clientX-popDrag.x)+"px";w.style.top=(w.offsetTop+e.clientY-popDrag.y)+"px";w.style.right="auto";w.style.bottom="auto";popDrag.x=e.clientX;popDrag.y=e.clientY}
+function startResizePop(e){e.preventDefault();const w=document.getElementById("popout-window"),startH=w.offsetHeight,startY=e.clientY;function move(ev){w.style.height=Math.max(320,startH-(ev.clientY-startY))+"px"}function up(){document.removeEventListener("mousemove",move);document.removeEventListener("mouseup",up)}document.addEventListener("mousemove",move);document.addEventListener("mouseup",up)}
+function popSend(){const i=document.getElementById("pop-input"),t=i.value.trim();if(!t)return;i.value="";document.getElementById("pop-msgs").innerHTML+=`<div class="msg user">${t}</div>`;fetch(API+"/run",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:t})}).then(r=>r.json()).then(d=>{document.getElementById("pop-msgs").innerHTML+=`<div class="msg ai">${d.output||"[empty]"}</div>`;document.getElementById("pop-msgs").scrollTop=document.getElementById("pop-msgs").scrollHeight}).catch(()=>{document.getElementById("pop-msgs").innerHTML+=`<div class="msg ai">Offline</div>`})}
+
+// Input resize
+document.addEventListener("DOMContentLoaded",()=>{const h=document.createElement("div");h.id="input-resize-handle";h.addEventListener("mousedown",e=>{e.preventDefault();const bar=document.getElementById("input-bar"),ta=document.getElementById("chat-input"),sh=ta.offsetHeight,sy=e.clientY;bar.classList.add("resizing");function mv(ev){ta.style.height=Math.max(42,Math.min(400,sh+(sy-ev.clientY)))+"px"}function up(){bar.classList.remove("resizing");document.removeEventListener("mousemove",mv);document.removeEventListener("mouseup",up)}document.addEventListener("mousemove",mv);document.addEventListener("mouseup",up)});document.getElementById("input-bar").appendChild(h)});
+
+function init(){
   ST.sidebarOpen=localStorage.getItem('mss_sidebar')!=='closed';
   if(ST.sidebarOpen)document.getElementById('sidebar').classList.add('open');document.getElementById('sidebar-toggle').textContent='?';
   renderAll();check();setInterval(check,15000);
@@ -213,4 +240,4 @@ function inputKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}
 
 const th=localStorage.getItem('mss_theme');if(th)document.documentElement.setAttribute('data-theme',th);
 init();
-</script></body></html>
+</script><div id="popout-window"><div class="resize-handle" onmousedown="startResizePop(event)"></div><div class="pop-header" onmousedown="startDragPop(event)">?? mssclaw ¡¤ Floating<button class="icon-btn" style="margin-left:auto" onclick="document.getElementById(\"popout-window\").classList.remove(\"open\")">?</button></div><div class="pop-body" id="pop-msgs"></div><div class="pop-input"><textarea id="pop-input" placeholder="Message..." rows="1" onkeydown="if(event.key===\"Enter\"&&!event.shiftKey){event.preventDefault();popSend()}"></textarea></div></div></body></html>
