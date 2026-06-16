@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation';
 
-export default async function Page() {
-  // mssclaw: no auth required, go straight to dashboard
+export default function Page() {
   redirect('/dashboard/overview');
 }

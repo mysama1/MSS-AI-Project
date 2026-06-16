@@ -1,7 +1,6 @@
 'use client';
 
 import PageContainer from '@/components/layout/page-container';
-import { OrganizationList } from '@clerk/nextjs';
 import { workspacesInfoContent } from '@/config/infoconfig';
 
 export default function WorkspacesPage() {

@@ -17,7 +17,7 @@
  */
 
 import { useMemo } from 'react';
-import { useOrganization, useUser } from '@clerk/nextjs';
+// mssclaw: no auth
 import type { NavItem, NavGroup } from '@/types';
 
 /**
@@ -27,8 +27,8 @@ import type { NavItem, NavGroup } from '@/types';
  * @returns Filtered items
  */
 export function useFilteredNavItems(items: NavItem[]) {
-  const { organization, membership } = useOrganization();
-  const { user } = useUser();
+  const { organization, membership } = { organization: null };
+  const user = null; // mssclaw: no auth
 
   // Memoize context and permissions
   const accessContext = useMemo(() => {
