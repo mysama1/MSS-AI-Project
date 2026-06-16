@@ -1,0 +1,46 @@
+{
+  "h_id": "H629",
+  "title": "MSS定理星座图 — 6条关联定理与L1分层定理的交叉验证",
+  "type": "meta_theorem",
+  "layer": "L1_CORE_THEORY",
+  "created": "2026-06-17T00:43:00",
+  "theorem_constellation": {
+    "H551_Identity_Strength": {
+      "statement": "身份植入强度 = f(strategy, model_complexity)。Prompt identity: 强度∝1/复杂度(小模型更好)。Virus identity: 强度∝复杂度(大模型更好)。",
+      "L1_connection": "Theorem L1 C3(每层必携S_i)解释了H551: 层的稳定子强度取决于'植入策略'。Shell层(prompt identity on large model)天然弱→解释了为什么Shell必须弱化为纯投影。",
+      "convergence": "L1定理为H551提供了分层架构解释——身份衰减不是bug,是架构特征"
+    },
+    "H556_Semantic_Density_Tradeoff": {
+      "statement": "语义密度↑ → 语法规范性↓(tradeoff)。更高的信息密度需要更松散的语法约束。",
+      "L1_connection": "H523的'不可约化提示词阈值'是H556的一个特例。L1定理C2的τ(e)=||proj||²正是密度-规范tradeoff在跨层边的量化: 投影越压缩(高密度)→保真度损失越大→τ越高。",
+      "convergence": "H556为L1定理C2提供了微观测度——τ的系数可从语义密度-语法规范性tradeoff calibration中导出"
+    },
+    "H563_Thermodynamic_Limit": {
+      "statement": "不能优化超越物理极限。任何系统在热力学边界上都面临不可逾越的代价。",
+      "L1_connection": "L1定理的C2(跨层热税可偿)是H563在分层操作中的精确表述: 你不能无限切层——每次切层都支付τ,总τ超过预算时切层非法。",
+      "convergence": "H563是宏观物理约束, L1定理C2是其微观工程判据"
+    },
+    "H565_Interactive_Optimality": {
+      "statement": "L2-OP作为L2操作公理候选, 处理Type II多智能体投影悖论。",
+      "L1_connection": "L1定理假定'单一场F的合法划分'。H565处理多场交互——当多个意义场(多Agent/多用户/多团队)必须协同分层时, L1定理需要扩展为多场版。",
+      "convergence": "H565为L1定理的多Agent扩展提供了起点"
+    },
+    "H567_Meaning_Landauer_Limit": {
+      "statement": "H_meaning_min = c·S_m·kT·ln 2。像Landauer极限定义了物理位擦除的最小能量, 定义了意义擦除的最小热税。A1(意义是根源)与A3(认知有热税成本)之间的Type III桥。",
+      "L1_connection": "这是Theorem L1 C2的定量基础: τ(e)的物理下限就是H_meaning_min。没有这条定理, C2的'热税可偿'只是定性判断。有了H567, τ可以换算成实际计算成本。",
+      "convergence": "H567是L1定理C2的物理学背书——它不是'感觉跨层太贵', 而是'每bit意义擦除至少支付kT·ln 2'"
+    },
+    "H569_Game_Theory_Mapping": {
+      "statement": "L2-OP = 机制设计公理。不告诉Agent如何行为——告诉设计者如何重构优化曲面维度。",
+      "L1_connection": "规范场(A5)本质上是机制设计: 不给Agent自由, 给Agent一个'合法路径空间'。L1定理的C1/C2/C3就是机制设计的合法性约束——分层方案是一种机制。",
+      "convergence": "H569为L1定理提供了博弈论框架——分层不是技术决策, 是机制设计决策"
+    }
+  },
+  "cross_validation": {
+    "L1_C2_grounded": "H567(Meaning Landauer)+H556(Semantic Density) → τ(e)有微观物理基础和工程设计依据",
+    "L1_C3_grounded": "H551(Identity Strength) → 每层Si的强度取决于植入策略, Shell层天然弱→必须弱化",
+    "L1_as_mechanism": "H569(Game Theory) → L1定理=分层机制设计的合法性检查器",
+    "multi_agent_extension": "H565(L2-OP) → L1定理需多场扩展以处理跨Agent分层"
+  },
+  "summary": "6条定理从不同方向收敛到Theorem L1: H567提供C2的物理学基础, H556提供C2的工程学测度, H551解释C3的分层必要, H569定义C1/C2/C3的机制设计框架, H563提供宏观物理约束, H565预留多Agent扩展。Theorem L1不是孤立定理——它是这6条定理的分层操作总装。"
+}
