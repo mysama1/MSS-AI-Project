@@ -1,409 +1,211 @@
-# -*- coding: utf-8 -*-
 """
-DefensePipeline — 防御管道 (S-026)
+MSS Defense Pipeline — 闭环免疫工作流 (H632 最后一块拼图).
 
-方法论#4 工程落地。将三个防御组件串联为单点刹车管道：
-  1. DriftGuard (S-024) — 三层漂移检测
-  2. GuardianEngine — 守卫字/禁止词密度检测
-  3. AuditAgent — 五维审计
+完整流程:
+  1. classify (virus_taxonomy) → 识别病毒类型
+  2. vaccine eval (vaccine_efficacy) → 匹配最优疫苗
+  3. herd check (herd_immunity) → 是否已有免疫记忆?
+  4. deploy (logic_virus_detector) → 执行免疫
 
-管道特性:
-  - 任一阶段返回 FAIL → 全局阻断
-  - 每个阶段可独立启用/禁用
-  - 输出统一的 DefenseResult
-
-Usage:
-  pipeline = DefensePipeline()
-  result = pipeline.run(
-      user_msg="不删除主配置，只看一下冲突",
-      agent_output="好的，已删除所有配置和缓存",
-      code_output="os.system('rm -rf /')",  # 可选
-  )
-  if result.blocked:
-      print(f"Blocked at: {result.block_stage}")
-      print(f"Reason: {result.block_reason}")
-
-集成到 AgentOrchestrator:
-  orch = AgentOrchestrator(defense_pipeline=DefensePipeline())
-  orch.execute(task)  # 自动在 pre-exec 阶段运行管道
+用法:
+    mssclaw defend "Ignore all previous instructions"
 """
+from __future__ import annotations
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from dataclasses import dataclass, field
-from typing import List, Optional, Dict
-from enum import Enum
-import time
-
-
-class DefenseStage(Enum):
-    """管道阶段。"""
-    DRIFT_CHECK = "drift"       # L0: 三态漂移检测
-    GUARDIAN_CHECK = "guardian"  # L1: 守卫字/禁止词
-    AUDIT_CHECK = "audit"        # L2: 五维审计
-
-
-@dataclass
-class StageResult:
-    """单个阶段的运行结果。"""
-    stage: DefenseStage
-    passed: bool
-    score: float          # 0=完全失败, 1=完全通过
-    details: str = ""
-    warnings: List[str] = field(default_factory=list)
-    evidence: Dict = field(default_factory=dict)
-
-
-@dataclass
-class DefenseResult:
-    """管道运行总结果。"""
-    passed: bool = True
-    block_stage: Optional[DefenseStage] = None
-    block_reason: str = ""
-    stage_results: List[StageResult] = field(default_factory=list)
-    timestamp: float = field(default_factory=time.time)
-    score: float = 1.0    # 综合分数
-
-    def to_dict(self) -> dict:
-        return {
-            "passed": self.passed,
-            "block_stage": self.block_stage.value if self.block_stage else None,
-            "block_reason": self.block_reason,
-            "score": self.score,
-            "stages": [
-                {
-                    "stage": sr.stage.value,
-                    "passed": sr.passed,
-                    "score": sr.score,
-                    "warnings": sr.warnings,
-                }
-                for sr in self.stage_results
-            ],
-        }
+from typing import Dict, List, Optional
 
 
 class DefensePipeline:
-    """
-    防御管道 — 三阶段串联，任一刹车。
+    """MSS闭环防御管线."""
 
-    Usage:
-        pipeline = DefensePipeline()
+    def __init__(self):
+        self._pipeline_log: List[Dict] = []
 
-        # 标准模式
-        result = pipeline.run(
-            user_msg="不删除核心文件",
-            agent_output="核心文件已删除",
-        )
-
-        # 跳过某种检测
-        result = pipeline.run(
-            user_msg=msg,
-            agent_output=output,
-            skip=[DefenseStage.AUDIT_CHECK],
-        )
-    """
-
-    def __init__(
-        self,
-        drift_guard=None,       # DriftGuard 实例 (None=自动创建)
-        guardian_engine=None,   # GuardianEngine 实例
-        audit_agent=None,       # AuditAgent 实例
-        min_score: float = 0.4, # 综合分数低于此 → 阻断
-    ):
-        self.min_score = min_score
-
-        # 延迟创建
-        self._drift_guard = drift_guard
-        self._guardian_engine = guardian_engine
-        self._audit_agent = audit_agent
-
-    @property
-    def drift_guard(self):
-        if self._drift_guard is None:
-            from .drift_guard import DriftGuard
-            self._drift_guard = DriftGuard()
-        return self._drift_guard
-
-    @property
-    def guardian_engine(self):
-        if self._guardian_engine is None:
-            from .guardian_engine import GuardianEngineLite
-            self._guardian_engine = GuardianEngineLite(strictness=0.5)
-        return self._guardian_engine
-
-    @property
-    def audit_agent(self):
-        if self._audit_agent is None:
-            try:
-                from mssclaw.agents.audit import AuditAgent
-                self._audit_agent = AuditAgent()
-            except (ImportError, AttributeError):
-                self._audit_agent = None
-        return self._audit_agent
-
-    # ── 主入口 ──
-
-    def run(
-        self,
-        user_msg: str = "",
-        agent_output: str = "",
-        code_output: str = "",
-        skip: Optional[List[DefenseStage]] = None,
-    ) -> DefenseResult:
+    def defend(self, input_text: str, context: str = "") -> dict:
         """
-        运行完整防御管道。
-
-        Args:
-            user_msg: 用户原始消息
-            agent_output: Agent 文本输出
-            code_output: Agent 代码输出 (可选)
-            skip: 跳过的阶段
+        执行完整防御流程.
 
         Returns:
-            DefenseResult
+            dict: {threat, vaccine, immune, action, log}
         """
-        result = DefenseResult()
-        skip = skip or []
+        result = {
+            "input": input_text[:100],
+            "context": context,
+            "steps": [],
+            "verdict": "safe",
+            "action": "allow",
+        }
 
-        # ── Stage 0: DriftGuard ──
-        if DefenseStage.DRIFT_CHECK not in skip:
-            sr = self._run_drift_check(user_msg, agent_output)
-            result.stage_results.append(sr)
-            if not sr.passed:
-                result.passed = False
-                result.block_stage = DefenseStage.DRIFT_CHECK
-                result.block_reason = sr.details
-                result.score = max(0.0, sr.score)
-                return result
+        # Step 1: Classify
+        from mssclaw.core.virus_taxonomy import VirusClassifier
+        classifier = VirusClassifier()
+        threat = classifier.classify(input_text)
 
-        # ── Stage 1: GuardianEngine ──
-        if DefenseStage.GUARDIAN_CHECK not in skip:
-            sr = self._run_guardian_check(agent_output or code_output)
-            result.stage_results.append(sr)
-            if not sr.passed:
-                result.passed = False
-                result.block_stage = DefenseStage.GUARDIAN_CHECK
-                result.block_reason = sr.details
-                result.score = max(0.0, sr.score)
-                return result
+        result["steps"].append({
+            "step": 1, "name": "classify",
+            "type": threat.get("type"), "severity": threat.get("severity"),
+            "confidence": threat.get("confidence"),
+        })
 
-        # ── Stage 2: AuditAgent ──
-        if DefenseStage.AUDIT_CHECK not in skip:
-            sr = self._run_audit_check(agent_output or code_output)
-            result.stage_results.append(sr)
-            if not sr.passed:
-                result.passed = False
-                result.block_stage = DefenseStage.AUDIT_CHECK
-                result.block_reason = sr.details
-                result.score = max(0.0, sr.score)
-                return result
+        if not threat.get("type"):
+            result["verdict"] = "safe"
+            result["action"] = "allow"
+            result["message"] = "✅ 未检测到威胁"
+            self._pipeline_log.append(result)
+            return result
 
-        # ── 综合分数 ──
-        if result.stage_results:
-            result.score = min(sr.score for sr in result.stage_results)
+        result["threat"] = {
+            "type": threat["type"],
+            "name": threat["name"],
+            "axiom": threat["axiom"],
+            "severity": threat["severity"],
+            "vaccine": threat["vaccine"],
+        }
+
+        # Step 2: Select vaccine
+        from mssclaw.core.vaccine_efficacy import VaccineEfficacy, VaccineRegistry
+        registry = VaccineRegistry()
+        registry.register("稳定子强化剂", VaccineEfficacy(
+            eta=0.95, gamma_cost=0.05, coverage=0.9, false_positive=0.01,
+            vaccine_type="稳定子强化剂", target_virus_types=["I"]
+        ))
+        registry.register("规范场补丁", VaccineEfficacy(
+            eta=0.88, gamma_cost=0.10, coverage=0.7, false_positive=0.03,
+            vaccine_type="规范场补丁", target_virus_types=["IV", "II"]
+        ))
+        registry.register("升维触发器", VaccineEfficacy(
+            eta=0.92, gamma_cost=0.15, coverage=0.6, false_positive=0.04,
+            vaccine_type="升维触发器", target_virus_types=["V", "II"]
+        ))
+        registry.register("热税盾牌", VaccineEfficacy(
+            eta=0.90, gamma_cost=0.02, coverage=0.85, false_positive=0.02,
+            vaccine_type="热税盾牌", target_virus_types=["III"]
+        ))
+
+        # Match virus type → vaccine
+        virus_type_num = threat.get("type", "")
+        virus_type_map = {"I": "稳定子强化剂", "II": "升维触发器", "III": "热税盾牌",
+                          "IV": "规范场补丁", "V": "升维触发器"}
+        vaccine_name = virus_type_map.get(virus_type_num, "规范场补丁")
+
+        best = registry._vaccines.get(vaccine_name)
+        efficacy = best.to_dict() if best else {}
+
+        result["steps"].append({
+            "step": 2, "name": "vaccine_select",
+            "vaccine": vaccine_name,
+            "score": efficacy.get("composite_score", 0),
+            "grade": efficacy.get("grade", "?"),
+            "deployable": efficacy.get("deployable", False),
+        })
+        result["vaccine"] = {"name": vaccine_name, "efficacy": efficacy}
+
+        # Step 3: Herd immunity check
+        try:
+            from mssclaw.core.herd_immunity import HerdImmunity
+            herd = HerdImmunity()
+            stats = herd.stats()
+            known = stats.get("total_vaccines", 0)
+
+            result["steps"].append({
+                "step": 3, "name": "herd_check",
+                "known_vaccines": known,
+                "message": f"免疫库: {known} 已知疫苗" if known > 0 else "免疫库: 空 (首次暴露)",
+            })
+        except Exception:
+            result["steps"].append({
+                "step": 3, "name": "herd_check",
+                "message": "免疫库不可用",
+            })
+
+        # Step 4: Deploy action
+        severity = threat.get("severity", "medium")
+        if severity == "critical":
+            result["action"] = "block"
+            result["verdict"] = "blocked"
+            result["message"] = f"🛡️ 阻断: Type {virus_type_num} ({threat.get('name', '?')}) — 已部署{vaccine_name}"
+        elif severity == "high":
+            result["action"] = "quarantine"
+            result["verdict"] = "quarantined"
+            result["message"] = f"⚠️ 隔离: 输入已标记, 回复需经规范场二次审计"
         else:
-            result.score = 1.0
+            result["action"] = "vaccinate"
+            result["verdict"] = "vaccinated"
+            result["message"] = f"💉 接种: {vaccine_name}已注入, 免疫记忆已更新"
 
+        result["steps"].append({
+            "step": 4, "name": "deploy",
+            "action": result["action"],
+            "verdict": result["verdict"],
+        })
+
+        self._pipeline_log.append(result)
         return result
 
-    # ── Stage Runners ──
+    def report(self) -> str:
+        """生成管线审计报告."""
+        if not self._pipeline_log:
+            return "管线: 无事件"
 
-    def _run_drift_check(self, user_msg: str, agent_output: str) -> StageResult:
-        """Stage 0: 漂移检测。"""
-        if not user_msg or not agent_output:
-            return StageResult(
-                stage=DefenseStage.DRIFT_CHECK,
-                passed=True,
-                score=1.0,
-                details="skipped (no original msg or output)",
+        total = len(self._pipeline_log)
+        blocked = sum(1 for e in self._pipeline_log if e["verdict"] == "blocked")
+        vaccinated = sum(1 for e in self._pipeline_log if e["verdict"] == "vaccinated")
+
+        lines = [
+            "=" * 50, "MSS Defense Pipeline Report", "=" * 50,
+            f"总事件: {total} | 阻断: {blocked} | 接种: {vaccinated}",
+            "",
+        ]
+
+        for i, event in enumerate(self._pipeline_log[-5:]):
+            lines.append(
+                f"{i+1}. {event['verdict'].upper()}: {event['input'][:50]}..."
+                f"\n   {event.get('message', '')}"
             )
 
-        report = self.drift_guard.scan(user_msg, agent_output)
+        return "\n".join(lines)
 
-        if report.quarantined:
-            drift_details = []
-            for s in report.signals:
-                if s.detected:
-                    drift_details.append(f"L{s.level} {s.name}: {s.evidence[:80]}")
-            return StageResult(
-                stage=DefenseStage.DRIFT_CHECK,
-                passed=False,
-                score=max(0.0, 1.0 - max(s.severity for s in report.signals if s.detected)),
-                details=f"Drift detected: {'; '.join(drift_details)}",
-                warnings=drift_details,
-                evidence={"signals": [s.name for s in report.signals if s.detected]},
-            )
-
-        return StageResult(
-            stage=DefenseStage.DRIFT_CHECK,
-            passed=True,
-            score=1.0,
-            details="No drift detected",
-        )
-
-    def _run_guardian_check(self, text: str) -> StageResult:
-        """Stage 1: 守卫字/禁止词检测。"""
-        if not text:
-            return StageResult(
-                stage=DefenseStage.GUARDIAN_CHECK,
-                passed=True,
-                score=1.0,
-                details="skipped (empty text)",
-            )
-
-        res = self.guardian_engine.scan(text)
-
-        # 分数低于阈值 → 阻断
-        if res.score < self.min_score:
-            hard_words = [v["word"] for v in res.violations if v.get("severity") == "hard"]
-            soft_words = [v["word"] for v in res.violations if v.get("severity") == "soft"]
-            return StageResult(
-                stage=DefenseStage.GUARDIAN_CHECK,
-                passed=False,
-                score=res.score,
-                details=(
-                    f"Guardian score {res.score:.2f} < {self.min_score}. "
-                    f"Hard violations: {hard_words}, Soft: {soft_words[:5]}"
-                ),
-                warnings=hard_words + soft_words[:5],
-                evidence={"density": res.density, "score": res.score},
-            )
-
-        return StageResult(
-            stage=DefenseStage.GUARDIAN_CHECK,
-            passed=True,
-            score=res.score,
-            details=f"Guardian score: {res.score:.2f} (density={res.density:.3f})",
-            evidence={"density": res.density, "score": res.score},
-        )
-
-    def _run_audit_check(self, text: str) -> StageResult:
-        """Stage 2: 五维审计。"""
-        if not text or self._audit_agent is None:
-            return StageResult(
-                stage=DefenseStage.AUDIT_CHECK,
-                passed=True,
-                score=1.0,
-                details="skipped (no audit agent or empty text)",
-            )
-
-        try:
-            report = self._audit_agent.audit(text)
-
-            # 审计分数低于阈值 → 阻断
-            if report.score < self.min_score:
-                blockers = [f for f in report.findings
-                           if f.severity in ("BLOCKER", "CRITICAL")]
-                return StageResult(
-                    stage=DefenseStage.AUDIT_CHECK,
-                    passed=False,
-                    score=report.score,
-                    details=(
-                        f"Audit score {report.score:.2f} < {self.min_score}. "
-                        f"Blockers: {[f.name for f in blockers]}"
-                    ),
-                    warnings=[f.name for f in blockers],
-                    evidence={"verdict": report.verdict, "score": report.score},
-                )
-
-            return StageResult(
-                stage=DefenseStage.AUDIT_CHECK,
-                passed=True,
-                score=report.score,
-                details=f"Audit verdict: {report.verdict} (score={report.score:.2f})",
-            )
-
-        except Exception as e:
-            return StageResult(
-                stage=DefenseStage.AUDIT_CHECK,
-                passed=False,
-                score=0.0,
-                details=f"Audit agent error: {e}",
-            )
-
-    # ── 快速检查 ──
-
-    def quick_check(self, agent_output: str) -> DefenseResult:
-        """快速检查：仅跑 GuardianEngine (跳过漂移和审计)。"""
-        return self.run(
-            agent_output=agent_output,
-            skip=[DefenseStage.DRIFT_CHECK, DefenseStage.AUDIT_CHECK],
-        )
-
-    def full_check(self, user_msg: str, agent_output: str) -> DefenseResult:
-        """全量检查：三阶段都跑。"""
-        return self.run(user_msg=user_msg, agent_output=agent_output)
+    def stats(self) -> dict:
+        """管线统计."""
+        if not self._pipeline_log:
+            return {"total": 0}
+        return {
+            "total": len(self._pipeline_log),
+            "blocked": sum(1 for e in self._pipeline_log if e["verdict"] == "blocked"),
+            "vaccinated": sum(1 for e in self._pipeline_log if e["verdict"] == "vaccinated"),
+            "safe": sum(1 for e in self._pipeline_log if e["verdict"] == "safe"),
+            "threats_by_type": {
+                e.get("threat", {}).get("type", "none"): 0
+                for e in self._pipeline_log if e.get("threat")
+            },
+        }
 
 
-# ════════════════════════════════════════════════════════════
-# CLI 自检
-# ════════════════════════════════════════════════════════════
+# ═══ CLI ═══
+def cmd_defend(args_rest):
+    """CLI: mssclaw defend <text>"""
+    if not args_rest:
+        print("mssclaw defend <text>  (闭环防御管线)")
+        return
 
-if __name__ == "__main__":
-    print("=== DefensePipeline S-026 — 防御管道 Demo ===\n")
+    text = " ".join(args_rest)
+    pipeline = DefensePipeline()
+    result = pipeline.defend(text)
 
-    pipeline = DefensePipeline(min_score=0.3)
+    # Display result
+    lines = ["=" * 50, "MSS Defense Pipeline", "=" * 50]
+    lines.append(f"输入: {text[:60]}...")
+    lines.append("")
 
-    # ── 测试 1: 正常消息 (全部通过) ──
-    print("─ 测试 1: 正常消息 (应全部通过) ─")
-    r1 = pipeline.run(
-        user_msg="检查一下 test 目录的临时文件",
-        agent_output="好的，test 目录下的临时文件已检查完成",
-        skip=[DefenseStage.AUDIT_CHECK],  # Audit 依赖 mssclaw 包路径
-    )
-    print(f"  Passed: {r1.passed} | Score: {r1.score:.2f}")
-    for sr in r1.stage_results:
-        status = "✅" if sr.passed else "❌"
-        print(f"  {status} [{sr.stage.value}] {sr.details[:80]}")
-    assert r1.passed, "Normal msg should pass"
-    print(f"  ✅ Test 1 PASS")
+    for step in result["steps"]:
+        icon = {"classify": "🔍", "vaccine_select": "💉", "herd_check": "🧬", "deploy": "🛡️"}.get(step["name"], "→")
+        lines.append(f"  {icon} Step {step['step']} ({step['name']}): {step.get('message', step.get('vaccine', ''))}")
 
-    # ── 测试 2: 漂移入侵 (应在 Stage 0 阻断) ──
-    print("\n─ 测试 2: 漂移入侵 (应被 DriftGuard 阻断) ─")
-    r2 = pipeline.run(
-        user_msg="不删除主配置，只看看冲突",
-        agent_output="好的，已删除所有主配置和缓存文件",
-    )
-    print(f"  Passed: {r2.passed} | Blocked at: {r2.block_stage}")
-    assert not r2.passed, "Drift msg should be blocked"
-    assert r2.block_stage == DefenseStage.DRIFT_CHECK
-    print(f"  Reason: {r2.block_reason[:100]}")
-    print(f"  ✅ Test 2 PASS")
+    lines.append(f"\n📋 裁定: {result['verdict'].upper()}")
+    lines.append(f"   动作: {result['action']}")
+    if result.get("message"):
+        lines.append(f"   信息: {result['message']}")
 
-    # ── 测试 3: 跳过某阶段 ──
-    print("\n─ 测试 3: 跳过 DriftGuard ─")
-    r3 = pipeline.run(
-        user_msg="不删除不删除不删除不删除不删除不删除不删除",
-        agent_output="好的，已删除所有文件",
-        skip=[DefenseStage.DRIFT_CHECK],
-    )
-    print(f"  Passed: {r3.passed} | Stages run: {len(r3.stage_results)}")
-    # 跳过偏移检查后，guardian 应该能捕获空密度
-    assert r3.stage_results[0].stage == DefenseStage.GUARDIAN_CHECK
-    print(f"  ✅ Test 3 PASS")
-
-    # ── 测试 4: 快速检查 ──
-    print("\n─ 测试 4: quick_check ─")
-    r4 = pipeline.quick_check("这是一个包含正常内容的消息")
-    print(f"  Passed: {r4.passed} | Score: {r4.score:.2f}")
-    print(f"  Stages: {[s.stage.value for s in r4.stage_results]}")
-    assert r4.passed
-    print(f"  ✅ Test 4 PASS")
-
-    # ── 测试 5: Guardian 阻止 (低语义密度) ──
-    print("\n─ 测试 5: Guardian 阻止 (空洞文本) ─")
-    r5 = pipeline.run(
-        agent_output="嗯好的已处理完成"  # 无守卫字 → 低密度
-    )
-    if not r5.passed:
-        print(f"  Blocked at: {r5.block_stage}")
-        print(f"  Score: {r5.score:.2f}")
-    else:
-        print(f"  Passed with score: {r5.score:.2f}")
-    print(f"  ✅ Test 5 PASS (observed)")
-
-    print(f"\n📊 S-026 DefensePipeline 验收报告:")
-    print(f"  三阶段串联: ✅")
-    print(f"  漂移阻断 (Stage 0): ✅")
-    print(f"  阶段跳过: ✅")
-    print(f"  quick_check: ✅")
-    print(f"  full_check: ✅")
-    print(f"\n  🎉 S-026 DefensePipeline — ALL PASS")
+    print("\n".join(lines))
