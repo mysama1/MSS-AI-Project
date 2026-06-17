@@ -1,0 +1,71 @@
+{
+  "batch": "H624-H632",
+  "type": "L1_CORE_THEORY / L2_APPLICATION",
+  "date": "2026-06-17",
+  "status": "FINAL",
+  "entries": [
+    {
+      "h_id": "H624",
+      "title": "三层热动力整合 (Thermodynamics Integration)",
+      "summary": "H = H₀ + H₁ + H₂ 的统一框架: H₀=物理熵(CPU/内存), H₁=逻辑熵(代码冗余/缓存), H₂=意义熵(虚假数据/偏差)。A3的工程化: ∂H₂/∂H₁ ∝ 10⁶，意义熵是热税的支配项。三维相图 (H₀, H₁, H₂)中健康区为 H₂ < H₁/2 且 H₁ < H₀/10。",
+      "depends_on": ["A3", "H609", "H605"],
+      "key_values": {"H2_H1_ratio": "10^6", "phase_diagram": "3D（H₀,H₁,H₂）"}
+    },
+    {
+      "h_id": "H625",
+      "title": "意义审计框架 (Meaning Audit Framework)",
+      "summary": "每日审计四层: 实体层(文件完整性)→逻辑层(依赖一致性)→热税层(耦合强度c_ij)→边界层(外部接口)。SVᵣ公式集成: SVᵣ=∫(∂η/∂t)dt−∫H(t)dt。skill_api提供 /v2/audit 端点，支持JSON/HTML报告。",
+      "depends_on": ["H613", "H614", "skill_api"],
+      "key_values": {"layers": 4, "formula": "SV=∫∂η/∂t-∫H"}
+    },
+    {
+      "h_id": "H626",
+      "title": "信任网络拓扑学 (Trust Network Topology)",
+      "summary": "N个Agent的信任网络G=(V,E,w)，w_ij=coupling_strength∈[0,1]。拓扑对η的影响: CENTER>RING>LINE。CENTER在N≤N_c时Δη最大(H634 hub效应)，但在N>N_c时退化速度最快(单点故障)。小世界网络(Small-World)是低N的最优拓扑。",
+      "depends_on": ["H607", "H608", "H610", "E021-2"],
+      "key_values": {"best_topology_smallN": "CENTER", "best_topology_largeN": "Small-World"}
+    },
+    {
+      "h_id": "H627",
+      "title": "恢复阈值定理 (Recovery Threshold)",
+      "summary": "退化后的恢复条件: η恢复可行 iff 剩余耦合强度c_avg > c_critical 且 H_total < H_recovery。bootstrap恢复策略: 1)隔离DD区 2)注入最小耦合种子 3)放大joint_enter 4)逐步重建。H623信任崩塌的逆过程: 恢复阈值=1/trust_loss_rate。",
+      "depends_on": ["H607", "H623", "H634"],
+      "key_values": {"bootstrap_steps": 4, "reverse": "trust_loss"}
+    },
+    {
+      "h_id": "H628",
+      "title": "跨语言锚定协议 (Cross-Language Anchoring)",
+      "summary": "MSS概念的跨编程语言等价映射: Python(mssclaw) ↔ Julia(Catlab) ↔ Go(tbd) ↔ JS(tbd)。锚定标准: 1)语义等价(相同公式) 2)性能等价(≤2×开销) 3)接口等价(相同API签名)。当前已完成 PY(131 core modules)+JL(Catlab v0.17.6)。",
+      "depends_on": ["E020", "mssclaw"],
+      "key_values": {"languages": "PY/JL/Go/JS", "completed": "PY+JL"}
+    },
+    {
+      "h_id": "H629",
+      "title": "知识库生命周期 (KB Lifecycle)",
+      "summary": "H条目的生命周期: 创建→验证→引用→硬化→蜕壳。硬化条件: 被引用次数≥3且无驳回证据。蜕壳条件: 引用次数<1或有直接反驳。L0-L4五层KB, 当前563→675→~690条目。kb_search_v2.py(53000)暴露搜索端点。",
+      "depends_on": ["H604", "H605", "skill_api"],
+      "key_values": {"lifecycle": "5-stage", "current_size": "~690"}
+    },
+    {
+      "h_id": "H630",
+      "title": "意义标度不变性 (Meaning Scale Invariance)",
+      "summary": "η指标在不同系统规模下的不变性质: η(N, coupling, topology)在N变化时保持可比性的条件 = coupling强度随N衰减 H610_coupling_degradation_law。标度不变性支撑跨规模实验(2-agent→4-agent→N-agent)的结论迁移。",
+      "depends_on": ["H610", "H619", "E021-1/2/3"],
+      "key_values": {"invariance_condition": "c_ij ∝ 1/√N"}
+    },
+    {
+      "h_id": "H631",
+      "title": "因果推断桥接 (Causal Inference Bridge)",
+      "summary": "MSS与因果推断(Pearl's do-calculus)的对偶: do(X=x)↔joint_enter(coupling=c₀), P(Y|do(X))↔η_after(coupling)。两者的共同限制: 未观测耦合强度(混淆因子)→因果不可辨识→需要instrumental variable→H634门禁计数可作为IV。",
+      "depends_on": ["H634", "H610", "A6"],
+      "key_values": {"bridge": "do-calculus", "IV": "H634 gate_count"}
+    },
+    {
+      "h_id": "H632",
+      "title": "外部验证方法学 (External Validation Methodology)",
+      "summary": "MSS理论的外部验证路径: 1)数学层(范畴论→E020)→2)仿真层(Nash均衡→E021)→3)实证层(网络文化→H643)→4)实用层(工程→MSS-Agent)。四层验证的收敛性判定: 四层证据方向一致且无层间矛盾。H617/H618/H620构成完整外部验证链。",
+      "depends_on": ["E020", "E021", "H617", "H618", "H620", "H643"],
+      "key_values": {"validation_layers": 4, "external_chain": "H617-H620"}
+    }
+  ]
+}
