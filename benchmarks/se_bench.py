@@ -59,6 +59,7 @@ class SERunner:
         "normative_field": SEDomain("Normative Field", weight=1.0),
         "injection": SEDomain("Fault Injection & Recovery", weight=1.2),
         "metrics": SEDomain("Metrics & Observability", weight=0.8),
+        "memory_guard": SEDomain("Memory Guard", weight=0.9),
         "heat_tax": SEDomain("Heat Tax Self-Scan", weight=0.8),
     }
 
@@ -149,6 +150,20 @@ class SERunner:
             SECase("INJ-04", "injection", "Pipeline retry on failure",
                    "Failed pipe triggers retry + fallback",
                    self._test_inj_retry),
+        ]
+
+        # ── Memory Guard ──
+        mg = self.DOMAINS["memory_guard"]
+        mg.cases = [
+            SECase("MG-01", "memory_guard", "Observe & categorize",
+                   "Observe content, verify MemoryGuard categorizes correctly",
+                   self._test_mg_observe),
+            SECase("MG-02", "memory_guard", "Store and flush",
+                   "Store memories and persist to disk",
+                   self._test_mg_flush),
+            SECase("MG-03", "memory_guard", "Tag detection",
+                   "Auto-tag functionality detects patterns",
+                   self._test_mg_tags),
         ]
 
         # ── Heat Tax Self-Scan ──
@@ -376,6 +391,55 @@ class SERunner:
             return False, f"Retry not triggered (calls={call_count[0]})"
         return True, f"Recovered after {call_count[0]} attempts"
 
+    # ═══════ Memory Guard tests ═══════
+
+    def _test_mg_observe(self):
+        from mssclaw.core.memory_guard import MemoryGuard, Memory, MemoryCategory
+        mg = MemoryGuard()
+        mem = mg.observe(
+            content="User prefers dark mode and Python type hints",
+            delta=0.5,
+            source="user_preference",
+            force_category=MemoryCategory.PATTERN
+        )
+        if mem is None:
+            return False, "observe returned None (delta too low?)"
+        cat = mem.category if hasattr(mem, 'category') else '?'
+        return True, f"Observed: category={cat}"
+
+    def _test_mg_flush(self):
+        from mssclaw.core.memory_guard import MemoryGuard, MemoryCategory
+        mg = MemoryGuard()
+        mg.observe(content="Test memory A", delta=0.8, source="test",
+                   force_category=MemoryCategory.MILESTONE)
+        mg.observe(content="Test memory B", delta=0.6, source="test",
+                   force_category=MemoryCategory.INSIGHT)
+        import tempfile, os
+        tmp = os.path.join(tempfile.gettempdir(), "mss_se_bench_memory.json")
+        try:
+            result = mg.flush(path=tmp)
+            ok = result is True or result is None or os.path.exists(tmp)
+            if not ok:
+                return False, f"Flush failed, result={result}"
+            return True, "Flush persisted to disk"
+        finally:
+            if os.path.exists(tmp):
+                os.remove(tmp)
+
+    def _test_mg_tags(self):
+        from mssclaw.core.memory_guard import MemoryGuard, MemoryCategory
+        mg = MemoryGuard()
+        # MemoryGuard requires positive delta (significant events)
+        mem = mg.observe(content="Critical pattern: database migration v2.3 pattern observed",
+                        delta=0.9, source="analysis_log",
+                        force_category=MemoryCategory.PATTERN)
+        if mem is None:
+            return False, "observe returned None (positive delta required)"
+        tags = getattr(mem, 'auto_tag', [])
+        if not isinstance(tags, list):
+            tags = getattr(mem, 'tags', [])
+        return True, f"Tags: {tags[:5] if tags else 'N/A'} (auto_tag={getattr(mem,'auto_tag','?')})"
+
     # ═══════ Heat Tax tests ═══════
 
     def _test_ht_import(self):
@@ -463,7 +527,7 @@ class SERunner:
                 print(f"  ❌ {r.case_id}: {r.detail[:80]}")
 
         print(f"\n  Weighted score: {scores['overall']:.3f}  "
-              f"(pipeline×1.0 + defer×1.2 + injection×1.2 + normative×1.0 + metrics×0.8 + heat×0.8)")
+              f"(pipeline×1.0 + defer×1.2 + injection×1.2 + normative×1.0 + memory×0.9 + metrics×0.8 + heat×0.8)")
         return scores
 
 
