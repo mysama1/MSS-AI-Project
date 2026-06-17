@@ -1,0 +1,16 @@
+  ✅ requests: η=0.984, 19 files, 407 lines, 0 violations (0.2s)
+  ✅ click: η=0.891, 17 files, 632 lines, 10 violations (0.3s)
+  ✅ fastapi: η=0.939, 48 files, 675 lines, 21 violations (0.3s)
+
+======================================================================
+  Multi-Project MSS Audit Summary
+======================================================================
+  Project           η  Files    Lines Violations
+  ──────────── ────── ────── ──────── ──────────
+  requests      0.984     19      407          0
+  click         0.891     17      632         10
+  fastapi       0.939     48      675         21
+
+  Key finding: MSS measures what SonarQube cannot —
+  normative field compliance and stable node fidelity.
+======================================================================

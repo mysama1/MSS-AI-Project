@@ -44,6 +44,7 @@ USAGE = """mssclaw — MSS AI Framework
   health     系统健康检查
   status     全系统状态面板
   benchmark  Ollama基准测试 (5模型×11题)
+  se         软件工程审计 (audit|heat|stress <path>)
   version    版本信息
 
 示例:
@@ -54,6 +55,92 @@ USAGE = """mssclaw — MSS AI Framework
 """
 
 VERSION = "0.3.10"
+
+
+def cmd_se(args_rest):
+    """MSS 软件工程审计: se audit|heat|stress <path>"""
+    from mssclaw.se_audit import print_report, save_report_json, MSSAuditor
+    import argparse, json
+
+    if not args_rest or args_rest[0] in ('--help', '-h'):
+        print("mssclaw se — MSS 意义场软件工程工具")
+        print()
+        print("  mssclaw se audit <path>      全量MSS架构审计")
+        print("  mssclaw se heat <path>       热税热点仪表盘")
+        print("  mssclaw se stress <path>     tension/矛盾分析")
+        print()
+        print("  --json FILE  输出JSON报告")
+        print()
+        print("示例:")
+        print("  mssclaw se audit .")
+        print("  mssclaw se audit requests --json reports/se_requests.json")
+        return
+
+    subcmd = args_rest[0]
+    subargs = args_rest[1:]
+
+    # Parse --json
+    json_out = None
+    path = None
+    for a in subargs:
+        if a == '--json' or a == '-j':
+            idx = subargs.index(a)
+            if idx + 1 < len(subargs):
+                json_out = subargs[idx + 1]
+        elif not a.startswith('-'):
+            path = a
+
+    if path is None:
+        path = '.'
+
+    auditor = MSSAuditor(path)
+    report = auditor.audit()
+
+    if subcmd == 'audit':
+        print_report(report)
+        if json_out:
+            save_report_json(report, json_out)
+
+    elif subcmd == 'heat':
+        print(f"\n🔥 MSS 热税热点 — {path}")
+        print(f"{'═'*60}")
+        print(f"  η_code: {report.eta_code:.3f}")
+        print(f"  热税利用率: {report.H_utilization:.3f}")
+        print()
+        if report.heat_hotspots:
+            print(f"  Top 热点:")
+            for i, (f, h) in enumerate(report.heat_hotspots[:8], 1):
+                bar = '🔥' * min(5, int(h * 10))
+                print(f"  {i:>2}. {f:<45} {bar} ({h:.2f})")
+        else:
+            print(f"  ✅ 无高热税模块")
+        print()
+        if json_out:
+            save_report_json(report, json_out)
+
+    elif subcmd == 'stress':
+        severe = [v for v in report.violations if v.severity > 0.35]
+        by_sev = sorted(severe, key=lambda v: v.severity, reverse=True)
+        print(f"\n⚡ MSS 矛盾张力分析 — {path}")
+        print(f"{'═'*60}")
+        print(f"  η_code: {report.eta_code:.3f}")
+        print(f"  Tension≥0.35: {len(by_sev)} violations")
+        print()
+        if by_sev:
+            for i, v in enumerate(by_sev[:12], 1):
+                icon = {0.7: '🔴', 0.5: '🟡', 0.35: '🟢'}
+                sev_icon = '🔴' if v.severity > 0.7 else ('🟡' if v.severity > 0.5 else '🟢')
+                print(f"  {i:>2}. {v.file}:{v.line}  {sev_icon} {v.severity:.2f}")
+                print(f"      {v.description}")
+                print(f"      → {v.suggestion}")
+        else:
+            print(f"  ✅ 无高张力矛盾")
+        if json_out:
+            save_report_json(report, json_out)
+
+    else:
+        print(f"Unknown se subcommand: {subcmd}")
+        print("  Use: se audit|heat|stress <path>")
 
 
 def cmd_vault(args_rest):
@@ -434,6 +521,7 @@ def main():
         "status": cmd_status,
         "pipeline": cmd_pipeline,
         "experiment": lambda r: __import__('mssclaw.core.experiment_runner', fromlist=['main']).main(r),
+        "se": cmd_se,
         "benchmark": cmd_benchmark,
         "version": cmd_version,
     }
