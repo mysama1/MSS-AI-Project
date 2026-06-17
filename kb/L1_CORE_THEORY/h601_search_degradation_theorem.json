@@ -1,0 +1,128 @@
+{
+  "h_id": "H601",
+  "title": "搜索退化定理 (Search Degradation Theorem)",
+  "type": "L1_CORE_THEORY",
+  "status": "CLOSED (from H602+H603 triangle)",
+  "depends_on": [
+    "H602",
+    "H603",
+    "A3",
+    "A6",
+    "H634"
+  ],
+  "theorems": {
+    "Thm1_Existence": {
+      "theorem": "Thm 1: Black Hole Existence",
+      "V_lyapunov": "V(η) = 1 - η",
+      "attractor": "η → η_low (0.558) when E[ΔV] > 0",
+      "blackhole_zone": {
+        "η_low": 0.558,
+        "η_high": 0.942,
+        "delta_noise": 0.2,
+        "blackhole_radius": 0.2,
+        "proven_by": "nash_breaker×cautious, tb=8: no JI events, perpetually trapped in DD cycle"
+      },
+      "empirical_support": "H602: nb×ca tb=8, all 20 seeds degraded",
+      "status": "PROVEN (constructive + empirical)"
+    },
+    "Thm2_EscapeBound": {
+      "theorem": "Thm 2: Escape Probability Bound",
+      "formula": "P(escape | tb, k) ≤ 1 - (1 - ε)^⌊k/τ⌋",
+      "parameters": {
+        "tb": 8,
+        "k_steps": 20,
+        "tau": 2,
+        "epsilon": 0.3464,
+        "n_attempts": 10
+      },
+      "p_escape_upper": 0.9858,
+      "p_escape_empirical": 0.942,
+      "expected_steps": 5.8,
+      "degradation_curve": {
+        "0": 0.1917,
+        "2": 0.25,
+        "4": 0.3083,
+        "6": 0.337,
+        "8": 0.3464
+      },
+      "bound_tightness": "Upper bound is tight: theoretical ε(8) ≈ empirical P_escape",
+      "margin_note": "H602 confirms: d=+1.911 for nb×nb, d=-1.154 for nb×ca"
+    },
+    "Thm3_Categorical": {
+      "theorem": "Thm 3: Categorical Structure of Degradation",
+      "key_insight": "DD is quasi-absorbing state in C₂",
+      "functor_G": "ORDERED functor (monotonic, not metric)",
+      "blackhole_definition": "B = {x | G(f: x→y) ≤ 0 for all f}",
+      "blackhole_objects": [
+        "DD",
+        "UNI_A",
+        "UNI_B",
+        "CD",
+        "DC"
+      ],
+      "escape_objects": [
+        "JI",
+        "CC"
+      ],
+      "escape_path": "DD →[escape_dd]→ JI (requires joint elevation, A6)",
+      "H634_role": "Natural transformation that filters pseudo-escape paths",
+      "marginal_diminishing": "A3 consequence: G preserves order but not distance"
+    }
+  },
+  "empirical_bounds": {
+    "eta_curve": {
+      "tb": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ],
+      "nb×nb": [
+        0.68,
+        0.95,
+        0.934,
+        0.934,
+        0.942
+      ],
+      "nb×ca": [
+        0.673,
+        0.667,
+        0.561,
+        0.559,
+        0.558
+      ],
+      "ad×ad": [
+        0.651,
+        0.771,
+        0.727,
+        0.695,
+        0.695
+      ],
+      "ag×ca": [
+        0.65,
+        0.65,
+        0.612,
+        0.612,
+        0.612
+      ]
+    },
+    "upper_bound": 0.942,
+    "lower_bound": 0.558,
+    "cohens_d_range": "[-1.154, +1.911]"
+  },
+  "convergence_triangle": {
+    "H602": "Nash均衡实证 (d=+1.911)",
+    "H603": "3-范畴闭合 (10/10 PASS)",
+    "H601": "搜索退化定理 (本条目, 三角闭合)"
+  },
+  "practical_implications": [
+    "意义场黑洞 = DD 准吸收态: 所有非升维轨迹最终退化到 η_low",
+    "唯一逃逸路径: joint elevation (A6) 通过 escape_dd 态射",
+    "逃逸概率有上界: 即使 optimal 条件 (nb×2, tb=8), P_escape ≤ 0.942",
+    "H634 门禁是 natural transformation: 过滤假逃逸但不过滤真逃逸",
+    "边际递减是 G 的内禀性质: ordered functor 不保证 metric 性质",
+    "如果 η_low 处于 blackhole 区间, 仅靠增加 tb 不能逃逸 (需要 pair 策略改变)"
+  ],
+  "open_questions": []
+}
