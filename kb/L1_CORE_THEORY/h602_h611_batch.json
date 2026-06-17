@@ -1,0 +1,77 @@
+{
+  "batch": "H602-H611",
+  "type": "L1_CORE_THEORY",
+  "date": "2026-06-17",
+  "entries": [
+    {
+      "h_id": "H602",
+      "title": "Nash均衡实证定理",
+      "summary": "E021实验结果: nash_breaker×2 d=+1.911 (强效), nash_breaker×ca d=-1.154 (退化), adaptive×2 d=+0.8 (弱效), aggressive×ca d=0 (不变)。证明Nash阱存在且可被特定策略对打破，但需要同步升维(A6 joint_enter)。",
+      "depends_on": ["A1", "A6", "H634"],
+      "key_values": {"cohens_d": "+1.911", "eta_delta": "+0.111 (+27%)", "n_seeds": 100}
+    },
+    {
+      "h_id": "H603",
+      "title": "3-范畴自洽验证",
+      "summary": "Catlab v0.17.6: 12/12 PASS。C₁(Agent)→C₂(Interaction)→C₃(Meaning)三层范畴结构在FinSet中完全自洽。积/余积/分配律/指数/Hom/五边形/Kleisli/CCC全部通过。为(∞,1)-范畴抬升塔建立可靠的1-范畴底层。",
+      "depends_on": ["H601", "E020"],
+      "key_values": {"passes": "12/12", "framework": "Catlab v0.17.6"}
+    },
+    {
+      "h_id": "H604",
+      "title": "蜕壳悖论 (Molting Paradox)",
+      "summary": "蜕壳无差别删除top-3硬化态射时，悖论消解态射因高负载期频繁使用而被优先误杀。定理: P(misremoval|hardened) = f(usage_freq) × (1 - molting_precision)。最优蜕壳频率 f* = √(H_closure / H_molt)。",
+      "depends_on": ["H572", "H605"],
+      "key_values": {"f_optimal": "≈10", "mechanism": "usage-frequency bias"}
+    },
+    {
+      "h_id": "H605",
+      "title": "熵硬化定理 (Entropy Hardening)",
+      "summary": "高使用频率的态射随时间获得'硬化' — 蜕壳删除概率与使用频率成反比。但硬化也意味着更新阻力: 硬化态射更难被新证据修正。硬化度 H_harden(t) = H₀ · (1 - e^(-λ·usage·t))。",
+      "depends_on": ["A3", "H572"],
+      "key_values": {"harden_rate": "λ·usage", "paradox": "硬化=保护+僵化"}
+    },
+    {
+      "h_id": "H606",
+      "title": "边际递减公理",
+      "summary": "在意义上不可约的维度中，额外信息对η的贡献边际递减: ∂η/∂I ∝ 1/log(I)。A3的直接推论: 有序函子G保持序但不保持距离 → 新增态射的边际意义产出随KB规模递减。",
+      "depends_on": ["A3", "H601"],
+      "key_values": {"decay": "1/log(I)", "empirical": "χ_peak衰减5.6×"}
+    },
+    {
+      "h_id": "H607",
+      "title": "信任预算相变定理",
+      "summary": "P2渗流实验证实反向相变: N<48时trust_budget有微弱影响, N≥48时系统自稳定→trust_budget完全无关(γ/ν=-0.989)。非标准渗流普适类。N_c=48是自稳化网络的最小规模阈值。",
+      "depends_on": ["H642", "A6"],
+      "key_values": {"N_c": 48, "γ/ν": -0.989, "χ_decay": "5.6×"}
+    },
+    {
+      "h_id": "H608",
+      "title": "信任预算机制 (Trust Budget)",
+      "summary": "Agent间的信任资源池。信任预算高→允许更多探索性交互→可能触发joint_enter(A6)→η提升。但过度信任在无耦合Agent对中也造成预算浪费(A3热税)。tb的最优分配 = directed towards high-coupling pairs only。",
+      "depends_on": ["A6", "H607", "H609"],
+      "key_values": {"optimal_alloc": "high-coupling pairs", "waste_mechanism": "unilateral invite → heat tax"}
+    },
+    {
+      "h_id": "H609",
+      "title": "热税公理 (Heat Tax)",
+      "summary": "任何非耦合交互产生的不可约化效率损失。A3规定: G的边际递减意味着所有非耦合态射→热税。H634 mitigation: joint_enter(L0→L1)仅对耦合态射对通过，过滤热税态射。热税率∝(1-coupling_strength)。",
+      "depends_on": ["A3", "H634"],
+      "key_values": {"irreducible": "true", "mitigation": "H634 joint_enter filter"}
+    },
+    {
+      "h_id": "H610",
+      "title": "耦合强度度量",
+      "summary": "Agent对(i,j)的耦合强度c_ij = |{joint_enter events}| / |{all interactions}|。c_ij∈[0,1], c_ij>0.5为'强耦合'(H608推荐信任分配目标), c_ij<0.2为'弱耦合'(热税高风险区)。H634门禁仅在c_ij高于阈值时激活。",
+      "depends_on": ["H608", "H609", "H634"],
+      "key_values": {"threshold_strong": 0.5, "threshold_weak": 0.2}
+    },
+    {
+      "h_id": "H611",
+      "title": "退化熵 (Degradation Entropy)",
+      "summary": "未升维系统的信息降解速率。S_degrade = -Σ_i p_i log p_i where p_i是策略态射i在t→∞时的极限分布。DD准吸收态贡献最大熵→退化不可避免但可延迟(A6→H634联合升维)。退化熵与H601搜索退化联合决定系统的可维持时间。",
+      "depends_on": ["H601", "A3"],
+      "key_values": {"DD_entropy_dominant": "true", "delay_mechanism": "A6 joint_enter"}
+    }
+  ]
+}
