@@ -54,9 +54,8 @@ VERSION = "0.3.9"
 
 
 def cmd_vault(args_rest):
-    from mssclaw.core.vault_cli import main
-    sys.argv = ["vault"] + args_rest
-    main()
+    from mssclaw.core.credential_vault import cmd_vault as _vault
+    _vault(args_rest)
 
 
 def cmd_chat(args_rest):
