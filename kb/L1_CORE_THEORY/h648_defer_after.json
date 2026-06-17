@@ -1,0 +1,153 @@
+{
+  "h_id": "H648",
+  "title": "逆优先级协议 — defer_after 闭锁语义与对称临界区",
+  "type": "L1_CORE_THEORY",
+  "date": "2026-06-17",
+  "depends_on": ["H634", "A5", "H601"],
+  "summary": "发现当前执行模型缺失的结构性机制：正向门禁(H634 joint_enter)只解决'进入前验证'，缺失对称的'退出前验证'——即某些操作必须在批次关闭后才能执行。这不是优先级问题，而是时序约束类型不同。逆优先级≠低优先级。",
+  
+  "core_insight": {
+    "problem": "传统优先级是单向排序轴(A>B>C)，不足以表达'X必须排在所有其他操作之后'的约束。Gateway重启在git push之前执行会摧毁整个批次——但把这个操作标为'最高优先级'同样无法解决问题，因为问题不在优先级高低，而在它不应与普通操作共享同一个排序轴。",
+    "key_distinction": {
+      "forward_priority": "A在B之前 — 同一轴上的相对位置 (我们已有, 隐含)",
+      "reverse_priority": "X在所有其他之后 — 跨轴的闭包依赖 (我们不拥有)",
+      "gating": "Y不能进入 — 前提条件 (H634 joint_enter)",
+      "deferring": "Z不能执行直到... — 后置条件 (本协议, defer_after)"
+    },
+    "critical_realization": "逆优先级不是低优先级。一个'必须最后执行'的操作可能紧急程度最高，但它的时序约束是结构性而非排序性的。"
+  },
+
+  "protocol_definition": {
+    "name": "defer_after",
+    "semantics": "操作注册一组后置条件——在这些条件全部满足之前，调度器不执行该操作",
+    "parameters": {
+      "defer_after": "字符串列表，如 ['git_push', 'artifact_write', 'commit']",
+      "on_violation": "ABORT (默认) 或 WARN (开发模式)",
+      "timeout_s": "等待后置条件的最长时间，超时后降级处理"
+    },
+    "actions": {
+      "register": "在操作队列中标记 defer_after 约束",
+      "check": "调度前：所有后置条件是否已完成？",
+      "block": "未满足 → 保持pending，不执行",
+      "release": "全部满足 → 允许调度",
+      "force": "紧急覆盖（需人工确认）"
+    },
+    "lifecycle": "register → 批次开始 → 正常操作执行 → 后置条件逐个完成 → check(defer_after) → all_satisfied → release → execute deferred action"
+  },
+
+  "symmetry_with_H634": {
+    "H634_joint_enter": {
+      "type": "precondition_gate",
+      "blocks": "entry",
+      "question": "可以进入了吗？",
+      "example": "联合入场信任门禁 — 两个Agent都确认后，操作才能进入执行"
+    },
+    "H648_defer_after": {
+      "type": "postcondition_gate",
+      "blocks": "execution",
+      "question": "批次关闭了吗？",
+      "example": "Gateway重启 — push+commit+artifact全部完成后，才能执行"
+    },
+    "combined": "进入前验证 + 退出前验证 = 完整临界区协议。H634确保安全进入，H648确保安全退出。缺少任一半边，临界区都不是闭环。"
+  },
+
+  "incident_analysis": {
+    "event": "2026-06-17 Sprint 173: Gateway重启在git push前执行，虽被自动重连兜底但暴露结构缺陷",
+    "root_cause": "场景路由器的执行排序缺少defer_after概念。Gateway重启被当作普通操作参与优先级排序，而它实际上是closure-dependent操作。",
+    "would_have_prevented": "如果Gateway重启标注了 defer_after=['git_push', 'artifact_write']，调度器会在批次完成前跳过它，不推进到执行阶段。"
+  },
+
+  "comparative_analysis": {
+    "title": "开源生态系统中的闭锁/逆优先级机制对比",
+    "entries": [
+      {
+        "mechanism": "systemd Before=/After=",
+        "ecosystem": "Linux服务管理",
+        "what_it_does": "声明服务启动顺序：Before=network.target 表示'我必须在network之前完成启动'",
+        "similarity_to_H648": "⭐⭐⭐⭐ 最接近的工业实现——它是唯一显式建模双向依赖的调度系统。Before=就是逆优先级：'我不需要先跑，但我必须在这个之前跑完'。",
+        "key_difference": "仅覆盖启动阶段。systemd没有等价的shutdown排序——服务关闭是LIFO强杀，无Before=/After=对应的关闭语义。这正是我们今天踩的坑：'启动时有序，销毁时无序'。",
+        "relevance": "证明双向排序需求是真实的、工业规模的。但systemd缺失关闭侧实现，恰好对应H648要填补的空缺。"
+      },
+      {
+        "mechanism": "Kubernetes Finalizers",
+        "ecosystem": "容器编排",
+        "what_it_does": "资源注册finalizer键 → 删除请求只设置deletionTimestamp → 控制器完成清理后移除finalizer → 资源才能被真正删除",
+        "similarity_to_H648": "⭐⭐⭐⭐ 语义几乎一致：'这个操作（删除）必须等所有finalizer完成才能执行'。pre-delete hook = defer_after的删除特化版。",
+        "key_difference": "Finalizers仅服务于删除语义——它是一个destruction guard。H648的defer_after更通用：任何操作都可以注册后置条件，不限于删除。",
+        "relevance": "K8s用finalizers解决了'删除必须在清理之后'这一特定案例。MSS需要泛化到所有closure-dependent操作。"
+      },
+      {
+        "mechanism": "Rust Drop Order",
+        "ecosystem": "编程语言/编译器",
+        "what_it_does": "变量按声明的逆序析构——后声明的先释放，确保依赖链不被切断",
+        "similarity_to_H648": "⭐⭐⭐ 逆序释放 = 编译时保证'依赖方在其被依赖方之后才被释放'。这是一种结构化的defer，由编译器静态证明。",
+        "key_difference": "编译时而非运行时。Drop order是静态分析结果，H648的defer_after是动态调度决策。但原理同源：某些操作必须在其他操作之后。",
+        "relevance": "证明'逆序约束'在类型系统层面即可表达——启发我们：能否在MSS的类型/协议层面静态标注defer_after，而不依赖运行时调度器？"
+      },
+      {
+        "mechanism": "try/catch/finally",
+        "ecosystem": "几乎所有语言",
+        "what_it_does": "finally块无论成功失败都最后执行——确保资源释放",
+        "similarity_to_H648": "⭐⭐⭐ finally是universal的闭锁机制：它不参与try/catch的优先级排序，而是被结构性保证为'最后执行'。",
+        "key_difference": "finally是词法作用域（同一个block内），H648是调度作用域（跨操作/跨批次）。但语义同构：'这批操作完成后，执行这个闭锁动作'。",
+        "relevance": "最古老的defer模式。启发：H648可以借鉴finally的语法简洁性——defer_after应该是声明式的，一个标签而非一套代码。"
+      },
+      {
+        "mechanism": "Database WAL (Write-Ahead Log)",
+        "ecosystem": "数据库引擎",
+        "what_it_does": "日志写入必须先于数据文件修改——崩溃恢复依赖这个不变式",
+        "similarity_to_H648": "⭐⭐ 物理层不变式，不是调度层机制。但原理同构：破坏性操作（修改数据）必须等非破坏记录（写日志）完成。",
+        "key_difference": "WAL是存储引擎内部的不变式，不暴露为调度接口。",
+        "relevance": "低成本验证：'closure-dependent ordering'在数据库领域已被证明是ACID的必要条件——MSS只是把同一原理提升到AI操作调度层。"
+      },
+      {
+        "mechanism": "RCU rcu_barrier()",
+        "ecosystem": "Linux内核",
+        "what_it_does": "等待所有挂起的RCU回调完成——确保旧数据读取者全部退出后才执行破坏性操作",
+        "similarity_to_H648": "⭐⭐ 精确的'等待所有先决操作完成'语义，但范围限定在RCU读取者。",
+        "key_difference": "RCU解决的是并发读写的一致性问题，不是批次调度问题。",
+        "relevance": "内核级验证：'等待所有前置操作完成'是可行的、高性能的。H648可以借鉴RCU的grace period概念设计性能衰减曲线。"
+      }
+    ],
+    "verdict": "不存在直接对标。最接近的是systemd Before=(双向启动排序)、K8s Finalizers(删除闭锁)、finally(通用闭锁)——但三者拼起来才覆盖H648的设计空间。没有任何开源项目同时拥有：①通用操作闭锁 ②跨批次的动态约束 ③与forward priority正交的排序轴。"
+  },
+
+  "classification_matrix": {
+    "title": "执行排序的四象限——传统优先级只是其中一个",
+    "quadrants": {
+      "Q1_high_priority_normal": "紧急 + 无闭锁约束 → 正常优先调度",
+      "Q2_high_priority_deferred": "紧急 + 必须在批次后 → 高强度等待（如事后审核）",
+      "Q3_low_priority_normal": "不紧急 + 无闭锁 → 低优先级后台",
+      "Q4_low_priority_deferred": "不紧急 + 必须在批次后 → 传统陷阱：被误判为'不重要'而永久延迟"
+    },
+    "trap_diagnosis": "Q4是传统优先级模型的盲区。Gateway重启恰好在这里：它不紧急（可以等），但必须等所有操作完成——传统调度器会把它无限推迟，因为'低优先级'被误读为'可以永久跳过'。defer_after纠正这个误读：'虽然不紧急，但必须在这一批结束时执行'。"
+  },
+
+  "design_choices": [
+    {
+      "choice": "声明式 vs 命令式",
+      "recommended": "声明式 — defer_after=['commit', 'push', 'artifact'] — 像finally一样简单，一标签搞定"
+    },
+    {
+      "choice": "阻塞 vs 超时降级",
+      "recommended": "默认阻塞（不完成就不执行），生产模式加超时（如5min后报警但继续等待）"
+    },
+    {
+      "choice": "全局注册 vs 操作级注册",
+      "recommended": "操作级注册 — 每个操作独立声明自己的闭锁约束，不同操作可不同"
+    }
+  ],
+
+  "integration_points": {
+    "scene_router": "在方向选择时检查：如果操作有defer_after约束且后置条件未满足 → 标记为pending而非调度",
+    "experiment_runner": "Pipeline节点可注册defer_after：如'cleanup节点必须在所有实验节点之后'",
+    "pipeline_production": "GracefulShutdown节点天然需要defer_after=['all_metrics_saved', 'connections_drained']",
+    "cli_tool_calls": "OpenClaw工具调用序列中，restart类操作应自动标注defer_after=['git_push', 'artifact_write']"
+  },
+
+  "next_steps": {
+    "P0": "在CLI/场景路由器中实现最小defer_after检查（标签+1个if判断）",
+    "P1": "与H634 joint_enter合并为统一临界区协议——不是两个独立机制，而是一个协议的两个面",
+    "P2": "静态标注能力：能否在函数签名上标注@defer_after，让编译器/类型检查器做静态验证"
+  }
+}
