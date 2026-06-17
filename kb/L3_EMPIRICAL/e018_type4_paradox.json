@@ -1,0 +1,64 @@
+{
+  "experiment": "E018",
+  "version": "E018 v1.0",
+  "type": "Type IV Self-Referential Paradox",
+  "n_seeds": 30,
+  "n_rounds": 200,
+  "\u03b2_critical": null,
+  "results": [
+    {
+      "\u03b2": 0.0,
+      "mean_error": 0.0361999161433267,
+      "max_error": 0.13606594868242705,
+      "oscillation": 1.3462504853999002,
+      "divergence_rate": 0.0,
+      "convergence_rate": 0.5333333333333333,
+      "n_seeds": 30
+    },
+    {
+      "\u03b2": 0.2,
+      "mean_error": 0.03595750872628005,
+      "max_error": 0.1290266395816954,
+      "oscillation": 1.3389507778679406,
+      "divergence_rate": 0.0,
+      "convergence_rate": 0.5333333333333333,
+      "n_seeds": 30
+    },
+    {
+      "\u03b2": 0.4,
+      "mean_error": 0.033944577705877374,
+      "max_error": 0.11538850195421538,
+      "oscillation": 1.3418965947372674,
+      "divergence_rate": 0.0,
+      "convergence_rate": 0.8,
+      "n_seeds": 30
+    },
+    {
+      "\u03b2": 0.6,
+      "mean_error": 0.03394798408602686,
+      "max_error": 0.11909346227102519,
+      "oscillation": 1.3288503897070223,
+      "divergence_rate": 0.0,
+      "convergence_rate": 0.6666666666666666,
+      "n_seeds": 30
+    },
+    {
+      "\u03b2": 0.8,
+      "mean_error": 0.03602012368578132,
+      "max_error": 0.12067020415262929,
+      "oscillation": 1.3527818784997636,
+      "divergence_rate": 0.0,
+      "convergence_rate": 0.7666666666666667,
+      "n_seeds": 30
+    },
+    {
+      "\u03b2": 1.0,
+      "mean_error": 0.17171857587379927,
+      "max_error": 0.36942463156814365,
+      "oscillation": 1.3493649750492913,
+      "divergence_rate": 0.0,
+      "convergence_rate": 0.7333333333333333,
+      "n_seeds": 30
+    }
+  ]
+}

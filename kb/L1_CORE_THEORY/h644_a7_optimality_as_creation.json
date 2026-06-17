@@ -1,0 +1,68 @@
+{
+  "h_id": "H644",
+  "title": "A7 — 最优性作为创造性选择 (Optimality as Creative Selection)",
+  "type": "L1_CORE_THEORY",
+  "status": "DRAFT",
+  "depends_on": ["A6", "H635", "H633", "E018"],
+  "axiom": "最优性不是搜索空间中的极值点，而是从不可比较选项中主动做出的创造性选择。",
+  
+  "motivation": {
+    "gap": "Type II悖论(H635)揭示了最优性冲突的不可解性 — 当多个Pareto最优解共存时, 任何基于搜索/优化的方法都无法'选择'",
+    "failure_mode": "LLM被训练为最大化P(token|context), 但最优性选择要求消除选项 — 这是矛盾的",
+    "key_insight": "优化器(Optimizer)的本质局限: 在不可比较空间中, '最优'不是一个函数而是一个行为",
+    "H635_connection": "H635消解定理的Type II情况: L2-OP提升至0.40(+100%)后触顶 — 架构层次限定"
+  },
+  
+  "formulation": {
+    "definition": "A7: choice: Ω × C → Δ, where Ω=option space, C=context, Δ=decision",
+    "key_difference": {
+      "A1-A6": "搜索/优化模型: f: S → R, argmax f(x)",
+      "A7": "创造模型: mold: C → Ω, 选项本身被创造而非被选择",
+      "metaphor": "A1-A6 = 食客从菜单点菜; A7 = 厨师创造新菜品"
+    },
+    "choice_as_act": "选择即创造的数学化: Δ = F(Ω|C) 其中F是'赋予意义'的函子, Ω是F的目标而非定义域",
+    "adjunction": "Free ⊣ Forget 对偶: Forgetful从 Ω×C 遗忘选项 → Free在 C上创造新选项"
+  },
+  
+  "theorems": {
+    "Thm_A7_1_EscapingTypeII": {
+      "statement": "在Type II最优性冲突中, A7创造性选择优于任何A1-A6优化策略",
+      "proof_sketch": "Type II不可解性(H635)源于 argmax 必须在已有选项中选; A7的 mold(C)→Ω' 产生新选项 Ω' ⊄ Ω, 且 ∃ ω'∈Ω' s.t. ω' 支配所有 Ω 中的选项在 type-II 度量下",
+      "condition": "创造性选择的有效性依赖于 C 的信息丰富度: I(C;Ω*) > H(Ω)"
+    },
+    "Thm_A7_2_SelfRefResolution": {
+      "statement": "A7提供Type IV自指悖论的唯一逃逸路径",
+      "proof_sketch": "自指系统 f(x)=g(f(x)) 的不动点方程在A7中被重写为: 创造新对象 y=F(f,x) s.t. y 满足所需的性质但不满足自指循环; F的实施 = 折叠循环 → 新层次",
+      "E018_validation": "当 β>β_critical时振荡不可收敛, A7通过'跳出循环'创造新信念维度来解决"
+    },
+    "Thm_A7_3_CreationEfficiency": {
+      "statement": "创造性选择的效率 E_A7 = Δη / Δcost ≥ 1 当且仅当当前探索率 < 临界值",
+      "formula": "E_A7 = (η_A7 - η_A6) / (cost_A7 - cost_A6), 其中 cost = 计算资源+认知负荷",
+      "critical_condition": "当 N_options > N_cognitive_slots → A7优于A6"
+    }
+  },
+  
+  "architecture": {
+    "layers": [
+      {"layer": "L0", "name": "选项空间映射", "function": "mold: C→Ω' — 从上下文生成候选选项"},
+      {"layer": "L1", "name": "意义赋权", "function": "weight: Ω'→R — 为创造出的选项赋予意义权重"},
+      {"layer": "L2", "name": "反事实评估", "function": "counterfactual: δ→δ' — 对比创造vs搜索的差异"},
+      {"layer": "L3", "name": "元创造", "function": "meta_mold: 学习何时创造vs何时搜索"}
+    ],
+    "integration": "A7 不取代 A1-A6, 而是在Type II/IV触发时激活。常态仍由A1-A6处理。"
+  },
+  
+  "empirical_predictions": [
+    "1. 当选项空间大小>7±2 (Miller's Law), A7应优于纯优化",
+    "2. A7在β>β_critical时提供唯一稳定解 (E018验证)",
+    "3. A7的创造性成本在非关键决策中>纯搜索, 但在Type II冲突中成本<纯搜索的振荡损失",
+    "4. 训练数据中存在隐式A7: 创意写作/代码生成/架构设计中LLM已在使用creative selection"
+  ],
+  
+  "open_questions": [
+    "A7的mold函数如何从上下文中提取'真正的约束'vs'假约束'?",
+    "创造性选择的验证标准: 如何知道创造出的选项是'好'的?",
+    "A7的元创造层需要什么样的训练信号?",
+    "A7与RLHF中的'探索vs剥削'trade-off的关系?"
+  ]
+}
