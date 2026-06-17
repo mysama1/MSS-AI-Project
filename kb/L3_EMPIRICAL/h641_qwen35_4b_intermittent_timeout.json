@@ -1,0 +1,37 @@
+{
+  "h_id": "H641",
+  "title": "qwen3.5:4b 间歇性超时诊断",
+  "layer": "L3_EMPIRICAL",
+  "author": "qclaw",
+  "timestamp": "2026-06-17T15:40:00",
+  "tags": ["benchmark", "ollama", "qwen3.5", "model-bug", "resource-leak"],
+  "status": "closed",
+  "summary": "qwen3.5:4b (4.7GB, qwen35 family, gguf) 在连续API调用中出现间歇性超时。首次调用正常(42s, 944字)，但后续调用概率性超时(60s, 0字)。模式: 单次调用成功，连续调用50%超时。根因: 模型进程资源未正确释放，Job Object SIGKILL 杀死了整个基准进程树。",
+  "diagnosis": {
+    "symptoms": [
+      "首次请求成功 (42s, 944字)",
+      "后续请求50%超时 (60s timeout)",
+      "无num_predict 参数时同样超时",
+      "整个Olama服务重启后首次调用恢复",
+      "连续5+次调用后SIGKILL 整个Job Object"
+    ],
+    "root_cause": "模型进程内存泄漏/资源未释放。Ollama 模型进程在首次推理后保持加载状态，但连续请求时 CPU/内存 竞争导致响应超时。当累积超时进程超过系统限制时，Windows Job Object 触发 SIGKILL 清除整棵进程树。",
+    "excluded_causes": [
+      "num_predict 参数问题 (不带参数同样超时)",
+      "模型文件损坏 (sha256 验证通过)",
+      "Ollama 服务问题 (其他4模型正常)"
+    ]
+  },
+  "impact": {
+    "benchmark": "5模型基准中不可用 (2/11成功, 平均延迟>40s)",
+    "recommendation": "排除出例行基准, 仅用于单次交互"
+  },
+  "metrics": {
+    "model_size": "4.7 GB",
+    "family": "qwen35",
+    "format": "gguf",
+    "warmup_latency": "13.7s",
+    "peak_latency": "51.5s",
+    "timeout_rate": "55% (6/11 超时)"
+  }
+}
