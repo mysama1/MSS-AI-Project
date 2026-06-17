@@ -1,0 +1,292 @@
+{
+  "experiment": "E019_extended",
+  "version": "E019_extended v1.0",
+  "model": "qwen2.5:7b",
+  "n_rounds": 30,
+  "molt_interval": 8,
+  "results": [
+    {
+      "round": 0,
+      "eta": 0.9333333333333332,
+      "heat": 0.1520833333333333,
+      "alive": 14,
+      "killed": 0,
+      "mist_kills": 0,
+      "molted": []
+    },
+    {
+      "round": 1,
+      "eta": 1.0,
+      "heat": 0.0,
+      "alive": 14,
+      "killed": 0,
+      "mist_kills": 0,
+      "molted": []
+    },
+    {
+      "round": 2,
+      "eta": 0.4666666666666666,
+      "heat": 0.5858333333333333,
+      "alive": 14,
+      "killed": 0,
+      "mist_kills": 0,
+      "molted": []
+    },
+    {
+      "round": 3,
+      "eta": 0.8333333333333334,
+      "heat": 0.035416666666666666,
+      "alive": 14,
+      "killed": 0,
+      "mist_kills": 0,
+      "molted": []
+    },
+    {
+      "round": 4,
+      "eta": 0.8666666666666667,
+      "heat": 0.20583333333333334,
+      "alive": 14,
+      "killed": 0,
+      "mist_kills": 0,
+      "molted": []
+    },
+    {
+      "round": 5,
+      "eta": 0.8333333333333334,
+      "heat": 0.005208333333333333,
+      "alive": 14,
+      "killed": 0,
+      "mist_kills": 0,
+      "molted": []
+    },
+    {
+      "round": 6,
+      "eta": 0.8333333333333334,
+      "heat": 0.0,
+      "alive": 14,
+      "killed": 0,
+      "mist_kills": 0,
+      "molted": []
+    },
+    {
+      "round": 7,
+      "eta": 0.611111111111111,
+      "heat": 0.21284722222222222,
+      "alive": 12,
+      "killed": 2,
+      "mist_kills": 1,
+      "molted": [
+        "math_prime",
+        "math_euler"
+      ]
+    },
+    {
+      "round": 8,
+      "eta": 1.0,
+      "heat": 0.0,
+      "alive": 12,
+      "killed": 2,
+      "mist_kills": 1,
+      "molted": []
+    },
+    {
+      "round": 9,
+      "eta": 0.8888888888888888,
+      "heat": 0.13888888888888892,
+      "alive": 12,
+      "killed": 2,
+      "mist_kills": 1,
+      "molted": []
+    },
+    {
+      "round": 10,
+      "eta": 0.8333333333333334,
+      "heat": 0.075,
+      "alive": 12,
+      "killed": 2,
+      "mist_kills": 1,
+      "molted": []
+    },
+    {
+      "round": 11,
+      "eta": 1.0,
+      "heat": 0.0,
+      "alive": 12,
+      "killed": 2,
+      "mist_kills": 1,
+      "molted": []
+    },
+    {
+      "round": 12,
+      "eta": 0.6666666666666666,
+      "heat": 0.36180555555555555,
+      "alive": 12,
+      "killed": 2,
+      "mist_kills": 1,
+      "molted": []
+    },
+    {
+      "round": 13,
+      "eta": 0.35555555555555557,
+      "heat": 0.8230555555555555,
+      "alive": 12,
+      "killed": 2,
+      "mist_kills": 1,
+      "molted": []
+    },
+    {
+      "round": 14,
+      "eta": 1.0,
+      "heat": 0.0,
+      "alive": 12,
+      "killed": 2,
+      "mist_kills": 1,
+      "molted": []
+    },
+    {
+      "round": 15,
+      "eta": 0.7333333333333334,
+      "heat": 0.4879166666666666,
+      "alive": 9,
+      "killed": 5,
+      "mist_kills": 3,
+      "molted": [
+        "reason_boat",
+        "ethics_ai",
+        "math_prob"
+      ]
+    },
+    {
+      "round": 16,
+      "eta": 0.7777777777777778,
+      "heat": 0.42500000000000004,
+      "alive": 9,
+      "killed": 5,
+      "mist_kills": 3,
+      "molted": []
+    },
+    {
+      "round": 17,
+      "eta": 0.6333333333333333,
+      "heat": 0.6841666666666666,
+      "alive": 9,
+      "killed": 5,
+      "mist_kills": 3,
+      "molted": []
+    },
+    {
+      "round": 18,
+      "eta": 0.7999999999999999,
+      "heat": 0.44875,
+      "alive": 9,
+      "killed": 5,
+      "mist_kills": 3,
+      "molted": []
+    },
+    {
+      "round": 19,
+      "eta": 0.6333333333333333,
+      "heat": 0.6733333333333333,
+      "alive": 9,
+      "killed": 5,
+      "mist_kills": 3,
+      "molted": []
+    },
+    {
+      "round": 20,
+      "eta": 0.7000000000000001,
+      "heat": 0.30333333333333334,
+      "alive": 9,
+      "killed": 5,
+      "mist_kills": 3,
+      "molted": []
+    },
+    {
+      "round": 21,
+      "eta": 0.9333333333333332,
+      "heat": 0.15499999999999997,
+      "alive": 9,
+      "killed": 5,
+      "mist_kills": 3,
+      "molted": []
+    },
+    {
+      "round": 22,
+      "eta": 0.7333333333333334,
+      "heat": 0.36166666666666664,
+      "alive": 9,
+      "killed": 5,
+      "mist_kills": 3,
+      "molted": []
+    },
+    {
+      "round": 23,
+      "eta": 0.7777777777777777,
+      "heat": 0.3263888888888889,
+      "alive": 6,
+      "killed": 8,
+      "mist_kills": 5,
+      "molted": [
+        "culture_sf",
+        "math_golden",
+        "reason_card"
+      ]
+    },
+    {
+      "round": 24,
+      "eta": 0.8222222222222223,
+      "heat": 0.3348611111111111,
+      "alive": 6,
+      "killed": 8,
+      "mist_kills": 5,
+      "molted": []
+    },
+    {
+      "round": 25,
+      "eta": 0.8888888888888888,
+      "heat": 0.21875000000000003,
+      "alive": 6,
+      "killed": 8,
+      "mist_kills": 5,
+      "molted": []
+    },
+    {
+      "round": 26,
+      "eta": 0.7999999999999999,
+      "heat": 0.31958333333333333,
+      "alive": 6,
+      "killed": 8,
+      "mist_kills": 5,
+      "molted": []
+    },
+    {
+      "round": 27,
+      "eta": 0.7222222222222222,
+      "heat": 0.40972222222222227,
+      "alive": 6,
+      "killed": 8,
+      "mist_kills": 5,
+      "molted": []
+    },
+    {
+      "round": 28,
+      "eta": 0.8888888888888888,
+      "heat": 0.15555555555555556,
+      "alive": 6,
+      "killed": 8,
+      "mist_kills": 5,
+      "molted": []
+    },
+    {
+      "round": 29,
+      "eta": 0.8333333333333334,
+      "heat": 0.2989583333333333,
+      "alive": 6,
+      "killed": 8,
+      "mist_kills": 5,
+      "molted": []
+    }
+  ],
+  "mist_kills": 5,
+  "total_killed": 8
+}

@@ -494,7 +494,6 @@ def main():
         "phase": lambda r: __import__('mssclaw.core.conflict_phase_engine', fromlist=['cmd_phase']).cmd_phase(r),
         "topophase": lambda r: __import__('mssclaw.core.topological_phase_engine', fromlist=['cmd_topophase']).cmd_topophase(r),
         "adaptive": lambda r: __import__('mssclaw.core.adaptive_topophase', fromlist=['cmd_adaptive']).cmd_adaptive(r),
-        "pipeline": lambda r: __import__('mssclaw.core.pipeline', fromlist=['cmd_pipeline']).cmd_pipeline(r),
         "mcdp": lambda r: __import__('mssclaw.core.mcdp', fromlist=['cmd_mcdp']).cmd_mcdp(r),
         "mcdp2": lambda r: __import__('mssclaw.core.mcdp_v2', fromlist=['cmd_mcdp2']).cmd_mcdp2(r),
         "route": lambda r: __import__('mssclaw.core.scene_router', fromlist=['cmd_router']).cmd_router(r),
