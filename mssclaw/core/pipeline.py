@@ -91,6 +91,70 @@ class ProductionConfig:
     backpressure_queue_max: int = 100
     enable_heat_tax_profiling: bool = True
     progress_interval_s: float = 0.5
+    # Metrics
+    metrics_path: str = ""  # 持久化JSON路径
+    alert_on_p99_ms: float = 5000.0  # P99超此值触发告警
+
+
+class MetricsCollector:
+    """生产级指标采集: P50/P99延迟、成功率、错误分布."""
+
+    def __init__(self):
+        self.latencies: List[float] = []
+        self.success_count: int = 0
+        self.fail_count: int = 0
+        self.error_types: Dict[str, int] = defaultdict(int)
+        self.circuit_trips: int = 0
+        self.start_time: float = time.time()
+
+    def record(self, duration_ms: float, success: bool, error_type: str = ""):
+        self.latencies.append(duration_ms)
+        if success:
+            self.success_count += 1
+        else:
+            self.fail_count += 1
+            if error_type:
+                self.error_types[error_type] += 1
+
+    def record_circuit_trip(self):
+        self.circuit_trips += 1
+
+    def p50(self) -> float:
+        if not self.latencies:
+            return 0.0
+        s = sorted(self.latencies)
+        return s[len(s) // 2]
+
+    def p99(self) -> float:
+        if not self.latencies:
+            return 0.0
+        s = sorted(self.latencies)
+        idx = int(len(s) * 0.99)
+        return s[min(idx, len(s) - 1)]
+
+    def avg(self) -> float:
+        return sum(self.latencies) / len(self.latencies) if self.latencies else 0.0
+
+    def success_rate(self) -> float:
+        total = self.success_count + self.fail_count
+        return self.success_count / total if total > 0 else 1.0
+
+    def to_dict(self) -> Dict:
+        total = self.success_count + self.fail_count
+        return {
+            "duration_s": round(time.time() - self.start_time, 1),
+            "total_calls": total,
+            "success": self.success_count,
+            "fail": self.fail_count,
+            "success_rate": round(self.success_rate(), 4),
+            "latency_ms": {
+                "avg": round(self.avg(), 1),
+                "p50": round(self.p50(), 1),
+                "p99": round(self.p99(), 1),
+            },
+            "error_distribution": dict(self.error_types),
+            "circuit_trips": self.circuit_trips,
+        }
 
 
 class StreamingPipeline:
@@ -117,19 +181,24 @@ class StreamingPipeline:
         self._consecutive_failures: int = 0
         self._circuit_open_until: float = 0.0
         self._aborted: bool = False
+        self.metrics = MetricsCollector()
+        self._metric_path = self.config.metrics_path or f"pipeline_{self.name}_{int(time.time())%100000:05d}.json"
 
     @property
     def is_circuit_open(self) -> bool:
         return self._circuit_open_until > time.time()
 
-    def _record_failure(self):
+    def _record_failure(self, duration_ms: float = 0, error_type: str = "Unknown"):
         self._consecutive_failures += 1
+        self.metrics.record(duration_ms, False, error_type)
         if self._consecutive_failures >= self.config.circuit_breaker_threshold:
             self._circuit_open_until = time.time() + self.config.circuit_breaker_cooldown_s
             self._aborted = True
+            self.metrics.record_circuit_trip()
 
-    def _record_success(self):
+    def _record_success(self, duration_ms: float = 0):
         self._consecutive_failures = 0
+        self.metrics.record(duration_ms, True)
 
     def add_node(self, node: PipeNode, after: Optional[List[str]] = None,
                  is_start: bool = False):
@@ -286,19 +355,20 @@ class StreamingPipeline:
                                    duration_ms=duration, heat_tax=heat_tax,
                                    metadata={"attempts": attempt + 1})
                 self.heat_tax_total += heat_tax
-                self._consecutive_failures = 0
+                self._record_success(duration)
                 return result
 
             except Exception as e:
                 last_error = str(e)
                 duration = (time.time() - t0) * 1000
+                err_type = type(e).__name__
                 self.heat_tax_total += duration / 1000 * node.heat_tax_weight
 
                 if attempt < max_retries:
                     delay = self.config.retry_delay_ms * (self.config.retry_backoff ** attempt) / 1000
                     time.sleep(delay)
 
-        self._record_failure()
+        self._record_failure(duration, err_type)
         return PipeResult(PipeStatus.FAILED, error=last_error,
                          metadata={"attempts": max_retries + 1, "gave_up": True})
 
@@ -384,7 +454,7 @@ class StreamingPipeline:
         return '\n'.join(lines)
 
     def stats(self) -> Dict:
-        return {
+        result = {
             "name": self.name,
             "nodes": len(self.nodes),
             "edges": sum(len(v) for v in self.edges.values()),
@@ -392,7 +462,22 @@ class StreamingPipeline:
             "results": {k: {"status": v.status.value, "heat_tax": v.heat_tax}
                        for k, v in self.results.items()},
             "total_heat_tax": round(self.heat_tax_total, 4),
+            "metrics": self.metrics.to_dict(),
         }
+        return result
+
+    def save_metrics(self, path: str = ""):
+        """持久化指标到JSON文件."""
+        out = path or self._metric_path
+        data = {
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "pipeline": self.name,
+            **self.metrics.to_dict(),
+            "summary": self.summary().split('\n'),
+        }
+        with open(out, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        return out
 
 
 # ═══════ Sprint 146c: Decentralized VCG Compensation ═══════
