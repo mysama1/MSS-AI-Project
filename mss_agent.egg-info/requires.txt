@@ -1,9 +1,12 @@
 requests>=2.28
 cryptography>=41.0
 
+[all]
+mss-agent[dev,llm]
+
 [dev]
-pytest
-pytest-cov
+pytest>=7.0
+pytest-cov>=4.0
 
 [llm]
 openai>=1.0

@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mss-agent"
+version = "0.3.11"
+description = "MSS-Agent: AI Agent framework with meaning-field self-check, heat-tax auditing, streaming pipeline, and encrypted vault"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "MSS-AI Project" }]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "requests>=2.28",
+    "cryptography>=41.0",
+]
+
+[project.optional-dependencies]
+llm = ["openai>=1.0"]
+dev = ["pytest>=7.0", "pytest-cov>=4.0"]
+all = ["mss-agent[llm,dev]"]
+
+[project.urls]
+Homepage = "https://github.com/mysama1/MSS-AI-Project"
+Repository = "https://github.com/mysama1/MSS-AI-Project"
+Issues = "https://github.com/mysama1/MSS-AI-Project/issues"
+Wiki = "https://mssai.miraheze.org/wiki/Main_Page"
+
+[project.scripts]
+mssclaw = "mssclaw.cli:main"
+mss-agent = "mss_agent.cli:main"
+mss-vault = "mssclaw.core.credential_vault:cli_main"
+
+[tool.setuptools.packages.find]
+include = ["mssclaw*", "mss_agent*"]
+exclude = ["tests*", "experiments*", "scripts*", "archive*", "backups*"]
+
+[tool.setuptools.package-data]
+mssclaw = ["**/*.json", "**/*.yaml", "**/*.yml", "**/*.md"]
+mss_agent = ["**/*.json", "**/*.yaml", "**/*.yml", "**/*.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = ["-v", "--tb=short", "--strict-markers"]
+markers = [
+    "slow: marks tests that are slow (deselect with '-m \"not slow\"')",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+exclude = [".git", "__pycache__", ".egg-info", "dist", "build", "archive", "backups"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]

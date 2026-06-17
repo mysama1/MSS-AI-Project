@@ -54,7 +54,10 @@ USAGE = """mssclaw — MSS AI Framework
   mssclaw kb "热税公式"
 """
 
-VERSION = "0.3.10"
+try:
+    from mssclaw import __version__ as VERSION
+except ImportError:
+    VERSION = "0.3.11"
 
 
 def cmd_se(args_rest):

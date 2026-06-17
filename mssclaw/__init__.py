@@ -1,8 +1,11 @@
 """
-MSSclaw — Meaning Supremacy System CLI & Library.
+mssclaw — Meaning Supremacy System CLI & Library.
 
-纯库架构：core / scanner / cli 默认不依赖任何外部进程。
-channels/ 是可选插件层，由调用方显式加载。
+Core package architecture:
+  core/   — 133 modules: defer_guard, pipeline, scene_router, vault, etc.
+  scanner/ — VDP multi-language vulnerability detection (10 languages)
+  cli.py   — Unified launcher (34 commands)
+
+  channels/ is an optional plugin layer, loaded explicitly by the caller.
 """
-
-__version__ = "0.3.0"
+__version__ = "0.3.11"
