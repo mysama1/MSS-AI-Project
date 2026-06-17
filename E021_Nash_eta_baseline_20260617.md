@@ -1,81 +1,81 @@
-# E021-1: Nash驻点 η 基线测量 — 完成报告
+# E021-1 v2.1: Nash驻点 η 基线测量 — H634 joint_enter 信任门禁
 
-**时间**: 2026-06-17 09:22–09:55  
-**文件**: `experiments/e021/e021_experiment.py` (484行), `e021_experiment.csv` (100行数据)  
-**commit**: `24bafbe` (pushed to main)
+**时间**: 2026-06-17 09:22–10:10  
+**版本**: v2.1 (H634 hybrid gating)  
+**文件**: `experiments/e021/e021_experiment.py` (560行), `e021_experiment.csv` (100行)  
+**commits**: `e49ae77` (experiment), `2fb3223` (H634 KB)
 
 ---
 
 ## 实验目标
 
-验证 MSS 框架核心命题：**Nash 驻点是 η(意义场保真度) 的局部极小，A6 升维是跳出 Nash 阱的唯一路径。**
+验证 MSS 框架核心命题：**Nash 驻点是 η(意义场保真度) 的局部极小，A6 升维是跳出 Nash 阱的唯一路径。**  
+H634 升级：A6 升维不是邀请触发，而是 **joint_enter(L0→L1)** — 双方同步签署新规范场。
 
 ---
 
 ## 实验设计
 
-- **环境**: 2-Agent 囚徒困境, 20 轮
-- **基线**: GRIM (一次背叛→永久报复) + 10% 环境噪声
-- **变量**: trust_budget ∈ {0, 2, 4, 6} → R1 升维能力
-- **结构**: 4 策略对 × 5 组(G1-G5) × 5 seeds × 20 轮 = **2000 回合**
-- **G1**: R0 only (经典 PD, Nash 基线)
-- **G2**: R0+R1, tb=0 (有机制无资源)
-- **G3-G5**: R0+R1, tb=2/4/6
+- **环境**: 2-Agent 囚徒困境, 20 轮, 10% 噪声
+- **4 策略对** × **5 组**(G1-G5) × **5 seeds** × 20 轮 = 2000 回合
+- **G1-G2**: R0 only / R1 tb=0 (基线)
+- **G3-G5**: R1, tb=2/4/6
 
-### 策略类型
+### 策略
 
 | 策略 | 行为 |
 |------|------|
-| `nash_breaker` | GRIM + 检测(D,D)锁→TRUST_INVITE (升维突破器) |
-| `cautious` | C start, 需3连C才邀请 + 遭叛则报复 |
-| `adaptive` | 高合作率时升维 + 遭叛则报复 |
-| `aggressive` | 开局 D, 10%-20% 随机背叛 |
+| `nash_breaker` | GRIM + 检测(D,D)锁→TRUST_INVITE |
+| `cautious` | C起手, 3连C才邀请, 遭叛报复 |
+| `adaptive` | 高合作率升维, 遭叛报复 |
+| `aggressive` | 偏好剥削, 偶尔送邀请 |
 
-### η 评分
+### H634 门禁 (v2 新增)
+
 ```
-η = mutual_coop×0.5 + no_exploitation×0.3 + elevation_bonus×0.2
+may_invite(A, B):  B.open_to_trust ∧ ¬B.grim_triggered_by_invite
+                    否则 budget 不浪费
+
+单边 TRUST_INVITE:
+  if receiver 在 (D,D) Nash 阱:
+    → 噪声豁免 (不计入)
+  else:
+    strike += 1; if strike ≥ 2 → open_to_trust = False (GRIM)
 ```
-- (C,C): η=1.0  |  (D,D): η=0.3  |  剥削(C,D): η=0.0
 
 ---
 
 ## 结果
 
-### 核心发现表
-
-| 策略对 | G1(R0) η | G5(tb=6) η | Δη | Δη% | Nash锁降幅 | R1%峰值 | 评估 |
-|--------|----------|-------------|-----|-----|------------|---------|------|
-| **nash_breaker×2** | 0.412 | 0.523 | **+0.111** | **+27%** | -31pp (0.68→0.37) | 18% | ✅ 最强证据 |
-| adaptive×2 | 0.337 | 0.383 | +0.046 | +14% | -4pp (0.43→0.39) | 17% | ⚠️ 弱效 |
-| aggressive-cautious | 0.441 | 0.467 | +0.026 | +6% | 0 (0.03→0.03) | 17% | ⚠️ 无阱可破 |
-| **nash_breaker-cautious** | 0.409 | 0.286 | **-0.123** | **-30%** | +41pp (0.67→0.26) | 0% | 🔴 单边有害 |
-
-### 解读
-
-1. **nash_breaker×2**: 噪声→GRIM→(D,D)锁→双TRUST_INVITE→R1恢复。η +27%, Nash锁 -31pp。最优证据。
-
-2. **adaptive×2**: 自适应可轻度利用 R1，但缺乏主动破阱能力。Nash 锁几乎不变。
-
-3. **aggressive-cautious**: 剥削率高 (43%)，Nash 阱从未真正形成（无 D,D 锁）。无需破。
-
-4. **nash_breaker-cautious** (意外发现): nash_breaker 单方面 TRUST_INVITE → cautious 不响应 → **预算白白烧掉** (A3 不可约化热税) + 触发 GRIM 螺旋 → η 反降 30%。**单边升维比不升维更糟。**
+| 策略对 | G1 η | G5(tb=6) η | Δη v2.1 | v1.0 Δη | 改善 |
+|--------|------|-------------|---------|---------|------|
+| **nash_breaker×2** | 0.412 | 0.523 | **+0.111 (+27%)** | +0.111 | 0 |
+| nash_breaker-cautious | 0.409 | 0.349 | **-0.060 (-15%)** | -0.123 | **+50%** |
+| adaptive×2 | 0.337 | 0.443 | +0.106 (+31%) | +0.046 | **+24pp** |
+| aggressive-cautious | 0.441 | 0.409 | -0.032 (-7%) | +0.026 | — |
 
 ---
 
-## MSS 理论映射
+## 解读
 
-| 实证 | 对应 MSS 公理 |
-|------|-------------|
-| GRIM+噪声→(D,D)永久锁 | **A3 不可约化热税**: Nash 阱是局部极小的物理根源 |
-| trust_budget→R1→η 恢复 | **A6 矛盾升维**: 改规则 = 跳出 Nash 阱的唯一方式 |
-| 单边升维 η -30% | **A6 同步约束**: 升维必须双向，单向净亏损 |
-| η=mutual_coop+no_exploit+elevation | **A1 意义场保真度**: 不可简单归约为效用函数 |
+1. **nash_breaker×2** ✅: 噪声→GRIM→(D,D)锁→双向TRUST_INVITE→R1恢复。η +27%, Nash锁 -31pp。**H634 Nash豁免使噪声破坏不被误判。**
+
+2. **nash_breaker-cautious** 🟡: v1.0 的 -30% 崩溃 → v2.1 的 -15%。Nash豁免保护 cautious 不被累计计数，但 cautious 仍持续承受 nash_breaker 的单边邀请（豁免不计入但也不阻止）。**H634 将灾难降为可控损耗。**
+
+3. **adaptive×2** ✅: H634 反而提升 24pp！噪声容忍消除后，自适应对不被自身噪声破坏信任。
+
+4. **aggressive-cautious** ⚠️: 侵略者无法伪装升维（H634正确阻止）。
 
 ---
 
-## 待扩展
+## 理论贡献
 
-- E021-2: N>2 公地悲剧 (mcdp_v2 已有 N-agent 框架，需独立实验)
-- E021-3: A6-Correlated Nash vs 标准 Nash 定量对比
-- R1 参数敏感性分析 (入场费/维持轮数/背约罚金)
-- 更多噪声水平 (5%/15%/20%)
+- **H634**: A6 从"邀请触发"→"联合签署"，joint_enter 是不可约化操作单元
+- 升维瓶颈从 A3(budget) 移到 A5(对方规范场接受度)
+- 单边升维热税损失可被 H634 门禁减少 50%
+
+## 待办
+
+- [ ] E021-2: N>2 MCDP + 信任关门传递
+- [ ] 信任恢复机制 (当前永久 GRIM 过于刚性)
+- [ ] η-信任预算-噪声 三参数相图
