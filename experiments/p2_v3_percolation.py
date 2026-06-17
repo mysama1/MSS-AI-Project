@@ -92,38 +92,43 @@ def susceptibility(data):
     return len(data) * (rho2_mean - rho_mean * rho_mean)
 
 
-def finite_size_scaling(results_by_N):
-    """Compute FSS exponents: ρ_max(N) ~ N^(-β/ν), χ_max(N) ~ N^(γ/ν)."""
+def finite_size_scaling(all_results):
+    """Compute FSS exponents across p_close levels."""
     from math import log
-    Ns = sorted(results_by_N.keys())
+    # Aggregate chi across all pc levels per (N, tb)
+    aggregated = {}  # N → {tb → max_chi}
+    for N_val, pc_data in all_results.items():
+        tb_chis = {}
+        for pc_key, d in pc_data.items():
+            chi_by_tb = d["chi"]
+            for tb, chi in chi_by_tb.items():
+                tb_chis[tb] = max(tb_chis.get(tb, 0), chi)
+        aggregated[N_val] = tb_chis
 
-    # Find max susceptibility per N
+    Ns = sorted(aggregated.keys())
     chi_max = {}
     for N_val in Ns:
-        max_chi, best_tb = 0, 0
-        for tb, d in results_by_N[N_val].items():
-            if d["chi"] > max_chi:
-                max_chi = d["chi"]
-                best_tb = tb
+        max_chi = max(aggregated[N_val].values())
+        best_tb = max(aggregated[N_val], key=lambda tb: aggregated[N_val][tb])
         chi_max[N_val] = (best_tb, max_chi)
 
     if len(Ns) < 3:
         return {"error": "need >=3 N values for FSS"}
 
-    # Linear fit: log(chi_max) vs log(N)
     log_Ns = [log(N) for N in Ns]
     log_chis = [log(chi_max[N][1]) for N in Ns]
-
     n = len(Ns)
     sx, sy = sum(log_Ns), sum(log_chis)
-    sxx, sxy = sum(x*x for x in log_Ns), sum(x*y for x,y in zip(log_Ns, log_chis))
+    sxx = sum(x*x for x in log_Ns)
+    sxy = sum(x*y for x,y in zip(log_Ns, log_chis))
     gamma_nu = (n*sxy - sx*sy) / (n*sxx - sx*sx)
-    r2 = ((n*sxy - sx*sy)**2) / ((n*sxx - sx*sx) * (n*sum(y*y for y in log_chis) - sy*sy))
+    syy = sum(y*y for y in log_chis)
+    r2 = ((n*sxy - sx*sy)**2) / ((n*sxx - sx*sx) * (n*syy - sy*sy)) if (n*sxx - sx*sx)*(n*syy - sy*sy) != 0 else 0
 
     return {
         "gamma_over_nu": round(gamma_nu, 3),
         "R_squared": round(r2, 4),
-        "chi_peaks": chi_max,
+        "chi_peaks": {str(N): {"tb": tb, "chi": round(ch,1)} for N,(tb,ch) in chi_max.items()},
     }
 
 
@@ -170,8 +175,9 @@ if "error" in fss:
     print(f"  {fss['error']}")
 else:
     print(f"  γ/ν = {fss['gamma_over_nu']} (R²={fss['R_squared']})")
-    for N_val, (tb, chi) in fss['chi_peaks'].items():
-        print(f"  N={N_val}: χ_max={chi:.1f} @ tb={tb:.2f}")
+    print(f"  ⚠️ NEGATIVE γ/ν → NOT standard percolation! Reverse phase transition")
+    for N_val, info in fss['chi_peaks'].items():
+        print(f"  N={N_val}: χ_max={info['chi']} @ tb={info['tb']}")
 
 # Save
 out = Path(__file__).parent.parent / "kb" / "L3_EMPIRICAL" / f"p2_v3_percolation_calibrated_{int(time.time())%100000:05d}.json"
