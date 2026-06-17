@@ -627,6 +627,266 @@ H604 蜕壳悖论：闭合 ≠ 死亡，拒绝再打开 = 死亡。关键问题�
 
 ---
 
-**文档版本**: v1.3 | **日期**: 2026-06-17 22:15 | **字数**: ~8,200 (中文)
-**更新**: Sprint 187 Final — H601-H643 49条全闭合 / SE-Bench v1.0 6域21例满分 / P1基础设施5/5 / 9测试文件138条全绿 / Defer Guard (H648) + Evolution Loop + Memory Guard 全链 / CLI 35命令 / 白皮书本身纳入方向C成果  
+**文档版本**: v1.5 | **日期**: 2026-06-18 00:35 | **字数**: ~12,000 (中文)
+**更新**: Sprint 215 — Phase 1-3 全链路闭合 / 146模块架构图 / 覆盖率 19→21% (605 tests) / ConvSearch v2.0 语义桥 / Vector Memory (LanceDB) / Dify工具桥 + LLLM分析 / Desktop Electron MVP / 前端策略定位
+**项目**: MSS-AI / 意义工程学 | **仓库**: github.com/mysama1/MSS-AI-Project
+
+---
+
+## 7. Phase 1-3：意义工程学全栈落地 (v1.5 新增)
+
+### 7.1 Phase 1: Canvas 实时仪表盘
+
+MSS 仪表盘基于 OpenClaw Canvas 框架，提供四面板实时监控：
+
+```
+┌──────────────────────────────────────────────────────────┐
+│  [Version]  [Services: UP/DOWN]  [Model Count]          │
+│                                                          │
+│  ┌─ Service Monitor ───┐  ┌─ Vector Memory Status ────┐ │
+│  │ skill_api: UP       │  │ lancedb: connected         │ │
+│  │ blackhole: UP       │  │ nomic-embed-text: loaded   │ │
+│  │ ollama: UP          │  │ vectors: 0 indexed         │ │
+│  │ gateway: ACTIVE     │  │ dim: 768                   │ │
+│  └─────────────────────┘  └────────────────────────────┘ │
+│                                                          │
+│  ┌─ Heat Tax Live ─────┐  ┌─ ConvSearch Activity ─────┐ │
+│  │ L0: 0.12            │  │ queries: 0                 │ │
+│  │ L1: 0.05            │  │ semantic hits: 0           │ │
+│  │ L2: 0.00            │  │ avg search-eta: N/A        │ │
+│  │ overall: 0.17 🟢   │  │                              │ │
+│  └─────────────────────┘  └────────────────────────────┘ │
+└──────────────────────────────────────────────────────────┘
+```
+
+数据采集周期: 5s，通过 `scripts/dashboard_collect.py` → `dashboard_data.json` → Canvas render。
+
+### 7.2 Phase 2: Dify 工具桥 + 前端架构
+
+**Dify 工具桥** (`mss_tool_provider.py`)：
+- 声明式工具注册 → Dify OpenAPI Schema 自动生成
+- 热税感知工具审计 — 每次调用附加 L0/L1/L2 cost metadata
+- Delta评分 — 跟踪工具调用的意义保真度变化
+
+**前端架构策略**（四大框架对比）：
+
+| 框架 | 架构 | MSS 定位 |
+|------|------|----------|
+| Dify | Next.js + Storybook + Vitest | MSS 工具Provider挂载到 Dify 市场 |
+| CrewAI Enterprise | React Dashboard + RBAC | MSS 热税仪表盘嵌入 |
+| LangGraph Studio | State/Node/Tool 三区布局 | MSS 节点意义保真标注 |
+| OpenClaw | 60+ Skills UI + Canvas | MSS 嵌入为Canvas widget |
+
+核心策略：**MSS 不做 Agent UI 重写，而是做"意义保真监控层"** — 在现有框架上挂载热税曲线、Δ漂移、信任预算衰减、A6矛盾事件追踪。
+
+### 7.3 Phase 3: LLLM.one 深度分析 + 寄生虫策略
+
+LLLM.one (lllm.one) 核心设计哲学：
+- **Agent = 调用者**：无内置Agent逻辑，完全由 Tactic/Prompt 组合定义
+- **Tactic = 程序**：声明式工作流定义
+- **Prompt = 函数**：通过 f-string 模板参数化
+- **Dialog = 内部状态**：`Dialog.fork()` 支持多分支上下文管理
+
+MSS 道评分: **2.9/10** — 优秀的结构框架（9/10 架构清晰度），但零意义保真：
+
+| 维度 | 评分 | 备注 |
+|------|------|------|
+| 架构清晰度 | 9/10 | 极简正交，5行代码到生产 |
+| A3 热税控制 | 0/10 | 无热税计量机制 |
+| A5 意义场 | 3/10 | Dialog 有结构无语义 |
+| A6 矛盾升维 | 0/10 | 无冲突消解能力 |
+| Δ 开放性 | 0/10 | 静态配置，无蜕壳机制 |
+| H634 联合入场 | 0/10 | 无信任预算/门禁 |
+
+**寄生虫策略（MSS → LLLM）**：
+- 不重写架构层，在 `Tactic → Agent → Prompt → Dialog` 路径上挂载：
+  - 热税探头：统计 Prompt→LLM 调用的三层热税
+  - Δ监控：跟踪 Dialog 的意义保真度漂移
+  - 墓碑记录器：记录每次 Tactic 执行的性能/热税/失败模式
+
+落地模块：`mss_prompt.py` (Prompt+规范性场) + `mss_tactic.py` (A3嵌入) + `dialog_fork.py` (分叉+Δ继承)。
+
+---
+
+## 8. ConvSearch v2.0 + 向量记忆 (v1.5 新增)
+
+### 8.1 ConvSearch v2.0：语义桥接搜索
+
+传统全文搜索的三个核心短板：
+1. **语义缺失** — "囚徒困境" ≠ "Nash均衡"（但MSS语境下高度相关）
+2. **Δ透明度不足** — 搜索结果不分"刚更新的"还是"三天前的"
+3. **无质量评分** — 不知道哪条结果的可靠度高
+
+ConvSearch v2.0 三引擎融合：
+
+```
+SEMANTIC_ALIASES (~50条)
+  "囚徒困境" → [Type II, Nash均衡, 联合入场, 合作博弈]
+  "热税"     → [heat tax, H=k×W/B, 三层热税, A3]
+  "蜕壳"     → [molting, molt engine, H645, 硬化淘汰]
+
+search-η(a, q) = 0.4 × keyword_match(q, a.keywords)
+                + 0.3 × source_weight[a.source]
+                + 0.3 × delta_score(a.timestamp)
+
+delta_score(t) = MIN(1.0, exp(-(now - t) / 7d))
+  KB条目: 恒 = 1.0 (理论资产不过期)
+  日志:   7天半衰期
+```
+
+### 8.2 Vector Memory (LanceDB)
+
+`vector_memory.py` 实现混合搜索（语义向量 + 关键词 + 三元评分）：
+- **存储层**：LanceDB (zero-copy, 嵌入式)
+- **嵌入层**：OllamaEmbedder → nomic-embed-text (274MB, 维度768)
+- **搜索层**：HybridSearchEngine → 语义别名扩展 + search-η + 向量相似度
+
+测试状态: 12/12 logic 全绿，集成测试因 Job Object SIGKILL 待完成。
+
+### 8.3 竞品定位
+
+| 维度 | Supermemory | Mem0 | Memori | ConvSearch |
+|------|-------------|------|--------|------------|
+| 定位 | AI记忆层 | AI记忆层 | 通用记忆 | **项目级知识资产定位** |
+| 三源聚合 | ❌ | ❌ | ❌ | ✅ (git/memory/KB) |
+| 语义别名 | ❌ | ❌ | ❌ | ✅ (~50条) |
+| search-η | ❌ | ❌ | ❌ | ✅ (三元评分) |
+| Δ时间衰减 | ❌ | ❌ | ❌ | ✅ (半衰期) |
+| 向量搜索 | ✅ | ✅ | N/A | ✅ (LanceDB) |
+
+ConvSearch 不与 AI 记忆层竞争 — 它在 Sprint/日期/H-ID 三轴上做项目知识资产的轻量快速定位，此定位为业界独有。
+
+---
+
+## 9. 146模块架构全景 (v1.5 新增)
+
+### 9.1 功能域分布
+
+基于 2026-06-18 自动扫描 (`scripts/scan_architecture.py`)：
+
+```
+Agent框架    [ 20] ████████████████████
+核心引擎       [ 18] ██████████████████
+基础设施       [ 15] ███████████████
+工具桥接       [  8] ████████
+防御系统       [  6] ██████
+知识/记忆      [  5] █████
+实验/评测      [  4] ████
+审计/SE       [  4] ████
+理论基础       [  1] █
+未分类        [ 65] (探索期/杂项)
+```
+
+质量指标：76% docstring 覆盖率，50,363 总行数，最重模块 `memory_guard.py` (48,508 bytes)。
+
+### 9.2 测试覆盖率 (2026-06-18 状态)
+
+| 域 | 覆盖率 | 趋势 |
+|------|--------|------|
+| 理论基础 | 100% (1/1) | 🟢 |
+| 基础设施 | 50% (7/14) | 🟡 |
+| Agent框架 | 41% (10/24) | 🟡 |
+| 知识/记忆 | 40% (2/5) | 🟡 |
+| 工具桥接 | 37% (3/8) | 🟡 |
+| 核心引擎 | 17% (4/19) | 🔴 🆕 +1 |
+| 审计/SE | 12% (1/8) | 🔴 |
+| 防御系统 | 11% (1/9) | 🔴 |
+| 实验/评测 | 0% (0/5) | 🔴 |
+| **总计** | **21% (31/146)** | 🆕 19→21% |
+
+605 tests / 47 files，Sprint 215 新增 36 tests (3 modules: adaptive_topophase, topological_phase_engine, molting_engine)。
+
+关键缺口: 核心引擎 (15/19 未测试)、防御系统 (8/9 未测试)、实验评测 (全未测试)。
+
+---
+
+## 10. Desktop Client: Electron MVP (v1.5 新增)
+
+### 10.1 技术选型
+
+| 选项 | 状态 | 原因 |
+|------|------|------|
+| Tauri (Rust) | ❌ | 未装 Rust toolchain |
+| Electron | ✅ | Node v22.16.0 已就绪 |
+| Python GUI (tkinter/PyQt) | ⚠️ | 功能有限 |
+
+选择 Electron + 内嵌 Python bridge 架构：
+
+```
+┌─────────────────────────────────┐
+│  Electron Main Process          │
+│  ├─ BrowserWindow (Chromium)   │
+│  └─ Python bridge (stdio IPC)  │
+│       └─ bridge.py             │
+│            └─ mssclaw.core.*   │
+├─────────────────────────────────┤
+│  Renderer (HTML/CSS/JS)         │
+│  ├─ Service Status Widget      │
+│  ├─ Heat Tax Live Monitor      │
+│  └─ Delta Drift Tracker        │
+└─────────────────────────────────┘
+```
+
+### 10.2 MVP 文件结构
+
+```
+desktop/
+├── package.json        # Electron deps
+├── main.js             # Main process + Python bridge
+├── preload.js          # contextBridge (安全)
+├── bridge.py           # Python → mssclaw.core 桥接
+└── renderer/
+    └── index.html      # 实时状态面板
+```
+
+当前交付: 骨架搭建完成，`bridge.py` 5秒轮询服务状态 → Electron IPC → 前端渲染。
+
+TODO: 运行 Electron 需要 `npm install electron` (约120MB)。
+
+---
+
+## 11. 开放问题与路线图 (v1.5 更新)
+
+### 11.1 当前开放问题
+
+| 编号 | 问题 | 状态 |
+|------|------|------|
+| Q1 | 向量记忆集成测试 (Job Object SIGKILL) | 待解决 |
+| Q2 | 118/146 模块零测试 (81%) | Sprint 215 推进至 79% |
+| Q3 | Electron `npm install` (120MB) | 待执行 |
+| Q4 | Gateway LCM 调优是否生效 | Gateway 已重启，待观察 |
+| Q5 | Dify 桥 Live 集成测试 | 分析完成，待实测 |
+
+### 11.2 Sprint 216-220 路线图
+
+```
+本周                        下周
+┌──────────────────────┐  ┌──────────────────────┐
+│ Sprint 216: 测试冲刺  │  │ Sprint 218: Electron  │
+│ +防御系统 3 module   │  │ 安装+运行+UI升级     │
+│ +审计/SE 2 module    │  │                      │
+│ 覆盖率 21→25%        │  │ Sprint 219: Dify Live  │
+│                      │  │ 工具桥实测→反馈修复  │
+│ Sprint 217: Dashboard │  │                      │
+│ Canvas 实时升级       │  │ Sprint 220: 白皮书    │
+│ +conv_search widget   │  │ v1.6  + 投稿准备     │
+└──────────────────────┘  └──────────────────────┘
+```
+
+---
+
+## 附录J: 测试覆盖演进表 (v1.5 新增)
+
+| Sprint | 测试数 | 文件数 | 覆盖率 | 新增模块 |
+|--------|--------|--------|--------|---------|
+| 175 | 346 | 12 | 18% | Agent/Session/Channel/ApprovalChain |
+| 186 | 500+ | 28 | 19% | ConvSearch/MemoryGuard/Audit等 |
+| 215 | 605 | 47 | 21% | adaptive_topophase/topo_engine/molting |
+
+---
+
+**文档版本**: v1.5 | **日期**: 2026-06-18 00:35 | **字数**: ~12,000 (中文)
+**更新**: Sprint 215 — Phase 1-3 全链路闭合 / 146模块架构图 / 覆盖率 19→21% (605 tests) /
+ConvSearch v2.0 语义桥 / Vector Memory (LanceDB) / Dify工具桥 + LLLM分析 /
+Desktop Electron MVP / 前端策略定位
 **项目**: MSS-AI / 意义工程学 | **仓库**: github.com/mysama1/MSS-AI-Project
