@@ -16,7 +16,7 @@ class TestConvSearch:
         from mssclaw.core.conv_search import ConvSearch
         cs = ConvSearch()
         cs.rebuild()
-        results = cs.search(query="Sprint")
+        results, meta = cs.search(query="Sprint")
         assert len(results) > 0
         assert all("Sprint" in r.summary or any("sprint" in kw.lower() for kw in r.keywords)
                    or "Sprint" in " ".join(r.h_ids) for r in results[:3])
@@ -25,14 +25,14 @@ class TestConvSearch:
         from mssclaw.core.conv_search import ConvSearch
         cs = ConvSearch()
         cs.rebuild()
-        results = cs.search(sprint=185)
+        results, _ = cs.search(sprint=185)
         assert all(r.sprint == 185 for r in results)
 
     def test_search_hid(self):
         from mssclaw.core.conv_search import ConvSearch
         cs = ConvSearch()
         cs.rebuild()
-        results = cs.search(h_id="H650")
+        results, _ = cs.search(h_id="H650")
         assert len(results) > 0
         assert any("H650" in r.h_ids for r in results)
 
@@ -40,14 +40,14 @@ class TestConvSearch:
         from mssclaw.core.conv_search import ConvSearch
         cs = ConvSearch()
         cs.rebuild()
-        results = cs.search(date="2026-06-17")
+        results, _ = cs.search(date="2026-06-17")
         assert len(results) > 0
 
     def test_source_filter(self):
         from mssclaw.core.conv_search import ConvSearch
         cs = ConvSearch()
         cs.rebuild()
-        results = cs.search(source="kb")
+        results, _ = cs.search(source="kb")
         assert all(r.source == "kb" for r in results)
 
     def test_save_load(self):
@@ -77,7 +77,7 @@ class TestConvSearch:
         cs = ConvSearch()
         cs.rebuild()
         # Date-filtered search
-        results = cs.search(date="2026-06-17")
+        results, _ = cs.search(date="2026-06-17")
         assert len(results) > 0
 
     def test_cross_reference(self):
@@ -85,7 +85,7 @@ class TestConvSearch:
         from mssclaw.core.conv_search import ConvSearch
         cs = ConvSearch()
         cs.rebuild()
-        results = cs.search(query="batch")
+        results, _ = cs.search(query="batch")
         sources = set(r.source for r in results[:10])
         # Should find both git and kb results
         assert len(sources) >= 2 or len(results) > 0, f"Expected cross-source results, got {sources}"
@@ -94,5 +94,5 @@ class TestConvSearch:
         from mssclaw.core.conv_search import ConvSearch
         cs = ConvSearch()
         cs.rebuild()
-        results = cs.search(query="xyznonexistent123456")
+        results, _ = cs.search(query="xyznonexistent123456")
         assert len(results) == 0

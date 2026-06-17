@@ -29,6 +29,49 @@ INDEX_PATH = PROJECT_ROOT / ".conv_index.json"
 KB_DIR = PROJECT_ROOT / "kb"
 MEMORY_DIR = Path.home() / ".openclaw" / "workspace" / "memory"
 
+# ─── Semantic Bridge (v2.0) ────────────────────────────────────
+# Maps user-query terms → canonical MSS terms
+SEMANTIC_ALIASES: Dict[str, List[str]] = {
+    # Type II / contradiction concepts
+    "typeii": ["type-ii", "type2", "type ii", "type_2", "type-2", "双稳定子", "矛盾消解", "contradiction",
+              "tension", "conflict", "对立", "悖论消解", "二选一"],
+    "囚徒困境": ["prisoner's dilemma", "nash", "nash均衡", "博弈", "game theory", "type ii", "type2"],
+    # Heat tax / thermodynamics
+    "热税": ["heat tax", "heat-tax", "热力学", "thermodynamic", "不可约化", "irreducible", "waste",
+            "h = k × w / b", "三层热税", "l0", "l1", "l2"],
+    "热力学": ["heat tax", "热税", "thermodynamic", "entropy", "熵", "能量", "energy"],
+    "entropy": ["熵", "热力学", "heat tax", "delta", "∆"],
+    # Delta / openness
+    "delta": ["∆", "δ", "开放度", "维持条件", "openness", "rho"],
+    "开放度": ["delta", "∆", "openness", "rho", "闭合", "closure"],
+    # Architecture / engineering
+    "测试": ["test", "pytest", "testing", "benchmark", "se-bench", "coverage", "覆盖"],
+    "基准": ["benchmark", "se-bench", "eval", "评测", "score", "评分"],
+    "路由": ["router", "route", "scene", "routing", "场景", "dispatch"],
+    "管道": ["pipeline", "流水线", "streaming", "metrics", "指标"],
+    # KB / knowledge
+    "知识库": ["kb", "knowledge base", "h-id", "条目", "entry", "json"],
+    "搜索": ["search", "recall", "grep", "find", "query", "检索", "索引", "index"],
+    # Closure / molting
+    "蜕壳": ["molting", "molt", "闭合", "closure", "淘汰", "prune", "硬化", "hardening"],
+    "闭合": ["closure", "蜕壳", "molting", "收敛", "convergence", "catlab"],
+    # Agent / multi-agent
+    "多智能体": ["multi-agent", "swarm", "agent", "mcdp", "consensus", "共识"],
+    "agent": ["智能体", "代理", "swarm", "multi-agent", "mcdp"],
+    # Memory
+    "记忆": ["memory", "guard", "memoryguard", "delta threshold", "存储"],
+    # Black hole
+    "黑洞": ["black hole", "blackhole", "crtr", "意义场", "事件视界", "event horizon"],
+    # Catlab / category theory
+    "范畴": ["category", "catlab", "functor", "函子", "3-范畴", "kleisli"],
+}
+
+# Source weight for search-η scoring
+SOURCE_WEIGHTS = {"git": 0.7, "memory": 0.6, "kb": 1.0, "lcm": 0.8}
+
+# Recency decay half-life (days) — entries older than this get score ×0.5
+RECENCY_HALF_LIFE_DAYS = 7.0
+
 
 @dataclass
 class ConvEntry:
@@ -201,14 +244,53 @@ class ConvSearch:
 
         return entries
 
-    # ─── Query engine ────────────────────────────────────────────
+    # ─── Query engine (v2.0) ────────────────────────────────────
+
+    def _expand_query(self, query: str) -> List[str]:
+        """Expand query with semantic aliases.
+        E.g., 'Type II' → ['Type II', 'typeii', 'type-ii', 'type2', '双稳定子', '矛盾消解', ...]
+        """
+        expanded = [query]
+        q_lower = query.lower().strip()
+        # Direct alias lookup
+        if q_lower in SEMANTIC_ALIASES:
+            expanded.extend(SEMANTIC_ALIASES[q_lower])
+        # Partial match: each word in query
+        for word in q_lower.split():
+            if word in SEMANTIC_ALIASES:
+                expanded.extend(SEMANTIC_ALIASES[word])
+        return list(set(expanded))
+
+    def _delta_score(self, entry: ConvEntry) -> float:
+        """Compute Δ (activity level) for an entry: 0=dead/obsolete, 1.0=active.
+        Based on recency and source freshness."""
+        # KB entries: always 1.0 (authoritative)
+        if entry.source == "kb":
+            return 1.0
+        # Recency decay
+        if not entry.timestamp:
+            return 0.5  # git entries have no timestamp → neutral
+        try:
+            ts = entry.timestamp
+            if ts.endswith("Z"):
+                ts = ts.replace("Z", "+00:00")
+            ts = datetime.fromisoformat(ts)
+            now = datetime.now(timezone.utc)
+            if ts.tzinfo is None:
+                ts = ts.replace(tzinfo=timezone.utc)
+            delta_days = (now - ts).total_seconds() / 86400
+            decay = 0.5 ** (delta_days / RECENCY_HALF_LIFE_DAYS)
+            return max(0.2, min(1.0, decay))
+        except (ValueError, AttributeError):
+            return 0.5  # unparseable → neutral
 
     def search(self, query: str = "", sprint: Optional[int] = None,
                date: Optional[str] = None, h_id: Optional[str] = None,
-               source: Optional[str] = None, max_results: int = 15) -> List[ConvEntry]:
-        """Search the index with multiple filters."""
-
-        # Ensure index is loaded
+               source: Optional[str] = None, max_results: int = 15,
+               semantic: bool = True) -> tuple:
+        """Search with semantic bridging + search-η scoring + delta tagging.
+        Returns (results, meta) where meta = {query_expanded, coverage, avg_delta}.
+        """
         if not self.index.entries:
             self.load()
 
@@ -231,29 +313,60 @@ class ConvSearch:
         if source:
             results = [e for e in results if e.source == source]
 
-        # Keyword ranking
+        meta = {"query_expanded": [query], "coverage": len(results), "avg_delta": 0.0}
+
+        # Keyword ranking with semantic expansion
         if query:
-            q_lower = query.lower()
+            # Semantic expansion
+            terms = self._expand_query(query) if semantic else [query]
+            meta["query_expanded"] = terms
+            meta["semantic_enabled"] = semantic
+
             scored = []
             for e in results:
-                score = 0
+                score = 0.0
                 text = (e.summary + " " + " ".join(e.keywords) + " " + " ".join(e.h_ids)).lower()
-                # Direct match bonus
-                if q_lower in text:
-                    score += 5
-                # Word-level match
-                words = q_lower.split()
-                for w in words:
-                    if w in text:
-                        score += 1
-                    if w in e.summary.lower():
-                        score += 2
-                if score > 0:
-                    scored.append((score, e))
+
+                # Search-η components:
+                # 1. Keyword match (weight: 0.4)
+                kw_score = 0.0
+                for term in terms:
+                    t = term.lower()
+                    if t in text:
+                        kw_score += 2.0  # exact match
+                    elif t in e.summary.lower():
+                        kw_score += 3.0  # summary match bonus
+                    # Word-level
+                    tw = t.split()
+                    for w in tw:
+                        if len(w) > 1 and w in text:
+                            kw_score += 0.5
+                score += kw_score * 0.4
+
+                # 2. Source weight (weight: 0.3)
+                sw = SOURCE_WEIGHTS.get(e.source, 0.5)
+                score += sw * 0.3
+
+                # 3. Recency / delta (weight: 0.3)
+                delta = self._delta_score(e)
+                score += delta * 0.3
+
+                if kw_score > 0:  # only include entries with keyword match
+                    scored.append((score, e, {"delta": delta, "kw_score": kw_score}))
+
             scored.sort(key=lambda x: x[0], reverse=True)
             results = [s[1] for s in scored]
+            # Store metadata dict for display, indexed by entry id (position)
+            meta["_scores"] = {str(i): {"eta": s[2]["kw_score"], "delta": s[2]["delta"]}
+                                for i, s in enumerate(scored) if i < len(results)}
 
-        return results[:max_results]
+            # Compute aggregate delta
+            deltas = [s[2]["delta"] for s in scored]
+            meta["avg_delta"] = round(sum(deltas) / len(deltas), 2) if deltas else 0.0
+
+        results = results[:max_results]
+        meta["coverage"] = len(results)
+        return results, meta
 
     # ─── Persistence ─────────────────────────────────────────────
 
@@ -305,28 +418,43 @@ class ConvSearch:
 
 # ─── CLI formatter ───────────────────────────────────────────────
 
-def format_results(results: List[ConvEntry], query_info: str = ""):
-    """Pretty-print search results."""
+def format_results(results, query_info: str = "", meta: dict = None):
+    """Pretty-print search results with search-η metadata."""
     if query_info:
         print(f"\n  🔍 {query_info}")
-    print(f"  ─────────────────────────────────────────────\n")
+    if meta and meta.get("semantic_enabled"):
+        aliases = meta.get("query_expanded", [])[:5]
+        print(f"  🔗 语义扩展: {' → '.join(aliases)}")
+    if meta and "avg_delta" in meta:
+        d = meta["avg_delta"]
+        d_icon = "🟢" if d > 0.7 else "🟡" if d > 0.3 else "🔴"
+        print(f"  {d_icon} Δ_avg: {d:.2f}  |  Results: {meta.get('coverage', 0)}")
+    print(f"  {'─' * 50}\n")
 
     if not results:
-        print("  (no results)\n")
+        print("  (no results — try --semantic or broader query)\n")
         return
 
-    for e in results:
+    for i, e in enumerate(results):
         source_icon = {"git": "📝", "memory": "🧠", "kb": "📚", "lcm": "💬"}.get(e.source, "📄")
         sprint_tag = f" [Sprint {e.sprint}]" if e.sprint else ""
-        h_tag = f" [{', '.join(e.h_ids[:5])}]" if e.h_ids else ""
+        h_tag = f" [{', '.join(e.h_ids[:3])}]" if e.h_ids else ""
         ts_tag = f"  {e.timestamp[:10]}" if e.timestamp else ""
+        # Extract η/Δ from meta scores
+        extra = ""
+        if meta and "_scores" in meta:
+            si = meta["_scores"].get(str(i), {})
+            eta = si.get("eta", 0)
+            d = si.get("delta", 0)
+            if eta > 0:
+                extra = f"  η={eta:.1f} Δ={d:.2f}"
 
-        print(f"  {source_icon}{sprint_tag}{h_tag}{ts_tag}")
-        print(f"    {e.summary[:120]}")
+        print(f"  {i+1}. {source_icon}{sprint_tag}{h_tag}{extra}{ts_tag}")
+        print(f"     {e.summary[:130]}")
         if e.commit:
-            print(f"    commit: {e.commit[:8]}")
+            print(f"     commit: {e.commit[:8]}")
         if e.file:
-            print(f"    file: {Path(e.file).name}")
+            print(f"     file: {Path(e.file).name}")
         print()
 
 # ─── CLI entry ───────────────────────────────────────────────────
@@ -381,7 +509,7 @@ def main():
     if args.h_id:
         query_desc.append(f"h-id={args.h_id}")
 
-    results = cs.search(
+    results, meta = cs.search(
         query=args.query,
         sprint=args.sprint,
         date=args.date,
@@ -390,7 +518,7 @@ def main():
         max_results=args.max,
     )
 
-    format_results(results, ", ".join(query_desc))
+    format_results(results, ", ".join(query_desc), meta)
 
 
 if __name__ == "__main__":
