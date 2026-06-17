@@ -76,6 +76,7 @@ class PipeNode:
     retry_delay_ms: int = 100
     timeout_s: float = 30.0
     heat_tax_weight: float = 1.0
+    defer_after: List[str] = field(default_factory=list)  # H648: 后置条件约束
 
 
 @dataclass
@@ -386,6 +387,20 @@ class StreamingPipeline:
                 continue
             node = self.nodes[pipe_name]
             executed.add(pipe_name)
+
+            # H648: defer_after 闭锁检查
+            if node.defer_after:
+                from mssclaw.core.defer_guard import get_guard
+                guard = get_guard()
+                ok, missing = guard.can_execute(pipe_name)
+                if not ok:
+                    self.results[pipe_name] = PipeResult(
+                        PipeStatus.CIRCUIT_OPEN,
+                        error=f"defer_after BLOCKED: missing={missing}"
+                    )
+                    # 重新入队尾，等待后置条件满足
+                    queue.append(pipe_name)
+                    continue
 
             # 生产级执行
             result = self._execute_node(node)

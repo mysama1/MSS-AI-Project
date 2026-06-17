@@ -324,6 +324,51 @@ def cmd_benchmark(args_rest):
     run_benchmark()
 
 
+def cmd_defer(args_rest):
+    """H648 逆优先级闭锁 — defer_after检查/注册/强制覆盖."""
+    from mssclaw.core.defer_guard import get_guard, auto_register_dangerous_actions
+    guard = get_guard()
+    auto_register_dangerous_actions(guard)
+
+    if not args_rest:
+        s = guard.status()
+        print("=== Defer Guard (H648) ===")
+        print(f"  Completed: {s['completed']}")
+        print(f"  Ready: {s['ready_count']}  Blocked: {s['blocked_count']}")
+        for name, info in s['deferred'].items():
+            missing = info['missing']
+            status = "READY" if not missing else f"BLOCKED missing={missing}"
+            print(f"  {name:25s} {info['state']:10s} {status}")
+        return
+
+    sub = args_rest[0]
+    sub_args = args_rest[1:]
+
+    if sub == "satisfy":
+        for c in sub_args:
+            guard.satisfy(c)
+            print(f"  satisfied: {c}")
+    elif sub == "check":
+        name = sub_args[0] if sub_args else ""
+        ok, missing = guard.can_execute(name)
+        if ok:
+            print(f"  {name}: READY")
+        else:
+            print(f"  {name}: BLOCKED missing={missing}")
+    elif sub == "force":
+        name = sub_args[0] if sub_args else ""
+        reason = sub_args[1] if len(sub_args) > 1 else "manual"
+        ok, msg = guard.execute(name, force=True, force_reason=reason)
+        print(f"  {msg}")
+    elif sub == "reset":
+        from mssclaw.core.defer_guard import reset_guard
+        reset_guard()
+        print("  guard reset")
+    else:
+        print(f"Unknown: {sub}")
+        print("  defer / defer satisfy <c> / check <n> / force <n> / reset")
+
+
 def cmd_absorb(args_rest):
     """吸收外部Agent/技能."""
     if not args_rest:
@@ -522,6 +567,7 @@ def main():
         "experiment": lambda r: __import__('mssclaw.core.experiment_runner', fromlist=['main']).main(r),
         "se": cmd_se,
         "benchmark": cmd_benchmark,
+        "defer": cmd_defer,
         "version": cmd_version,
     }
 

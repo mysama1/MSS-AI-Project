@@ -78,6 +78,7 @@ mss_agent/swarm/swarm.py
 mssclaw/__init__.py
 mssclaw/cli.py
 mssclaw/rust_backend.py
+mssclaw/se_audit.py
 mssclaw/agents/__init__.py
 mssclaw/agents/audit.py
 mssclaw/agents/base.py
@@ -107,6 +108,7 @@ mssclaw/core/agent_server.py
 mssclaw/core/auto_archive.py
 mssclaw/core/auto_layering.py
 mssclaw/core/backend_selector.py
+mssclaw/core/bench_lite.py
 mssclaw/core/budget.py
 mssclaw/core/budget_allocator.py
 mssclaw/core/capability_level.py
@@ -122,6 +124,7 @@ mssclaw/core/cweight_gate.py
 mssclaw/core/dashboard.py
 mssclaw/core/deep_fold.py
 mssclaw/core/defense_pipeline.py
+mssclaw/core/defer_guard.py
 mssclaw/core/delta.py
 mssclaw/core/delta_callback.py
 mssclaw/core/delta_monitor.py
@@ -142,6 +145,7 @@ mssclaw/core/empirical_plan.py
 mssclaw/core/escalator.py
 mssclaw/core/eta_heat_tax_bridge.py
 mssclaw/core/evolution_loop.py
+mssclaw/core/experiment_runner.py
 mssclaw/core/feedback_evolution.py
 mssclaw/core/goal_anchor.py
 mssclaw/core/gradient_theft_detector.py
@@ -168,6 +172,7 @@ mssclaw/core/llm_backend.py
 mssclaw/core/logging_setup.py
 mssclaw/core/logic_virus_detector.py
 mssclaw/core/mcdp.py
+mssclaw/core/mcdp_v2.py
 mssclaw/core/mcp_client.py
 mssclaw/core/meaning_characters.py
 mssclaw/core/meaning_index.py
@@ -190,15 +195,18 @@ mssclaw/core/mss_swarm.py
 mssclaw/core/norm_shield_bridge.py
 mssclaw/core/normative_field.py
 mssclaw/core/observability.py
+mssclaw/core/ollama_benchmark.py
 mssclaw/core/orchestrator.py
 mssclaw/core/perf_bench.py
 mssclaw/core/personal.py
 mssclaw/core/personal_norm_field.py
 mssclaw/core/pipeline.py
+mssclaw/core/pipeline_production.py
 mssclaw/core/plan_agent.py
 mssclaw/core/process_monitor.py
 mssclaw/core/rag_pipeline.py
 mssclaw/core/resilient_backend.py
+mssclaw/core/scene_router.py
 mssclaw/core/semantic_styler.py
 mssclaw/core/session_persist.py
 mssclaw/core/skill_compiler.py
@@ -207,9 +215,11 @@ mssclaw/core/smart_router.py
 mssclaw/core/specialized_agents.py
 mssclaw/core/stream_styler.py
 mssclaw/core/system_status.py
+mssclaw/core/token_registry.py
 mssclaw/core/tool_budget_gate.py
 mssclaw/core/tool_registry.py
 mssclaw/core/topological_phase_engine.py
+mssclaw/core/type2_control_experiment.py
 mssclaw/core/vaccine_efficacy.py
 mssclaw/core/vault_cli.py
 mssclaw/core/vault_health.py
@@ -239,6 +249,7 @@ mssclaw/core/semantic/__init__.py
 mssclaw/core/semantic/dual_shell_architecture.py
 mssclaw/core/semantic/mss_llm_perception_shell.py
 mssclaw/core/semantic/multilang_detector.py
+mssclaw/core/semantic/perception_shell_v2.py
 mssclaw/core/semantic/symbolic_engine_v3.py
 mssclaw/core/swarm/__init__.py
 mssclaw/core/swarm/hybrid_pipeline_demo.py
