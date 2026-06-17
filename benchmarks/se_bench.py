@@ -57,6 +57,7 @@ class SERunner:
         "defer_guard": SEDomain("Defer Guard (H648)", weight=1.2),
         "pipeline": SEDomain("Pipeline Engine", weight=1.0),
         "normative_field": SEDomain("Normative Field", weight=1.0),
+        "injection": SEDomain("Fault Injection & Recovery", weight=1.2),
         "metrics": SEDomain("Metrics & Observability", weight=0.8),
         "heat_tax": SEDomain("Heat Tax Self-Scan", weight=0.8),
     }
@@ -131,6 +132,23 @@ class SERunner:
             SECase("MT-02", "metrics", "Doctor package check",
                    "Core packages detected as installed",
                    self._test_mt_packages),
+        ]
+
+        # ── Fault Injection & Recovery ──
+        inj = self.DOMAINS["injection"]
+        inj.cases = [
+            SECase("INJ-01", "injection", "Missing condition returns blocked",
+                   "Action with 0/3 satisfied returns False",
+                   self._test_inj_blocked),
+            SECase("INJ-02", "injection", "Force bypass mechanism",
+                   "Force-execute overrides blocking",
+                   self._test_inj_force),
+            SECase("INJ-03", "injection", "Partial recovery",
+                   "Satisfying half conditions stays blocked",
+                   self._test_inj_partial),
+            SECase("INJ-04", "injection", "Pipeline retry on failure",
+                   "Failed pipe triggers retry + fallback",
+                   self._test_inj_retry),
         ]
 
         # ── Heat Tax Self-Scan ──
@@ -306,6 +324,60 @@ class SERunner:
             return False, f"Missing packages: {missing}"
         return True, f"Core packages: {result['ok']}"
 
+    # ═══════ Injection tests ═══════
+
+    def _test_inj_blocked(self):
+        from mssclaw.core.defer_guard import DeferGuard
+        dg = DeferGuard()
+        dg.register("critical_op", ["backup", "commit", "push"])
+        can, missing = dg.can_execute("critical_op")
+        if can:
+            return False, "Should be blocked with 0/3 conditions"
+        if len(missing) != 3:
+            return False, f"Expected 3 missing, got {missing}"
+        return True, f"Blocked with 3 missing: {missing}"
+
+    def _test_inj_force(self):
+        from mssclaw.core.defer_guard import DeferGuard
+        dg = DeferGuard()
+        dg.register("emergency", ["sa_review"])
+        result = dg.execute("emergency", force_reason="fire_drill")
+        if result is None:
+            return False, "Force execute returned None"
+        return True, "Force bypass works for emergency"
+
+    def _test_inj_partial(self):
+        from mssclaw.core.defer_guard import DeferGuard
+        dg = DeferGuard()
+        dg.register("deploy", ["ci_pass", "smoke_test", "canary_ok"])
+        dg.satisfy("ci_pass")  # Only 1/3
+        can, missing = dg.can_execute("deploy")
+        if can:
+            return False, "Should be blocked with 1/3 satisfied"
+        if len(missing) != 2:
+            return False, f"Expected 2 missing after 1 satisfied, got {missing}"
+        return True, f"Partial (1/3) still blocked: {missing}"
+
+    def _test_inj_retry(self):
+        from mssclaw.core.pipeline import (
+            StreamingPipeline, PipeNode, ProductionConfig, PipeStatus
+        )
+        config = ProductionConfig(max_retries=2, retry_backoff=0.01)
+        pl = StreamingPipeline("retry_test", config)
+        call_count = [0]
+        def flaky_fn(ctx):
+            call_count[0] += 1
+            if call_count[0] < 3:
+                raise RuntimeError("transient failure")
+            return "recovered"
+        pl.add_node(PipeNode("flaky", flaky_fn, retry_count=2), is_start=True)
+        result = pl.run_production()
+        if call_count[0] < 3:
+            return False, f"Retry not triggered (calls={call_count[0]})"
+        return True, f"Recovered after {call_count[0]} attempts"
+
+    # ═══════ Heat Tax tests ═══════
+
     def _test_ht_import(self):
         from mssclaw.core.heat_tax_self_scan import (
             scan_l0_physical, scan_l1_logical, scan_l2_meaning, run_self_scan
@@ -391,7 +463,7 @@ class SERunner:
                 print(f"  ❌ {r.case_id}: {r.detail[:80]}")
 
         print(f"\n  Weighted score: {scores['overall']:.3f}  "
-              f"(pipeline×1.0 + defer×1.2 + normative×1.0 + metrics×0.8 + heat×0.8)")
+              f"(pipeline×1.0 + defer×1.2 + injection×1.2 + normative×1.0 + metrics×0.8 + heat×0.8)")
         return scores
 
 

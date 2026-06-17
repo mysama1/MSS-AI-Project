@@ -4,7 +4,14 @@
   "type": "L1_CORE_THEORY",
   "status": "DEEPENED",
   "parent": "H601",
-  "depends_on": ["H602", "H603", "A3", "A6", "H634", "H642"],
+  "depends_on": [
+    "H602",
+    "H603",
+    "A3",
+    "A6",
+    "H634",
+    "H642"
+  ],
   "derivations": {
     "D1_ScalingLaw": {
       "name": "Scaling Law of Search Degradation",
