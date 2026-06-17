@@ -20,6 +20,7 @@ USAGE = """mssclaw — MSS AI Framework
   adaptive    Adaptive Topological Phase Engine (活性检测+抗僵化重锚定)
   pipeline    Pipeline分支/流式 + 去中心化VCG
   mcdp        Multi-Agent Conflict Resolution Protocol
+  mcdp2       MCDP v0.2: N>2 Mean Field + Decentralized L2.5 Gossip
   auto-layer  自动分层 (L0->L3)
   mcp         MCP协议客户端
   defend      闭环防御管线
@@ -344,6 +345,7 @@ def main():
         "adaptive": lambda r: __import__('mssclaw.core.adaptive_topophase', fromlist=['cmd_adaptive']).cmd_adaptive(r),
         "pipeline": lambda r: __import__('mssclaw.core.pipeline', fromlist=['cmd_pipeline']).cmd_pipeline(r),
         "mcdp": lambda r: __import__('mssclaw.core.mcdp', fromlist=['cmd_mcdp']).cmd_mcdp(r),
+        "mcdp2": lambda r: __import__('mssclaw.core.mcdp_v2', fromlist=['cmd_mcdp2']).cmd_mcdp2(r),
         "auto-layer": lambda r: __import__('mssclaw.core.auto_layering', fromlist=['cmd_auto_layer']).cmd_auto_layer(r),
         "mcp": lambda r: __import__('mssclaw.core.mcp_client', fromlist=['cmd_mcp']).cmd_mcp(r),
         "defend": lambda r: __import__('mssclaw.core.defense_pipeline', fromlist=['cmd_defend']).cmd_defend(r),
