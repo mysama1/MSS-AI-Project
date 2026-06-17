@@ -1,108 +1,104 @@
-# mssclaw Documentation
+# MSS-AI Architecture Map v0.3.11
 
-## Architecture
+> Auto-generated 2026-06-18 | 146 core modules | 50,363 lines | 76% docstring coverage
+
+## Domain Map
 
 ```
-pip install mss-agent
-          │
-    ┌─────┴──────┐
-    │  mssclaw   │  ← Unified CLI
-    └─────┬──────┘
-          │
-    ┌─────┴─────────────────────────┐
-    │                               │
-  ┌─┴──────────┐          ┌────────┴──────┐
-  │ Agent Core  │          │  Vault Stack  │
-  │ ─────────── │          │  ──────────── │
-  │ L2 Bridge   │          │  CredentialVault
-  │ HeatTax     │          │  VaultHealth   │
-  │ Delta       │          │  VaultStats    │
-  │ NormField   │          │  VaultServer   │
-  │ HalluShield │          │  VaultCLI      │
-  │ CogFrame    │          │  ChromeImport  │
-  │ LLM Backend │          └────────┬──────┘
-  │ Tool Registry│                 │
-  │ RAG Pipeline │         ┌───────┴───────┐
-  │ Agent Pipeline│        │  HTTP API      │
-  │ Stream Engine │        │  Web Dashboard │
-  └──────┬────────┘        └───────────────┘
-         │
-    ┌────┴─────────────────────┐
-    │  Specialty Systems       │
-    │  ─────────────────      │
-    │  Skill Compiler          │
-    │  Agent Absorber          │
-    │  Digest Engine           │
-    │  Logic Virus Detector    │
-    │  Herd Immunity           │
-    │  Library Manager         │
-    │  Model Orchestrator      │
-    │  MSS Shell               │
-    │  MSS Evaluator           │
-    └──────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                     MSSclaw Core (146 .py)                       │
+├──────────────┬──────────────┬──────────────┬────────────────────┤
+│ Agent框架(20)│ 核心引擎(18) │ 基础设施(15) │ 工具桥接(8)        │
+│ agent        │ l2op_v3      │ vault        │ tool_provider      │
+│ session      │ mcdp/mcdp_v2 │ doctor       │ mcp_client         │
+│ channel      │ pipeline     │ dashboard    │ mss_prompt/tactic  │
+│ approval     │ phase_engine │ model_catalog│ dialog_fork        │
+│ groupchat    │ scene_router │ init_env     │ tool_registry      │
+│ sandbox      │ auto_layering│ library      │ advanced_tool      │
+│ quorum       │ delta        │ heat_tax_tmr │ budget_gate       │
+│ checkpoint   │ conflict     │ token_reg    │                    │
+│ rollback     │ adaptive     │ credential   │                    │
+│ orchestrator │ nash/vcg     │ deployer     │                    │
+│ registry     │ type2_*      │ doctor       │                    │
+│ absorber     │ agent_pipe   │ safe_run     │                    │
+│ server       │ defense_pipe │              │                    │
+│ config       │              │              │                    │
+├──────────────┼──────────────┼──────────────┼────────────────────┤
+│ 防御系统(6)  │ 知识/记忆(5) │ 审计/SE(4)   │ 理论基础(1)        │
+│ virus_tax    │ conv_search  │ defer_guard  │ normative_field    │
+│ vaccine      │ vector_memory│ heat_tax_self│                    │
+│ escalator    │ memory_guard │ delta_audit  │                    │
+│ goal_anchor  │ memory       │ hive_audit   │                    │
+│ layering_lint│ consolidator │              │                    │
+│ logic_virus  │              │              │                    │
+├──────────────┼──────────────┼──────────────┼────────────────────┤
+│ 实验/评测(4) │ VDP扫描器(3) │ 未分类(65)   │                    │
+│ experiment   │ vdp_scan     │ ~50探索期模块│                    │
+│ bench_lite   │ vdp_fuzzer   │ +15杂项      │                    │
+│ ollama_bench │ js_scan      │              │                    │
+│ perf_bench   │              │              │                    │
+└──────────────┴──────────────┴──────────────┴────────────────────┘
 ```
 
-## Core Modules
+## Test Coverage
 
-### L2 Meaning Layer (MSS Unique)
-| Module | Purpose |
-|---|---|
-| `l2_bridge.py` | L2 bridge: heat tax, delta, norm field orchestration |
-| `heat_tax.py` | A3 heat tax: physical/logic/meaning three-layer tax |
-| `delta.py` | Delta openness: maintain Δ>0, prevent closure |
-| `normative_field.py` | Normative field: prompt engineering as a field |
-| `hallucination_shield.py` | 31 rules, 4 detection types |
-| `cognitive_framework.py` | Capability self-awareness, identity anchoring |
-| `mss_evaluator.py` | Dao scoring: valid - pseudo×2.0 |
+| Domain | Coverage | Status |
+|--------|----------|--------|
+| 理论基础 | 100% (1/1) | 🟢 |
+| 基础设施 | 50% (7/14) | 🟡 |
+| Agent框架 | 41% (10/24) | 🟡 |
+| 知识/记忆 | 40% (2/5) | 🟡 |
+| 工具桥接 | 37% (3/8) | 🟡 |
+| 核心引擎 | 15% (3/19) | 🔴 |
+| 审计/SE | 12% (1/8) | 🔴 |
+| 防御系统 | 11% (1/9) | 🔴 |
+| 实验/评测 | 0% (0/5) | 🔴 |
+| **Total** | **19% (28/146)** | 🔴 |
 
-### Agent Engine
-| Module | Purpose |
-|---|---|
-| `agent.py` | Core MSSAgent with L2 bridge |
-| `llm_backend.py` | Ollama + OpenAI backend |
-| `stream_styler.py` | Semantic streaming (6 modes) |
-| `deep_fold.py` | Auto-fold deep content |
-| `smart_router.py` | Tiered routing |
-| `tool_registry.py` | 10 built-in tools |
-| `rag_pipeline.py` | BM25 + density RAG |
-| `agent_pipeline.py` | Writer→Reviewer→Refiner |
-| `memory.py` | 3-tier memory storage |
-| `memory_consolidator.py` | Auto-condense memories |
+Total: 569 tests / 46 files
 
-### Vault Stack
-| Module | Purpose |
-|---|---|
-| `credential_vault.py` | AES-256-GCM encrypted vault |
-| `vault_health.py` | Password hygiene scoring |
-| `vault_stats.py` | Usage statistics |
-| `vault_server.py` | REST API (port 5099) |
-| `vault_cli.py` | 15+ commands |
-| `chrome_import.py` | Chrome/Edge password migration |
+## Heaviest Modules
 
-### Specialty Systems
-| Module | Purpose |
-|---|---|
-| `skill_compiler.py` | Absorb→Deconstruct→MSS-rebuild→Generate |
-| `agent_absorber.py` | External agent→MSS ecosystem |
-| `digest_engine.py` | Auto-digest absorbed skills |
-| `logic_virus_detector.py` | 5 types, 20+ rules, auto-repair |
-| `herd_immunity.py` | Cross-agent vaccine propagation |
-| `library_manager.py` | 8 libraries, cross-search |
-| `model_catalog.py` | 30 models (18 cloud + 9 local + 3 MSS) |
-| `model_orchestrator.py` | Multi-model pipeline |
-| `mss_shell.py` | Perception Shell + Logic Core dual model |
+| Module | Size | Domain |
+|--------|------|--------|
+| memory_guard.py | 48,508 | 知识/记忆 |
+| type2_control_experiment.py | 41,982 | 核心引擎 |
+| normative_field.py | 38,333 | 理论基础 |
+| doc_agent.py | 37,866 | Agent框架 |
+| hallucination_shield.py | 35,787 | 防御系统 |
 
-## CLI Reference
+## Quality Indicators
 
-```bash
-mssclaw init          # One-click environment setup
-mssclaw chat          # Terminal AI chat
-mssclaw demo          # Full system demo (12 modules)
-mssclaw status        # System status panel
-mssclaw serve         # Start Agent + Vault services
-mssclaw vault         # Vault subcommands (setup/add/get/list/search/serve)
-mssclaw kb <query>    # Search MSS knowledge base (618 entries)
-mssclaw absorb <desc> # Absorb external skill/agent
-mssclaw library       # Library management (search/export)
-mssclaw models        # Model catalog (30 models)
+- Docstring coverage: 76% (112/146)
+- Total lines: 50,363
+- Test files: 46
+- Untested modules: 118 (81%)
+- CLI commands: 36
+
+## Integration Surface
+
 ```
+MSS Core ──┬── skill_api (53000)  ← HTTP API gateway
+            ├── blackhole_api (53001) ← CRTR monitoring
+            ├── Ollama (11434)    ← Local LLM + embeddings
+            ├── Gateway (52930)   ← OpenClaw bridge
+            ├── LanceDB           ← Vector store
+            └── Dify (port 5001)  ← Tool ecosystem (future)
+```
+
+## 未分类模块状态标注
+
+```
+🟢 stable (生产可用):        ~10 modules
+🟡 experimental (实验阶段):  ~35 modules  
+🔴 deprecated (待归档):      ~20 modules
+```
+
+## Key Architecture Decisions
+
+1. **Scanner→Rule pattern** — VDP scanners (vdp_scan, js_scan, etc.) follow unified architecture
+2. **Pipeline→Metrics→Alert** — All production paths end with MetricsCollector + alert integration
+3. **Delta-as-condition** — Delta is not an optimization target, it's a maintenance condition (Δ > 0)
+4. **Heat tax 3-tier** — L0 (physical) < L1 (logical) < L2 (meaning, 10^6x impact)
+5. **VCG over pure game theory** — Externalities internalization more operable than pure Nash equilibrium
+6. **Module granularity** — 146 modules is heavy; consolidation needed as domain boundaries clarify
