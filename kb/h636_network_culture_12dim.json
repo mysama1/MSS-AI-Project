@@ -1,0 +1,28 @@
+{
+  "h_id": "H636",
+  "title": "网络文化12维评估框架 — MSS意义工程学应用",
+  "type": "theoretical_application",
+  "source": "网络文化.txt (95KB, 1173行)",
+  "date": "2026-06-17",
+  "content": {
+    "dimensions": [
+      {"id": "D1", "name": "社会隐喻层", "mss_concept": "H601 结构退化", "polarity": "伦理共同体 ↔ 绩效科层制"},
+      {"id": "D2", "name": "成功路径", "mss_concept": "H602 策略均衡", "polarity": "奇遇+道德 ↔ 系统化升级"},
+      {"id": "D3", "name": "核心价值轴", "mss_concept": "H608 信任预算", "polarity": "侠义(集体) ↔ 力量(个体)"},
+      {"id": "D4", "name": "叙事节奏", "mss_concept": "H617 收敛映射", "polarity": "慢节奏多线 ↔ 爽点密集型"},
+      {"id": "D5", "name": "世界观深度", "mss_concept": "H603 范畴收敛", "polarity": "现实锚定 ↔ 架空自洽"},
+      {"id": "D6", "name": "媒介适配", "mss_concept": "H623 相图参数", "polarity": "实拍武打 ↔ 视觉奇观"},
+      {"id": "D7", "name": "受众心理", "mss_concept": "H622 黑洞产业链", "polarity": "家国情怀 ↔ 代偿性满足"},
+      {"id": "D8", "name": "规则体系", "mss_concept": "NEW", "polarity": "显性任务 ↔ 隐藏规则"},
+      {"id": "D9", "name": "信息博弈", "mss_concept": "NEW", "polarity": "力量碾压 ↔ 认知差博弈"},
+      {"id": "D10", "name": "人物弧光", "mss_concept": "H611 退化熵", "polarity": "伦理困境 ↔ 数值膨胀"},
+      {"id": "D11", "name": "文化输出", "mss_concept": "H616 可观测量", "polarity": "本土封闭 ↔ 全球符号化"},
+      {"id": "D12", "name": "价值深度", "mss_concept": "H627 恢复阈值", "polarity": "存在主义 ↔ 爽感至上"}
+    ],
+    "convergence_patterns": [
+      "武侠→玄幻退化链: H601搜索退化实例化 — 碎片化阅读降低t_optimal → 爽点驱动替代意义叙事",
+      "隐藏规则博弈↔trust_budget: 信息不对称/规则隐藏/信任坍缩 三点同构",
+      "三种文化收敛三角: 玄幻/西幻/日幻的世界观构建逻辑跨域映射"
+    ]
+  }
+}
