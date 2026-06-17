@@ -51,7 +51,7 @@ USAGE = """mssclaw — MSS AI Framework
   mssclaw kb "热税公式"
 """
 
-VERSION = "0.3.9"
+VERSION = "0.3.10"
 
 
 def cmd_vault(args_rest):

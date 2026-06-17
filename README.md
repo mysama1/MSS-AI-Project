@@ -64,7 +64,108 @@ mssclaw chat --model qwen2.5:7b
 mssclaw serve --all
 ```
 
+## 💻 CLI 完整命令参考 (31个)
+
+### 基础操作
+```bash
+# 环境初始化
+mssclaw init                     # 一键初始化本地环境
+
+# 模型与知识库
+mssclaw models                   # 列出所有可用模型
+mssclaw kb "热税公式"            # 模糊搜索知识库 (621条目)
+mssclaw kb --hid H633            # H-ID精确查找
+mssclaw kb --stats               # KB分层统计
+mssclaw library                  # 统一库管理 (8库)
+
+# 终端聊天
+mssclaw chat --model qwen2.5:7b  # 终端AI对话
+
+# 服务启动
+mssclaw serve                    # 启动 Agent:5100 + Vault:5099
+mssclaw serve --all              # 含聊天+Web面板
+mssclaw serve --model qwen2.5:7b # 指定模型
+
+# 全栈演示
+mssclaw demo                     # 运行交互式演示
+mssclaw demo --setup             # 安装演示环境
+```
+
+### Vault 密码管理
+```bash
+mssclaw vault setup              # 初始化加密保险箱
+mssclaw vault add github token   # 添加密码
+mssclaw vault list               # 列出所有条目
+mssclaw vault get github         # 获取密码
+mssclaw vault search email       # 搜索密码
+mssclaw vault serve              # 启动Web面板
+mssclaw vault import chrome      # 导入Chrome密码
+```
+
+### TypeⅡ 矛盾消解 (三方案全栈)
+```bash
+# 方案A: L2-OP v3 — VCG补偿机制
+mssclaw l2op --agents 4 --type prisoner
+
+# 方案B: Phase Engine — 单Agent相位调度
+mssclaw phase --agents 2 --tension 0.7
+
+# 方案C: MCDP — 多Agent调解升维
+mssclaw mcdp --agents 4 --strategy default    # N=4单机
+mssclaw mcdp2 --agents 25 --mode gossip        # N>2去中心化
+
+# 拓扑相位 (锚点选择+抗僵化)
+mssclaw topophase --agents 4 --theta 0.5
+mssclaw adaptive --agents 4 --drift-check      # 活性检测+自动重锚定
+
+# 多Agent Pipeline (分支/流式+去中心化VCG补偿)
+mssclaw pipeline --mode branch --agents 4
+```
+
+### 场景路由与实验
+```bash
+# 场景抉择 (方向1调解 vs 方向2相位)
+mssclaw route --tension 0.6 --stakes high       # 高利害→方向1
+mssclaw route --tension 0.3 --real-time yes     # 实时交互→方向2
+
+# TypeⅡ 对照实验 (MCDP vs PhaseEngine)
+mssclaw t2exp --runs 50 --agents 4
+mssclaw t2exp --runs 50 --agents 4 --v2         # 含H634仲裁器
+
+# 自动分层 (L0→L3 智能路由)
+mssclaw auto-layer --input conflict_report.json
+```
+
+### 防御管线
+```bash
+mssclaw defend --target example_agent.py        # 闭环防御扫描
+mssclaw vaccine --agent example_agent.py        # 疫苗效力评估
+mssclaw classify --virus suspicious_code.py     # 逻辑病毒分类
+```
+
+### 开发工具
+```bash
+mssclaw lint --target mssclaw/core/agent.py     # L1定理分层检查
+mssclaw escalate --issue "循环依赖检测"        # 开发矛盾升维器
+mssclaw goal --anchor "完成Sprint 152"          # 目标锚定
+mssclaw timer --task "重构l2op_v3.py" --budget 60  # 热税计时器
+```
+
+### 外部集成
+```bash
+mssclaw absorb "A code review agent for Python"  # 吸收外部Agent
+mssclaw mcp --server http://localhost:8000        # MCP协议客户端
+```
+
+### 系统监控
+```bash
+mssclaw health                    # 健康检查 (进程/Vault/Delta)
+mssclaw health --fix              # 自动清理孤儿进程
+mssclaw status                    # 全系统状态面板
+mssclaw version                   # 版本信息
+```
+
 ## 📊 开发统计
-- 81 Sprints | 117 Tests | 81 Commits
-- v0.3.0 | GitHub: mysama1/MSS-AI-Project
+- 151 Sprints | 117+ Tests | 90+ Commits
+- v0.3.10 | GitHub: mysama1/MSS-AI-Project
 - License: MIT
