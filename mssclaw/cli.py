@@ -46,6 +46,9 @@ USAGE = """mssclaw — MSS AI Framework
   benchmark  Ollama基准测试 (5模型×11题)
   bench     MSS-SE-Bench 软件工程质量基准
   se         软件工程审计 (audit|heat|stress <path>)
+  defer      H648 逆优先级闭锁 (check/satisfy/force)
+  dashboard  仪表盘数据导出 → Canvas [--watch --interval=60]
+  recall     对话历史召回 (grep|search|stats)
   version    版本信息
 
 示例:
@@ -345,6 +348,28 @@ def cmd_doctor(args_rest):
     print(format_diagnosis(run_diagnosis()))
 
 
+def cmd_dashboard(args_rest):
+    """仪表盘数据导出 → Canvas data.json."""
+    from mssclaw.core.dashboard_export import export_dashboard_data
+    path = export_dashboard_data()
+    print(f"✅ Dashboard data → {path}")
+
+    if "--watch" in args_rest:
+        import time
+        interval = 60
+        for a in args_rest:
+            if a.startswith("--interval="):
+                interval = int(a.split("=")[1])
+        print(f"🔄 Auto-refresh every {interval}s (Ctrl+C to stop)")
+        try:
+            while True:
+                time.sleep(interval)
+                path = export_dashboard_data()
+                print(f"  [{time.strftime('%H:%M:%S')}] refreshed")
+        except KeyboardInterrupt:
+            print("\n⏹ stopped")
+
+
 def cmd_defer(args_rest):
     """H648 逆优先级闭锁 — defer_after检查/注册/强制覆盖."""
     from mssclaw.core.defer_guard import get_guard, auto_register_dangerous_actions
@@ -604,6 +629,7 @@ def main():
         "bench": cmd_bench,
         "doctor": cmd_doctor,
         "defer": cmd_defer,
+        "dashboard": cmd_dashboard,
         "recall": cmd_recall,
         "version": cmd_version,
     }
