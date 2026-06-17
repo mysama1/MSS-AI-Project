@@ -1,0 +1,17 @@
+{
+  "h_id": "H646",
+  "title": "E019蜕壳不对称性 — 模型能力决定蜕壳方向",
+  "type": "L3_EMPIRICAL",
+  "date": "2026-06-17",
+  "status": "FINAL",
+  "depends_on": ["H604", "H605", "H645", "A7"],
+  "summary": "双规格蜕壳实验揭示关键不对称性: 弱模型(0.5b)蜕壳提升η +67%, 强模型(7b)蜕壳降低η −27%。根源: 强模型下硬化条目=高正确率(可靠), 弱模型下=低正确率(噪声)。H604无差别蜕壳策略需修正为eta加权蜕壳: 仅删除eta<0.5的硬化条目。这意味着最优蜕壳策略依赖于基座模型能力, 不可一刀切。误杀率50%进一步证实基于纯使用频率的蜕壳决策有系统性偏差。",
+  "metrics": {
+    "light_model": {"model": "qwen2.5:0.5b", "eta_before": 0.375, "eta_after": 0.625, "delta": "+67%", "rounds": 10},
+    "full_model": {"model": "qwen2.5:7b", "eta_before": 0.569, "eta_after": 0.417, "delta": "-27%", "rounds": 12, "total_time_s": 310},
+    "miss_rate": "50% (both models)",
+    "key_insight": "蜕壳方向=强模型负/弱模型正 — 需eta加权",
+    "f_star": "both ✅ Δ<2"
+  },
+  "refinement": "H604修正: f* = √(H_closure/H_molt) 保持, 但蜕壳选择规则改为: kill iff eta_avg < 0.5 AND cnt >= hardening_threshold"
+}
