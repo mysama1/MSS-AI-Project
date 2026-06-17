@@ -1,0 +1,113 @@
+[
+  {
+    "h_id": "H660",
+    "title": "ConvSearch 三源对话索引架构",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["conversation", "search", "index", "recall"],
+    "summary": "conv_search.py 从三源（git commit 200条 + memory文件24个 + KB JSON 78个）构建302条索引，跨越152个Sprint和143个唯一H-ID。查询支持keyword/Sprint/日期/H-ID四轴过滤，纯stdlib零依赖。<1ms延迟。与Mem0/Letta/Supermemory定位不同——不做AI记忆层，做项目知识资产的轻量快速定位。",
+    "cli": "mssclaw recall <query> [--sprint N] [--date YYYY-MM-DD] [--h-id Hxxx] [--stats] [--index]",
+    "status": "verified",
+    "related": ["kb_search", "memory_guard", "SE-Bench"]
+  },
+  {
+    "h_id": "H661",
+    "title": "SE-Bench 九域满分架构",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["benchmark", "quality", "engineering", "9domains"],
+    "summary": "MSS-SE-Bench v1.0 覆盖9域30例，总分1.000。域权重分配：DeferGuard×1.2 / Pipeline×1.0 / NormativeField×1.0 / FaultInjection×1.2 / MemoryGuard×0.9 / SceneRouter×0.9 / Observability×0.9 / Metrics×0.8 / HeatTax×0.8。无Ollama依赖，纯Python逻辑，correctness(50%)+robustness(30%)+heat_tax(20%)。从5域17例扩展至9域30例仅用约2小时。",
+    "domains": ["defer_guard:5", "pipeline:4", "normative_field:4", "injection:4", "memory_guard:3", "scene_router:3", "observability:3", "metrics:2", "heat_tax:2"],
+    "status": "verified",
+    "related": ["H653", "H648", "H649", "H660"]
+  },
+  {
+    "h_id": "H662",
+    "title": "TombstoneBrowser 决策记录系统",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["observability", "tombstone", "decision", "audit"],
+    "summary": "TombstoneBrowser 以 agent_name/decision_type/decision_dict/reason/delta 五元组记录Agent关键决策。支持 keyword 搜索和统计查询。不同于日志——Tombstone 存的是'Why did we choose this?'而非'What happened?'。为事后审计和H634门禁回溯提供决策链证据。",
+    "fields": ["agent_name", "decision_type", "decision", "reason", "context", "heat_tax", "delta"],
+    "status": "verified",
+    "related": ["H634", "H647", "observability"]
+  },
+  {
+    "h_id": "H663",
+    "title": "TraceManager 嵌套跨度树",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["trace", "span", "tree", "observability"],
+    "summary": "TraceManager 管理 Span 的父子树结构（start_span/finish_span/get_span_tree），类比 Jaeger/Zipkin 但嵌入MSS语义：每个 Span 携带 heat_tax_at_start 和 delta_at_start 字段，使追踪同时是热税计账。SpanStatus 五态：STARTED/SUCCEEDED/FAILED/INTERRUPTED/TIMED_OUT。",
+    "statuses": ["STARTED", "SUCCEEDED", "FAILED", "INTERRUPTED", "TIMED_OUT"],
+    "status": "verified",
+    "related": ["observability", "H636"]
+  },
+  {
+    "h_id": "H664",
+    "title": "对话搜索器 vs Mem0/Letta/Supermemory 竞品对比",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["competitive_analysis", "memory", "search"],
+    "summary": "conv_search.py 不与 Mem0(25K⭐向量+KG)/Letta(19K⭐LLM自主调度)/Supermemory(17K⭐RAG) 直接竞争。独特优势：Sprint轴线和H-ID交叉引用为业界独有；零依赖可离线运行；<1ms延迟 vs 业界50-200ms。弱点：无语义搜索、无自动记忆提取、无去重、规模小（302 vs 百万级）。P1改进：回溯全量git log + git hook自动索引。",
+    "competitors": {"Mem0": "25K stars, vector+KG", "Letta": "19K stars, LLM-managed", "Supermemory": "17K stars, RAG+vector"},
+    "status": "verified",
+    "related": ["H660", "H661", "H651"]
+  },
+  {
+    "h_id": "H665",
+    "title": "测试密度爬坡方法论",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["testing", "methodology", "coverage", "sprint"],
+    "summary": "8小时内测试从107→232（×2.2），12个测试文件覆盖13个模块（9.7%→预估）。核心策略：① 先探真API（inspect.signature+实际调用）再写测试；② 先绿后优——先让全部通过再优化深度；③ 批量API适配——同一类module的API同时探测；④ 遇SIGKILL不纠缠——标记已知问题后跳过。",
+    "metrics": {"start": 107, "end": 232, "files": 12, "modules_covered": 13, "coverage_pct": 9.7},
+    "status": "verified",
+    "related": ["H649", "SE-Bench"]
+  },
+  {
+    "h_id": "H666",
+    "title": "KB JSON批量写入策略",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["kb", "json", "batch", "knowledge_management"],
+    "summary": "KB条目JSON化采用批量文件策略：每batch 8-10条H-ID写入单个JSON数组文件（如h650_h659_batch.json）。优势：减少文件碎片（45文件→61 H-ID），便于跨引用；代价：目录扁平化不便逐条目定位。H601-H659零间隙闭合。H1-H595仍为旧格式（.jsonl/.md），待批量迁移。",
+    "batch_files": ["h603_h610_batch.json", "h611_h619_batch.json", "h624_h632_batch.json", "h650_h659_batch.json"],
+    "status": "verified",
+    "related": ["H666", "kb_index"]
+  },
+  {
+    "h_id": "H667",
+    "title": "Windows Job Object SIGKILL 根因与规避",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["windows", "SIGKILL", "job_object", "testing"],
+    "summary": "pytest 全量运行时 test_doctor.py 和 test_heat_tax_scan.py 因触发重子进程（ollama subprocess）被 Windows Job Object 树杀（KILL_ON_JOB_CLOSE语义）。规避策略：① 快速套件排除此两文件（232/232 @ 2.15s）；② 或裸终端直接调用Python（绕过OpenClaw exec wrapper）。本次测试密度爬坡全部使用策略①。",
+    "affected": ["test_doctor.py", "test_heat_tax_scan.py"],
+    "mitigation": "pytest --ignore=tests/test_doctor.py --ignore=tests/test_heat_tax_scan.py",
+    "status": "verified",
+    "related": ["H641", "H649"]
+  },
+  {
+    "h_id": "H668",
+    "title": "SceneRouter float-based route_custom API",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["scene_router", "API", "routing", "decision"],
+    "summary": "SceneRouter.route_custom() 接受8个独立的 float/int/bool 参数（非SceneContext对象）：stakes/latency_req/agent_count/duration_hours/resource_tight/requires_audit/max_heat_tax/description。返回 Dict{direction, confidence, scores, recommendation, heat_tax_estimate}。route_all_profiles() 返回 List[Dict]（非Dict）。发现：SceneContext dataclass 存在但 route_custom 不使用它——这是API设计不一致。",
+    "api_inconsistency": "SceneContext exists but route_custom takes flat params",
+    "status": "verified",
+    "related": ["H634", "H659"]
+  },
+  {
+    "h_id": "H669",
+    "title": "白皮书 v1.0→v1.4 演化轨迹",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["whitepaper", "documentation", "evolution"],
+    "summary": "MEANING_ENGINEERING_WHITEPAPER 从 v1.0 (400行, 6章+4附录) → v1.1 (Pipeline MetricsCollector) → v1.2 (附录E E019不对称) → v1.3 (H648 Defer Guard + SE-Bench + 测试生态) → v1.4 (新增：第7章 对话搜索器 + 附录F 竞品对比 + 附录G 测试密度爬坡方法论 + 附录H 九域SE-Bench全貌)。总行数 ~550。",
+    "versions": {"v1.0": "6章4附录", "v1.1": "+Pipeline", "v1.2": "+E019", "v1.3": "+H648+SE-Bench", "v1.4": "+ConvSearch+竞品"},
+    "status": "in_progress",
+    "related": ["H660", "H661", "H664", "H665"]
+  }
+]

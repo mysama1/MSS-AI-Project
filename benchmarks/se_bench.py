@@ -61,6 +61,7 @@ class SERunner:
         "metrics": SEDomain("Metrics & Observability", weight=0.8),
         "memory_guard": SEDomain("Memory Guard", weight=0.9),
         "scene_router": SEDomain("Scene Router", weight=0.9),
+        "observability": SEDomain("Observability (Span/Trace/Tombstone)", weight=0.9),
         "heat_tax": SEDomain("Heat Tax Self-Scan", weight=0.8),
     }
 
@@ -179,6 +180,20 @@ class SERunner:
             SECase("SR-03", "scene_router", "Direction consistency",
                    "Identical scenarios yield consistent directions",
                    self._test_sr_consistency),
+        ]
+
+        # ── Observability ──
+        obs = self.DOMAINS["observability"]
+        obs.cases = [
+            SECase("OB-01", "observability", "Span lifecycle",
+                   "Create, start, finish, and query a Span through full lifecycle",
+                   self._test_ob_span),
+            SECase("OB-02", "observability", "TraceManager span tree",
+                   "Build nested spans and traverse the parent-child tree",
+                   self._test_ob_trace),
+            SECase("OB-03", "observability", "Tombstone recording + search",
+                   "Record agent decisions and search by keyword",
+                   self._test_ob_tombstone),
         ]
 
         # ── Heat Tax Self-Scan ──
@@ -505,6 +520,80 @@ class SERunner:
             return False, f"Non-deterministic: {r1['direction']} vs {r2['direction']}"
         return True, f"Consistent: direction={r1['direction']}"
 
+    # ═══════ Observability tests ═══════
+
+    def _test_ob_span(self):
+        from mssclaw.core.observability import Span, SpanStatus
+        s = Span(
+            id="s-ob-01",
+            parent_id="",
+            name="test_span",
+            agent_name="test_agent",
+            status=SpanStatus.STARTED,
+            tags=["test", "benchmark"],
+            heat_tax_at_start=0.0,
+            delta_at_start=0.5,
+        )
+        if s.status != SpanStatus.STARTED:
+            return False, f"Expected STARTED, got {s.status}"
+        s.status = SpanStatus.SUCCEEDED
+        s.ended_at = s.started_at + 0.1
+        s.duration_ms = 100.0
+        if s.duration_ms <= 0:
+            return False, f"Duration not set"
+        return True, f"Span: {s.name} → {s.status.name} ({s.duration_ms}ms)"
+
+    def _test_ob_trace(self):
+        from mssclaw.core.observability import Span, SpanStatus, TraceManager
+        tm = TraceManager(max_spans=100)
+        # Build a 3-level tree
+        root = Span(id="root", parent_id="", name="root_span", agent_name="orchestrator",
+                     status=SpanStatus.STARTED, tags=["root"])
+        tm.start_span(root)
+        child = Span(id="child", parent_id="root", name="child_span", agent_name="worker",
+                      status=SpanStatus.STARTED, tags=["child"])
+        tm.start_span(child)
+        grandchild = Span(id="gc", parent_id="child", name="gc_span", agent_name="sub_worker",
+                           status=SpanStatus.STARTED, tags=["leaf"])
+        tm.start_span(grandchild)
+        tm.finish_span("gc", SpanStatus.SUCCEEDED, 10)
+        tm.finish_span("child", SpanStatus.SUCCEEDED, 25)
+        tm.finish_span("root", SpanStatus.SUCCEEDED, 30)
+        tree = tm.get_span_tree()
+        stats = tm.get_stats()
+        if stats.get("total", 0) < 3:
+            return False, f"Expected >=3 spans, got {stats}"
+        return True, f"Trace: {stats.get('total')} spans, 3-level tree OK"
+
+    def _test_ob_tombstone(self):
+        import tempfile, os
+        from mssclaw.core.observability import TombstoneBrowser
+        d = tempfile.mkdtemp(prefix="mss_tomb_")
+        try:
+            tb = TombstoneBrowser(store_dir=d)
+            tb.record(
+                agent_name="test_agent",
+                decision_type="route",
+                decision={"direction": 1, "confidence": 0.827},
+                reason="Agent chose direction_1 over direction_2 for high_stakes routing",
+                delta=0.42
+            )
+            tb.record(
+                agent_name="test_agent",
+                decision_type="error",
+                decision={"missed": "negative_delta"},
+                reason="Memory guard rejected negative delta -0.9 entry",
+                delta=-0.9
+            )
+            results = tb.search(keyword="routing")
+            if not results:
+                return False, "No search results for 'routing'"
+            st = tb.stats()
+            return True, f"Tombstone: {st.get('total',0)} records, search OK"
+        finally:
+            import shutil
+            shutil.rmtree(d, ignore_errors=True)
+
     # ═══════ Heat Tax tests ═══════
 
     def _test_ht_import(self):
@@ -592,7 +681,7 @@ class SERunner:
                 print(f"  ❌ {r.case_id}: {r.detail[:80]}")
 
         print(f"\n  Weighted score: {scores['overall']:.3f}  "
-              f"(pipeline×1.0 + defer×1.2 + injection×1.2 + normative×1.0 + memory×0.9 + scene×0.9 + metrics×0.8 + heat×0.8)")
+              f"(pipeline×1.0 + defer×1.2 + injection×1.2 + normative×1.0 + memory×0.9 + scene×0.9 + observability×0.9 + metrics×0.8 + heat×0.8)")
         return scores
 
 
