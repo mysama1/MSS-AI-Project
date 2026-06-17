@@ -284,3 +284,6 @@ if __name__ == "__main__":
         demo_setup()
     else:
         demo()
+
+# Alias for cmd_demo in cli.py
+run_demo = demo
