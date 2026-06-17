@@ -1,0 +1,13 @@
+{
+  "experiment": "E020/H603",
+  "title": "MSS 3-Category Closure - Convergence Triangle",
+  "checks": 10,
+  "all_pass": true,
+  "corners": {
+    "E018_TypeIV": 0.672,
+    "E019_Ecdysis": 0.788,
+    "E021_H602": 0.942
+  },
+  "conclusion": "TRIANGLE CLOSED",
+  "next": "H601 Search Degradation Theorem"
+}
