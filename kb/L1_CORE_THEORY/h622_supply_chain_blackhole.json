@@ -1,0 +1,45 @@
+{
+  "h_id": "H622",
+  "title": "AI产业链意义场黑洞实证: 上游硬件→下游软件→转型分化",
+  "type": "L1_CORE_THEORY",
+  "version": "v1.0",
+  "date": "2026-06-17",
+  "summary": "NVIDIA Q1营收\\.6B(+85%): HBM存储瓶颈至2030: AI-ERP降本35%但Meta裁20%: 有赞AI成交¥2.41亿 vs Intuit裁3000人 — 完整的产业链意义黑洞证据链",
+  "external_verification_count": 8,
+  "three_layer_analysis": {
+    "L0_物理热税": "算力+存储需求指数增长 vs 晶圆厂3年建设周期 = 供给侧刚性瓶颈",
+    "L1_逻辑热税": "AI替代人力(初级岗-62%) + 企业裁员(Meta 20%/Intuit 17%) = 结构性失业",
+    "L2_意义热税": "转型分化: 少数(有赞/税友)捕获价值 vs 多数(六小虎)融资断裂"
+  },
+  "key_data": {
+    "NVIDIA": {
+      "Q1_revenue": "\\.6B",
+      "YoY": "+85%",
+      "net_margin": "71.5%",
+      "market_share": "75%"
+    },
+    "HBM": {
+      "SK_Hynix_capacity": "5y double",
+      "bottleneck": "through 2030",
+      "market_2030": "",
+      "CAGR": "37%"
+    },
+    "layoffs": {
+      "Meta": "20%",
+      "Intuit": "17%",
+      "Cloudflare": "AI+600% then fire 1100"
+    },
+    "success_cases": {
+      "Youzan": "¥241M AI sales",
+      "Taxfriend": "AI revenue 26%",
+      "Atlassian": "stock +25%"
+    }
+  },
+  "five_insights": [
+    "算力税≠利润转化: AI基础设施投入每.30下游价值",
+    "存储瓶颈=物理约束: HBM产能翻倍需5年, 但需求CAGR 37% → 永久短缺",
+    "裁员悖论: AI降本→裁员→消费力下降→市场萎缩 — Type II陷阱",
+    "转型非对称: 受益者(有赞/税友)远少于受损者(初级岗/六小虎)",
+    "A3三层热税在产业链完全显现: L0(芯片)↔L1(岗位)↔L2(意义)"
+  ]
+}

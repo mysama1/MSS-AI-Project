@@ -18,6 +18,58 @@ from enum import Enum
 # D1: 跨领域意义黑洞普查
 # ═══════════════════════════════════════════════════════════════════
 
+# 产业链全景数据 (2026-06 实时)
+AI_SUPPLY_CHAIN = {
+    "upstream_hardware": {
+        "NVIDIA": {
+            "Q1_revenue": "$81.6B (+85% YoY)",
+            "net_profit": "$58.3B (71.5% margin)",
+            "datacenter": "$75.2B (92% of total, +92% YoY)",
+            "Q2_guidance": "$89.1-92.8B",
+            "annual_2025": "$215.9B (+65%)",
+            "market_share": "75% AI accelerator",
+            "cpu_business": "~$20B expected 2026",
+            "blackwell_ramp": "fastest product ramp in history",
+        },
+        "HBM_memory": {
+            "SK_Hynix": "5年产能翻倍, 月产50万→2029超越三星",
+            "supply_bottleneck": "持续至2030年 (崔泰源)",
+            "DDR5_spot": "单周+8%, NAND出货不足订单25%",
+            "HBM_price": "暴涨500% (传统DRAM 5倍利润)",
+            "HBM_market_2030": "$168B (从2025 $35B, CAGR 37%)",
+            "HBM4_12layer": "2TB/s带宽, 36GB, SK海力士首发",
+            "inventory": "SK海力士: 库存仅4周, 历史极低",
+            "structural_insight": "HBM产能占比从12%→23%, 通用DRAM产能被压缩18%",
+        },
+        "mss_parallel": "L0物理热税 — 算力+存储需求指数增长, 但供给侧受限于晶圆厂建设周期(3年+)",
+    },
+    "downstream_software": {
+        "AI_ERP": {"market": "亚太$28B, CAGR 47%", "cost_cut": "平均降本35%"},
+        "financial_AI": {"kingdee": "央企财务月结12天→4天, 200+风险点自动检测"},
+        "creative_AI": {"wondershare": "3秒中文生视频, 用户效率+50%"},
+        "industrial_AI": {"hikvision": "瑕疵检测99.9%, 300+工业场景"},
+        "marketing_AI": {"bluefocus": "AI收入>30%, 覆盖95%营销场景"},
+        "mss_parallel": "L1逻辑热税 — AI替代人力但引发结构性失业(初级岗-62%)",
+    },
+    "transformation_cases": {
+        "success": [
+            "有赞: AI客服 1.8万商家, 3600万次调用, 引导成交¥2.41亿",
+            "税友: 自研财税大模型, AI收入>26%, 医疗AI获¥3亿订单",
+            "Atlassian/Twilio/Five9: AI驱动营收超预期, 股价盘后+16-25%",
+        ],
+        "disruption": [
+            "Intuit: 裁3000人(17%) → AI转型",
+            "Meta: 裁1.6万(20%), AI工具使工程师有效工时40h→10h",
+            "Cloudflare: AI用量+600%, 转头裁1100人",
+        ],
+        "six_tigers_collapse": [
+            "中国AI六小虎: 融资渠道断崖式萎缩",
+            "月之暗面/智谱AI/百川智能: 200亿估值独角兽, 仅国资+中东可接盘",
+        ],
+        "mss_parallel": "类型II悖论: AI降本增效≠企业利润增长, 人力成本坍缩反向压缩消费市场",
+    },
+}
+
 AI_BUBBLE_EVIDENCE = {
     # 来自2026-06 中文互联网实时搜索
     "7_stage_collapse": {
@@ -134,6 +186,32 @@ class DomainSurveyRunner:
                 'source': ev_data['source'],
                 'mss_parallel': ev_data['mss_parallel'],
             }
+        # 供应链
+        for sc_key, sc_data in AI_SUPPLY_CHAIN.items():
+            if sc_key == 'upstream_hardware':
+                corroboration['supply_upstream_NVIDIA'] = {
+                    'source': f"NVIDIA FY2027 Q1: 营收$81.6B(+85%), 净利$58.3B(71.5%利润率)",
+                    'mss_parallel': sc_data['mss_parallel'],
+                }
+                corroboration['supply_upstream_HBM'] = {
+                    'source': f"SK海力士5年产能翻倍, HBM存储瓶颈至2030, 市场$168B(CAGR37%)",
+                    'mss_parallel': 'L0物理热税 — 供给侧晶圆厂建设周期(3年+) 无法匹配 AI需求指数增长',
+                }
+            elif sc_key == 'downstream_software':
+                corroboration['supply_downstream'] = {
+                    'source': f"AI-ERP降本35%, 月结12→4天, 但Meta裁20%/Intuit裁17%",
+                    'mss_parallel': sc_data['mss_parallel'],
+                }
+            elif sc_key == 'transformation_cases':
+                corroboration['supply_transformation'] = {
+                    'source': f"有赞AI成交¥2.41亿 vs Intuit裁3000人 — 转型分化",
+                    'mss_parallel': sc_data['mss_parallel'],
+                }
+            elif 'mss_parallel' in sc_data:
+                corroboration[f'supply_{sc_key}'] = {
+                    'source': str(list(sc_data.values())[:2])[:100],
+                    'mss_parallel': sc_data['mss_parallel'],
+                }
         return corroboration
     
     def run_full_survey(self) -> Dict:
@@ -536,9 +614,13 @@ def run_all():
     
     # 外部验证
     print("  ── 外部验证 ──")
+    ev_count = 0
     for ev_key, ev in survey['external_corroboration'].items():
-        print(f"  📄 {ev_key}: {ev['source'][:60]}...")
+        ev_count += 1
+        prefix = '🔗' if ev_key.startswith('supply') else '📄'
+        print(f"  {prefix} {ev_key}: {ev['source'][:70]}...")
         print(f"     MSS并行: {ev['mss_parallel'][:80]}...")
+    print(f"\n  总计: {ev_count} 条外部验证 (包括产业链上下游全链)")
     
     # ── D2: 趋势检测 ──
     print("\n═══ D2: 预警增强 — 趋势检测 + 告警 ═══\n")
