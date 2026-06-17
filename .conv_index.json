@@ -1,0 +1,4384 @@
+{
+  "entries": [
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 212,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 212: architecture map + coverage matrix + state analysis (146 mods, 19% coverage, 569 tests)",
+      "file": "",
+      "commit": "3e317ac5"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 208,
+      "h_ids": [],
+      "keywords": [
+        "Dify"
+      ],
+      "summary": "Sprint 208-211: dashboard export CLI + Dify tool bridge + desktop client dismantling + 3-doc",
+      "file": "",
+      "commit": "779d2e6c"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 205,
+      "h_ids": [],
+      "keywords": [
+        "Lance"
+      ],
+      "summary": "Sprint 205-207: P2 vector memory (LanceDB) + frontend dismantling + checkpoint/rollback fix",
+      "file": "",
+      "commit": "a52d14b6"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 204,
+      "h_ids": [],
+      "keywords": [
+        "Chat",
+        "Gen",
+        "Graph",
+        "Lang",
+        "Group",
+        "Auto"
+      ],
+      "summary": "Sprint 204: P1 absorption — checkpoint/rollback (LangGraph pattern) + GroupChat (AutoGen pattern) + 27 tests",
+      "file": "",
+      "commit": "dd8f6832"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 203,
+      "h_ids": [],
+      "keywords": [
+        "Crew",
+        "Dify",
+        "Open",
+        "Gen",
+        "Claw",
+        "Graph",
+        "Lang",
+        "Auto"
+      ],
+      "summary": "Sprint 203: 7-framework comparison — CrewAI / AutoGen / LangGraph / Dify / LLLM / OpenClaw / MSS",
+      "file": "",
+      "commit": "3cf7a0c7"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 202,
+      "h_ids": [],
+      "keywords": [
+        "Chain",
+        "Session",
+        "Open",
+        "Approval",
+        "Channel",
+        "Claw"
+      ],
+      "summary": "Sprint 202: OpenClaw absorption — MSSSession + MSSApprovalChain + MSSChannel (3 modules, 47 tests)",
+      "file": "",
+      "commit": "6220720a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 201,
+      "h_ids": [],
+      "keywords": [
+        "Open",
+        "Claw"
+      ],
+      "summary": "Sprint 201: OpenClaw full disassembly (12 systems, ~1000 modules analyzed)",
+      "file": "",
+      "commit": "38228596"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 200,
+      "h_ids": [],
+      "keywords": [
+        "Python",
+        "Agent",
+        "Sandbox"
+      ],
+      "summary": "﻿Sprint 200: LLLM toolbox deep dive + MSS Sandbox (Agent-owned Python interpreter)",
+      "file": "",
+      "commit": "5aa4a522"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 198,
+      "h_ids": [],
+      "keywords": [
+        "Fork",
+        "Tactic",
+        "Prompt",
+        "Dialog"
+      ],
+      "summary": "﻿Sprint 198: LLLM吸收 — MSSPrompt + MSSTactic + DialogFork (A6 elevation)",
+      "file": "",
+      "commit": "92183d19"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 196,
+      "h_ids": [],
+      "keywords": [
+        "Search",
+        "Conv"
+      ],
+      "summary": "﻿Sprint 196: ConvSearch v2.0 — semantic bridging + search-eta + delta tagging",
+      "file": "",
+      "commit": "a8b82bdd"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 195,
+      "h_ids": [
+        "H660",
+        "H669"
+      ],
+      "keywords": [
+        "Bench",
+        "Paper",
+        "White"
+      ],
+      "summary": "﻿Sprint 195: SE-Bench 9th domain + H660-H669 + White Paper v1.4",
+      "file": "",
+      "commit": "374d8530"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 194,
+      "h_ids": [],
+      "keywords": [
+        "Conversation",
+        "Search"
+      ],
+      "summary": "﻿Sprint 194: Conversation Search — conv_search.py + mssclaw recall",
+      "file": "",
+      "commit": "bf1cdeec"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 193,
+      "h_ids": [
+        "H650",
+        "H659"
+      ],
+      "keywords": [],
+      "summary": "﻿Sprint 193: KB batch — H650-H659 (10 new entries)",
+      "file": "",
+      "commit": "752e12c4"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 192,
+      "h_ids": [],
+      "keywords": [
+        "Bench",
+        "Scene",
+        "Router"
+      ],
+      "summary": "﻿Sprint 192: SE-Bench 8th domain — Scene Router (27/27, 1.000)",
+      "file": "",
+      "commit": "5b65b102"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 191,
+      "h_ids": [],
+      "keywords": [
+        "Bench",
+        "Guard",
+        "Memory"
+      ],
+      "summary": "﻿Sprint 191: SE-Bench 7th domain — Memory Guard (24/24, 1.000)",
+      "file": "",
+      "commit": "b67db4d2"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 190,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "﻿Sprint 190: mcdp_v2 (18/18) + type2_experiment (13/13) tests",
+      "file": "",
+      "commit": "919aaa38"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 189,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "﻿Sprint 189: doc_agent (15/15) + specialized_agents (14/14) tests",
+      "file": "",
+      "commit": "508e932f"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 188,
+      "h_ids": [],
+      "keywords": [
+        "White"
+      ],
+      "summary": "﻿Sprint 188: White paper v1.3 + agent tests (23/23)",
+      "file": "",
+      "commit": "70efa89c"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 187,
+      "h_ids": [
+        "H620"
+      ],
+      "keywords": [],
+      "summary": "﻿Sprint 187: memory_guard tests (25/25) + H620 gap closure",
+      "file": "",
+      "commit": "f6c9a9a7"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 186,
+      "h_ids": [
+        "H601",
+        "H643"
+      ],
+      "keywords": [],
+      "summary": "﻿Sprint 186: KB batch fill — H601-H643 fully closed (28 new H-IDs)",
+      "file": "",
+      "commit": "1f8f7c08"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 185,
+      "h_ids": [],
+      "keywords": [
+        "Bench"
+      ],
+      "summary": "﻿Sprint 185: evolution_loop tests + SE-Bench injection domain",
+      "file": "",
+      "commit": "eb883076"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 184,
+      "h_ids": [
+        "H601"
+      ],
+      "keywords": [
+        "Bench"
+      ],
+      "summary": "﻿Sprint 184: SE-Bench injection domain + H601 encoding fix",
+      "file": "",
+      "commit": "809fad6f"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 183,
+      "h_ids": [
+        "H602"
+      ],
+      "keywords": [],
+      "summary": "﻿Sprint 183: mssclaw bench CLI + H602 formal KB entry",
+      "file": "",
+      "commit": "8f1c0095"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 182,
+      "h_ids": [],
+      "keywords": [
+        "Bench"
+      ],
+      "summary": "﻿Sprint 182: P2 MSS-SE-Bench v1.0 + E021 analysis + scripts cleanup",
+      "file": "",
+      "commit": "cfc429ec"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 181,
+      "h_ids": [
+        "H602"
+      ],
+      "keywords": [],
+      "summary": "﻿Sprint 181: normative_field tests + E021 H602 analysis",
+      "file": "",
+      "commit": "2a0f1c5d"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 180,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "﻿Sprint 180: P1-2 safe_run.py + P1-5 CI audit -> both done",
+      "file": "",
+      "commit": "a0a2a82e"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 179,
+      "h_ids": [],
+      "keywords": [
+        "Pipeline"
+      ],
+      "summary": "Sprint 179: P1-4 Pipeline测试 → 38/38 PASS (累计56)",
+      "file": "",
+      "commit": "b03728a8"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 178,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 178: P1-1 pyproject.toml + __main__.py + 测试扩展 → A5🔴→🟡",
+      "file": "",
+      "commit": "8c9a793e"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 177,
+      "h_ids": [
+        "H649"
+      ],
+      "keywords": [
+        "Quick",
+        "Wins"
+      ],
+      "summary": "Sprint 177: H649 Quick Wins — 热税自扫描 + pytest骨架 + mssclaw doctor",
+      "file": "",
+      "commit": "47af0c57"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 176,
+      "h_ids": [
+        "H649"
+      ],
+      "keywords": [],
+      "summary": "Sprint 176: H649 MSS软件工程能力诊断与四阶段提升路线图",
+      "file": "",
+      "commit": "c3956935"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 175,
+      "h_ids": [
+        "H648"
+      ],
+      "keywords": [
+        "Pipeline"
+      ],
+      "summary": "Sprint 175: H648 P0实现 — defer_guard.py + Pipeline集成 + CLI命令",
+      "file": "",
+      "commit": "9ffb2bce"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 174,
+      "h_ids": [
+        "H648"
+      ],
+      "keywords": [],
+      "summary": "Sprint 174: H648 逆优先级协议 — defer_after闭锁语义 + 6系统对比",
+      "file": "",
+      "commit": "cf410e5b"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 173,
+      "h_ids": [],
+      "keywords": [
+        "Bandit",
+        "Semgrep",
+        "Ruff"
+      ],
+      "summary": "Sprint 173: 三层管道实测数据入库 — Ruff/Semgrep/Bandit mssclaw扫描结果",
+      "file": "",
+      "commit": "c7e23933"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 172,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 172: 审查修复 — CLI pipeline重复注册 + 未提交实验数据",
+      "file": "",
+      "commit": "94f3cdb2"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 171,
+      "h_ids": [
+        "H647"
+      ],
+      "keywords": [],
+      "summary": "Sprint 171: SQ规则集逆向考古 → H647-B",
+      "file": "",
+      "commit": "cbe1129a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 170,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 170: CLI集成 + 多项目验证 — MSS-SE 生产就绪",
+      "file": "",
+      "commit": "cd654970"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 169,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 169: MSS软件工程验证全链 P0→P1→P2",
+      "file": "",
+      "commit": "5bc50926"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 168,
+      "h_ids": [
+        "H635"
+      ],
+      "keywords": [],
+      "summary": "Sprint 168: 感知壳v2.0 + H635 JSON化 — 全KB缺口闭合",
+      "file": "",
+      "commit": "83c7469f"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 167,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 167: E019双规格蜕壳实证全收 — 关键发现：蜕壳方向不对称",
+      "file": "",
+      "commit": "7aae32d6"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 166,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 166: E019蜕壳实证 + D6-015修复 + D2上线",
+      "file": "",
+      "commit": "ba2b2121"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 165,
+      "h_ids": [],
+      "keywords": [
+        "Pipeline"
+      ],
+      "summary": "Sprint 165: D6-015 Pipeline生产化 + E019_extended 蜕壳实证 (准就绪)",
+      "file": "",
+      "commit": "4d617688"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 164,
+      "h_ids": [
+        "H624",
+        "H632"
+      ],
+      "keywords": [],
+      "summary": "Sprint 164: H624-H632 — 全距闭合, H6xx理论链完整",
+      "file": "",
+      "commit": "9ee97fd6"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 163,
+      "h_ids": [
+        "H602",
+        "H620"
+      ],
+      "keywords": [],
+      "summary": "Sprint 163: H602-H620 20条核心理论批量入库",
+      "file": "",
+      "commit": "d6225f9a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 162,
+      "h_ids": [],
+      "keywords": [
+        "Type"
+      ],
+      "summary": "Sprint 162: E021-3仲裁 + E018 Type IV自指 + A7最优性创造",
+      "file": "",
+      "commit": "d2445f86"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 161,
+      "h_ids": [
+        "H601",
+        "H643"
+      ],
+      "keywords": [],
+      "summary": "Sprint 161: 全5项收束 — H601深化 + E021-2 + 场景抉择 + H643 + D6-013",
+      "file": "",
+      "commit": "17099e23"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 160,
+      "h_ids": [],
+      "keywords": [
+        "Catlab"
+      ],
+      "summary": "Sprint 160b: E020 3-范畴深化12/12 PASS — Catlab v0.17.6",
+      "file": "",
+      "commit": "89ab3315"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 160,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 160a: P2 v4 N_c漂移精确定位 + E020 3-范畴深化脚本",
+      "file": "",
+      "commit": "6b6181e7"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "chore: 记录基准实测数据",
+      "file": "",
+      "commit": "f6887d12"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 159,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 159b: P2渗流v3收官 — γ/ν=-0.989 反向相变",
+      "file": "",
+      "commit": "781c1dad"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 159,
+      "h_ids": [],
+      "keywords": [
+        "Cron"
+      ],
+      "summary": "Sprint 159: 白皮书v1.1 + P2渗流v3 + 夜间基准Cron",
+      "file": "",
+      "commit": "ebd5847f"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 158,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 158d: 4模型纯净基准 + qwen3.5:4b诊断入库",
+      "file": "",
+      "commit": "6da344d7"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 158,
+      "h_ids": [],
+      "keywords": [
+        "Pipeline"
+      ],
+      "summary": "Sprint 158c: Pipeline生产级指标 + qwen3.5:4b诊断",
+      "file": "",
+      "commit": "51e65646"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 158,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 158b: CLI集成benchmark命令 + bench_lite重构",
+      "file": "",
+      "commit": "cbc129be"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 158,
+      "h_ids": [],
+      "keywords": [
+        "Ollama"
+      ],
+      "summary": "Sprint 158: Ollama完整基准 — 5模型×11题=55发",
+      "file": "",
+      "commit": "e2a55497"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 157,
+      "h_ids": [],
+      "keywords": [
+        "Ollama"
+      ],
+      "summary": "Sprint 157a: Ollama基准实测 — 5模型×3题",
+      "file": "",
+      "commit": "6a5a5bd7"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 157,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 157c: 网络文化深度MSS分析 — 12维框架+5条新H-ID",
+      "file": "",
+      "commit": "f0bb564c"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 156,
+      "h_ids": [],
+      "keywords": [
+        "Pipeline"
+      ],
+      "summary": "Sprint 156: 实验自动化管线 — 假设→Pipeline→KB 全闭环",
+      "file": "",
+      "commit": "c4af0e77"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 155,
+      "h_ids": [],
+      "keywords": [
+        "Pipeline"
+      ],
+      "summary": "Sprint 155: Pipeline生产级增强 — 重试+熔断+回退+CLI",
+      "file": "",
+      "commit": "193f0e73"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 154,
+      "h_ids": [
+        "H623"
+      ],
+      "keywords": [],
+      "summary": "Sprint 154: H623三维相图 — trust_budget×p_close×recovery_threshold",
+      "file": "",
+      "commit": "eb0e4ff9"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 153,
+      "h_ids": [],
+      "keywords": [
+        "Git"
+      ],
+      "summary": "Sprint 153: 全局健康监控 — D2黑洞预警+Git+进程+任务栏",
+      "file": "",
+      "commit": "19fa32ec"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 153,
+      "h_ids": [
+        "H623"
+      ],
+      "keywords": [],
+      "summary": "Sprint 153: H623信任介导坍缩 — 恢复阈值敏感度实验 + demo修复",
+      "file": "",
+      "commit": "ae230c7f"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 152,
+      "h_ids": [],
+      "keywords": [
+        "Zenodo"
+      ],
+      "summary": "Sprint 152-2: 白皮书Zenodo自动化发布管线",
+      "file": "",
+      "commit": "b34efb52"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "P1 v2: 渗流临界指数 — 降噪+扩采样, 确定性负结果",
+      "file": "",
+      "commit": "566f1c2c"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "fix: demo取消密码锁 + 同步site-packages",
+      "file": "",
+      "commit": "ff718903"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 151,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "demo.py: Sprint 151 成果演示 — 7段交互式展示",
+      "file": "",
+      "commit": "bd40cb4e"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "README: CLI 31命令完整使用示例 + 版本同步0.3.10",
+      "file": "",
+      "commit": "75106208"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "白皮书 v1.0: 意义工程学 — 从热税动力学到意义场黑洞",
+      "file": "",
+      "commit": "e82d884a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "P1+P2+P3: N→∞渗流相变三线分析 — 含负结果诚实报告",
+      "file": "",
+      "commit": "367a99e1"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H622"
+      ],
+      "keywords": [],
+      "summary": "H622: AI全产业链意义场黑洞实证 + D1普查扩围至上下游",
+      "file": "",
+      "commit": "2c42d023"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [
+        "Pipeline"
+      ],
+      "summary": "四合一综合闭合: D1普查 + D2预警 + D6-013 VCG + D6-015 Pipeline",
+      "file": "",
+      "commit": "58b7ec01"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "D2: 实时黑洞预警系统 v3.0 — API+仪表盘",
+      "file": "",
+      "commit": "d9397645"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H621"
+      ],
+      "keywords": [],
+      "summary": "H621: 意义场黑洞深化 — 12内部源+4外部验证全综合",
+      "file": "",
+      "commit": "172b8db2"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H634"
+      ],
+      "keywords": [],
+      "summary": "D6-007: N→∞ H634渗流相变 — 全部理论缺口闭合",
+      "file": "",
+      "commit": "4322505a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H635",
+        "H634"
+      ],
+      "keywords": [
+        "Type"
+      ],
+      "summary": "H635 衍生缺口三合一闭合: k_opt + Type判别 + H634-G",
+      "file": "",
+      "commit": "3bcb2592"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H601"
+      ],
+      "keywords": [],
+      "summary": "H601: 搜索退化定理 — 收敛三角全闭合",
+      "file": "",
+      "commit": "0ecab448"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H603"
+      ],
+      "keywords": [
+        "Catlab"
+      ],
+      "summary": "H603: Catlab.jl 3-category closure — triangle closed 10/10 PASS",
+      "file": "",
+      "commit": "0710f44f"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H602"
+      ],
+      "keywords": [
+        "Nash"
+      ],
+      "summary": "H602: Nash均衡形式化 + E021实证 — d=+1.911 超大型效应",
+      "file": "",
+      "commit": "397b74ba"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H635"
+      ],
+      "keywords": [
+        "Type"
+      ],
+      "summary": "H635: Type II 全博弈消解性定理 + A→E 五方向综合报告",
+      "file": "",
+      "commit": "6c39271b"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [
+        "Conflict",
+        "Agent",
+        "Arbiter"
+      ],
+      "summary": "E021-3: 3-Agent 资源池 + ConflictArbiter — 预算独立性验证",
+      "file": "",
+      "commit": "45b95a0b"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "E023: 信任恢复机制 — TIMEOUT/SPONSOR/LINKAGE 对比",
+      "file": "",
+      "commit": "039b4319"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [
+        "Penalty",
+        "Heatx"
+      ],
+      "summary": "E022: HeatxPenalty 相图 — 三相结构验证",
+      "file": "",
+      "commit": "3f2a5fac"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H634"
+      ],
+      "keywords": [
+        "Agent",
+        "Multi"
+      ],
+      "summary": "E021-2: N=4 Multi-Agent H634泛化 — RING vs CENTER trust closure propagation",
+      "file": "",
+      "commit": "b8c5fe61"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H634"
+      ],
+      "keywords": [],
+      "summary": "E021-1 v2.1 report: H634 joint_enter gate — final results",
+      "file": "",
+      "commit": "af82af98"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H634"
+      ],
+      "keywords": [],
+      "summary": "H634: elevation joint_enter condition — KB entry [E021-1 v2.1 evidence]",
+      "file": "",
+      "commit": "2fb32232"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H634"
+      ],
+      "keywords": [],
+      "summary": "E021-1 v2.1: H634 joint_enter 信任门禁 — 单边升维封杀",
+      "file": "",
+      "commit": "e49ae773"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [
+        "Nash"
+      ],
+      "summary": "E021-1: Nash驻点 eta 基线测量 — GRIM+噪声囚徒困境",
+      "file": "",
+      "commit": "24bafbe3"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [
+        "Add"
+      ],
+      "summary": "Add .gitignore for token scripts",
+      "file": "",
+      "commit": "340e8e96"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 150,
+      "h_ids": [
+        "H633"
+      ],
+      "keywords": [
+        "Conflict",
+        "Arbiter"
+      ],
+      "summary": "Sprint 150 close: H633 v2.0 归档 + ConflictArbiter 实现",
+      "file": "",
+      "commit": "74f4c6a5"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 150,
+      "h_ids": [],
+      "keywords": [
+        "Type"
+      ],
+      "summary": "Sprint 150: TypeII对照实验 — 方向1(MCDP) vs 方向2(相位机)",
+      "file": "",
+      "commit": "8456ad83"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 149,
+      "h_ids": [],
+      "keywords": [
+        "Vault"
+      ],
+      "summary": "Sprint 149: Vault v2.0 — 场景自动匹配 · 零交互密码管理器",
+      "file": "",
+      "commit": "41eaa82d"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 148,
+      "h_ids": [],
+      "keywords": [
+        "Scene",
+        "Router"
+      ],
+      "summary": "Sprint 148: Scene Router + PyPI v0.3.10",
+      "file": "",
+      "commit": "7d183716"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 147,
+      "h_ids": [],
+      "keywords": [
+        "Gossip",
+        "Decentralized",
+        "Mean",
+        "Field"
+      ],
+      "summary": "Sprint 147b+c: MCDP v0.2 — N>2 Mean Field + Decentralized L2.5 Gossip",
+      "file": "",
+      "commit": "73a1efe5"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 147,
+      "h_ids": [],
+      "keywords": [
+        "Phase",
+        "Adaptive",
+        "Engine",
+        "Topological"
+      ],
+      "summary": "Sprint 147a: Adaptive Topological Phase Engine — 锚点活性管理+抗僵化重锚定",
+      "file": "",
+      "commit": "67f98cf0"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 146,
+      "h_ids": [],
+      "keywords": [
+        "Pipeline"
+      ],
+      "summary": "Sprint 146: 拓扑相位机 + Pipeline分支/流式 + 去中心化VCG",
+      "file": "",
+      "commit": "4ed7fde8"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 145,
+      "h_ids": [],
+      "keywords": [
+        "Agent"
+      ],
+      "summary": "Sprint 145: MCDP v0.1 — 多Agent矛盾消解协议",
+      "file": "",
+      "commit": "abc8db2d"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 144,
+      "h_ids": [],
+      "keywords": [
+        "Conflict",
+        "Phase",
+        "Engine",
+        "Agent",
+        "Type"
+      ],
+      "summary": "Sprint 144: Conflict Phase Engine (TypeⅡ单Agent工程可调度解)",
+      "file": "",
+      "commit": "ac332759"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 143,
+      "h_ids": [],
+      "keywords": [
+        "Agent"
+      ],
+      "summary": "Sprint 143: L2-OP v3 — 多Agent维度重构协议",
+      "file": "",
+      "commit": "264139f4"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 142,
+      "h_ids": [],
+      "keywords": [
+        "Tax",
+        "Layer",
+        "Auto"
+      ],
+      "summary": "Sprint 142: TOP1+2+5修复 — Tax + AutoLayer + CI/CD",
+      "file": "",
+      "commit": "8050e4cb"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 141,
+      "h_ids": [],
+      "keywords": [
+        "Layering",
+        "Auto"
+      ],
+      "summary": "Sprint 141: 函子抬升第一步 — 自动分层(Auto-Layering)",
+      "file": "",
+      "commit": "4f70e9a4"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 140,
+      "h_ids": [],
+      "keywords": [
+        "Sprints"
+      ],
+      "summary": "Sprint 140: 里程碑 — 140 Sprints, 14 CLI命令",
+      "file": "",
+      "commit": "53e5d609"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 140,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 140: MCP客户端 — stdlib-only JSON-RPC 2.0",
+      "file": "",
+      "commit": "aee99a40"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 139,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 139: 全行业能力对比审计",
+      "file": "",
+      "commit": "d5868ea9"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 138,
+      "h_ids": [],
+      "keywords": [
+        "Agent"
+      ],
+      "summary": "Sprint 138: /tools端点接入Agent服务器",
+      "file": "",
+      "commit": "70a86ad8"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 137,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 137: 工具调用升级 v0.2 — 结构化输出+函数调用API",
+      "file": "",
+      "commit": "d14987eb"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 136,
+      "h_ids": [],
+      "keywords": [
+        "Fix"
+      ],
+      "summary": "Sprint 136: Fix tax misreporting — delta=1.0 no longer shows 100%",
+      "file": "",
+      "commit": "64db187e"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 135,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 135: mssclaw status — 全栈一览",
+      "file": "",
+      "commit": "b373d420"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 134,
+      "h_ids": [],
+      "keywords": [
+        "All",
+        "Systems",
+        "Nominal"
+      ],
+      "summary": "Sprint 134: 全链集成验证 — All Systems Nominal",
+      "file": "",
+      "commit": "8788cd93"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 133,
+      "h_ids": [],
+      "keywords": [
+        "Agent"
+      ],
+      "summary": "Sprint 133: 防御管线接入Agent服务器 — 运行时保护",
+      "file": "",
+      "commit": "65e81d89"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 132,
+      "h_ids": [
+        "H632"
+      ],
+      "keywords": [
+        "Defense",
+        "Pipeline"
+      ],
+      "summary": "Sprint 132: H632完整闭环 — DefensePipeline",
+      "file": "",
+      "commit": "50fc7d2c"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 131,
+      "h_ids": [
+        "H632"
+      ],
+      "keywords": [],
+      "summary": "Sprint 131: H632落地 — 疫苗效力评估指标",
+      "file": "",
+      "commit": "495c0083"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 130,
+      "h_ids": [
+        "H632"
+      ],
+      "keywords": [],
+      "summary": "Sprint 130: H632落地 — 逻辑病毒MSS分类系统",
+      "file": "",
+      "commit": "28763210"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H631",
+        "H632"
+      ],
+      "keywords": [],
+      "summary": "H631+H632: 意义隧穿分析 + 疫苗工厂架构",
+      "file": "",
+      "commit": "576a8593"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 129,
+      "h_ids": [],
+      "keywords": [
+        "Cleanup"
+      ],
+      "summary": "Sprint 129: Cleanup — linter restore + integration scripts",
+      "file": "",
+      "commit": "dc1bdd4b"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 128,
+      "h_ids": [],
+      "keywords": [
+        "Theorem"
+      ],
+      "summary": "Sprint 128: P1完成 — Theorem L1修复建议",
+      "file": "",
+      "commit": "0573dc3a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 127,
+      "h_ids": [
+        "H630"
+      ],
+      "keywords": [],
+      "summary": "Sprint 127 + H630: P0完成 — L3→L2热税预算传递协议",
+      "file": "",
+      "commit": "673a413f"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H629"
+      ],
+      "keywords": [],
+      "summary": "H629: MSS定理星座图 — 6条定理交叉验证L1",
+      "file": "",
+      "commit": "ba0bcbf3"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H628"
+      ],
+      "keywords": [],
+      "summary": "H628: MSS意义场工程学 — 全研究线整合地图",
+      "file": "",
+      "commit": "1d7a66f1"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H627"
+      ],
+      "keywords": [
+        "Engineering",
+        "Prompt"
+      ],
+      "summary": "H627: 意义场工程学 — Prompt Engineering的MSS升维",
+      "file": "",
+      "commit": "1d94856a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 125,
+      "h_ids": [
+        "H626"
+      ],
+      "keywords": [
+        "Linter",
+        "Theorem"
+      ],
+      "summary": "Sprint 125 + H626: Theorem L1 v0.2 + 可计算Linter",
+      "file": "",
+      "commit": "f9dad7c7"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 124,
+      "h_ids": [],
+      "keywords": [
+        "Shell",
+        "Theorem"
+      ],
+      "summary": "Sprint 124: Shell层修复 — 纯A2投影 (Theorem L1合规)",
+      "file": "",
+      "commit": "f242e68a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H625"
+      ],
+      "keywords": [
+        "Theorem"
+      ],
+      "summary": "H625: Theorem L1完整审计 — mssclaw + 前端开发双重诊断",
+      "file": "",
+      "commit": "f8bd2b7e"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H624"
+      ],
+      "keywords": [
+        "Theorem"
+      ],
+      "summary": "H624: Theorem L1 — 分层合法性定理 + 首次审计",
+      "file": "",
+      "commit": "292b0a30"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 122,
+      "h_ids": [
+        "H623"
+      ],
+      "keywords": [],
+      "summary": "Sprint 122-123: H623全套工具箱落地",
+      "file": "",
+      "commit": "d0e0e330"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 121,
+      "h_ids": [
+        "H623"
+      ],
+      "keywords": [],
+      "summary": "Sprint 121 + H623: 热税计时器落地",
+      "file": "",
+      "commit": "9db21785"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H622"
+      ],
+      "keywords": [],
+      "summary": "H622: MSS软件工程白皮书 — 全生命周期重构",
+      "file": "",
+      "commit": "d7810c16"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H621"
+      ],
+      "keywords": [],
+      "summary": "H621: MSS前端架构白皮书 v0.1",
+      "file": "",
+      "commit": "eb4ee0bd"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 120,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 120: IIFE模块化 + CSS-transform侧边栏",
+      "file": "",
+      "commit": "451afb08"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 119,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 119: ES5重写 — 消除所有正则修补bug",
+      "file": "",
+      "commit": "63a46b13"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 118,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 118: 稳定版 — 移除折叠侧边栏,消除回归bug",
+      "file": "",
+      "commit": "691f68ea"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 117,
+      "h_ids": [],
+      "keywords": [
+        "Fix"
+      ],
+      "summary": "Sprint 117: Fix sidebar + input auto-collapse bugs",
+      "file": "",
+      "commit": "63c90c90"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 116,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 116: 完整重写前端 — 零bug,全功能",
+      "file": "",
+      "commit": "d0f1020c"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 115,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 115: 浮窗模式 + 输入框拖拽放大",
+      "file": "",
+      "commit": "3eb776fa"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 114,
+      "h_ids": [],
+      "keywords": [
+        "Pipeline"
+      ],
+      "summary": "Sprint 114: Pipeline工作流 + UI修复",
+      "file": "",
+      "commit": "3ff2b497"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 113,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 113: 修复三大用户反馈",
+      "file": "",
+      "commit": "2abf7fce"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "fix: remove embedded git repo",
+      "file": "",
+      "commit": "fd3d5406"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 112,
+      "h_ids": [],
+      "keywords": [
+        "Agent"
+      ],
+      "summary": "Sprint 112: 吸收6个开发Agent → 重构前端到专业级",
+      "file": "",
+      "commit": "21bf66eb"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 111,
+      "h_ids": [],
+      "keywords": [
+        "Chatbox"
+      ],
+      "summary": "Sprint 111: 专业Chatbox风格前端 — 三服务全通",
+      "file": "",
+      "commit": "ecc0ed04"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 110,
+      "h_ids": [],
+      "keywords": [
+        "Agent"
+      ],
+      "summary": "Sprint 110: 前端接入真实mssclaw Agent后端",
+      "file": "",
+      "commit": "9dbb4855"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 109,
+      "h_ids": [],
+      "keywords": [
+        "Chatbox"
+      ],
+      "summary": "Sprint 109: 重建前端 — Chatbox风格单页应用",
+      "file": "",
+      "commit": "1fb5db2b"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 108,
+      "h_ids": [],
+      "keywords": [
+        "Production",
+        "Type",
+        "Script"
+      ],
+      "summary": "Sprint 108: Production build + clean TypeScript",
+      "file": "",
+      "commit": "17bb4008"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 107,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 107: 清空所有模板残留 → mssclaw专属",
+      "file": "",
+      "commit": "a3388336"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 106,
+      "h_ids": [],
+      "keywords": [
+        "Overview"
+      ],
+      "summary": "Sprint 106: Overview cards → mssclaw real data",
+      "file": "",
+      "commit": "f8375968"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 105,
+      "h_ids": [],
+      "keywords": [
+        "Dashboard"
+      ],
+      "summary": "Sprint 105d: Dashboard LIVE — 200 OK",
+      "file": "",
+      "commit": "61ded136"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 105,
+      "h_ids": [],
+      "keywords": [
+        "Dashboard",
+        "Clerk",
+        "Auth"
+      ],
+      "summary": "Sprint 105c: 跳过Clerk Auth → 直接进入Dashboard",
+      "file": "",
+      "commit": "fdfe1c4b"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 105,
+      "h_ids": [],
+      "keywords": [
+        "Web"
+      ],
+      "summary": "Sprint 105b: WebUI dev server LIVE",
+      "file": "",
+      "commit": "4ae5c1a2"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 105,
+      "h_ids": [],
+      "keywords": [
+        "Web",
+        "Next"
+      ],
+      "summary": "Sprint 105: WebUI编译验证 - Next.js build PASS",
+      "file": "",
+      "commit": "2b419d2e"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 104,
+      "h_ids": [],
+      "keywords": [
+        "Web"
+      ],
+      "summary": "Sprint 104: 集成 next-shadcn-dashboard-starter 为 mssclaw WebUI",
+      "file": "",
+      "commit": "1db9d91a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 103,
+      "h_ids": [],
+      "keywords": [
+        "Web"
+      ],
+      "summary": "Sprint 103: 吸收顶级前端 + 生成 mssclaw WebUI v2.0",
+      "file": "",
+      "commit": "d8767a6d"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 102,
+      "h_ids": [],
+      "keywords": [
+        "Final"
+      ],
+      "summary": "Sprint 102: Final audit and wrap-up",
+      "file": "",
+      "commit": "cdb0195d"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 101,
+      "h_ids": [],
+      "keywords": [
+        "Real",
+        "Ollama"
+      ],
+      "summary": "Sprint 101: Real Ollama integration test - 5/5 PASS",
+      "file": "",
+      "commit": "fb779d44"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 100,
+      "h_ids": [],
+      "keywords": [
+        "Product"
+      ],
+      "summary": "Sprint 100: Product completeness — LICENSE, CONTRIBUTING, templates",
+      "file": "",
+      "commit": "8f0022b4"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 98,
+      "h_ids": [],
+      "keywords": [
+        "Chinese",
+        "Unified"
+      ],
+      "summary": "Sprint 98-99: Unified logging + Chinese error messages",
+      "file": "",
+      "commit": "cb6de6d9"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 97,
+      "h_ids": [],
+      "keywords": [
+        "Unified"
+      ],
+      "summary": "Sprint 97: Unified config system (mssclaw.yaml)",
+      "file": "",
+      "commit": "51ef1b76"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 93,
+      "h_ids": [],
+      "keywords": [
+        "Release",
+        "Git",
+        "Hub"
+      ],
+      "summary": "Sprint 93: GitHub Release v0.3.9 + wheel",
+      "file": "",
+      "commit": "e5ed7d11"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 96,
+      "h_ids": [],
+      "keywords": [
+        "Integration",
+        "Phase"
+      ],
+      "summary": "Sprint 96: Integration test + Phase C wrap",
+      "file": "",
+      "commit": "7351b75a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 95,
+      "h_ids": [],
+      "keywords": [
+        "Coverage"
+      ],
+      "summary": "Sprint 95: Coverage boost - 16 new tests",
+      "file": "",
+      "commit": "65e3b915"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 94,
+      "h_ids": [],
+      "keywords": [
+        "Windows"
+      ],
+      "summary": "Sprint 94: vault_server test fix - skip on Windows",
+      "file": "",
+      "commit": "66b1f706"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 92,
+      "h_ids": [],
+      "keywords": [
+        "Shell",
+        "Tutorial"
+      ],
+      "summary": "Sprint 92: Tutorial - Shell双模型模式",
+      "file": "",
+      "commit": "b5e18ff2"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 91,
+      "h_ids": [],
+      "keywords": [
+        "Agent",
+        "Chat",
+        "Tutorial"
+      ],
+      "summary": "Sprint 91: Tutorial - Agent Chat (5步)",
+      "file": "",
+      "commit": "395027f8"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 90,
+      "h_ids": [],
+      "keywords": [
+        "Vault",
+        "Tutorial"
+      ],
+      "summary": "Sprint 90: Tutorial - Vault保险箱 (5步)",
+      "file": "",
+      "commit": "a489223b"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 89,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 89: docs/ARCHITECTURE.md - 架构文档",
+      "file": "",
+      "commit": "7d6e71dd"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 86,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 86: PyPI v0.3.9 发布成功",
+      "file": "",
+      "commit": "74155610"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 88,
+      "h_ids": [],
+      "keywords": [
+        "Quickstart"
+      ],
+      "summary": "Sprint 88: Quickstart指南 - 5分钟上车",
+      "file": "",
+      "commit": "cac0ac59"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 87,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 87: mssclaw init - 一键环境初始化",
+      "file": "",
+      "commit": "a983438f"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 86,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 86: PyPI v0.3.0 build ready",
+      "file": "",
+      "commit": "b59245ac"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 85,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 85: CHANGELOG.md - 全历史记录",
+      "file": "",
+      "commit": "6bfa03bf"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 84,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 84: mssclaw demo - 一键全功能演示",
+      "file": "",
+      "commit": "01bcdb08"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 83,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 83: mssclaw library export - 生态清单导出",
+      "file": "",
+      "commit": "ecee2b59"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 82,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 82: 终版README - 81 Sprint全貌",
+      "file": "",
+      "commit": "5e98465a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 81,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 81: /shell模式自动检测后端",
+      "file": "",
+      "commit": "3d5b93ab"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 80,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 80: /shell 命令 - 聊天终端切换壳/核模式",
+      "file": "",
+      "commit": "d079db0b"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 79,
+      "h_ids": [],
+      "keywords": [
+        "Manager",
+        "Library"
+      ],
+      "summary": "Sprint 79: mssclaw models CLI + LibraryManager集成",
+      "file": "",
+      "commit": "42c7f4e5"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 78,
+      "h_ids": [],
+      "keywords": [
+        "Git",
+        "Hub"
+      ],
+      "summary": "Sprint 78: GitHub仓库大清理 - 根目录191→10",
+      "file": "",
+      "commit": "9ec74b7f"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 77,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 77: 清理测试目录 - 25零散脚本→_archive",
+      "file": "",
+      "commit": "1d93f4e3"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 76,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 76: 项目审计 + .gitignore修复",
+      "file": "",
+      "commit": "48f86af6"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 75,
+      "h_ids": [],
+      "keywords": [
+        "Global",
+        "Catalog",
+        "Model"
+      ],
+      "summary": "Sprint 75: Global Model Catalog - 全球模型目录",
+      "file": "",
+      "commit": "da75d4f6"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 74,
+      "h_ids": [],
+      "keywords": [
+        "Selector",
+        "Smart",
+        "Backend"
+      ],
+      "summary": "Sprint 74: Smart Backend Selector - 壳API+核本地",
+      "file": "",
+      "commit": "e8e93324"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 73,
+      "h_ids": [],
+      "keywords": [
+        "Shell"
+      ],
+      "summary": "Sprint 73: MSS Shell路由修复 + 真实模型测试报告",
+      "file": "",
+      "commit": "e42617d5"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 72,
+      "h_ids": [],
+      "keywords": [
+        "Mode",
+        "Shell"
+      ],
+      "summary": "Sprint 72: MSS Shell Mode - 双模型架构",
+      "file": "",
+      "commit": "8365fe7b"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 71,
+      "h_ids": [],
+      "keywords": [
+        "Orchestrator",
+        "Model"
+      ],
+      "summary": "Sprint 71: ModelOrchestrator - 多模型协同编排",
+      "file": "",
+      "commit": "505e9fdd"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 70,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 70: 架构重定位 - mssclaw为平台, mss-ai为模型",
+      "file": "",
+      "commit": "7a040a0a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 69,
+      "h_ids": [],
+      "keywords": [
+        "Manager",
+        "Library"
+      ],
+      "summary": "Sprint 69: 模型库接入LibraryManager",
+      "file": "",
+      "commit": "739065a3"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 68,
+      "h_ids": [],
+      "keywords": [
+        "Custom",
+        "Library",
+        "Model"
+      ],
+      "summary": "Sprint 68: ModelLibrary + CustomLibrary - 本地模型库+可扩展库",
+      "file": "",
+      "commit": "1081a5eb"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 67,
+      "h_ids": [],
+      "keywords": [
+        "Toolkit",
+        "Office"
+      ],
+      "summary": "Sprint 67: Office Toolkit - 办公工具库",
+      "file": "",
+      "commit": "6b95199a"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 66,
+      "h_ids": [],
+      "keywords": [
+        "Manager",
+        "Library"
+      ],
+      "summary": "Sprint 66: LibraryManager - 统一库管理+跨库检索",
+      "file": "",
+      "commit": "7122e479"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 65,
+      "h_ids": [],
+      "keywords": [
+        "Herd",
+        "Agent",
+        "Immunity"
+      ],
+      "summary": "Sprint 65: HerdImmunity - 跨Agent免疫系统",
+      "file": "",
+      "commit": "bbc7948e"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 64,
+      "h_ids": [],
+      "keywords": [
+        "Detector",
+        "Virus",
+        "Logic"
+      ],
+      "summary": "Sprint 64: LogicVirusDetector - 吸收前安检",
+      "file": "",
+      "commit": "484b749f"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 63,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 63: 修复dashboard弹窗 - 不再自动打开浏览器",
+      "file": "",
+      "commit": "d9b1f4ce"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 62,
+      "h_ids": [],
+      "keywords": [
+        "Agent"
+      ],
+      "summary": "Sprint 62: mssclaw absorb CLI - 命令行吸收Agent/技能",
+      "file": "",
+      "commit": "baae09c0"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 61,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 61: mssclaw status - 全系统状态一页看",
+      "file": "",
+      "commit": "2ee9163e"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 60,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 60: 聊天终端 /absorb 一键吸收安装",
+      "file": "",
+      "commit": "6519ee3f"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 59,
+      "h_ids": [],
+      "keywords": [
+        "Digest",
+        "Agent",
+        "Engine"
+      ],
+      "summary": "Sprint 59: DigestEngine - 吸收后自动消化到Agent",
+      "file": "",
+      "commit": "6e2972d7"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 58,
+      "h_ids": [],
+      "keywords": [
+        "Agent",
+        "Absorber"
+      ],
+      "summary": "Sprint 58: AgentAbsorber - 吸收外部Agent→MSS原生生态",
+      "file": "",
+      "commit": "b47273b6"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 57,
+      "h_ids": [],
+      "keywords": [
+        "Compiler",
+        "Skill"
+      ],
+      "summary": "Sprint 57: SkillCompiler - 吸收→拆解→MSS重构→生成",
+      "file": "",
+      "commit": "03f693fd"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 56,
+      "h_ids": [],
+      "keywords": [
+        "Agent",
+        "Registry",
+        "Skill"
+      ],
+      "summary": "Sprint 56: SkillRegistry - Agent技能系统",
+      "file": "",
+      "commit": "3479af19"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 55,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 55: .gitignore + 项目清理",
+      "file": "",
+      "commit": "abf13130"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 54,
+      "h_ids": [],
+      "keywords": [
+        "Agent"
+      ],
+      "summary": "Sprint 54: KB搜索工具 — Agent能搜618条MSS知识",
+      "file": "",
+      "commit": "6223b9a3"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 53,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 53: mssclaw serve --all 全栈启动",
+      "file": "",
+      "commit": "776714ce"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 52,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 52: 幻觉盾实战测试 (+2 tests)",
+      "file": "",
+      "commit": "e82e20ca"
+    },
+    {
+      "source": "git",
+      "timestamp": "",
+      "sprint": 51,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "Sprint 51: 聊天终端+工具调用 — 对话中可用计算器/读文件/查时间",
+      "file": "",
+      "commit": "80a6ce86"
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-05-28T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H161",
+        "H100",
+        "H159",
+        "H189",
+        "H196",
+        "H148",
+        "H178",
+        "H160",
+        "H163",
+        "H137",
+        "H192",
+        "H179"
+      ],
+      "keywords": [
+        "02:10 - 任务栏恢复 + H160/H161入库",
+        "# 任务栏系统",
+        "# H160/H161入库",
+        "# 知识库状态",
+        "02:29 - 三线收尾: D5-014验收 + H74-H84清查 + D5-033启动",
+        "# D5-014 认知净化工厂 → 100% 完成",
+        "# H74-H84 知识库缺口 → 确定永久丢失",
+        "# D5-033 MSS-Proof 楔子项目启动",
+        "# task_bar.md 完整恢复",
+        "# 关键文件路径记录"
+      ],
+      "summary": "Memory file: 2026-05-28.md (14002 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-05-28.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-05-29T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H203",
+        "H144",
+        "H142",
+        "H140",
+        "H141"
+      ],
+      "keywords": [
+        "22:09 — P0 任务执行完成 + 下阶段规划",
+        "# P0 完成状态",
+        "# P0 产出文件",
+        "# H203 入库摘要",
+        "# 下阶段目标（按优先级）",
+        "## **P0 续 · 立即执行**",
+        "## **P1 · 短期推进（1-3个月）**",
+        "## **P2 · 中期推进（3-6个月）**",
+        "# 知识库归类划分建议",
+        "## ✅ 优先同步进IMA的知识库（完成度>80%，可直接使用）"
+      ],
+      "summary": "Memory file: 2026-05-29.md (4344 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-05-29.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-05-30T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H100",
+        "H211",
+        "H212",
+        "H148",
+        "H144",
+        "H204",
+        "H209",
+        "H213",
+        "H137",
+        "H210",
+        "H140",
+        "H147"
+      ],
+      "keywords": [
+        "12:15 — IMA知识库污染清除",
+        "# 腾讯文档IMA处置",
+        "# 全局污染清除总览",
+        "# H条目: 209",
+        "12:30 — IMA知识库污染清除完成",
+        "# 腾讯文档IMA处置总结",
+        "# 全链污染清除总览",
+        "# H条目总计: **209** (H1-H209)",
+        "# 今日归档",
+        "# 下阶段选项"
+      ],
+      "summary": "Memory file: 2026-05-30.md (19774 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-05-30.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-05-31T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H109",
+        "H119",
+        "H425",
+        "H129",
+        "H237",
+        "H110",
+        "H130",
+        "H416",
+        "H419",
+        "H218",
+        "H418",
+        "H227",
+        "H420",
+        "H417",
+        "H100"
+      ],
+      "keywords": [
+        "01:32-01:38 — H100-H137全量补全 + D5-033启动",
+        "# H100-H137 38条目 ✅",
+        "# D5-033 MSS-Proof 楔子 ✅ 启动",
+        "# 剩余3项",
+        "# 工具集全貌",
+        "01:47-02:06 — organized更新 + purification测试 + K3监控验证",
+        "# D5-014 purification_factory 实测 ✅",
+        "# L4-001 k3_blackhole_monitor 实测 ✅",
+        "# knowledge_base_organized 更新 ✅",
+        "# 五位置搜索结论"
+      ],
+      "summary": "Memory file: 2026-05-31.md (14323 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-05-31.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-01T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H426",
+        "H189",
+        "H427",
+        "H178",
+        "H192",
+        "H215",
+        "H217",
+        "H428"
+      ],
+      "keywords": [
+        "KB Restructuring Execution (14:02–14:07)",
+        "# Classification System Applied",
+        "# Generated Artifacts",
+        "# Phase 1 Complete (Index) | Phase 2 Pending (File Renaming)",
+        "# Distribution Notes",
+        "Session Context (Reconstructed)",
+        "D5 Deliverables (00:10-01:59)",
+        "Riemann Hypothesis Content (13:56)",
+        "Grand Unification Assessment (14:02)",
+        "KB Restructuring Proposal & Execution (14:02-14:07)"
+      ],
+      "summary": "Memory file: 2026-06-01.md (11201 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-01.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-02T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H434",
+        "H435"
+      ],
+      "keywords": [
+        "2026-06-02 Session Summary (11:37–12:50 GMT+8)",
+        "# 1. LexicalGuard 诚实化重构",
+        "# 2. KB 向量检索引擎",
+        "# 3. 翻译功能评估",
+        "# 4. 任务栏更新",
+        "# 关键文件"
+      ],
+      "summary": "Memory file: 2026-06-02.md (1017 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-02.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-03T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H448",
+        "H446",
+        "H141",
+        "H449",
+        "H450"
+      ],
+      "keywords": [
+        "21:08-21:15 — 命名裁定 + KB归档 + 清理",
+        "# 命名裁定",
+        "# KB新增",
+        "# 今日总计 (6/3)"
+      ],
+      "summary": "Memory file: 2026-06-03.md (377 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-03.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-04T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H476",
+        "H473",
+        "H475",
+        "H474"
+      ],
+      "keywords": [
+        "Overview",
+        "Key Deliverables",
+        "# KB Management System (NEW)",
+        "# VDP Enhancement",
+        "# Paper (D5-033)",
+        "# Theory (D5-020)",
+        "# Civilization Framework",
+        "Active State",
+        "Key Paths",
+        "Lessons Learned"
+      ],
+      "summary": "Memory file: 2026-06-04.md (2768 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-04.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-04T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H476",
+        "H475",
+        "H480"
+      ],
+      "keywords": [
+        "Scale",
+        "Architecture Built",
+        "# Knowledge Management",
+        "# VDP Rules",
+        "# KB Legacy Cleanup",
+        "# Paper",
+        "# Documentation",
+        "# External Tools",
+        "Final State"
+      ],
+      "summary": "Memory file: 2026-06-04_final.md (1858 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-04_final.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-05T00:00:00",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [
+        "Scale",
+        "Architecture Delivered",
+        "# Theory (L3) — 10 documents",
+        "# Engineering (L4) — 3 documents",
+        "# Raw Materials (L5) — 2 documents",
+        "# VDP Rules — 24 total",
+        "# Tools — 7 scripts",
+        "# Infrastructure",
+        "Final State",
+        "2026-06-05 下半场 — 工程基准 + 三层归因 + 跨模型对比 (01:00-01:56)"
+      ],
+      "summary": "Memory file: 2026-06-05.md (7644 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-05.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-05T00:00:00",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [
+        "Scale",
+        "三线产出",
+        "# 线1: 基础设施 (持续)",
+        "# 线2: 理论构建 (L3)",
+        "# 线3: 基准测试 (新)",
+        "关键决策",
+        "终态"
+      ],
+      "summary": "Memory file: 2026-06-05_final.md (1276 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-05_final.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-05T00:00:00",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [
+        "Built",
+        "Key Numbers",
+        "Decisions Locked",
+        "Next Session"
+      ],
+      "summary": "Memory file: 2026-06-05_session_close.md (1010 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-05_session_close.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-06T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H267",
+        "H491"
+      ],
+      "keywords": [
+        "TRAE False Sandbox Diagnostic",
+        "A3 Decision Framework",
+        "KB Deep Audit",
+        "4-Phase Execution",
+        "# A: KB Audit ✅",
+        "# B: Paper v5.2 Final ✅ (14.6KB, Ξ/Ω/π operators + GEB bus + v17.8 empirical support)",
+        "# C: Fix Queue ✅",
+        "# D: Operational Hardening ✅",
+        "Model Tuning Results",
+        "LLM Tuning Deliverables"
+      ],
+      "summary": "Memory file: 2026-06-06.md (2533 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-06.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-07T00:00:00",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [
+        "Published",
+        "Glass Box Dashboard (Live)",
+        "Delta History Visualization",
+        "Commit: 4c66d46"
+      ],
+      "summary": "Memory file: 2026-06-07.md (796 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-07.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-08T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H587",
+        "H594",
+        "H519",
+        "H513",
+        "H596",
+        "H552",
+        "H572",
+        "H560",
+        "H570",
+        "H591",
+        "H533",
+        "H554",
+        "H579",
+        "H582",
+        "H592"
+      ],
+      "keywords": [
+        "01:03-01:15 — CI/CD + CLI + Release",
+        "# GitHub Actions 新增",
+        "# Agent CLI",
+        "# Release",
+        "04:00-04:09 — 九轮对弈收束 + K4化石封存",
+        "# 第七轮",
+        "# AMFI三联检验反向校准",
+        "# 赵州茶机制",
+        "# AMFI自我废止条款 (H592)",
+        "# 第九轮递归死锁"
+      ],
+      "summary": "Memory file: 2026-06-08.md (12689 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-08.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-09T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H630",
+        "H632",
+        "H633",
+        "H631",
+        "H629"
+      ],
+      "keywords": [
+        "Prompt Rewrite Project — Phase 1 (Session depth, started ~20:30)",
+        "# Key Decisions",
+        "# Project Structure",
+        "# Doubao (豆包) API Integration",
+        "# ComfyUI Custom Node Packaged",
+        "# System Reboot (20:30)",
+        "# KB Updated",
+        "# Pending",
+        "ComfyUI Custom Node Fix (00:37–00:47)",
+        "ComfyUI Custom Node Debugging (00:37–00:55)"
+      ],
+      "summary": "Memory file: 2026-06-09.md (27009 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-09.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-10T00:00:00",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [
+        "ComfyUI 环境",
+        "ComfyUI 自定义节点",
+        "模型下载 & 归档",
+        "第三方模型调研",
+        "项目进度",
+        "搜索策略改进（教训）",
+        "文档评估",
+        "技术笔记",
+        "修复记录：opencv-python 安装误报",
+        "下次交互待办"
+      ],
+      "summary": "Memory file: 2026-06-10.md (4259 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-10.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-11T00:00:00",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [
+        "MSSclaw Round 1 提审 → Round 2 规划",
+        "# 产出",
+        "# 关键文件",
+        "# 核心决策"
+      ],
+      "summary": "Memory file: 2026-06-11.md (722 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-11.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-12T00:00:00",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [
+        "2026-06-12 14:05 LLM-Wired CodeAgent",
+        "# 新建",
+        "# 集成测试中"
+      ],
+      "summary": "Memory file: 2026-06-12.md (286 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-12.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-13T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H610",
+        "H611",
+        "H612"
+      ],
+      "keywords": [
+        "# 22:45 补充 — 修炼者压力代谢模型",
+        "# 22:52 — 体感层突破性细化",
+        "## 用户自校准核心输出",
+        "## 建议扩充方向（QClaw提议）",
+        "## 22:53 — 会话自然收束",
+        "# 22:53-22:55 — H611 体感层互操作性规范入库",
+        "# 22:55-22:56 — _master_index 更新完成",
+        "# 23:19 — 最终状态快照",
+        "# 23:19-23:22 — 用户「木星威胁论被嘲笑」深度分析",
+        "## 三层嘲笑机制解剖"
+      ],
+      "summary": "Memory file: 2026-06-13.md (4081 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-13.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-14T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H544",
+        "H541",
+        "H549",
+        "H569",
+        "H545",
+        "H564",
+        "H560",
+        "H547",
+        "H550",
+        "H548",
+        "H567",
+        "H533",
+        "H571",
+        "H543",
+        "H551"
+      ],
+      "keywords": [
+        "# 09:50-10:00 — P0 A3 v15.2 三件套全部完成",
+        "# 10:00-10:05 — eta P0 four items completed",
+        "# 10:03-10:08 — P1 eta + LET/MSIT done",
+        "# 10:06-10:12 — P1+P2 eta framework sweep complete",
+        "# 10:10-10:15 — P3 DTSS->eta + eta framework CLOSURE",
+        "# 10:35 — Empirical validation plan E1-E4",
+        "# 10:39-10:50 — E1 empirical harness built + cross-model smoke test",
+        "# 11:00-11:10 — E1 triple experiment complete (A+B+C, 12 runs)",
+        "# 11:16-11:35 — E2 cross-model breach spectrum complete (30 experiments)",
+        "# 12:16-12:30 — E3 complete (A: 12-turn depth, B: GuardProxy middleware)"
+      ],
+      "summary": "Memory file: 2026-06-14.md (13599 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-14.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-15T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H604",
+        "H576",
+        "H602",
+        "H601",
+        "H578",
+        "H603",
+        "H577"
+      ],
+      "keywords": [
+        "四线推进全部完成 (02:12-02:35)",
+        "# #1 E-012/E-013/E-014 全量实验 ✅",
+        "# #1 核心发现 — Guard Toxicity Theorem",
+        "# 🧠 结构残骸即病毒温床 — 关键理论进展 (02:35-02:39)",
+        "# 📝 论文章节正式写入 (02:39-02:42)",
+        "# #3 SFT 训练验证 ✅",
+        "# #4 MSSclaw ✅",
+        "# MSSclaw 架构全景",
+        "# 📝 论文精修 + Zenodo 打包启动 (02:58-03:07)",
+        "# 📄 PDF + Supplementary 封装完成 (03:07-03:09)"
+      ],
+      "summary": "Memory file: 2026-06-15.md (10229 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-15.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-16T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H620"
+      ],
+      "keywords": [
+        "QClaw 版本检查与升级",
+        "H620 - AGI游戏设计文档",
+        "Gateway 重启与版本深度排查 (11:43-12:03)",
+        "# Gateway 重启尝试",
+        "# npm 安装尝试",
+        "# Node.js 升级",
+        "# 真相：多版本并存",
+        "# 当前状态"
+      ],
+      "summary": "Memory file: 2026-06-16.md (1505 chars, 0 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-16.md",
+      "commit": ""
+    },
+    {
+      "source": "memory",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": 149,
+      "h_ids": [
+        "H635",
+        "H633",
+        "H634"
+      ],
+      "keywords": [
+        "Sprint 149 — Vault v2.0 场景自动匹配 · 零交互密码管理器",
+        "# 问题",
+        "# 解决方案: Vault v2.0",
+        "# 验证结果 (8/8)",
+        "Sprint 149 — Vault v2.0 场景自动匹配 · 零交互密码管理器",
+        "# 问题",
+        "# 解决方案: Vault v2.0",
+        "# 验证结果 (8/8)",
+        "Sprint 150 — TypeⅡ对照实验 · 方向1(MCDP) vs 方向2(相位机)",
+        "# 实验设计"
+      ],
+      "summary": "Memory file: 2026-06-17.md (10211 chars, 3 sprints)",
+      "file": "C:\\Users\\Administrator\\.openclaw\\workspace\\memory\\2026-06-17.md",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H636"
+      ],
+      "keywords": [
+        "网络文化12维评估框架 — MSS意义工程学应用"
+      ],
+      "summary": "网络文化12维评估框架 — MSS意义工程学应用",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\h636_network_culture_12dim.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H637"
+      ],
+      "keywords": [
+        "武侠→玄幻退化链 — H601搜索退化定理的文化实例化"
+      ],
+      "summary": "武侠→玄幻退化链 — H601搜索退化定理的文化实例化",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\h637_wuxia_xuanhuan_degeneration.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H638"
+      ],
+      "keywords": [
+        "隐藏规则博弈 ↔ trust_budget 同构映射"
+      ],
+      "summary": "隐藏规则博弈 ↔ trust_budget 同构映射",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\h638_hidden_rules_trust_budget.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H639"
+      ],
+      "keywords": [
+        "A3热税在文化消费中的应用 — 读者认知成本模型"
+      ],
+      "summary": "A3热税在文化消费中的应用 — 读者认知成本模型",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\h639_a3_cultural_heat_tax.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H640"
+      ],
+      "keywords": [
+        "欺诈即规则重构 — 意义系统的降维攻击与黑洞生成"
+      ],
+      "summary": "欺诈即规则重构 — 意义系统的降维攻击与黑洞生成",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\h640_fraud_as_rule_reconstruction.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H601_DEEP"
+      ],
+      "keywords": [
+        "搜索退化定理 — 完整理论推导 (Full Derivation)"
+      ],
+      "summary": "搜索退化定理 — 完整理论推导 (Full Derivation)",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h601_search_degradation_full_derivation.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H601"
+      ],
+      "keywords": [
+        "搜索退化定理 (Search Degradation Theorem)"
+      ],
+      "summary": "搜索退化定理 (Search Degradation Theorem)",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h601_search_degradation_theorem.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "h602_h611_batch.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h602_h611_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H602"
+      ],
+      "keywords": [
+        "nash_equilibrium",
+        "joint_entrance",
+        "H634",
+        "E021-2",
+        "trust_budget",
+        "Nash均衡打破：H634联合入场门禁的形式化与实证"
+      ],
+      "summary": "Nash均衡打破：H634联合入场门禁的形式化与实证",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h602_nash_breaking.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H603"
+      ],
+      "keywords": [
+        "catlab",
+        "3-category",
+        "convergence_triangle",
+        "E020",
+        "收敛三角: 三-范畴验证 (Catlab.jl)"
+      ],
+      "summary": "收敛三角: 三-范畴验证 (Catlab.jl)",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h603_h610_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H604"
+      ],
+      "keywords": [
+        "molt",
+        "closure",
+        "optimal_frequency",
+        "entropy",
+        "蜕壳最优频率定理: f* = √(H_closure / H_molt)"
+      ],
+      "summary": "蜕壳最优频率定理: f* = √(H_closure / H_molt)",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h603_h610_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H605"
+      ],
+      "keywords": [
+        "entropy",
+        "hardening",
+        "paradox",
+        "knowledge_crystallization",
+        "熵硬化悖论 (Entropy Hardening Paradox)"
+      ],
+      "summary": "熵硬化悖论 (Entropy Hardening Paradox)",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h603_h610_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H606"
+      ],
+      "keywords": [
+        "marginal_diminishing",
+        "state_morphism",
+        "info_gain",
+        "边际递减定律: 状态射密度与信息增益的边际递减"
+      ],
+      "summary": "边际递减定律: 状态射密度与信息增益的边际递减",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h603_h610_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H607"
+      ],
+      "keywords": [
+        "trust",
+        "phase_transition",
+        "critical_point",
+        "P2",
+        "信任预算相变: N_c = 48 临界点"
+      ],
+      "summary": "信任预算相变: N_c = 48 临界点",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h603_h610_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H608"
+      ],
+      "keywords": [
+        "self_stabilization",
+        "trust_network",
+        "H634",
+        "emergence",
+        "信任网络自稳化: H634 联合入场门禁的涌现属性"
+      ],
+      "summary": "信任网络自稳化: H634 联合入场门禁的涌现属性",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h603_h610_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H609"
+      ],
+      "keywords": [
+        "heat_tax",
+        "three_layer",
+        "coupling",
+        "A3",
+        "热税三层耦合方程: H = k × W / B"
+      ],
+      "summary": "热税三层耦合方程: H = k × W / B",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h603_h610_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H610"
+      ],
+      "keywords": [
+        "degradation",
+        "entropy",
+        "logarithmic",
+        "time_evolution",
+        "退化熵退化方程: S_degradation(t) = S₀ + α·log(1 + t/τ)"
+      ],
+      "summary": "退化熵退化方程: S_degradation(t) = S₀ + α·log(1 + t/τ)",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h603_h610_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H611"
+      ],
+      "keywords": [
+        "nash",
+        "game_theory",
+        "H634",
+        "E021",
+        "Nash均衡打破: 联合入场门禁的博弈论基础"
+      ],
+      "summary": "Nash均衡打破: 联合入场门禁的博弈论基础",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h611_h619_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H612"
+      ],
+      "keywords": [
+        "3-category",
+        "FinSet",
+        "Kleisli",
+        "CCC",
+        "3-范畴自洽: FinSet→Kleisli→CCC 验证链"
+      ],
+      "summary": "3-范畴自洽: FinSet→Kleisli→CCC 验证链",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h611_h619_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H613"
+      ],
+      "keywords": [
+        "molt",
+        "eta_weighted",
+        "frequency",
+        "E019",
+        "蜕壳策略: η加权 vs 纯频率"
+      ],
+      "summary": "蜕壳策略: η加权 vs 纯频率",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h611_h619_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H614"
+      ],
+      "keywords": [
+        "blackhole",
+        "CRTR",
+        "event_horizon",
+        "K3",
+        "意义黑洞事件视界: CRTR ≥ 8 判定标准"
+      ],
+      "summary": "意义黑洞事件视界: CRTR ≥ 8 判定标准",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h611_h619_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H615"
+      ],
+      "keywords": [
+        "VDP",
+        "verification",
+        "discipline",
+        "engineering",
+        "VDP验证纪律体系: 7条核心纪律的工程落地"
+      ],
+      "summary": "VDP验证纪律体系: 7条核心纪律的工程落地",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h611_h619_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H616"
+      ],
+      "keywords": [
+        "whitepaper",
+        "meaning_engineering",
+        "architecture",
+        "白皮书: 意义工程学 v1.2 架构"
+      ],
+      "summary": "白皮书: 意义工程学 v1.2 架构",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h611_h619_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H617"
+      ],
+      "keywords": [
+        "network_culture",
+        "observable_convergence",
+        "semantic_engine",
+        "网络文化可观测收敛: 生存胜负公式与语义引擎同构"
+      ],
+      "summary": "网络文化可观测收敛: 生存胜负公式与语义引擎同构",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h611_h619_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H618"
+      ],
+      "keywords": [
+        "A6",
+        "LLM",
+        "contradiction_elevation",
+        "spontaneous",
+        "A6活体标本: LLM自发矛盾升维的认知轨迹"
+      ],
+      "summary": "A6活体标本: LLM自发矛盾升维的认知轨迹",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h611_h619_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H619"
+      ],
+      "keywords": [
+        "unconscious_projection",
+        "game_design",
+        "system_convergence",
+        "无意识工程化投影: AGI游戏设计的MSS结构映射"
+      ],
+      "summary": "无意识工程化投影: AGI游戏设计的MSS结构映射",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h611_h619_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "h612_h620_batch.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h612_h620_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H621"
+      ],
+      "keywords": [
+        "意义场黑洞深化: 全源综合报告"
+      ],
+      "summary": "意义场黑洞深化: 全源综合报告",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h621_meaning_blackhole_deepening.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H622"
+      ],
+      "keywords": [
+        "AI产业链意义场黑洞实证: 上游硬件→下游软件→转型分化"
+      ],
+      "summary": "AI产业链意义场黑洞实证: 上游硬件→下游软件→转型分化",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h622_supply_chain_blackhole.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H623"
+      ],
+      "keywords": [
+        "信任介导坍缩: H634-G的新型动力学相变"
+      ],
+      "summary": "信任介导坍缩: H634-G的新型动力学相变",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h623_trust_mediated_collapse.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "h624_h632_batch.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h624_h632_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H633"
+      ],
+      "keywords": [
+        "矛盾消解操作的双阈值定理: tension_crit 与 degrade_crit"
+      ],
+      "summary": "矛盾消解操作的双阈值定理: tension_crit 与 degrade_crit",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h633_contradiction_threshold.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H634"
+      ],
+      "keywords": [
+        "升维的联合进入条件与单边热税惩罚"
+      ],
+      "summary": "升维的联合进入条件与单边热税惩罚",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h634_elevation_joint_enter.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H635"
+      ],
+      "keywords": [
+        "Type II 全博弈消解性定理"
+      ],
+      "summary": "Type II 全博弈消解性定理",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h635_type2_dissolution_theorem.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H642"
+      ],
+      "keywords": [
+        "percolation",
+        "phase-transition",
+        "H634-G",
+        "reverse-transition",
+        "trust-network",
+        "P2渗流v3: 反向相变 — γ/ν=-0.989 非标准普适类"
+      ],
+      "summary": "P2渗流v3: 反向相变 — γ/ν=-0.989 非标准普适类",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h642_p2_percolation_reverse_transition.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H644"
+      ],
+      "keywords": [
+        "A7 — 最优性作为创造性选择 (Optimality as Creative Selection)"
+      ],
+      "summary": "A7 — 最优性作为创造性选择 (Optimality as Creative Selection)",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h644_a7_optimality_as_creation.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H648"
+      ],
+      "keywords": [
+        "逆优先级协议 — defer_after 闭锁语义与对称临界区"
+      ],
+      "summary": "逆优先级协议 — defer_after 闭锁语义与对称临界区",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h648_defer_after.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H649"
+      ],
+      "keywords": [
+        "MSS 软件工程能力诊断与提升路线图"
+      ],
+      "summary": "MSS 软件工程能力诊断与提升路线图",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h649_se_roadmap.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H650"
+      ],
+      "keywords": [
+        "memory",
+        "delta",
+        "asymmetry",
+        "guard",
+        "MemoryGuard 正delta 不对称性"
+      ],
+      "summary": "MemoryGuard 正delta 不对称性",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h650_h659_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H651"
+      ],
+      "keywords": [
+        "threshold",
+        "memory",
+        "filter",
+        "delta_threshold 门限机制"
+      ],
+      "summary": "delta_threshold 门限机制",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h650_h659_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H652"
+      ],
+      "keywords": [
+        "tension",
+        "enum",
+        "measurement",
+        "TensionLevel 浮点映射"
+      ],
+      "summary": "TensionLevel 浮点映射",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h650_h659_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H653"
+      ],
+      "keywords": [
+        "benchmark",
+        "engineering",
+        "quality",
+        "SE-Bench 八域架构"
+      ],
+      "summary": "SE-Bench 八域架构",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h650_h659_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H654"
+      ],
+      "keywords": [
+        "agent",
+        "heat_tax",
+        "result",
+        "tracking",
+        "AgentResult 热税字典追踪"
+      ],
+      "summary": "AgentResult 热税字典追踪",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h650_h659_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H655"
+      ],
+      "keywords": [
+        "document",
+        "data_model",
+        "import",
+        "export",
+        "DocAgent 六数据模型族"
+      ],
+      "summary": "DocAgent 六数据模型族",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h650_h659_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H656"
+      ],
+      "keywords": [
+        "swarm",
+        "agent",
+        "registry",
+        "multi-agent",
+        "SwarmNode 五Agent注册表"
+      ],
+      "summary": "SwarmNode 五Agent注册表",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h650_h659_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H657"
+      ],
+      "keywords": [
+        "meaning_field",
+        "graph",
+        "topology",
+        "MeaningField 图模型"
+      ],
+      "summary": "MeaningField 图模型",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h650_h659_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H658"
+      ],
+      "keywords": [
+        "type2",
+        "conflict",
+        "golden_answer",
+        "resource",
+        "TypeIICase golden/resource 映射"
+      ],
+      "summary": "TypeIICase golden/resource 映射",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h650_h659_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H659"
+      ],
+      "keywords": [
+        "scene_router",
+        "routing",
+        "API",
+        "decision",
+        "SceneRouter float-based API"
+      ],
+      "summary": "SceneRouter float-based API",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L1_CORE_THEORY\\h650_h659_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H624"
+      ],
+      "keywords": [
+        "CRTR",
+        "empirical_calibration",
+        "startup_pitch",
+        "CRTR 融合公式的实证校准: startup_pitch 基准"
+      ],
+      "summary": "CRTR 融合公式的实证校准: startup_pitch 基准",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h624_h632_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H625"
+      ],
+      "keywords": [
+        "VDP",
+        "multilingual",
+        "scanner",
+        "PyPI",
+        "VDP 多语言漏洞检测: 10语言/50+规则的工程实现"
+      ],
+      "summary": "VDP 多语言漏洞检测: 10语言/50+规则的工程实现",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h624_h632_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H626"
+      ],
+      "keywords": [
+        "whitepaper",
+        "reproducibility",
+        "commands",
+        "白皮书附录C: 全实验复现命令清单"
+      ],
+      "summary": "白皮书附录C: 全实验复现命令清单",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h624_h632_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H627"
+      ],
+      "keywords": [
+        "observability",
+        "metrics",
+        "5-dimensional",
+        "意义场可观测量: 5维可操作化指标"
+      ],
+      "summary": "意义场可观测量: 5维可操作化指标",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h624_h632_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H628"
+      ],
+      "keywords": [
+        "stable_candidate",
+        "convergence",
+        "preprocessor",
+        "收敛映射: 稳定子候选集定义与三层预处理器"
+      ],
+      "summary": "收敛映射: 稳定子候选集定义与三层预处理器",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h624_h632_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H629"
+      ],
+      "keywords": [
+        "Type_II",
+        "dissolution",
+        "upper_bound",
+        "Type II 全博弈消解性上限"
+      ],
+      "summary": "Type II 全博弈消解性上限",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h624_h632_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H630"
+      ],
+      "keywords": [
+        "multi_agent",
+        "degradation",
+        "coordination",
+        "多Agent退化律: N > N_c 后的协同衰减"
+      ],
+      "summary": "多Agent退化律: N > N_c 后的协同衰减",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h624_h632_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H631"
+      ],
+      "keywords": [
+        "sprint",
+        "productivity",
+        "velocity",
+        "Sprint 统计: MSS 项目速度与生产率分析"
+      ],
+      "summary": "Sprint 统计: MSS 项目速度与生产率分析",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h624_h632_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H632"
+      ],
+      "keywords": [
+        "code_meaning_bridge",
+        "H647",
+        "engineering",
+        "代码→意义场量化映射定理的工程应用"
+      ],
+      "summary": "代码→意义场量化映射定理的工程应用",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h624_h632_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H647"
+      ],
+      "keywords": [
+        "代码→意义场量化映射定理"
+      ],
+      "summary": "代码→意义场量化映射定理",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h647_code_meaning_mapping.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H647-B"
+      ],
+      "keywords": [
+        "从工业规则库逆向标定稳定子候选集 — 22条SonarQube Python规则的MSS翻译"
+      ],
+      "summary": "从工业规则库逆向标定稳定子候选集 — 22条SonarQube Python规则的MSS翻译",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h647b_sq_rules_mss_translation.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H660"
+      ],
+      "keywords": [
+        "conversation",
+        "search",
+        "index",
+        "recall",
+        "ConvSearch 三源对话索引架构"
+      ],
+      "summary": "ConvSearch 三源对话索引架构",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h660_h669_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H661"
+      ],
+      "keywords": [
+        "benchmark",
+        "quality",
+        "engineering",
+        "9domains",
+        "SE-Bench 九域满分架构"
+      ],
+      "summary": "SE-Bench 九域满分架构",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h660_h669_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H662"
+      ],
+      "keywords": [
+        "observability",
+        "tombstone",
+        "decision",
+        "audit",
+        "TombstoneBrowser 决策记录系统"
+      ],
+      "summary": "TombstoneBrowser 决策记录系统",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h660_h669_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H663"
+      ],
+      "keywords": [
+        "trace",
+        "span",
+        "tree",
+        "observability",
+        "TraceManager 嵌套跨度树"
+      ],
+      "summary": "TraceManager 嵌套跨度树",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h660_h669_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H664"
+      ],
+      "keywords": [
+        "competitive_analysis",
+        "memory",
+        "search",
+        "对话搜索器 vs Mem0/Letta/Supermemory 竞品对比"
+      ],
+      "summary": "对话搜索器 vs Mem0/Letta/Supermemory 竞品对比",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h660_h669_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H665"
+      ],
+      "keywords": [
+        "testing",
+        "methodology",
+        "coverage",
+        "sprint",
+        "测试密度爬坡方法论"
+      ],
+      "summary": "测试密度爬坡方法论",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h660_h669_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H666"
+      ],
+      "keywords": [
+        "kb",
+        "json",
+        "batch",
+        "knowledge_management",
+        "KB JSON批量写入策略"
+      ],
+      "summary": "KB JSON批量写入策略",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h660_h669_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H667"
+      ],
+      "keywords": [
+        "windows",
+        "SIGKILL",
+        "job_object",
+        "testing",
+        "Windows Job Object SIGKILL 根因与规避"
+      ],
+      "summary": "Windows Job Object SIGKILL 根因与规避",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h660_h669_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H668"
+      ],
+      "keywords": [
+        "scene_router",
+        "API",
+        "routing",
+        "decision",
+        "SceneRouter float-based route_custom API"
+      ],
+      "summary": "SceneRouter float-based route_custom API",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h660_h669_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H669"
+      ],
+      "keywords": [
+        "whitepaper",
+        "documentation",
+        "evolution",
+        "白皮书 v1.0→v1.4 演化轨迹"
+      ],
+      "summary": "白皮书 v1.0→v1.4 演化轨迹",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L2_APPLICATION\\h660_h669_batch.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "benchmark_4model_83899.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\benchmark_4model_83899.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "benchmark_4model_v2_84218.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\benchmark_4model_v2_84218.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "benchmark_79557.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\benchmark_79557.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "benchmark_full_80343.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\benchmark_full_80343.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "benchmark_full_81808.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\benchmark_full_81808.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "benchmark_full_83728.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\benchmark_full_83728.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "d6_013_vcg_results.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\d6_013_vcg_results.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "e018_type4_paradox.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\e018_type4_paradox.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "e019_extended_molting.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\e019_extended_molting.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "e019_full_result.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\e019_full_result.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "e019_quick_result.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\e019_quick_result.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "e019_rest_result.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\e019_rest_result.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H620"
+      ],
+      "keywords": [
+        "AGI",
+        "game_design",
+        "projection",
+        "unconscious",
+        "AGI游戏设计的MSS结构投影: 8条无意识收敛映射"
+      ],
+      "summary": "AGI游戏设计的MSS结构投影: 8条无意识收敛映射",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\h620_game_design_projection.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H641"
+      ],
+      "keywords": [
+        "benchmark",
+        "ollama",
+        "qwen3.5",
+        "model-bug",
+        "resource-leak",
+        "qwen3.5:4b 间歇性超时诊断"
+      ],
+      "summary": "qwen3.5:4b 间歇性超时诊断",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\h641_qwen35_4b_intermittent_timeout.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [
+        "H643"
+      ],
+      "keywords": [
+        "12dim",
+        "cultural_analysis",
+        "works",
+        "作品分析12维度: 有意义工程学视角的文化产品评估"
+      ],
+      "summary": "作品分析12维度: 有意义工程学视角的文化产品评估",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\h643_works_analysis_12dim.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H645"
+      ],
+      "keywords": [
+        "E019 蜕壳实证 — 真LLM验证"
+      ],
+      "summary": "E019 蜕壳实证 — 真LLM验证",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\h645_e019_molting_empirical.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "2026-06-17T00:00:00",
+      "sprint": null,
+      "h_ids": [
+        "H646"
+      ],
+      "keywords": [
+        "E019蜕壳不对称性 — 模型能力决定蜕壳方向"
+      ],
+      "summary": "E019蜕壳不对称性 — 模型能力决定蜕壳方向",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\h646_e019_asymmetry.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "p2_v3_percolation_calibrated_87281.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\p2_v3_percolation_calibrated_87281.json",
+      "commit": ""
+    },
+    {
+      "source": "kb",
+      "timestamp": "",
+      "sprint": null,
+      "h_ids": [],
+      "keywords": [],
+      "summary": "p2_v4_nc_drift_89831.json",
+      "file": "E:\\AI_Workspace\\MSS-AI\\project\\kb\\L3_EMPIRICAL\\p2_v4_nc_drift_89831.json",
+      "commit": ""
+    }
+  ],
+  "updated": "2026-06-17T16:18:05.130797+00:00",
+  "stats": {
+    "total_entries": 312,
+    "unique_sprints": 152,
+    "unique_h_ids": 158,
+    "git": 200,
+    "memory": 24,
+    "kb": 88
+  }
+}
