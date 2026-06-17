@@ -13,20 +13,34 @@ Differences from OpenClaw:
 - Heat tax tracking instead of just token counting
 - Delta history instead of just transcript
 - Mollting support (self-evolution vs static)
+- Checkpoint/rollback (from LangGraph pattern)
 """
 
 from __future__ import annotations
+import copy
 import json
 import time
 import threading
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional, Tuple
 import os
 
 
 # ─── Data models ────────────────────────────────────────────
+
+@dataclass
+class SessionCheckpoint:
+    """A named snapshot of session state — like LangGraph's checkpoint."""
+    name: str
+    step_count: int
+    delta: float
+    heat_tax: float
+    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    steps_snapshot: List[Dict[str, Any]] = field(default_factory=list)
+    metadata_snapshot: Dict[str, Any] = field(default_factory=dict)
+
 
 @dataclass
 class SessionStep:
@@ -105,6 +119,7 @@ class MSSSession:
         self.hooks = HookRegistry()
         self._steps: List[SessionStep] = []
         self._metadata: Dict[str, Any] = {}
+        self._checkpoints: List[SessionCheckpoint] = []
         self._lock = threading.Lock()
         self._active = False
         self.auto_save = auto_save
@@ -252,6 +267,73 @@ class MSSSession:
         # Openness boost from molting
         self.cost.last_delta = min(1.0, self.cost.last_delta + 0.1)
         self._run_hooks(self.hooks.on_molt, {"reason": reason})
+
+    # ─── Checkpoint / Rollback (LangGraph pattern) ──────
+
+    def checkpoint(self, name: str) -> SessionCheckpoint:
+        """Save a named snapshot of current state."""
+        cp = SessionCheckpoint(
+            name=name,
+            step_count=self.cost.total_steps,
+            delta=self.cost.last_delta,
+            heat_tax=self.cost.total_heat_tax,
+            steps_snapshot=[asdict(s) for s in self._steps],
+            metadata_snapshot=dict(self._metadata),
+        )
+        self._checkpoints.append(cp)
+        return cp
+
+    def rollback(self, checkpoint_name: str) -> Tuple[bool, str]:
+        """Restore to a named checkpoint (destructive)."""
+        for i, cp in enumerate(self._checkpoints):
+            if cp.name == checkpoint_name:
+                # Restore state
+                self._steps = [SessionStep(**s) for s in cp.steps_snapshot]
+                self.cost.total_steps = cp.step_count
+                self.cost.total_heat_tax = cp.heat_tax
+                self.cost.last_delta = cp.delta
+                self._metadata = dict(cp.metadata_snapshot)
+                # Remove later checkpoints (they came after this one)
+                self._checkpoints = self._checkpoints[:i+1]
+                return True, f"Rolled back to checkpoint '{checkpoint_name}' (step {cp.step_count})"
+        return False, f"No checkpoint named '{checkpoint_name}' found"
+
+    def backtrack(self, steps: int) -> Tuple[bool, str]:
+        """Roll back by N steps — use nearest checkpoint + replay."""
+        if steps <= 0:
+            return False, "Steps must be > 0"
+        if steps > self.cost.total_steps:
+            return False, f"Cannot backtrack {steps} steps (only {self.cost.total_steps} total)"
+
+        target_step = self.cost.total_steps - steps
+        # Find nearest checkpoint (at or before target, or the earliest after)
+        best_cp = None
+        for cp in reversed(self._checkpoints):
+            if cp.step_count <= target_step:
+                best_cp = cp
+                break
+        
+        # If no checkpoint at/before target, use earliest checkpoint (after target)
+        if best_cp is None and self._checkpoints:
+            best_cp = self._checkpoints[0]
+
+        if best_cp is None:
+            # No checkpoint at all — just truncate steps list
+            self._steps = self._steps[:target_step]
+            self.cost.total_steps = target_step
+            # Can't recover exact heat/delta without checkpoint
+            return True, f"Backtracked {steps} steps to step {target_step} (no checkpoint — partial restore)"
+
+        # Restore from checkpoint then truncate to target
+        self.rollback(best_cp.name)
+        self.cost.total_steps = target_step
+        self._steps = self._steps[:target_step]
+        # Recalculate heat from truncated steps
+        self.cost.total_heat_tax = sum(s.heat_tax for s in self._steps)
+        return True, f"Backtracked {steps} steps to step {target_step} via checkpoint '{best_cp.name}'"
+
+    def list_checkpoints(self) -> List[Dict[str, Any]]:
+        return [{"name": cp.name, "step": cp.step_count, "delta": cp.delta} for cp in self._checkpoints]
 
     # ─── Reporting ───────────────────────────────────────
 
