@@ -1,0 +1,52 @@
+{
+  "hypothesis": "H602: Nash\u5747\u8861\u5f62\u5f0f\u5316 + \u5347\u7ef4\u6548\u5e94\u91cf",
+  "design": {
+    "n_pairs": 4,
+    "n_budgets": 5,
+    "n_seeds": 20,
+    "n_total_runs": 400,
+    "n_rounds": 20,
+    "noise_prob": 0.1,
+    "h634_version": "v2.1c (Nash\u8c41\u514d + \u53cc\u89e6\u53d1)"
+  },
+  "effect_sizes": {
+    "nash_breaker\u00d7nash_breaker": {
+      "cohens_d": 1.911,
+      "delta_eta": 0.262,
+      "delta_pct": 38.5,
+      "ci95_lo": 0.92,
+      "ci95_hi": 0.9613,
+      "significant": true
+    },
+    "nash_breaker\u00d7cautious": {
+      "cohens_d": -1.154,
+      "delta_eta": -0.1153,
+      "delta_pct": -17.1,
+      "ci95_lo": 0.5095,
+      "ci95_hi": 0.6048,
+      "significant": true
+    },
+    "adaptive\u00d7adaptive": {
+      "cohens_d": 0.29,
+      "delta_eta": 0.0445,
+      "delta_pct": 6.8,
+      "ci95_lo": 0.6018,
+      "ci95_hi": 0.787,
+      "significant": false
+    },
+    "aggressive\u00d7cautious": {
+      "cohens_d": -0.554,
+      "delta_eta": -0.0375,
+      "delta_pct": -5.8,
+      "ci95_lo": 0.5725,
+      "ci95_hi": 0.6495,
+      "significant": true
+    }
+  },
+  "interpretation": {
+    "cohens_d > 0.8": "large effect \u2192 strong causal",
+    "cohens_d 0.5-0.8": "medium effect \u2192 moderate causal",
+    "cohens_d 0.2-0.5": "small effect \u2192 weak causal",
+    "cohens_d < 0.2": "negligible \u2192 no causal"
+  }
+}
