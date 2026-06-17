@@ -1,0 +1,116 @@
+[
+  {
+    "h_id": "H650",
+    "title": "MemoryGuard 正delta 不对称性",
+    "layer": "L1_CORE_THEORY",
+    "date": "2026-06-17",
+    "tags": ["memory", "delta", "asymmetry", "guard"],
+    "summary": "MemoryGuard.observe() 仅存储正delta条目 (abs(delta) > 0.35 AND delta > 0)。负delta（错误/事故信号）被静默丢弃。这意味着ERROR/INCIDENT类别需要显式的flush()绕过机制来持久化负面事件。",
+    "formula": "mem ≠ None iff |delta| > δ_threshold AND delta > 0",
+    "status": "verified",
+    "related": ["H601", "H602", "memory_guard"]
+  },
+  {
+    "h_id": "H651",
+    "title": "delta_threshold 门限机制",
+    "layer": "L1_CORE_THEORY",
+    "date": "2026-06-17",
+    "tags": ["threshold", "memory", "filter"],
+    "summary": "MemoryGuard 使用双阈值过滤: delta_threshold=0.35（信号强度）和 decision_threshold=0.3（决策触发）。正负不对称性确保只归档\"有意义\"的增强信号，消解事件（错误、事故）不自动建立长期记忆。",
+    "formula": "store(m) iff |delta| > 0.35 AND delta > 0; decide(d) iff |delta| > 0.3",
+    "status": "verified",
+    "related": ["H650", "memory_guard"]
+  },
+  {
+    "h_id": "H652",
+    "title": "TensionLevel 浮点映射",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["tension", "enum", "measurement"],
+    "summary": "TypeIICase 的 TensionLevel 枚举使用浮点值而非整数: TRIVIAL=0.1→MAXIMAL=1.0，共10级。标准渗流 p_close 映射到 TensionLevel 需经过 sigmoid 转换而非线性分配。",
+    "levels": {"TRIVIAL": 0.1, "LOW": 0.2, "MODERATE": 0.3, "NOTABLE": 0.4, "HIGH": 0.5, "SEVERE": 0.6, "CRITICAL": 0.7, "EXTREME": 0.8, "PARADOXICAL": 0.9, "MAXIMAL": 1.0},
+    "status": "verified",
+    "related": ["H603", "H602", "type2_control"]
+  },
+  {
+    "h_id": "H653",
+    "title": "SE-Bench 八域架构",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["benchmark", "engineering", "quality"],
+    "summary": "MSS-SE-Bench v1.0 覆盖8域27例: Defer Guard(5)/Pipeline(4)/NormativeField(4)/FaultInjection(4)/Metrics(2)/MemoryGuard(3)/SceneRouter(3)/HeatTax(2)。加权总分 1.000。设计原则: 无Ollama依赖，纯Python逻辑，correctness(50%)+robustness(30%)+heat_tax(20%)。",
+    "domains": ["defer_guard×1.2", "pipeline×1.0", "normative_field×1.0", "injection×1.2", "memory_guard×0.9", "scene_router×0.9", "metrics×0.8", "heat_tax×0.8"],
+    "status": "verified",
+    "related": ["H648", "H647", "se_bench"]
+  },
+  {
+    "h_id": "H654",
+    "title": "AgentResult 热税字典追踪",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["agent", "heat_tax", "result", "tracking"],
+    "summary": "AgentResult 携带 heat_tax 字典 (default_factory=dict)，键为三层热税标签 (L0/L1/L2)，值为累积消耗。L2意义热税破坏力是L0物理热税的10⁶倍。AgentResult.success 决定是否计入有效结果，delta 跟踪意义场闭合度变化。",
+    "fields": {"success": "bool", "output": "Any", "aborted": "bool", "reason": "str", "heat_tax": "dict", "delta": "float", "elapsed_ms": "float"},
+    "status": "verified",
+    "related": ["A3", "H636", "agent"]
+  },
+  {
+    "h_id": "H655",
+    "title": "DocAgent 六数据模型族",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["document", "data_model", "import", "export"],
+    "summary": "DocAgent 提供六种结构化文档结果类型: DocExportResult(5字段)/DocImportResult(6字段)/PdfResult(3字段)/PptResult(3字段)/XlsxReadResult(4字段,多sheet)/XlsxWriteResult(4字段)。统一了 .docx/.pdf/.pptx/.xlsx 四种格式的导入导出模型。",
+    "models": ["DocExportResult", "DocImportResult", "PdfResult", "PptResult", "XlsxReadResult", "XlsxWriteResult"],
+    "status": "verified",
+    "related": ["doc_agent"]
+  },
+  {
+    "h_id": "H656",
+    "title": "SwarmNode 五Agent注册表",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["swarm", "agent", "registry", "multi-agent"],
+    "summary": "AGENT_REGISTRY 包含5个专用Agent: kb(KBAgent: search/write/audit/dedup/index), code(CodeAgent: gen/audit/refactor/syntax), video(VideoAgent: gen/render/clip/scene), translate(TranslateAgent: translate/localize/term/cultural), product(ProductAgent: spec/story/roadmap/align)。SharedStore和MessageBus为空容器(object实例)。",
+    "agents": {"kb": "KBAgent", "code": "CodeAgent", "video": "VideoAgent", "translate": "TranslateAgent", "product": "ProductAgent"},
+    "status": "verified",
+    "related": ["specialized_agents", "swarm"]
+  },
+  {
+    "h_id": "H657",
+    "title": "MeaningField 图模型",
+    "layer": "L1_CORE_THEORY",
+    "date": "2026-06-17",
+    "tags": ["meaning_field", "graph", "topology"],
+    "summary": "MeaningField 以四元组 (id, vertices, edges, stable_core) 建模意义场拓扑。边列表为有向对，stable_core 为稳定子集合。支持空核和100+节点的大图。MCDP共识消解在此图上进行余极限构造。",
+    "fields": {"id": "str", "vertices": "List[str]", "edges": "List[Tuple[str,str]]", "stable_core": "List[str]"},
+    "status": "verified",
+    "related": ["H593", "H603", "mcdp_v2"]
+  },
+  {
+    "h_id": "H658",
+    "title": "TypeIICase golden/resource 映射",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["type2", "conflict", "golden_answer", "resource"],
+    "summary": "TypeIICase 八字段结构: id/stable_a/stable_b/tension/context/golden/resources/recipients。golden 字段为人工标注的\"正确\"稳定子（可为None表示无已知答案），resources/recipients 映射系统约束和利益相关方。",
+    "fields": {"id": "str", "stable_a": "str", "stable_b": "str", "tension": "TensionLevel", "context": "str", "golden": "Optional[str]", "resources": "List[str]", "recipients": "List[str]"},
+    "status": "verified",
+    "related": ["H635", "H652", "type2_control"]
+  },
+  {
+    "h_id": "H659",
+    "title": "SceneRouter float-based API",
+    "layer": "L2_APPLICATION",
+    "date": "2026-06-17",
+    "tags": ["scene_router", "routing", "API", "decision"],
+    "summary": "SceneRouter.route_custom() 接受8个独立float/int/bool参数（非SceneContext对象）: stakes/latency_req/agent_count/duration_hours/resource_tight/requires_audit/max_heat_tax/description。返回 Dict{direction, confidence, scores, recommendation, heat_tax_estimate}。route_all_profiles() 返回 List[Dict]（非Dict）。",
+    "methods": {
+      "route_by_profile": "SceneProfile → Dict",
+      "route_custom": "8 params → Dict",
+      "route_all_profiles": "void → List[Dict]"
+    },
+    "status": "verified",
+    "related": ["scene_router", "H634"]
+  }
+]
