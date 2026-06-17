@@ -1,0 +1,48 @@
+{
+  "h_id": "H634",
+  "title": "升维的联合进入条件与单边热税惩罚",
+  "layer": "L1",
+  "category": "A6_elevation_constraint",
+  "version": "1.0",
+  "date": "2026-06-17",
+  "status": "empirically_verified",
+  "source": "E021-1 v2.1 experiment",
+  
+  "core_statement": "A6 升维操作 Φ: L0 → L1 的有效性条件是 joint_enter(L0→L1)；当邀请被拒时，系统不处于 L1，且已付 fee_entry 构成不可约化热税损失 ΔQ > 0，并可能触发对邀请方的信誉降级（GRIM 类稳定子）。因此单向 TRUST_INVITE 不是升维，是热税净损。",
+  
+  "formal_conditions": {
+    "joint_enter": "A sends INVITE ∧ B accepts ∧ both synchronously enter L1 norm field",
+    "failed_invite": "A pays fee_entry + B does not commit → ΔQ = fee_entry + penalty_failure, Δφ = -|η_after - η_before|",
+    "may_invite": "if B.open_to_trust ∧ ¬B.grim_triggered_by_invite: send INVITE else: stay L0, spend 0"
+  },
+  
+  "empirical_evidence": {
+    "experiment": "E021-1 v2.1",
+    "design": "4 strategy pairs × 5 trust_budget groups × 5 seeds × 20 rounds = 2000 rounds",
+    "key_results": {
+      "nash_breaker_x2": {"eta_gain": "+27%", "interpretation": "joint_enter satisfied → true elevation"},
+      "nash_breaker_cautious_v1": {"eta_gain": "-30%", "interpretation": "unilateral invites → pure heat tax loss"},
+      "nash_breaker_cautious_v2": {"eta_gain": "-15%", "interpretation": "H634 gate reduces loss by 50%, Nash exemption protects receiver in (D,D) lock"},
+      "adaptive_x2": {"eta_gain": "+31%", "interpretation": "H634 optimizes noise tolerance for homogeneous pairs"}
+    }
+  },
+  
+  "implementation": {
+    "state_variables": ["open_to_trust: bool", "grim_triggered_by_invite: bool", "unilateral_invite_received: int"],
+    "gate_logic": "Nash exemption (receiver in (D,D) → ignore) + 2-strike (non-Nash unilateral → count, 2nd → close)",
+    "budget_protection": "may_invite check prevents budget waste when opp_open_to_trust=False"
+  },
+  
+  "theoretical_implications": [
+    "Elevation bottleneck shifts from A3 (budget) to A5 (opponent's norm field acceptance)",
+    "Joint_enter is the irreducible unit of A6 — partial enter = no enter",
+    "H634 completes the A3-A6 bridge: A3 governs cost, A6 governs possibility, H634 governs boundary"
+  ],
+  
+  "related_entries": ["H633 (dual-threshold theorem for elevation)", "H602 (Nash equilibrium formalization)", "A6_elevation_axiom"],
+  "open_questions": [
+    "Q1: Can open_to_trust be recovered after closure? (current design: permanent GRIM)",
+    "Q2: Is multi-agent (N>2) trust closure transitive?",
+    "Q3: Optimal strike threshold for different noise levels"
+  ]
+}
