@@ -18,7 +18,7 @@ USAGE = """mssclaw — MSS AI Framework
   phase       Conflict Phase Engine (TypeⅡ单Agent工程解)
   topophase   Topological Phase Engine (锚点拓扑选择+θ驱动)
   adaptive    Adaptive Topological Phase Engine (活性检测+抗僵化重锚定)
-  pipeline    Pipeline分支/流式 + 去中心化VCG
+  pipeline   生产级Pipeline (重试+熔断+回退+热税) [--test|--demo|<config.json>]
   mcdp        Multi-Agent Conflict Resolution Protocol
   mcdp2       MCDP v0.2: N>2 Mean Field + Decentralized L2.5 Gossip
   route       场景抉择路由器 (方向1 vs 方向2)
@@ -261,6 +261,60 @@ def cmd_absorb(args_rest):
         print(f"    {d}")
 
 
+def cmd_pipeline(args_rest):
+    """生产级Pipeline执行."""
+    if not args_rest:
+        print("mssclaw pipeline <config.json>")
+        print("  --test   运行内置生产测试")
+        print("  --demo   运行示例Pipeline")
+        return
+
+    if "--test" in args_rest:
+        from mssclaw.core.pipeline import StreamingPipeline, PipeNode, ProductionConfig
+        config = ProductionConfig(max_retries=2, circuit_breaker_threshold=3)
+        pl = StreamingPipeline("production_test", config)
+        x = {"c": 0}
+        def retry_node(ctx): x["c"] += 1; return {"ok": True} if x["c"] > 1 else (_ for _ in()).throw(RuntimeError("transient"))
+        pl.add_node(PipeNode("init", lambda c: {"step": 1}), is_start=True)
+        pl.add_node(PipeNode("retry", retry_node, retry_count=2), after=["init"])
+        pl.add_node(PipeNode("final", lambda c: {"done": True}), after=["retry"])
+        result = pl.run_production()
+        print(pl.summary())
+        print(f"\n✅ Production pipeline test: {result['nodes_executed']} nodes, CB={'TRIPPED' if result['circuit_breaker']['tripped'] else 'OK'}")
+        return
+
+    if "--demo" in args_rest:
+        from mssclaw.core.pipeline import StreamingPipeline, PipeNode
+        pl = StreamingPipeline("demo_pipeline")
+        pl.add_node(PipeNode("fetch", lambda c: {"data": [1,2,3,4,5]}), is_start=True)
+        pl.add_node(PipeNode("filter", lambda c: {"filtered": [x for x in c.get("fetch",{}).get("data",[]) if x>2]}), after=["fetch"])
+        pl.add_node(PipeNode("aggregate", lambda c: {"sum": sum(c.get("filter",{}).get("filtered",[]))}), after=["filter"])
+        result = pl.run_production()
+        print(pl.summary())
+        print(f"\n  Result: {pl.context}")
+        return
+
+    # Load from JSON config
+    import json
+    with open(args_rest[0], 'r', encoding='utf-8') as f:
+        cfg = json.load(f)
+    from mssclaw.core.pipeline import StreamingPipeline, PipeNode, ProductionConfig
+    config = ProductionConfig(**cfg.get("production", {}))
+    pl = StreamingPipeline(cfg.get("name", "custom"), config)
+    for node_def in cfg.get("nodes", []):
+        fn_code = node_def["fn"]
+        fn = eval(fn_code, {"__builtins__": {}}, {"ctx": None})
+        pl.add_node(PipeNode(
+            name=node_def["name"],
+            fn=lambda c, f=fn: f(c),
+            retry_count=node_def.get("retry", 0),
+            fallback_pipe=node_def.get("fallback"),
+            timeout_s=node_def.get("timeout", 30.0),
+        ), is_start=node_def.get("start", False), after=node_def.get("after"))
+    result = pl.run_production()
+    print(pl.summary())
+
+
 def cmd_status(args_rest):
     """全系统状态面板."""
     from mssclaw.core.delta_monitor import DeltaMonitor
@@ -370,6 +424,7 @@ def main():
         "models": lambda r: __import__('mssclaw.core.model_catalog', fromlist=['cmd_models']).cmd_models(r),
         "health": cmd_health,
         "status": cmd_status,
+        "pipeline": cmd_pipeline,
         "version": cmd_version,
     }
 

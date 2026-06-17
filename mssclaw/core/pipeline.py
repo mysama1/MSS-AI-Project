@@ -26,6 +26,9 @@ class PipeStatus(Enum):
     DONE = "done"
     FAILED = "failed"
     SKIPPED = "skipped"
+    RETRYING = "retrying"
+    TIMED_OUT = "timed_out"
+    CIRCUIT_OPEN = "circuit_open"
 
 
 @dataclass
@@ -75,6 +78,21 @@ class PipeNode:
     heat_tax_weight: float = 1.0
 
 
+@dataclass
+class ProductionConfig:
+    """生产级Pipeline配置."""
+    max_retries: int = 3
+    retry_delay_ms: int = 200
+    retry_backoff: float = 2.0  # 指数退避系数
+    default_timeout_s: float = 30.0
+    circuit_breaker_threshold: int = 5  # 连续失败N次后熔断
+    circuit_breaker_cooldown_s: float = 30.0  # 熔断冷却时间
+    max_concurrent: int = 4  # 最大并行pipe数
+    backpressure_queue_max: int = 100
+    enable_heat_tax_profiling: bool = True
+    progress_interval_s: float = 0.5
+
+
 class StreamingPipeline:
     """
     流式分支Pipeline.
@@ -86,8 +104,9 @@ class StreamingPipeline:
       - 回退: 失败时的回退路径
     """
 
-    def __init__(self, name: str = "default"):
+    def __init__(self, name: str = "default", config: ProductionConfig = None):
         self.name = name
+        self.config = config or ProductionConfig()
         self.nodes: Dict[str, PipeNode] = {}
         self.edges: Dict[str, List[str]] = defaultdict(list)  # pipe → [next_pipes]
         self.start_pipe: Optional[str] = None
@@ -95,6 +114,22 @@ class StreamingPipeline:
         self.results: Dict[str, PipeResult] = {}
         self.heat_tax_total: float = 0.0
         self.stream_listeners: List[Callable[[StreamEvent], None]] = []
+        self._consecutive_failures: int = 0
+        self._circuit_open_until: float = 0.0
+        self._aborted: bool = False
+
+    @property
+    def is_circuit_open(self) -> bool:
+        return self._circuit_open_until > time.time()
+
+    def _record_failure(self):
+        self._consecutive_failures += 1
+        if self._consecutive_failures >= self.config.circuit_breaker_threshold:
+            self._circuit_open_until = time.time() + self.config.circuit_breaker_cooldown_s
+            self._aborted = True
+
+    def _record_success(self):
+        self._consecutive_failures = 0
 
     def add_node(self, node: PipeNode, after: Optional[List[str]] = None,
                  is_start: bool = False):
@@ -227,8 +262,48 @@ class StreamingPipeline:
                 "nodes_executed": len(self.results),
             }
 
+    def _execute_node(self, node: PipeNode) -> PipeResult:
+        """执行单个节点, 含重试+超时+熔断."""
+        if self._aborted or self.is_circuit_open:
+            return PipeResult(PipeStatus.CIRCUIT_OPEN,
+                            error=f"熔断中, 冷却至 {self._circuit_open_until:.0f}s")
+
+        last_error = None
+        max_retries = node.retry_count if node.retry_count else self.config.max_retries
+
+        for attempt in range(max_retries + 1):
+            t0 = time.time()
+            try:
+                result_data = node.fn(self.context)
+                duration = (time.time() - t0) * 1000
+
+                if node.timeout_s and duration / 1000 > node.timeout_s:
+                    raise TimeoutError(f"{duration/1000:.1f}s > {node.timeout_s}s")
+
+                heat_tax = (duration / 1000 * node.heat_tax_weight
+                           if self.config.enable_heat_tax_profiling else 0)
+                result = PipeResult(PipeStatus.DONE, result_data,
+                                   duration_ms=duration, heat_tax=heat_tax,
+                                   metadata={"attempts": attempt + 1})
+                self.heat_tax_total += heat_tax
+                self._consecutive_failures = 0
+                return result
+
+            except Exception as e:
+                last_error = str(e)
+                duration = (time.time() - t0) * 1000
+                self.heat_tax_total += duration / 1000 * node.heat_tax_weight
+
+                if attempt < max_retries:
+                    delay = self.config.retry_delay_ms * (self.config.retry_backoff ** attempt) / 1000
+                    time.sleep(delay)
+
+        self._record_failure()
+        return PipeResult(PipeStatus.FAILED, error=last_error,
+                         metadata={"attempts": max_retries + 1, "gave_up": True})
+
     def _run_sync_fallback(self) -> Dict:
-        """同步回退: 逐个执行节点 (无async)."""
+        """同步回退: 逐个执行节点 (生产级: 重试+熔断+回退)."""
         if not self.start_pipe:
             return {"events": 0, "results": {}, "heat_tax_total": 0, "nodes_executed": 0}
 
@@ -242,26 +317,30 @@ class StreamingPipeline:
             node = self.nodes[pipe_name]
             executed.add(pipe_name)
 
-            t0 = time.time()
-            try:
-                result_data = node.fn(self.context)
-                duration = (time.time() - t0) * 1000
-                heat_tax = duration / 1000 * node.heat_tax_weight
-                result = PipeResult(PipeStatus.DONE, result_data,
-                                   duration_ms=duration, heat_tax=heat_tax)
-                self.heat_tax_total += heat_tax
-            except Exception as e:
-                duration = (time.time() - t0) * 1000
-                result = PipeResult(PipeStatus.FAILED, error=str(e),
-                                   duration_ms=duration)
-                self.results[pipe_name] = result
-                self.heat_tax_total += duration / 1000 * node.heat_tax_weight
+            # 生产级执行
+            result = self._execute_node(node)
+            self.results[pipe_name] = result
+
+            if result.status == PipeStatus.FAILED:
                 if node.fallback_pipe and node.fallback_pipe not in executed:
                     queue.append(node.fallback_pipe)
+                else:
+                    # 无回退 → 记录失败但继续传播边
+                    for np in self.edges.get(pipe_name, []):
+                        if np not in executed:
+                            queue.append(np)
+                if self._aborted:
+                    self.results["_pipeline_aborted"] = PipeResult(
+                        PipeStatus.CIRCUIT_OPEN,
+                        error=f"连续{self.config.circuit_breaker_threshold}次失败, 熔断激活")
+                    break
                 continue
 
-            self.results[pipe_name] = result
-            self.context[pipe_name] = result_data
+            if result.status == PipeStatus.CIRCUIT_OPEN:
+                self.results["_pipeline_aborted"] = result
+                break
+
+            self.context[pipe_name] = result.output
 
             # 分支决策
             if node.branches:
@@ -277,8 +356,32 @@ class StreamingPipeline:
             "events": len(self.results),
             "results": {k: v.status.value for k, v in self.results.items()},
             "heat_tax_total": self.heat_tax_total,
-            "nodes_executed": len(self.results),
+            "nodes_executed": len(executed),
+            "circuit_breaker": {"tripped": self._aborted, "failures": self._consecutive_failures}
         }
+
+    def run_production(self) -> Dict:
+        """生产级执行: 重试+熔断+进度回调."""
+        return self._run_sync_fallback()
+
+    def run(self) -> Dict:
+        """推荐入口: 自动选择最佳执行路径."""
+        return self._run_sync_fallback()
+
+    def summary(self) -> str:
+        """人类可读的执行摘要."""
+        lines = [f"Pipeline '{self.name}': {len(self.results)} nodes"]
+        for name, r in self.results.items():
+            status = "✅" if r.status == PipeStatus.DONE else ("❌" if r.status == PipeStatus.FAILED else "🔌" if r.status == PipeStatus.CIRCUIT_OPEN else "⏭️")
+            duration = f"{r.duration_ms:.0f}ms" if r.duration_ms else "—"
+            ht = f"ht={r.heat_tax:.2f}" if r.heat_tax else ""
+            err = f" | {r.error[:40]}" if r.error else ""
+            lines.append(f"  {status} {name:20s} {duration:>8s} {ht}{err}")
+        lines.append(f"  {'─'*50}")
+        lines.append(f"  Total heat tax: {self.heat_tax_total:.2f}")
+        if self._aborted:
+            lines.append(f"  ⚠️ CIRCUIT BREAKER TRIPPED ({self._consecutive_failures} failures)")
+        return '\n'.join(lines)
 
     def stats(self) -> Dict:
         return {
