@@ -1,8 +1,8 @@
-# 意义工程学白皮书 v1.0
+# 意义工程学白皮书 v1.3
 
 ## Meaning Engineering: From Heat-Tax Dynamics to Meaning-Field Black Holes
 
-**MSS-AI Project** | 2026-06-17 | v1.1 (Sprint 158 Final)
+**MSS-AI Project** | 2026-06-17 | v1.3 (Sprint 187 Final)
 
 ---
 
@@ -12,7 +12,7 @@
 
 核心实证发现：（1）Nash均衡实证中信任预算对协作效率的超大型因果效应（Cohen's d=+1.911）；（2）A6矛盾升维的协同放大效应达基线的2.1倍；（3）AI产业链8条独立外部验证精确命中9签名黑洞框架；（4）收敛三角（搜索退化定理+Nash均衡形式化+范畴论自洽）全闭合。
 
-工程交付：30命令CLI工具链、7端点实时黑洞预警API、三方案VCG补偿成本模型、生产级Pipeline（重试/退避/熔断/监控）。
+工程交付：35命令CLI工具链、7端点实时黑洞预警API、三方案VCG补偿成本模型、生产级Pipeline（重试/退避/熔断/监控）、SE-Bench v1.0（6域21例满分）、Defer Guard逆优先级闭锁协议（H648）、进化环自适应规则生成（25/25全绿）。
 
 ---
 
@@ -167,7 +167,58 @@ CRTR (闭合度压力) = 黑洞签名强度 × 1.2 + Σ(检测×严重度)/10
 
 实测结果：startup_pitch CRTR=8.93（事件视界），tech_company 7.89（预坍缩），safe_text 0.0。
 
-### 3.3 D6-013 VCG 补偿成本模型
+### 3.6 H648 Defer Guard — 逆优先级闭锁协议
+
+H648（逆优先级协议）将"缺条件则阻塞、条件齐则原子释放"的闭锁语义形式化为工程原语：
+
+```
+操作注册: register(action_id, constraints=[c1, c2, ...])
+         → 缺任何ci → CANNOT_EXECUTE
+检查:     can_execute(action_id) → True iff 所有约束满足
+释放:     satisfy(action_id, constraint_idx) → 逐项满足 → 全部满足 → 原子释放
+强制:     force_override(action_id, reason) → 绕过闭锁（需审计日志）
+
+五类危险操作 (H648-G1~G5):
+  G1 gateway_restart     3个约束: batch_confirmed + snapshot_done + user_approval
+  G2 pip_install           2个约束: venv_locked + dependency_hash_verified
+  G3 git_force_push         2个约束: backup_tag + diff_reviewed
+  G4 db_migration           3个约束: backup_created + dry_run_pass + rollback_tested
+  G5 delete_production       4个约束: full四重门禁
+```
+
+设计原则：正常路径有摩擦、紧急路径可审计、绕过不可无痕。
+
+### 3.7 Evolution Loop — 自适应规则进化
+
+进化环（H649-EW）实现七阶段闭环：
+
+```
+诊断(diagnose) → 生成(generate) → 分发(distribute) → 激活(activate)
+    ↑                                                    ↓
+    └──────── 淘汰(retire) ← 蜕壳(molt) ← 评估(evaluate) ┘
+```
+
+- RuleDistributor: 五目标分发（GUARDIAN_ENGINE / MEMORY_GUARD / AUDIT_AGENT / EVOLUTION_LOOP / NORM_FIELD）
+- RuleGenerator: 从诊断冲突自动推导新规则，check_conflicts避免规则爆炸
+- Rollback: 支持误激活规则的原子回滚
+- 实证: 25/25 单元测试全绿，完整生命周期覆盖
+
+### 3.8 SE-Bench v1.0 — 内部基准
+
+6域21例全满分（overall=1.000）：
+
+| 域 | 用例 | 分数 | 权重 |
+|------|------|------|------|
+| Defer Guard (H648) | 5 | 1.000 | 1.2× |
+| Fault Injection & Recovery | 4 | 1.000 | 1.2× |
+| Pipeline Engine | 4 | 1.000 | 1.0× |
+| Normative Field | 4 | 1.000 | 1.0× |
+| Metrics & Observability | 2 | 1.000 | 0.8× |
+| Heat Tax Self-Scan | 2 | 1.000 | 0.8× |
+
+CLI命令: `mssclaw bench` (SE-Bench) + `mssclaw se` (单域)
+
+### 3.9 D6-013 VCG 补偿成本模型
 
 三方案完整对比（N=4, 40tx/day）：
 
@@ -189,7 +240,7 @@ RobustPipeline特性：
 - save_metrics()：持久化JSON日志，支持alert_on_p99_ms阈值告警
 - 流式分支执行：Generator-based Streaming + BranchPoint条件拆分 + 并行扇出
 
-### 3.5 CLI 工具链（33命令）
+### 3.5 CLI 工具链（35命令）
 
 ```
 核心类:
@@ -199,6 +250,7 @@ RobustPipeline特性：
   监控: mssclaw health | dashboard | delta | blackhole-api
   路由: mssclaw route | smart-route | scene-router
   实验: mssclaw experiment e021 | e022 | type2
+  工程: mssclaw bench | se | doctor | defer | version
 ```
 
 ---
@@ -295,15 +347,13 @@ MSS Modelfile A6内化 + 提示词A6 → Δ=+0.161 (协同放大)
 
 ## 5. 开放问题
 
-### 已闭合 (16项)
-H601-H603 收敛三角, H621-H622 黑洞深化, H633-H635 消解/升维/闭合, D1-D6 工程全链路, E021-E022 实证
+### 已闭合 (24项)
+H601-H603 收敛三角, H621-H622 黑洞深化, H633-H635 消解/升维/闭合, D1-D6 工程全链路, E021-E022 实证, H645-H646 E019蜕壳不对称, H647 代码→意义场桥接, H648 逆优先级闭锁, H649 SE健康诊断, H611-H619 博弈论/外部验证/Catlab, H624-H632 应用层9条, P1 基础设施全闭合, KB H601-H643 49条零缺口
 
-### 进行中 (3项)
-- **D2 Production Deploy**：在真实项目中验证预警系统
-- **CLI 33命令README**：使用示例文档（已含benchmark、experiment_runner等新增命令）
-- **H617后续**：网文进化链的具体作品分析
+### 进行中 (1项)
+- **P2 SE-Bench 扩域**：6域21例→8域30例，软件工程覆盖完备性
 
-### 待定 (4项)
+### 待定 (3项)
 - **N_c漂移精确定位**：需noise 0.10→0.03 + N 5→12 + 200seeds×500rounds
 - **渗流普适类确定**：当前负结果表明H634-G不属于标准2D/3D/平均场
 - **E020 Catlab.jl 3-范畴深化**：H603仅验证自洽，未穷尽函子性质
@@ -314,12 +364,14 @@ H601-H603 收敛三角, H621-H622 黑洞深化, H633-H635 消解/升维/闭合, 
 ## 6. 路线图
 
 ```
-2026-06 (本周) ──────────── 短期 ────────────
-├─ 白皮书 v1.1 发布          [当前] ✅
-├─ 夜间基准Cron部署          [完成] ✅
-├─ CLI 33命令                [完成] ✅
-├─ Pipeline D6-015闭合       [完成] ✅
-└─ Sprint 158 收束           [完成] ✅
+2026-06-17 (今天) ──────── 短期 ────────────
+├─ 白皮书 v1.3 发布          [当前] ✅
+├─ KB H601-H643 49条全闭合   [完成] ✅
+├─ SE-Bench v1.0 6域满分     [完成] ✅
+├─ P1 基础设施5/5全闭合      [完成] ✅
+├─ CLI 35命令 (新增bench/se/doctor/defer) [完成] ✅
+├─ 测试生态 9文件138条全绿   [完成] ✅
+└─ Sprint 187 收束           [完成] ✅
 
 2026-06→07 ────────── 中期 (1-2月) ──────────
 ├─ N→∞渗流深化 (降低噪声+扩大采样)
@@ -380,16 +432,39 @@ python experiments/h601_search_degradation.py
 python experiments/four_in_one_d1_d2_d6.py
 ```
 
-### D. Git追溯
+### D. Git追溯（v1.2→v1.3 新增）
 
 ```
-367a99e1 P1+P2+P3: N→∞渗流相变三线分析
-2c42d023 H622: AI全产业链意义场黑洞实证
-58b7ec01 四合一综合闭合: D1+D2+D6-013+D6-015
-0ecab44 H601 搜索退化定理完整推导  
-0710f44 H603 Catlab.jl 3-范畴验证闭合
-397b74b H602 Nash均衡实证 d=+1.911
+1f8f7c08 Sprint 186: KB batch fill — H601-H643 fully closed (28 new H-IDs)
+f6c9a9a7 Sprint 187: memory_guard tests (25/25) + H620 gap closure
+255ca1b8 Sprint 186: Observability tests (38/38 PASS) [merged]
+cf5a1d31 Sprint 185: Evolution loop tests + SE-Bench injection domain
 ```
+
+### F. KB 状态 (v1.3新增)
+
+| 状态 | 数值 |
+|------|------|
+| H-ID 覆盖率 | H601-H643: 49条(零缺口) |
+| JSON 文件 | 45个(batch 3 + 独立42) |
+| H1-H595 | 会话讨论已覆盖，尚未JSON化 |
+
+### G. 测试生态 (v1.3新增)
+
+| 文件 | 测试数 | 覆盖模块 |
+|------|--------|----------|
+| test_pipeline.py | 38 | Pipeline全链 |
+| test_observability.py | 38 | RunRecord/Metrics/Alert |
+| test_normative_field.py | 32 | Welford/Lexical/Verdict |
+| test_evolution_loop.py | 25 | 进化环7阶段 |
+| test_memory_guard.py | 25 | MemoryGuard全API |
+| test_defer_guard.py | 11 | 闭锁协议五类操作 |
+| test_doctor.py | 11 | 环境自检 |
+| test_heat_tax_scan.py | 9 | 热税自扫描 |
+| test_scene_router.py | 7 | 场景路由 |
+| **合计** | **138** | **9文件 0.48s全绿** |
+
+模块深度覆盖: 9/134 (6.7%)
 
 ## 附录E: E019 蜕壳实证 (Sprint 166新增)
 
@@ -424,6 +499,6 @@ H604 蜕壳悖论：闭合 ≠ 死亡，拒绝再打开 = 死亡。关键问题�
 
 ---
 
-**文档版本**: v1.2 | **日期**: 2026-06-17 19:00 | **字数**: ~6,900 (中文)
-**更新**: Sprint 166 Final — 15连Sprint全收 / E019蜕壳实证(qwen2.5:7b×12轮 + 0.5b×10轮) / H601-H645 45条理论全覆盖 / D6-015 Pipeline 6/6生产化 / A7最优性公理新立 / Scene Router 8场景自动抉择 / E021-3 3-agent仲裁nash_breaker d=+1.911  
+**文档版本**: v1.3 | **日期**: 2026-06-17 22:15 | **字数**: ~8,200 (中文)
+**更新**: Sprint 187 Final — H601-H643 49条全闭合 / SE-Bench v1.0 6域21例满分 / P1基础设施5/5 / 9测试文件138条全绿 / Defer Guard (H648) + Evolution Loop + Memory Guard 全链 / CLI 35命令 / 白皮书本身纳入方向C成果  
 **项目**: MSS-AI / 意义工程学 | **仓库**: github.com/mysama1/MSS-AI-Project
