@@ -324,6 +324,12 @@ def cmd_benchmark(args_rest):
     run_benchmark()
 
 
+def cmd_doctor(args_rest):
+    """环境诊断 — 检查Python/pip/Ollama/Julia/路径/磁盘."""
+    from mssclaw.core.doctor import run_diagnosis, format_diagnosis
+    print(format_diagnosis(run_diagnosis()))
+
+
 def cmd_defer(args_rest):
     """H648 逆优先级闭锁 — defer_after检查/注册/强制覆盖."""
     from mssclaw.core.defer_guard import get_guard, auto_register_dangerous_actions
@@ -567,6 +573,7 @@ def main():
         "experiment": lambda r: __import__('mssclaw.core.experiment_runner', fromlist=['main']).main(r),
         "se": cmd_se,
         "benchmark": cmd_benchmark,
+        "doctor": cmd_doctor,
         "defer": cmd_defer,
         "version": cmd_version,
     }
