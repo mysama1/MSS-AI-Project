@@ -22,6 +22,7 @@ USAGE = """mssclaw — MSS AI Framework
   mcdp        Multi-Agent Conflict Resolution Protocol
   mcdp2       MCDP v0.2: N>2 Mean Field + Decentralized L2.5 Gossip
   route       场景抉择路由器 (方向1 vs 方向2)
+  t2exp       TypeⅡ对照实验 (方向1-MCDP vs 方向2-相位机)
   auto-layer  自动分层 (L0->L3)
   mcp         MCP协议客户端
   defend      闭环防御管线
@@ -347,6 +348,7 @@ def main():
         "mcdp": lambda r: __import__('mssclaw.core.mcdp', fromlist=['cmd_mcdp']).cmd_mcdp(r),
         "mcdp2": lambda r: __import__('mssclaw.core.mcdp_v2', fromlist=['cmd_mcdp2']).cmd_mcdp2(r),
         "route": lambda r: __import__('mssclaw.core.scene_router', fromlist=['cmd_router']).cmd_router(r),
+        "t2exp": lambda r: __import__('mssclaw.core.type2_control_experiment', fromlist=['cmd_t2experiment']).cmd_t2experiment(r),
         "auto-layer": lambda r: __import__('mssclaw.core.auto_layering', fromlist=['cmd_auto_layer']).cmd_auto_layer(r),
         "mcp": lambda r: __import__('mssclaw.core.mcp_client', fromlist=['cmd_mcp']).cmd_mcp(r),
         "defend": lambda r: __import__('mssclaw.core.defense_pipeline', fromlist=['cmd_defend']).cmd_defend(r),
