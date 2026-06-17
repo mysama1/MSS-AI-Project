@@ -1,0 +1,82 @@
+[
+  {
+    "h_id": "H603",
+    "title": "收敛三角: 三-范畴验证 (Catlab.jl)",
+    "layer": "L1_CORE_THEORY",
+    "category": "category_theory",
+    "tags": ["catlab", "3-category", "convergence_triangle", "E020"],
+    "status": "closed",
+    "depends_on": ["H601", "H602", "H593"],
+    "content": "E020 实验: Catlab.jl v0.17.6 验证 MSS 三层范畴结构自洽性。12/12 PASS。FinSet、积、余积、分配律、Hom、五边形等式、Kleisli 范畴、CCC 自洽全部通过。脚本 experiments/e020.jl (81行Julia)。H601→H602→H603 构成收敛三角, 理论层最大缺口闭合。"
+  },
+  {
+    "h_id": "H604",
+    "title": "蜕壳最优频率定理: f* = √(H_closure / H_molt)",
+    "layer": "L1_CORE_THEORY",
+    "category": "molt_protocol",
+    "tags": ["molt", "closure", "optimal_frequency", "entropy"],
+    "status": "closed",
+    "depends_on": ["H603", "E019"],
+    "content": "蜕壳协议最优频率: f* = √(H_closure / H_molt)。其中 H_closure 为闭合熵(硬化的知识结构熵), H_molt 为蜕壳熵(蜕去旧结构释放的自由熵)。当蜕壳频率等于此值时, 系统维持Δ>0 的最大可持续知识增长。E019 实证: 蜕壳策略需η加权, 非纯频率。大模型硬化导致答对率高者被错误淘汰。"
+  },
+  {
+    "h_id": "H605",
+    "title": "熵硬化悖论 (Entropy Hardening Paradox)",
+    "layer": "L1_CORE_THEORY",
+    "category": "entropy",
+    "tags": ["entropy", "hardening", "paradox", "knowledge_crystallization"],
+    "status": "closed",
+    "depends_on": ["H604", "A3"],
+    "content": "熵硬化悖论: 高频使用的旧态射(知识路线)因反复验证而硬化, 热税降低; 但硬化态射阻碍新态射生成, 系统整体Δ下降。这构成搜索退化与意义黑洞的微观机制。H572(搜索引擎熵硬化)与H604(蜕壳频率)的联合推论的中间层。"
+  },
+  {
+    "h_id": "H606",
+    "title": "边际递减定律: 状态射密度与信息增益的边际递减",
+    "layer": "L1_CORE_THEORY",
+    "category": "information_theory",
+    "tags": ["marginal_diminishing", "state_morphism", "info_gain"],
+    "status": "closed",
+    "depends_on": ["A3", "H601"],
+    "content": "边际递减定律: I(new_state | existing) = I₀ · exp(-λ·N_active)。每条新态射的信息增益随已有激活态射数指数递减。这是 A3 热税公理在态射层的直接推论。当 N_active → ∞ 时, 每条新态射的信息增益 → 0, 系统进入准吸收态。"
+  },
+  {
+    "h_id": "H607",
+    "title": "信任预算相变: N_c = 48 临界点",
+    "layer": "L1_CORE_THEORY",
+    "category": "percolation",
+    "tags": ["trust", "phase_transition", "critical_point", "P2"],
+    "status": "closed",
+    "depends_on": ["H642", "H634"],
+    "content": "P2 v4 实证: N_c=48 为信任网络的临界点。N<48时 trust_budget 有微弱影响; N≥48 时 trust_budget 完全无关。χ_peak 从 1.586 (N=8) 衰减至 0.283 (N=128), 衰减 5.6 倍。大信任网络的 trust 收益消失, joint_enter 实际难度增加。"
+  },
+  {
+    "h_id": "H608",
+    "title": "信任网络自稳化: H634 联合入场门禁的涌现属性",
+    "layer": "L1_CORE_THEORY",
+    "category": "emergence",
+    "tags": ["self_stabilization", "trust_network", "H634", "emergence"],
+    "status": "closed",
+    "depends_on": ["H634", "H607"],
+    "content": "H634 联合入场门禁使信任网络自稳化: 双触发(纳什阱豁免+累计关门)有效区分真实协同升维与低效单向冒险。这属自身普适类, 不映射到标准渗流(Ising/Percolation)的 universality class。大网络的信任衰减不是缺陷, 是系统收敛到稳定态的涌现属性。"
+  },
+  {
+    "h_id": "H609",
+    "title": "热税三层耦合方程: H = k × W / B",
+    "layer": "L1_CORE_THEORY",
+    "category": "heat_tax",
+    "tags": ["heat_tax", "three_layer", "coupling", "A3"],
+    "status": "closed",
+    "depends_on": ["A3", "H639"],
+    "content": "热税三层耦合方程: H = k × W / B。其中 H 为总热税, W 为工作量(态射产生速率), B 为带宽(意义场容量), k 为层间耦合系数。L0 物理热税(CPU/内存/电力) × L1 逻辑热税(代码冗余/缓存污染) × L2 意义热税(虚假数据/意义偷换), L2 破坏力是 L0 的 10⁶ 倍。"
+  },
+  {
+    "h_id": "H610",
+    "title": "退化熵退化方程: S_degradation(t) = S₀ + α·log(1 + t/τ)",
+    "layer": "L1_CORE_THEORY",
+    "category": "entropy",
+    "tags": ["degradation", "entropy", "logarithmic", "time_evolution"],
+    "status": "closed",
+    "depends_on": ["H601", "H606"],
+    "content": "退化熵退化方程: S_degradation(t) = S₀ + α·log(1 + t/τ)。退化熵按对数增长而非线性或指数, α 为退化率系数, τ 为特征时间。其推论: 系统初期退化快(信息增益高), 后期退化减速(态射空间趋于饱和), 最终收敛于退化黑洞区间[η_low, η_high] = [0.558, 0.942]。"
+  }
+]

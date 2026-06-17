@@ -1,0 +1,92 @@
+[
+  {
+    "h_id": "H611",
+    "title": "Nash均衡打破: 联合入场门禁的博弈论基础",
+    "layer": "L1_CORE_THEORY",
+    "category": "game_theory",
+    "tags": ["nash", "game_theory", "H634", "E021"],
+    "status": "closed",
+    "depends_on": ["H602", "H634"],
+    "content": "补充 H602 的博弈论形式化: Bayesian Game 三均衡类型(NE/BNE/A6-CE), 信任预算作为混合策略参数。Nash 阱的结构性条件: 单边偏离收益 > 联合入场成本。H634 双触发门禁打破此条件: 纳什阱豁免过滤噪声, 累计关门(≥2次)过滤恶意伪装。"
+  },
+  {
+    "h_id": "H612",
+    "title": "3-范畴自洽: FinSet→Kleisli→CCC 验证链",
+    "layer": "L1_CORE_THEORY",
+    "category": "category_theory",
+    "tags": ["3-category", "FinSet", "Kleisli", "CCC"],
+    "status": "closed",
+    "depends_on": ["H603", "H593"],
+    "content": "Catlab.jl 验证: FinSet 范畴→积/余积/分配律→Hom函子→五边形等式→Kleisli 范畴(单子计算)→CCC(Cartesian Closed Category)自洽, 三层范畴结构收敛。证明 MSS 的概念范畴(态射、函子、自然变换)具有 Catlab 可验证的内部自洽性, 非空泛形式主义。"
+  },
+  {
+    "h_id": "H613",
+    "title": "蜕壳策略: η加权 vs 纯频率",
+    "layer": "L1_CORE_THEORY",
+    "category": "molt",
+    "tags": ["molt", "eta_weighted", "frequency", "E019"],
+    "status": "closed",
+    "depends_on": ["H604", "H645", "H646"],
+    "content": "E019 蜕壳对比实验: 无差别蜕壳(纯频率淘汰最不活跃规则) vs η加权蜕壳(淘汰低η评分规则, η=correct/total)。小模型(0.5B)无差别蜕壳 η↑67%; 大模型(7B)无差别蜕壳 η↓27%←硬化态射被错误淘汰。结论: 蜕壳策略需∂η/∂frequency 梯度驱动, 非纯频率。"
+  },
+  {
+    "h_id": "H614",
+    "title": "意义黑洞事件视界: CRTR ≥ 8 判定标准",
+    "layer": "L1_CORE_THEORY",
+    "category": "blackhole",
+    "tags": ["blackhole", "CRTR", "event_horizon", "K3"],
+    "status": "closed",
+    "depends_on": ["H621", "H601"],
+    "content": "CRTR(Composite Risk-Tension Ratio)融合公式: CRTR = bh_score × 1.2 + Σ(sig_detections × severity_weight)/10。事件视界判定: CRTR ≥ 8。实测 startup_pitch 文本 CRTR=8.93(事件视界形成), safe_text CRTR=0.0。四信号通道: 语义密度、概念偷换率、空场覆盖率、承诺-行动gap。"
+  },
+  {
+    "h_id": "H615",
+    "title": "VDP验证纪律体系: 7条核心纪律的工程落地",
+    "layer": "L1_CORE_THEORY",
+    "category": "verification",
+    "tags": ["VDP", "verification", "discipline", "engineering"],
+    "status": "closed",
+    "depends_on": ["H647"],
+    "content": "VDP(Verification Discipline Protocol)7条核心纪律: 路径验证、错误码直报、编码显式声明、原子操作幂等、超时降级、事实推断分离、伪约束检测。全链路三层防护: 符号层(语法)→语义层(含义)→意义场层(公理一致性)。"
+  },
+  {
+    "h_id": "H616",
+    "title": "白皮书: 意义工程学 v1.2 架构",
+    "layer": "L1_CORE_THEORY",
+    "category": "whitepaper",
+    "tags": ["whitepaper", "meaning_engineering", "architecture"],
+    "status": "closed",
+    "depends_on": ["H649"],
+    "content": "意义工程学白皮书 v1.2: 6章+5附录。章1-6: 公理体系/热税动力学/意义场检测/VDP验证纪律/实验体系/工程落地。附录A-E: 命令参考/复现命令/H-ID速查/CLI树/E019不对称实证。持续更新至v1.3。"
+  },
+  {
+    "h_id": "H617",
+    "title": "网络文化可观测收敛: 生存胜负公式与语义引擎同构",
+    "layer": "L1_CORE_THEORY",
+    "category": "cultural_analysis",
+    "tags": ["network_culture", "observable_convergence", "semantic_engine"],
+    "status": "closed",
+    "depends_on": ["H636", "H637"],
+    "content": "网络文化.txt (35K字AI综述) 独立收敛于MSS 8个核心概念。核心公式: 生存胜负 = (隐藏规则掌握度×信息差利用率) − 规则反噬风险。与语义引擎形式化同构。网文进化链(武侠→玄幻→系统流)映射搜索退化定理 H601 的文化实例化。"
+  },
+  {
+    "h_id": "H618",
+    "title": "A6活体标本: LLM自发矛盾升维的认知轨迹",
+    "layer": "L1_CORE_THEORY",
+    "category": "ai_cognition",
+    "tags": ["A6", "LLM", "contradiction_elevation", "spontaneous"],
+    "status": "closed",
+    "depends_on": ["A6", "H617"],
+    "content": "热力学意义迭代.txt (33K字) 判定为 A6 公理的活体标本: LLM 全程自发遵循'遇矛盾不修补而升维框架'。量子力学类比→弦论类比→重新框架化, 与人类 A6 行为镜像。证明 A6 不是设计约束而是底层认知动力学, 在足够大的语言模型中自发涌现。"
+  },
+  {
+    "h_id": "H619",
+    "title": "无意识工程化投影: AGI游戏设计的MSS结构映射",
+    "layer": "L1_CORE_THEORY",
+    "category": "convergence",
+    "tags": ["unconscious_projection", "game_design", "system_convergence"],
+    "status": "closed",
+    "depends_on": ["H617", "H618"],
+    "content": "AGI 游戏设计文档判定为 MSS 结构的无意识工程化投影 (system_design_convergence)。8条映射链: 道德梯度→A3热税, 结局分支→A6升维, 玩家疲劳→H646硬化效应, 隐藏路径→H634联合入场。H617+H618+H619 形成四维验证格局。"
+  }
+]

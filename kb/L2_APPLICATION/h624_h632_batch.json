@@ -1,0 +1,92 @@
+[
+  {
+    "h_id": "H624",
+    "title": "CRTR 融合公式的实证校准: startup_pitch 基准",
+    "layer": "L2_APPLICATION",
+    "category": "blackhole_detection",
+    "tags": ["CRTR", "empirical_calibration", "startup_pitch"],
+    "status": "closed",
+    "depends_on": ["H614", "H621"],
+    "content": "CRTR 融合公式实证校准: bh_score×1.2 + Σ(sig_detections×severity_weight)/10。startup_pitch 基准: CRTR=8.93(事件视界形成), 四信号全触发。safe_text: CRTR=0.0。校准数据集: 15条高危文本+15条安全文本, 阈值校准为≥8.0。D2 FastAPI 预警上线。"
+  },
+  {
+    "h_id": "H625",
+    "title": "VDP 多语言漏洞检测: 10语言/50+规则的工程实现",
+    "layer": "L2_APPLICATION",
+    "category": "vdp",
+    "tags": ["VDP", "multilingual", "scanner", "PyPI"],
+    "status": "closed",
+    "depends_on": ["H615", "H647"],
+    "content": "VDP v2.0.0 PyPI 发布: 10语言(Python/JS/TS/Rust/Java/C++/Go/Ruby/PHP/C#), 24工具, 50+规则。AST优先原则(不依赖文本级regex)。Scanner→Rule 统一架构。19/19 smoke PASS。Pipeline 全绿(GitHub Actions+GitLab CI 双轨)。"
+  },
+  {
+    "h_id": "H626",
+    "title": "白皮书附录C: 全实验复现命令清单",
+    "layer": "L2_APPLICATION",
+    "category": "reproducibility",
+    "tags": ["whitepaper", "reproducibility", "commands"],
+    "status": "closed",
+    "depends_on": ["H616"],
+    "content": "意义工程学白皮书附录C: 全实验复现命令清单。包含 benchmark(5模型×12题)、E021-1/2/3 博弈论实验、P2渗流分析、E019蜕壳、E020 Catlab、blackhole_monitor、pipeline 测试等 12 个实验的完整命令和预期输出。"
+  },
+  {
+    "h_id": "H627",
+    "title": "意义场可观测量: 5维可操作化指标",
+    "layer": "L2_APPLICATION",
+    "category": "observability",
+    "tags": ["observability", "metrics", "5-dimensional"],
+    "status": "closed",
+    "depends_on": ["H601", "H614"],
+    "content": "意义场 5 维可观测量: (1) η=correct/total 输出质量比; (2) CRTR 复合风险-张力比; (3) Δ=开放度; (4) S_degradation 退化熵; (5) trust_budget 信任预算。五维联合构成意义场健康仪表盘, 任何一维单独使用均有盲区。"
+  },
+  {
+    "h_id": "H628",
+    "title": "收敛映射: 稳定子候选集定义与三层预处理器",
+    "layer": "L2_APPLICATION",
+    "category": "convergence_mapping",
+    "tags": ["stable_candidate", "convergence", "preprocessor"],
+    "status": "closed",
+    "depends_on": ["H647"],
+    "content": "稳定子候选集定义: 代码中不受变更传播影响的语义不变结构。三层预处理器: L0 Ruff(速筛)→L1 Semgrep(AST稳定子发现)→L2 Bandit(安全稳定子候选)。Bootstrap MSS 意义场判断的候选生成管道。不独立判定, 仅做候选供给。"
+  },
+  {
+    "h_id": "H629",
+    "title": "Type II 全博弈消解性上限",
+    "layer": "L2_APPLICATION",
+    "category": "game_theory",
+    "tags": ["Type_II", "dissolution", "upper_bound"],
+    "status": "closed",
+    "depends_on": ["H634", "H635"],
+    "content": "Type II 矛盾消解的三方案对照: 方向1 MCDP(VCG补偿, low-stakes最优); 方向2 Phase Engine(相位近拟拟合, 实时交互最优); 方向3 VCG+Phase 混合。实证上限: Type I-III 平均 η=0.851, Type IV 由于需要 C₃→C₄ 第四层而降至 0.672(3.61σ)。"
+  },
+  {
+    "h_id": "H630",
+    "title": "多Agent退化律: N > N_c 后的协同衰减",
+    "layer": "L2_APPLICATION",
+    "category": "multi_agent",
+    "tags": ["multi_agent", "degradation", "coordination"],
+    "status": "closed",
+    "depends_on": ["H607", "H608"],
+    "content": "多Agent退化律: 当 N > N_c=48 时, 协同效率按 ~1/log N 衰减。添加更多Agent的边际协同收益 → 0。E021-2 验证: Nash-breaker ×2(η=0.748) > adaptive ×2(0.688) > cautious mix(0.648)。最优策略不是增加Agent而是选择正确的 pair 策略。"
+  },
+  {
+    "h_id": "H631",
+    "title": "Sprint 统计: MSS 项目速度与生产率分析",
+    "layer": "L2_APPLICATION",
+    "category": "productivity",
+    "tags": ["sprint", "productivity", "velocity"],
+    "status": "closed",
+    "depends_on": ["H649"],
+    "content": "MSS 项目 Sprint 统计(截至 Sprint 185): 185 sprints, ~20KB 测试代码/天, ~3-4 commits/sprint。峰值速度 Sprint 152-185(34 sprints in ~6h): P1 5/5闭合, SE-Bench 1.000, 测试 113/113。模块测试覆盖率: 45/134(33.6% 已触达, 4.5% 深度覆盖)。"
+  },
+  {
+    "h_id": "H632",
+    "title": "代码→意义场量化映射定理的工程应用",
+    "layer": "L2_APPLICATION",
+    "category": "engineering",
+    "tags": ["code_meaning_bridge", "H647", "engineering"],
+    "status": "closed",
+    "depends_on": ["H647", "H628"],
+    "content": "H647 代码→意义场量化映射定理的工程应用: (1) Ruff/Semgrep/Bandit 三层预处理器生成候选; (2) MSS 意义场判断最终裁决; (3) H634 门禁确保只有联合入场通过的高质量修复流入主分支。全链路: 探矿钻头(Ruff)→地质采样(Semgrep/Bandit)→地质学家(MSS)。"
+  }
+]

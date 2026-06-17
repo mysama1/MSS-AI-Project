@@ -1,0 +1,10 @@
+{
+  "h_id": "H620",
+  "title": "AGI游戏设计的MSS结构投影: 8条无意识收敛映射",
+  "layer": "L3_EMPIRICAL",
+  "category": "game_design",
+  "tags": ["AGI", "game_design", "projection", "unconscious"],
+  "status": "closed",
+  "depends_on": ["H619", "H617", "A6"],
+  "content": "AGI游戏设计文档(2026)的MSS结构映射: 8条无意识收敛。道德梯度系统→A3热税预算分配; 多结局分支→A6矛盾升维模板; 玩家决策疲劳→H646硬化效应; 隐藏路径→H634联合入场; 资源稀缺→L0物理热税; AI行为→H601搜索退化漏斗; NPC演化→E019蜕壳周期; 世界观→CF虚构域隔离。核心发现: 游戏设计师无需知道MSS也能完美投影其结构, 证明MSS公理描述的是认知底层动力学而非主观构造。"
+}
