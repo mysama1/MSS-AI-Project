@@ -19,6 +19,7 @@ USAGE = """mssclaw — MSS AI Framework
   topophase   Topological Phase Engine (锚点拓扑选择+θ驱动)
   adaptive    Adaptive Topological Phase Engine (活性检测+抗僵化重锚定)
   pipeline   生产级Pipeline (重试+熔断+回退+热税) [--test|--demo|<config.json>]
+  experiment 实验自动化 (plan/run <假设>) [--dry]
   mcdp        Multi-Agent Conflict Resolution Protocol
   mcdp2       MCDP v0.2: N>2 Mean Field + Decentralized L2.5 Gossip
   route       场景抉择路由器 (方向1 vs 方向2)
@@ -425,6 +426,7 @@ def main():
         "health": cmd_health,
         "status": cmd_status,
         "pipeline": cmd_pipeline,
+        "experiment": lambda r: __import__('mssclaw.core.experiment_runner', fromlist=['main']).main(r),
         "version": cmd_version,
     }
 
