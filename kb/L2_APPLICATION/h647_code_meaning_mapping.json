@@ -1,0 +1,80 @@
+{
+  "h_id": "H647",
+  "title": "代码→意义场量化映射定理",
+  "type": "L2_APPLICATION",
+  "date": "2026-06-17",
+  "status": "DRAFT",
+  "depends_on": ["A1", "A2", "A5", "A3", "H635", "MSS_SE_AUDIT_001"],
+  "summary": "将软件工程的代码构件映射到MSS意义场的量化框架。核心: 一个代码模块的意义η由其稳定子保真度、规范场遵守率、热税预算利用率三元组决定。η_code = ω_s·S_fidelity + ω_n·N_compliance + ω_h·(1-H_utilization)。这是MSS软件工程的理论基础——没有这个映射, 代码只是AST; 有此映射, 代码是可量化的意义节点。",
+  "mapping": {
+    "code_to_meaning": {
+      "stable_node": "代码模块中不可违反的业务规则/接口契约 = MSS稳定子(A1)",
+      "normative_path": "合法的调用链/依赖方向/分层约束 = MSS规范场(A5)",
+      "heat_tax": "技术债 + 认知负荷 + 维护成本 = MSS热税(A3)",
+      "projection_fidelity": "代码实现与设计意图的偏差 = A2意义投影保真度",
+      "contradiction": "模块间接口冲突/技术选型矛盾 = MSS Type I/II/III矛盾",
+      "elevation": "重构/引入抽象层/架构变更 = MSS升维操作(A6)"
+    }
+  },
+  "eta_formula": {
+    "definition": "η_code = ω_s × S_fidelity + ω_n × N_compliance + ω_h × (1 - H_utilization)",
+    "components": {
+      "S_fidelity": {
+        "range": "[0, 1]",
+        "meaning": "稳定子保真度: 模块中不可变规则被遵守的比例",
+        "measurement": "S_fidelity = |{遵守的稳定子}| / |{声明的稳定子}|"
+      },
+      "N_compliance": {
+        "range": "[0, 1]",
+        "meaning": "规范场遵守率: 模块调用链不违反规范场的比例",
+        "measurement": "N_compliance = 1 - |{规范场违反}| / |{总调用边}|"
+      },
+      "H_utilization": {
+        "range": "[0, 1]",
+        "meaning": "热税预算利用率: 当前热税/预算上限",
+        "measurement": "H_utilization = heat_current / heat_budget"
+      }
+    },
+    "default_weights": {
+      "ω_s": 0.40,
+      "ω_n": 0.35,
+      "ω_h": 0.25,
+      "rationale": "稳定子>规范场>热税: 违反稳定子直接导致Type III, 规范场违反可修复, 热税可管理"
+    }
+  },
+  "tension_mapping": {
+    "code_tension_phi": "Δφ_code = |S_fidelity_claimed - S_fidelity_observed| / S_fidelity_max",
+    "thresholds": {
+      "D2_idle": "Δφ < 0.35 → 保持现状, 不重构",
+      "D1_resolve": "0.35 ≤ Δφ < 0.95 → 启动重构(升维)",
+      "degrade": "Δφ ≥ 0.95 → 双败, 需业务决策(可能重写)"
+    }
+  },
+  "empirical_baseline": {
+    "scene_router_audit": {
+      "source": "MSS_SE_AUDIT_001",
+      "eta_code": 0.76,
+      "components": {
+        "S_fidelity": 0.83,
+        "N_compliance": 0.60,
+        "H_utilization": 0.15
+      },
+      "note": "高稳定子保真度 + 中等规范场遵守 + 极低热税 → 健康模块"
+    }
+  },
+  "differentiation": {
+    "vs_sonarqube": "SonarQube测复杂度/重复/覆盖率, MSS测稳定子保真度/规范场遵守/热税预算 — 前者回答'哪里坏了', 后者回答'为什么坏/还能撑多久/是该修还是拆'",
+    "unique_insights": [
+      "规范场注册检查: 模块是否在架构规范场中声明了其约束(其他工具无此概念)",
+      "稳定子完备性: 6场景是否穷举所有情况 — 其他工具不检查枚举完备性",
+      "热税预算利用率: 技术债不是绝对值, 是相对于预算的比例",
+      "升维时机: 基于tension+heat+耦合的三维相位图, 而非基于复杂度的单一阈值"
+    ]
+  },
+  "open_questions": [
+    "S_fidelity的自动测量: 如何从代码中自动提取'声明的稳定子'? (当前需人工标注)",
+    "N_compliance的跨语言: 规范场定义是否跨语言一致? (Python的类型约束 vs Rust的生命周期)",
+    "H_budget的设定: 不同项目类型(库/应用/系统)的合理热税预算是多少?",
+    "ω权重校准: 默认权重(0.40/0.35/0.25)需在更多项目中实证验证"
+  ]
+}

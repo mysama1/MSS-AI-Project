@@ -1,0 +1,407 @@
+{
+  "project": "mssclaw",
+  "files": 199,
+  "lines": 2527,
+  "eta_code": 0.926,
+  "S_fidelity": 1.0,
+  "N_compliance": 0.893,
+  "H_utilization": 0.145,
+  "violations": [
+    {
+      "file": "agents\\base.py",
+      "line": 23,
+      "type": "illegal_import",
+      "severity": 0.42,
+      "desc": "反向依赖: 层1→层0 (core.heat_tax)",
+      "suggestion": "引入接口抽象层或移动目标模块到同层/上层"
+    },
+    {
+      "file": "agents\\base.py",
+      "line": 24,
+      "type": "illegal_import",
+      "severity": 0.42,
+      "desc": "反向依赖: 层1→层0 (core.delta)",
+      "suggestion": "引入接口抽象层或移动目标模块到同层/上层"
+    },
+    {
+      "file": "agents\\base.py",
+      "line": 25,
+      "type": "illegal_import",
+      "severity": 0.42,
+      "desc": "反向依赖: 层1→层0 (core.guardian_engine)",
+      "suggestion": "引入接口抽象层或移动目标模块到同层/上层"
+    },
+    {
+      "file": "agents\\base.py",
+      "line": 26,
+      "type": "illegal_import",
+      "severity": 0.42,
+      "desc": "反向依赖: 层1→层0 (core.normative_field)",
+      "suggestion": "引入接口抽象层或移动目标模块到同层/上层"
+    },
+    {
+      "file": "agents\\code.py",
+      "line": 15,
+      "type": "illegal_import",
+      "severity": 0.42,
+      "desc": "反向依赖: 层1→层0 (core.feedback_evolution)",
+      "suggestion": "引入接口抽象层或移动目标模块到同层/上层"
+    },
+    {
+      "file": "agents\\code.py",
+      "line": 86,
+      "type": "illegal_import",
+      "severity": 0.42,
+      "desc": "反向依赖: 层1→层0 (core.heat_tax)",
+      "suggestion": "引入接口抽象层或移动目标模块到同层/上层"
+    },
+    {
+      "file": "agents\\personal.py",
+      "line": 27,
+      "type": "illegal_import",
+      "severity": 0.42,
+      "desc": "反向依赖: 层1→层0 (core.normative_field)",
+      "suggestion": "引入接口抽象层或移动目标模块到同层/上层"
+    },
+    {
+      "file": "agents\\personal.py",
+      "line": 28,
+      "type": "illegal_import",
+      "severity": 0.42,
+      "desc": "反向依赖: 层1→层0 (core.personal_norm_field)",
+      "suggestion": "引入接口抽象层或移动目标模块到同层/上层"
+    },
+    {
+      "file": "agents\\personal.py",
+      "line": 31,
+      "type": "illegal_import",
+      "severity": 0.42,
+      "desc": "反向依赖: 层1→层0 (core.heat_tax)",
+      "suggestion": "引入接口抽象层或移动目标模块到同层/上层"
+    },
+    {
+      "file": "agents\\personal.py",
+      "line": 32,
+      "type": "illegal_import",
+      "severity": 0.42,
+      "desc": "反向依赖: 层1→层0 (core.delta)",
+      "suggestion": "引入接口抽象层或移动目标模块到同层/上层"
+    },
+    {
+      "file": "agents\\personal.py",
+      "line": 33,
+      "type": "illegal_import",
+      "severity": 0.42,
+      "desc": "反向依赖: 层1→层0 (core.guardian_engine)",
+      "suggestion": "引入接口抽象层或移动目标模块到同层/上层"
+    },
+    {
+      "file": "core\\digest_engine.py",
+      "line": 26,
+      "type": "incomplete_enum",
+      "severity": 0.68,
+      "desc": "枚举 DigestMode 只有2个成员, 可能存在Type II选项空间不足",
+      "suggestion": "考虑是否遗漏枚举值, 或使用动态注册模式 (A7创造, H635)"
+    },
+    {
+      "file": "core\\eta_heat_tax_bridge.py",
+      "line": 22,
+      "type": "incomplete_enum",
+      "severity": 0.68,
+      "desc": "枚举 BreachType 只有2个成员, 可能存在Type II选项空间不足",
+      "suggestion": "考虑是否遗漏枚举值, 或使用动态注册模式 (A7创造, H635)"
+    },
+    {
+      "file": "core\\eta_heat_tax_bridge.py",
+      "line": 26,
+      "type": "incomplete_enum",
+      "severity": 0.68,
+      "desc": "枚举 EvolutionType 只有2个成员, 可能存在Type II选项空间不足",
+      "suggestion": "考虑是否遗漏枚举值, 或使用动态注册模式 (A7创造, H635)"
+    },
+    {
+      "file": "core\\heat_tax.py",
+      "line": 276,
+      "type": "incomplete_enum",
+      "severity": 0.68,
+      "desc": "枚举 HeatTaxMode 只有2个成员, 可能存在Type II选项空间不足",
+      "suggestion": "考虑是否遗漏枚举值, 或使用动态注册模式 (A7创造, H635)"
+    },
+    {
+      "file": "core\\mcdp.py",
+      "line": 34,
+      "type": "incomplete_enum",
+      "severity": 0.68,
+      "desc": "枚举 AgentRole 只有2个成员, 可能存在Type II选项空间不足",
+      "suggestion": "考虑是否遗漏枚举值, 或使用动态注册模式 (A7创造, H635)"
+    },
+    {
+      "file": "core\\meaning_temperature.py",
+      "line": 28,
+      "type": "incomplete_enum",
+      "severity": 0.68,
+      "desc": "枚举 MeaningAgent 只有2个成员, 可能存在Type II选项空间不足",
+      "suggestion": "考虑是否遗漏枚举值, 或使用动态注册模式 (A7创造, H635)"
+    },
+    {
+      "file": "cli.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 cli 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "agents\\base.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 agents.base 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "agents\\code.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 agents.code 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "agents\\personal.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 agents.personal 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "agents\\plan.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 agents.plan 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "agents\\video_prompt_agent.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 agents.video_prompt_agent 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\advanced_tool_calling.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.advanced_tool_calling 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\agent_chat.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.agent_chat 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\agent_pipeline.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.agent_pipeline 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\agent_server.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.agent_server 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\backend_selector.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.backend_selector 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\chrome_import.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.chrome_import 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\cognitive_framework.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.cognitive_framework 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\defense_pipeline.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.defense_pipeline 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\delta_callback.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.delta_callback 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\delta_monitor.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.delta_monitor 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\demo.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.demo 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\experiment_runner.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.experiment_runner 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\init_env.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.init_env 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\live_demo.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.live_demo 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\model_orchestrator.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.model_orchestrator 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\mss_model_test.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.mss_model_test 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\ollama_benchmark.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.ollama_benchmark 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\tool_budget_gate.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.tool_budget_gate 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\vault_cli.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.vault_cli 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\vault_health.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.vault_health 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\vault_server.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.vault_server 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\vault_stats.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.vault_stats 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    },
+    {
+      "file": "core\\semantic\\dual_shell_architecture.py",
+      "line": 0,
+      "type": "orphan_module",
+      "severity": 0.35,
+      "desc": "模块 core.semantic.dual_shell_architecture 未在规范场中注册",
+      "suggestion": "在 normative_field.py 中声明此模块的规范约束"
+    }
+  ],
+  "hotspots": [
+    {
+      "file": "core\\vault_cli.py",
+      "heat": 0.6
+    },
+    {
+      "file": "cli.py",
+      "heat": 0.582
+    },
+    {
+      "file": "core\\agent_chat.py",
+      "heat": 0.48
+    },
+    {
+      "file": "core\\cognitive_framework.py",
+      "heat": 0.402
+    },
+    {
+      "file": "core\\live_demo.py",
+      "heat": 0.369
+    }
+  ],
+  "elevation": [
+    "⚠️ 6个高严重度违反 (severity>0.5): core\\eta_heat_tax_bridge.py, core\\digest_engine.py",
+    "🔷 Type II风险: 6个枚举可能不完备 (core\\digest_engine.py, core\\eta_heat_tax_bridge.py, core\\eta_heat_tax_bridge.py) — 考虑动态注册 (A7创造, H635)",
+    "👻 29个孤儿模块未注册规范场 — 需要 normative_field 声明或确认独立合法性",
+    "✅ 整体健康 (η=0.93), D2_idle — 保持现状"
+  ]
+}
