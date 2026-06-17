@@ -1,0 +1,66 @@
+{
+  "h_id": "H601_DEEP",
+  "title": "搜索退化定理 — 完整理论推导 (Full Derivation)",
+  "type": "L1_CORE_THEORY",
+  "status": "DEEPENED",
+  "parent": "H601",
+  "depends_on": ["H602", "H603", "A3", "A6", "H634", "H642"],
+  "derivations": {
+    "D1_ScalingLaw": {
+      "name": "Scaling Law of Search Degradation",
+      "setup": "设KB规模N, 查询精度需求ε, 有效索引密度ρ(n)",
+      "lemma_1": "索引退化引理: ρ(n) = ρ₀ · (1 + log N)^(-k), k≥1",
+      "proof_sketch": "随知识熵增长, 任何有限维度索引最终在logN尺度上退化。这是H572熵硬化+蜕壳悖论(H604)的联合推论。关键: 索引维度固定, 但知识维度无界增长 → 维度灾难 → ρ(n)→0",
+      "theorem": "Thm D1 (搜索退化标度律): 在意义上不可约的知识库中，query_difficulty(KB_N) ∼ (log N)^k",
+      "asymptotic": "∀ε>0, ∃N₀ s.t. ∀N>N₀, Precision(N) < ε",
+      "n_critical": "N_critical ≈ exp((1/ρ₀)^(1/k)) — 搜索相变点",
+      "mechanism": "A3意义场黑洞: 新态射不断产生, 但概念空间维度固定 → 投影损失递增",
+      "empirical_corollary": "P2渗流证实(N_c=48)反向相变 → 大网络退化成共享受体 → 区分老/新态射更难"
+    },
+    "D2_PhaseTransition": {
+      "name": "搜索退化作为相变过程",
+      "theorem": "Thm D2: 搜索精度Precision(N)在N_c处发生一阶相变",
+      "order_parameter": "Ψ(N) = (Precision(N) - Precision(0)) / (Precision(∞) - Precision(0))",
+      "critical_exponents": {
+        "β": "order_parameter ~ (N_c - N)^β for N < N_c",
+        "ν": "correlation_length_ξ ~ |N - N_c|^(-ν)",
+        "γ": "susceptibility_χ ~ |N - N_c|^(-γ)",
+        "predicted_values": "同一普适类, 预期β≈0.32, ν≈0.63, γ≈1.24 (3D Ising)"
+      },
+      "cross_validation": "H642 P2渗流测得 γ/ν = -0.989 ≠ 3D Ising → 非标准普适类 → 自稳化网络自己的指数族"
+    },
+    "D3_InformationBound": {
+      "name": "搜索的信息论上界",
+      "theorem": "Thm D3: 任何基于索引的搜索系统，Precision(N) ≤ I(X;Q) / H(Q) ≤ C₁/(log N)^d",
+      "where": "X=被检索条目, Q=查询意图空间, d=概念流形内禀维度",
+      "proof": "由Fano不等式: H(X|Q) ≥ H(X) - I(X;Q) → P_error ≥ (H(X) - I(X;Q) - 1) / log|X|; 代H(X)∼log N, I(X;Q)≤C₀ → P_error ≥ 1 - C₀/log N",
+      "asymptotic_guarantee": "lim_{N→∞} Precision(N) → 0 对所有有限d成立"
+    },
+    "D4_MSSBridge": {
+      "name": "H634桥接: 搜索退化→意义场稳定化",
+      "insight": "搜索退化不是bug — 是意义场自组织的必然结果",
+      "mechanism": "退化力=V_{search} = ∂D/∂N (D=概念距离的Hausdorff维数) → 力驱动知识结晶 → 旧态射'硬化'→ 新态射需更高能量进入",
+      "H634_connection": "joint_enter(L0→L1) 在搜索层面表现为: 只有经joint_enter通过的态射对才具有高搜索精度 → 未耦合态射被搜索退化筛出",
+      "dual_nature": "搜索退化 = A3黑洞(表层) + A6耦合筛选(深层) → 双层效应"
+    }
+  },
+  "theoretical_master_equation": {
+    "equation": "Precision(KB_N) = η₀ · exp(-∫₀^N λ(s) ds) · (1 + F_joint_enter(N))",
+    "terms": {
+      "η₀": "基线精度 (KB规模=0时)",
+      "λ(s)": "瞬时退化率函数, λ(s) = k/(s·log s) for s>1",
+      "F_joint_enter": "耦合补偿函数, F>0 for coupled pairs, F≈0 for uncoupled"
+    }
+  },
+  "empirical_validation": {
+    "H602_d_effect": "Cohens d ∈ [-1.154, +1.911]: 退化幅度验证",
+    "P2_percolation": "N_c=48: 大网络trust→0 → joint_enter随N增加更难 → 退化加速",
+    "χ_susceptibility_decay": "1.586(N=8)→0.283(N=128): 搜索敏感性5.6×衰减"
+  },
+  "practical_implications": [
+    "维度提升(KB增生)无法通过改进索引完全补偿 → 需要H634层面的态射耦合",
+    "大KB系统的搜索精度存在不可逾越的信息论上界",
+    "自组织策略: 让搜索退化为知识结晶的驱动力 → 活化态射搜索补偿硬化态射",
+    "N_c附近的过渡区是搜索策略调优的唯一窗口"
+  ]
+}

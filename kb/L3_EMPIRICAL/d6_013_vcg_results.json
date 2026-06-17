@@ -1,0 +1,163 @@
+{
+  "d_id": "D6-013",
+  "version": "D6-013 v1.0",
+  "n_configs": [
+    3,
+    4,
+    5,
+    6,
+    8
+  ],
+  "n_seeds": 50,
+  "overall_truthful_rate": 0.96,
+  "total_budget_surplus": 4792.861478648905,
+  "aggregates": {
+    "3": {
+      "welfare": 109.97490750692427,
+      "budget_ratio": 0.0,
+      "truthful_rate": 1.0
+    },
+    "4": {
+      "welfare": 178.79852606236634,
+      "budget_ratio": 0.0,
+      "truthful_rate": 1.0
+    },
+    "5": {
+      "welfare": 200.8870336204486,
+      "budget_ratio": 0.03337905382958085,
+      "truthful_rate": 1.0
+    },
+    "6": {
+      "welfare": 242.64595755430625,
+      "budget_ratio": 0.11034650671127709,
+      "truthful_rate": 0.94
+    },
+    "8": {
+      "welfare": 273.6135643403196,
+      "budget_ratio": 0.19644158021248007,
+      "truthful_rate": 0.86
+    }
+  },
+  "raw": [
+    {
+      "n": 3,
+      "seed": 0,
+      "welfare": 169.4865417695062,
+      "payment_total": 0.0,
+      "budget_ratio": 0.0,
+      "allocated": 3,
+      "resource_util": 0.725,
+      "max_incentive": 0,
+      "n_incentive_gainers": 0,
+      "truthful": 1
+    },
+    {
+      "n": 3,
+      "seed": 1,
+      "welfare": 63.802521828097376,
+      "payment_total": 0.0,
+      "budget_ratio": 0.0,
+      "allocated": 1,
+      "resource_util": 0.1992,
+      "max_incentive": 0,
+      "n_incentive_gainers": 0,
+      "truthful": 1
+    },
+    {
+      "n": 3,
+      "seed": 2,
+      "welfare": 0,
+      "payment_total": 0.0,
+      "budget_ratio": 0.0,
+      "allocated": 0,
+      "resource_util": 0.0,
+      "max_incentive": 0,
+      "n_incentive_gainers": 0,
+      "truthful": 1
+    },
+    {
+      "n": 3,
+      "seed": 3,
+      "welfare": 134.08052750148175,
+      "payment_total": 0.0,
+      "budget_ratio": 0.0,
+      "allocated": 3,
+      "resource_util": 0.5151,
+      "max_incentive": 0,
+      "n_incentive_gainers": 0,
+      "truthful": 1
+    },
+    {
+      "n": 3,
+      "seed": 4,
+      "welfare": 82.15559438524153,
+      "payment_total": 0.0,
+      "budget_ratio": 0.0,
+      "allocated": 1,
+      "resource_util": 0.2388,
+      "max_incentive": 0,
+      "n_incentive_gainers": 0,
+      "truthful": 1
+    },
+    {
+      "n": 3,
+      "seed": 5,
+      "welfare": 109.09140733163993,
+      "payment_total": 0.0,
+      "budget_ratio": 0.0,
+      "allocated": 2,
+      "resource_util": 0.4488,
+      "max_incentive": 0,
+      "n_incentive_gainers": 0,
+      "truthful": 1
+    },
+    {
+      "n": 3,
+      "seed": 6,
+      "welfare": 139.06388905428508,
+      "payment_total": 0.0,
+      "budget_ratio": 0.0,
+      "allocated": 2,
+      "resource_util": 0.3215,
+      "max_incentive": 0,
+      "n_incentive_gainers": 0,
+      "truthful": 1
+    },
+    {
+      "n": 3,
+      "seed": 7,
+      "welfare": 86.3881570833816,
+      "payment_total": 0.0,
+      "budget_ratio": 0.0,
+      "allocated": 2,
+      "resource_util": 0.2325,
+      "max_incentive": 0,
+      "n_incentive_gainers": 0,
+      "truthful": 1
+    },
+    {
+      "n": 3,
+      "seed": 8,
+      "welfare": 83.08776170079508,
+      "payment_total": 0.0,
+      "budget_ratio": 0.0,
+      "allocated": 2,
+      "resource_util": 0.4989,
+      "max_incentive": 0,
+      "n_incentive_gainers": 0,
+      "truthful": 1
+    },
+    {
+      "n": 3,
+      "seed": 9,
+      "welfare": 167.9108991278447,
+      "payment_total": 0.0,
+      "budget_ratio": 0.0,
+      "allocated": 3,
+      "resource_util": 0.452,
+      "max_incentive": 0,
+      "n_incentive_gainers": 0,
+      "truthful": 1
+    }
+  ]
+}
