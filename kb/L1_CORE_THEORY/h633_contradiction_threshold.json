@@ -1,0 +1,55 @@
+{
+  "h_id": "H633",
+  "title": "矛盾消解操作的双阈值定理: tension_crit 与 degrade_crit",
+  "version": "v2.0",
+  "date": "2026-06-17",
+  "source": "E022-v2 (Sprint 150, 600 trials v1.0 + 600 trials v2.0)",
+  "status": "verified",
+  "layer": "L1",
+  "category": "contradiction_resolution",
+
+  "v2_changelog": "v1.0 使用相位不稳定性 ((d_a-d_b)/(d_a+d_b))² 作为矛盾强度 → 滤波过激。v2.0 改用 case.tension 直接测量矛盾强度 → 精确标定。关键教训: 矛盾强度(原因) ≠ 相位不稳定性(症状)，滤波器必须作用于原因。",
+
+  "core_claim": "存在两个关键阈值 tension_crit=0.35 和 degrade_crit=0.95，将矛盾处理空间分为三个区域: 零热税区(tension < 0.35) 无需任何消解操作，升维区(0.35 ≤ tension < 0.95) D1 升维消解优于 D2 相位调度，双败区(tension ≥ 0.95) 无论 D1/D2 均无法消解，需触发降级协议。",
+
+  "theorem": {
+    "name": "矛盾消解双阈值定理",
+    "statement": "设意义场中两个冲突稳定子的矛盾强度为 tension ∈ [0,1]。存在两个阈值 tension_crit < degrade_crit，使得: (1) tension < tension_crit → 不执行消解操作，D2 idle 零热税，η ≥ 0.90；(2) tension_crit ≤ tension < degrade_crit → D1 升维消解显著优于 D2，Δη ≥ +0.10；(3) tension ≥ degrade_crit → 双方均不可消解，需降级。阈值取值为 tension_crit=0.35, degrade_crit=0.95。",
+    "derivation": "从 A3 热税公理: D1 升维操作热税 Q_D1=850 tok, D2 idle 热税 Q_D2_idle=5 tok。在低张力区，D1 的 η 增益不足以覆盖其热税折损 → D2 idle 更优。在高张力区，D2 的相位切换开始产生 η 损失(滞回) → D1 的升维覆盖全面性产生净收益。在极值区，双方均达到物理边界 C₃→C₄。",
+    "measurement_correction": "v1.0 错误使用相位不稳定性 σ²=((d_a-d_b)/(d_a+d_b))² 作为矛盾强度。该指标测量的是'系统当前有多摇摆'而非'稳定子当前有多对立'。v2.0 改用 case.tension 直接测量矛盾强度——原因而非症状。",
+    "axiom_link": "A3(不可约化热税): 所有操作产生不可约化热税，本定理是 A3 在矛盾处理场景的定量特化。分三区对应三种热税效率: 零热税(idle) / 有效热税(D1升维) / 无效热税(degrade)."
+  },
+
+  "experimental_evidence": {
+    "experiment": "Sprint 150 TypeⅡ 对照实验",
+    "total_trials": 1200,
+    "v1_baseline": {"result": "D1 +10% success, D2 10x cheaper, η reversal at low tension"},
+    "v2_prefilter": {"result": "D2 η at low tension 0.62→0.95, overall η 0.658→0.718, heat tax 85→64 tok"},
+    "three_region_fit": {
+      "region_I_idle": {"tension": "0.1-0.3", "measured_best": "D2_idle", "η_range": "0.90-0.95", "fit": "perfect"},
+      "region_II_elevate": {"tension": "0.4-0.9", "measured_best": "D1_resolve", "η_range": "0.35-0.97", "fit": "perfect"},
+      "region_III_degrade": {"tension": "1.0", "measured_best": "neither", "η_range": "0.0-0.25", "fit": "perfect"}
+    }
+  },
+
+  "engineering_spec": {
+    "arbiter": "ConflictArbiter 统一调度 D1/D2，三分支决策: if tension < 0.35 → D2_idle / elif tension < 0.95 → D1_resolve / else → degrade",
+    "implementation": "mssclaw/core/conflict_arbiter.py",
+    "integration_target": "替换当前单一模式 (D1-only 或 D2-only) 为混合模式自动路由",
+    "thresholds": {"tension_crit": 0.35, "degrade_crit": 0.95},
+    "calibration_source": "Sprint 150 实验数据的自然断点 (η 反转为 0.35, η 崩塌为 0.95)"
+  },
+
+  "relationship_to_existing": {
+    "H593": "范畴论统一框架 → 本定理将矛盾消解函子从恒激活改为条件激活",
+    "A3": "不可约化热税公理 → 本定理是 A3 在矛盾处理场景的定量化特化",
+    "A3三层热税模型": "idle 路径对应 L1 逻辑热税归零，D1 路径对应 L2 意义热税支付，degrade 路径对应 L2 意义热税的不可回收性"
+  },
+
+  "open_questions": [
+    "tension_crit=0.35 是否普适于所有 TypeⅡ 矛盾对? (当前仅验证 平等vs贡献)",
+    "degrade 协议的具体形式: 向用户暴露矛盾? 自动降级到更简单的决策规则?",
+    "多Agent场景下 tension_crit 是否需要乘团队规模因子?",
+    "阈值是否可学习 (随 Agent 经验自适应调整)?"
+  ]
+}
