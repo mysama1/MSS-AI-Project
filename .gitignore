@@ -43,3 +43,7 @@ serde_derive-*.dll
 mssclaw_rs-*.exe
 dep-graph.bin
 query-cache.bin
+
+# Token storage scripts (contain secrets)
+_store_token.py
+_upload_pypi.py
