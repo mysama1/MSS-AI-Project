@@ -60,6 +60,7 @@ class SERunner:
         "injection": SEDomain("Fault Injection & Recovery", weight=1.2),
         "metrics": SEDomain("Metrics & Observability", weight=0.8),
         "memory_guard": SEDomain("Memory Guard", weight=0.9),
+        "scene_router": SEDomain("Scene Router", weight=0.9),
         "heat_tax": SEDomain("Heat Tax Self-Scan", weight=0.8),
     }
 
@@ -164,6 +165,20 @@ class SERunner:
             SECase("MG-03", "memory_guard", "Tag detection",
                    "Auto-tag functionality detects patterns",
                    self._test_mg_tags),
+        ]
+
+        # ── Scene Router ──
+        sr = self.DOMAINS["scene_router"]
+        sr.cases = [
+            SECase("SR-01", "scene_router", "Profile routing resolution",
+                   "All 6 preset profiles resolve to valid directions",
+                   self._test_sr_profiles),
+            SECase("SR-02", "scene_router", "Custom routing with context",
+                   "Custom SceneContext routes correctly",
+                   self._test_sr_custom),
+            SECase("SR-03", "scene_router", "Direction consistency",
+                   "Identical scenarios yield consistent directions",
+                   self._test_sr_consistency),
         ]
 
         # ── Heat Tax Self-Scan ──
@@ -440,6 +455,56 @@ class SERunner:
             tags = getattr(mem, 'tags', [])
         return True, f"Tags: {tags[:5] if tags else 'N/A'} (auto_tag={getattr(mem,'auto_tag','?')})"
 
+    # ═══════ Scene Router tests ═══════
+
+    def _test_sr_profiles(self):
+        from mssclaw.core.scene_router import SceneRouter, SceneProfile
+        sr = SceneRouter()
+        results = sr.route_all_profiles()
+        if not isinstance(results, list):
+            return False, f"Expected list, got {type(results)}"
+        n_routed = sum(1 for r in results if r.get('direction'))
+        return True, f"{n_routed}/{len(results)} profiles resolved"
+
+    def _test_sr_custom(self):
+        from mssclaw.core.scene_router import SceneRouter
+        sr = SceneRouter()
+        # route_custom takes individual float/int params, not SceneContext
+        result = sr.route_custom(
+            stakes=0.95,
+            latency_req=0.1,
+            agent_count=3,
+            duration_hours=2.0,
+            resource_tight=0.8,
+            requires_audit=True,
+            max_heat_tax=500.0,
+            description="Production deploy with audit trail"
+        )
+        if result is None:
+            return False, "route_custom returned None"
+        if 'direction' not in result:
+            return False, f"No direction in result: {result}"
+        return True, f"Routed: direction={result['direction']}, conf={result.get('confidence',0):.3f}"
+
+    def _test_sr_consistency(self):
+        from mssclaw.core.scene_router import SceneRouter
+        sr = SceneRouter()
+        r1 = sr.route_custom(
+            stakes=0.3, latency_req=0.9, agent_count=1,
+            duration_hours=0.5, resource_tight=False,
+            requires_audit=False, max_heat_tax=50.0,
+            description="Fast simple query"
+        )
+        r2 = sr.route_custom(
+            stakes=0.3, latency_req=0.9, agent_count=1,
+            duration_hours=0.5, resource_tight=False,
+            requires_audit=False, max_heat_tax=50.0,
+            description="Fast simple query"
+        )
+        if r1.get('direction') != r2.get('direction'):
+            return False, f"Non-deterministic: {r1['direction']} vs {r2['direction']}"
+        return True, f"Consistent: direction={r1['direction']}"
+
     # ═══════ Heat Tax tests ═══════
 
     def _test_ht_import(self):
@@ -527,7 +592,7 @@ class SERunner:
                 print(f"  ❌ {r.case_id}: {r.detail[:80]}")
 
         print(f"\n  Weighted score: {scores['overall']:.3f}  "
-              f"(pipeline×1.0 + defer×1.2 + injection×1.2 + normative×1.0 + memory×0.9 + metrics×0.8 + heat×0.8)")
+              f"(pipeline×1.0 + defer×1.2 + injection×1.2 + normative×1.0 + memory×0.9 + scene×0.9 + metrics×0.8 + heat×0.8)")
         return scores
 
 
