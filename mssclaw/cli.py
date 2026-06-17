@@ -16,6 +16,7 @@ USAGE = """mssclaw — MSS AI Framework
   init       一键环境初始化
   l2op        L2-OP v3 多Agent维度重构
   phase       Conflict Phase Engine (TypeⅡ单Agent工程解)
+  mcdp        Multi-Agent Conflict Resolution Protocol
   auto-layer  自动分层 (L0->L3)
   mcp         MCP协议客户端
   defend      闭环防御管线
@@ -336,6 +337,7 @@ def main():
     commands = {
         "l2op": lambda r: __import__('mssclaw.core.l2op_v3', fromlist=['cmd_l2op']).cmd_l2op(r),
         "phase": lambda r: __import__('mssclaw.core.conflict_phase_engine', fromlist=['cmd_phase']).cmd_phase(r),
+        "mcdp": lambda r: __import__('mssclaw.core.mcdp', fromlist=['cmd_mcdp']).cmd_mcdp(r),
         "auto-layer": lambda r: __import__('mssclaw.core.auto_layering', fromlist=['cmd_auto_layer']).cmd_auto_layer(r),
         "mcp": lambda r: __import__('mssclaw.core.mcp_client', fromlist=['cmd_mcp']).cmd_mcp(r),
         "defend": lambda r: __import__('mssclaw.core.defense_pipeline', fromlist=['cmd_defend']).cmd_defend(r),
