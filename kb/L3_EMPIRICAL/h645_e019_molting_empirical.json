@@ -1,0 +1,23 @@
+{
+  "h_id": "H645",
+  "title": "E019 蜕壳实证 — 真LLM验证",
+  "type": "L3_EMPIRICAL",
+  "date": "2026-06-17",
+  "status": "FINAL",
+  "depends_on": ["H604", "H605", "H629"],
+  "summary": "真LLM (qwen2.5:0.5b) 10轮蜕壳实验验证H604蜕壳悖论。核心发现: 蜕壳后η从0.375升至0.625 (+67%), 证实硬化态射拖累整体性能。f*_theory=1.1 vs actual=2（Δ<2, 一致）。误杀率50%, 归因小模型低分辨率+少轮次(10), 需更大规模实验验证。热税H=0 (num_predict=30限制)。",
+  "metrics": {
+    "eta_before": 0.375,
+    "eta_after": 0.625,
+    "eta_delta": "+67%",
+    "heat_tax": 0.0,
+    "f_star_theory": 1.1,
+    "f_star_actual": 2.0,
+    "f_star_match": true,
+    "mist_kill_rate": "50%",
+    "model": "qwen2.5:0.5b",
+    "rounds": 10,
+    "molt_interval": 4,
+    "molt_k": 2
+  }
+}
