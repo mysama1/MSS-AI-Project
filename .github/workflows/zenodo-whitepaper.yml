@@ -1,0 +1,32 @@
+﻿name: Archive Whitepaper to Zenodo
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'papers/MEANING_ENGINEERING_WHITEPAPER_v1.0.md'
+
+jobs:
+  zenodo-whitepaper:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload Whitepaper to Zenodo
+        env:
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+        run: |
+          DEPOSIT=$(curl -s -X POST "https://zenodo.org/api/deposit/depositions" \
+            -H "Authorization: Bearer $ZENODO_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d @.zenodo.json)
+          
+          DEPOSIT_ID=$(echo $DEPOSIT | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])")
+          BUCKET=$(echo $DEPOSIT | python3 -c "import sys,json; print(json.load(sys.stdin)['links']['bucket'])")
+          
+          curl -s -X PUT "$BUCKET/MEANING_ENGINEERING_WHITEPAPER_v1.0.md" \
+            -H "Authorization: Bearer $ZENODO_TOKEN" \
+            --data-binary "@papers/MEANING_ENGINEERING_WHITEPAPER_v1.0.md"
+          
+          curl -s -X POST "https://zenodo.org/api/deposit/depositions/$DEPOSIT_ID/actions/publish" \
+            -H "Authorization: Bearer $ZENODO_TOKEN"
+          
+          echo "DOI: https://doi.org/10.5281/zenodo.$DEPOSIT_ID"

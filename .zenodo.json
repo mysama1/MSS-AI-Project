@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "title": "意义工程学 v1.0: 从热税动力学到意义场黑洞的工程化框架",
+    "description": "当前AI产业正处于'意义场黑洞'形成期——万亿资本开支驱动的叙事膨胀与结构性失业、价值脱钩并存。本文提出意义工程学(Meaning Engineering)作为诊断和干预这一现象的工程化框架，基于MSS(Meaning Supremacy System)六公理体系，构建了从理论形式化到实时监控的全栈闭环。核心实证发现:信任预算对协作效率的超大型因果效应(Cohen's d=+1.911)，A6矛盾升维协同放大达基线2.1倍，8条产业链外部验证精确命中9签名黑洞框架，收敛三角(H601+H602+H603)全闭合。工程交付:31命令CLI工具链、7端点实时黑洞预警API、三方案VCG补偿成本模型、生产级Pipeline。",
+    "creators": [
+      {
+        "name": "MSS-AI Project",
+        "affiliation": "github.com/mysama1/MSS-AI-Project"
+      }
+    ],
+    "keywords": [
+      "meaning engineering",
+      "heat-tax dynamics",
+      "meaning-field black hole",
+      "multi-agent systems",
+      "Nash equilibrium",
+      "category theory",
+      "percolation theory",
+      "AI safety",
+      "trust-mediated collapse",
+      "A6 contradiction elevation"
+    ],
+    "license": "MIT",
+    "upload_type": "publication",
+    "publication_type": "preprint",
+    "version": "1.0.0",
+    "language": "zho",
+    "subjects": [
+      {"term": "Artificial Intelligence", "identifier": "https://id.loc.gov/authorities/subjects/sh85008180.html", "scheme": "url"},
+      {"term": "Multi-Agent Systems"},
+      {"term": "Category Theory"},
+      {"term": "Game Theory"}
+    ]
+  }
+}
