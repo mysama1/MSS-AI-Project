@@ -1,0 +1,78 @@
+{
+  "h_id": "H623",
+  "title": "信任介导坍缩: H634-G的新型动力学相变",
+  "timestamp": "2026-06-17T14:14:15.252193",
+  "version": "v1.0",
+  "layer": "L1_CORE_THEORY",
+  "status": "verified",
+  "dependencies": [
+    "H601",
+    "H602",
+    "H603",
+    "H634"
+  ],
+  "content": {
+    "discovery": "H634-G门禁传播系统确定不属于标准渗流普适类。p_c_eff=0.12在所有N(12..56)完全一致，ν=0.22 β=0.026距所有已知普适类>1.0。",
+    "mechanism": {
+      "name": "Trust-Mediated Collapse (信任介导坍缩)",
+      "key_features": [
+        "p_c与系统尺寸无关 — 违反标准FSS标度假定",
+        "信任级联自强化: 关门→降信任→更多关门 (positive feedback)",
+        "恢复机制太弱: 仅信任>0.7时5%概率重新开门",
+        "级联压倒恢复: η=0.11 even at p=0.10"
+      ],
+      "contrast_standard_percolation": {
+        "standard": "Forward/backward symmetry (close=open probability)",
+        "H634-G": "Asymmetric — close easier than open (trust barrier)"
+      }
+    },
+    "empirical_data": {
+      "v2_experiment": "noise=0.03 | N=[12,16,20,24,28,32,36,40,48,56] | p=[0.10..0.50 step 0.02] | 200seeds×500rounds",
+      "p_c_eff": 0.12,
+      "nu_fit": 0.22,
+      "beta_fit": 0.026,
+      "nu_r2": 1.0,
+      "universality_distances": {
+        "mean_field": 1.101,
+        "2D_Ising": 1.11,
+        "2D_percolation": 1.164,
+        "directed_percolation_1+1": 1.257
+      }
+    },
+    "η_cross_section_N32": {
+      "p0.10": {
+        "η": 0.1098,
+        "m": 0.8902,
+        "cluster": 0.3352
+      },
+      "p0.20": {
+        "η": 0.0408,
+        "m": 0.9592,
+        "cluster": 0.2077
+      },
+      "p0.30": {
+        "η": 0.0208,
+        "m": 0.9792,
+        "cluster": 0.1503
+      },
+      "p0.40": {
+        "η": 0.0129,
+        "m": 0.9871,
+        "cluster": 0.1194
+      }
+    },
+    "significance": "这是MSS框架发现的第一个新动力学类型。与标准渗流、Ising、平均场均不同，标志着MSS-Agent的多Agent交互动力学有其独特相变机制。",
+    "open_questions": [
+      "信任介导坍缩是否属于更大的普适类家族(尚无人研究)?",
+      "恢复强度阈值(当前0.7)与p_c固定性的定量关系?",
+      "连续极限(N→∞)下是否出现奇异行为?",
+      "能否构造解析解(平均场修正+1/N涨落)?"
+    ],
+    "next_steps": [
+      "降低恢复阈值(0.7→0.4)验证p_c是否开始漂移",
+      "绘制完整相图(trust_budget vs p_close vs noise)",
+      "N=100,200验证大N行为",
+      "与已知的social contagion/opinion dynamics模型对比"
+    ]
+  }
+}

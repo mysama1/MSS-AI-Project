@@ -49,8 +49,8 @@ def demo(interactive=True):
     print(f"  │ CLI 命令       │ {C['ok']}31个{C['reset']}        │ 9组分类, 50+使用示例              │")
     print(f"  │ TypeⅡ方案      │ {C['ok']}3方案{C['reset']}       │ VCG+相位调度+调解升维            │")
     print(f"  │ 黑洞预警       │ {C['ok']}7端点{C['reset']}       │ FastAPI + WebSocket + 仪表盘      │")
-    print(f"  │ NVIDIA Q1      │ {C['warn']}$81.6B{604}'  │ +85% YoY, 71.5% 利润率            │")
-    print(f"  │ HBM 市场       │ {C['warn']}$168B{604}'    │ CAGR 37%, 瓶颈至2030              │")
+    print(f"  │ NVIDIA Q1      │ {C['warn']}$81.6B{C['reset']}  │ +85% YoY, 71.5% 利润率            │")
+    print(f"  │ HBM 市场       │ {C['warn']}$168B{C['reset']}    │ CAGR 37%, 瓶颈至2030              │")
     print(f"  │ 六小虎估值      │ {C['err']}>¥2000亿{C['reset']}    │ 融资渠道断崖式萎缩               │")
     print("  └──────────────┴──────────────┴──────────────────────────────┘\n")
 
@@ -114,25 +114,25 @@ def demo(interactive=True):
     print(f"\n{C['sub']}═══ Part 4: 工程交付 — 31命令工具链 {C['reset']}\n")
 
     print(f"  {C['bold']}TypeⅡ 三方案 — 一键调用:{C['reset']}")
-    print(f"    {C['ok']}mssclaw l2op{776}'     L2-OP v3: VCG补偿机制 (囚徒困境 gap 1.0→0.0)")
-    print(f"    {C['ok']}mssclaw phase{776}'     Conflict Phase Engine: 单Agent相位调度")
-    print(f"    {C['ok']}mssclaw mcdp{776}'      MCDP: 多Agent调解升维 (N=4)")
-    print(f"    {C['ok']}mssclaw mcdp2{776}'     MCDP v2: N>2 Mean Field + Gossip共识")
+    print(f"    {C['ok']}mssclaw l2op{C['reset']}     L2-OP v3: VCG补偿机制 (囚徒困境 gap 1.0→0.0)")
+    print(f"    {C['ok']}mssclaw phase{C['reset']}     Conflict Phase Engine: 单Agent相位调度")
+    print(f"    {C['ok']}mssclaw mcdp{C['reset']}      MCDP: 多Agent调解升维 (N=4)")
+    print(f"    {C['ok']}mssclaw mcdp2{C['reset']}     MCDP v2: N>2 Mean Field + Gossip共识")
 
     print(f"\n  {C['bold']}场景路由 — 智能决策:{C['reset']}")
-    print(f"    {C['ok']}mssclaw route --tension 0.6 --stakes high{776}'   → 方向1 (调解)")
-    print(f"    {C['ok']}mssclaw route --tension 0.3 --real-time yes{776}'  → 方向2 (相位)")
+    print(f"    {C['ok']}mssclaw route --tension 0.6 --stakes high{C['reset']}   → 方向1 (调解)")
+    print(f"    {C['ok']}mssclaw route --tension 0.3 --real-time yes{C['reset']}  → 方向2 (相位)")
 
     print(f"\n  {C['bold']}拓扑相位 — 抗僵化:{C['reset']}")
-    print(f"    {C['ok']}mssclaw topophase --agents 4{776}'              锚点拓扑选择+θ驱动")
-    print(f"    {C['ok']}mssclaw adaptive --agents 4 --drift-check{776}'  活性检测+自动重锚定")
+    print(f"    {C['ok']}mssclaw topophase --agents 4{C['reset']}              锚点拓扑选择+θ驱动")
+    print(f"    {C['ok']}mssclaw adaptive --agents 4 --drift-check{C['reset']}  活性检测+自动重锚定")
 
     print(f"\n  {C['bold']}TypeⅡ 对照实验:{C['reset']}")
-    print(f"    {C['ok']}mssclaw t2exp --runs 50 --agents 4{776}'         基线 (无仲裁)")
-    print(f"    {C['ok']}mssclaw t2exp --runs 50 --agents 4 --v2{776}'    H634仲裁器增强")
+    print(f"    {C['ok']}mssclaw t2exp --runs 50 --agents 4{C['reset']}         基线 (无仲裁)")
+    print(f"    {C['ok']}mssclaw t2exp --runs 50 --agents 4 --v2{C['reset']}    H634仲裁器增强")
 
     print(f"\n  {C['bold']}D2 黑洞预警:{C['reset']}")
-    print(f"    {C['ok']}python blackhole_api.py{776}'                    启动7端点+WebSocket+仪表盘\n")
+    print(f"    {C['ok']}python blackhole_api.py{C['reset']}                    启动7端点+WebSocket+仪表盘\n")
 
     wait()
 
@@ -160,7 +160,7 @@ def demo(interactive=True):
     print("  └────────┴────────────────────────────────┴──────────┴────────────────────────────────────────────┴────┘\n")
 
     print(f"  {C['ok']}全部8条独立外部源精确命中MSS诊断框架{620}'")
-    print(f"  {C['dim']}H622入库: kb/L1_CORE_THEORY/h622_supply_chain_blackhole.json{776}'\n")
+    print(f"  {C['dim']}H622入库: kb/L1_CORE_THEORY/h622_supply_chain_blackhole.json{C['reset']}\n")
 
     wait()
 
@@ -181,8 +181,8 @@ def demo(interactive=True):
     print(f"    系统性高估η ({C['err']}Δ≈0.5{694}') → 缺失1/N涨落修正")
 
     print(f"\n  {C['bold']}核心结论:{C['reset']}")
-    print(f"  {C['warn']}10%噪声足以破坏临界行为 → H634-G≠标准渗流普适类{776}'")
-    print(f"  {C['ok']}这本身是有价值的负结果 — 说明H634-G的相变机制需要新的理论框架{776}'")
+    print(f"  {C['warn']}10%噪声足以破坏临界行为 → H634-G≠标准渗流普适类{C['reset']}")
+    print(f"  {C['ok']}这本身是有价值的负结果 — 说明H634-G的相变机制需要新的理论框架{C['reset']}")
     print(f"\n  {C['bold']}改进方向 (中期 1-2月):{C['reset']}")
     print(f"    noise 0.10→0.03 | N 5→12 (16..96) | p step 0.02 | 200seeds×500rounds\n")
 
