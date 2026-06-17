@@ -44,6 +44,7 @@ USAGE = """mssclaw — MSS AI Framework
   health     系统健康检查
   status     全系统状态面板
   benchmark  Ollama基准测试 (5模型×11题)
+  bench     MSS-SE-Bench 软件工程质量基准
   se         软件工程审计 (audit|heat|stress <path>)
   version    版本信息
 
@@ -321,6 +322,17 @@ def cmd_version(args_rest):
     print(f"{117} tests | Sprints 0-{62} | GitHub: mysama1/MSS-AI-Project")
 
 
+def cmd_bench(args_rest):
+    """MSS-SE-Bench — 软件工程质量基准."""
+    import sys, os
+    benchmarks_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'benchmarks')
+    sys.path.insert(0, benchmarks_dir)
+    from se_bench import run_bench
+    result = run_bench()
+    if result["overall"] < 0.8:
+        sys.exit(1)
+
+
 def cmd_benchmark(args_rest):
     """Ollama基准测试: 5模型×11题"""
     from mssclaw.core.bench_lite import run_benchmark
@@ -576,6 +588,7 @@ def main():
         "experiment": lambda r: __import__('mssclaw.core.experiment_runner', fromlist=['main']).main(r),
         "se": cmd_se,
         "benchmark": cmd_benchmark,
+        "bench": cmd_bench,
         "doctor": cmd_doctor,
         "defer": cmd_defer,
         "version": cmd_version,

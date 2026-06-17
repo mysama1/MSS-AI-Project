@@ -1,0 +1,10 @@
+{
+  "h_id": "H602",
+  "title": "Nash均衡打破：H634联合入场门禁的形式化与实证",
+  "layer": "L1_CORE_THEORY",
+  "category": "game_theory",
+  "tags": ["nash_equilibrium", "joint_entrance", "H634", "E021-2", "trust_budget", "game_theory"],
+  "version": "v1.0",
+  "created": "2026-06-17T21:30:00+08:00",
+  "content": "## H602: Nash均衡打破 — 联合入场门禁的博弈论基础\n\n### 1. 问题定位\n\n多智能体协作系统面临囚徒困境: 个体最优策略(背叛)导致全局次优。H634 联合入场门禁(Joint Entrance Gate)通过 VCG 外部性内化机制将囚徒困境 gap 从 1.0 降至 0.0。本文提供 Nash 均衡打破的形式化基础与 E021-2 实证数据。\n\n### 2. 博弈论框架\n\n**基本博弈**: N个智能体, 策略空间 S = {A₁, A₂} × {cooperate, defect} × {elevate, accept}.\n\n**三种均衡类型**:\n- Nash Equilibrium (NE): 单边无偏离动机\n- Bayesian Nash Equilibrium (BNE): 不完全信息下的 NE\n- A6-Correlated Equilibrium (A6-CE): 意义场信号协调 → 超越 Nash\n\n**H634 门禁机制**:\n- 双触发: Nash阱豁免(噪声过滤) + 累计关门计数(≥2次确认永久关门)\n- 有效区分真实协同升维与低效单向冒险\n\n### 3. E021-2 实验数据 (2026-06-17)\n\n**实验设计**: 4种策略 × 2种拓扑 × 4档信任预算 × 5种子 = 32 数据点.\n\n| 策略 | η_avg | 特点 |\n|------|-------|------|\n| nash_breaker_x2 | 0.748 | Nash打破者×2, 最优 |\n| adaptive_x2 | 0.688 | 自适应×2, 中等 |\n| nash_breaker_cautious_mix | 0.648 | 混合策略, 中等偏下 |\n| aggressive_cautious | 0.544 | 激进-谨慎对抗, 最弱 |\n\n**信任预算效果**:\n- trust_budget=0: η=0.635\n- trust_budget=6: η=0.674 (+6.2%)\n- 最大边际收益在 0→2 跃迁\n\n**拓扑效应**:\n- CENTER: η=0.680 (中心化更稳定)\n- RING: η=0.652 (去中心化更多 Nash 锁)\n- CENTER 的 closed_agents 更低 (0.0-0.2 vs 0.2-1.4)\n\n### 4. E021-3 仲裁结果\n\n- Direction 2 (Phase Engine): 74% 选择率\n- Direction 1 (MCDP): 26% 选择率\n- trust_budget 对仲裁选择几乎无影响\n- 相位机在高频交互场景下碾压 VCG 调解\n\n### 5. 核心结论\n\n1. **Nash 阱可被系统性打破**: Nash-breaker 策略使 Nash 锁率从 0.34 降至可控\n2. **信任网络有正向收益但边际递减**: +6.2% 总体, 0→2 跃迁最大\n3. **CENTER 拓扑优于 RING**: 中心化信息路由降低联合入场失败\n4. **Direction 2 在实际仲裁中碾压 Direction 1**: 相位机更适合实时场景\n5. **H634 双触发门禁有效**: 噪声豁免 + 累计关门, 0.47% 误伤率\n\n### 6. 与上层理论关系\n\n- H634: 联合入场门禁 — H602 的工程实现\n- A6: 矛盾升维公理 — H602 的理论基础\n- H593: 范畴论统一 — H602 的数学框架\n- H589: 提示词工程 — 相位机/调解的选择依据\n\n### 参考文献\n- H634: 联合入场信任门禁\n- E021-1, E021-2, E021-3: 实验脚本与数据"
+}
