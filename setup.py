@@ -6,7 +6,7 @@ with open("README.md", encoding="utf-8") as f:
 
 setup(
     name="mss-agent",
-    version="0.3.9",
+    version="0.3.10",
     description="MSS-Agent: AI Agent framework with meaning-field self-check, streaming, and local encrypted vault",
     long_description=long_desc,
     long_description_content_type="text/markdown",
