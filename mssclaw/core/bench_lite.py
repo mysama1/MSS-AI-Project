@@ -38,7 +38,6 @@ MODELS = [
 def query(model, prompt, timeout=60):
     t0 = time.time()
     payload = {"model": model, "prompt": prompt, "stream": False}
-    # qwen3.5:4b returns empty with num_predict option, omit for it
     if "qwen3.5:4b" not in model:
         payload["options"] = {"num_predict": 128}
     try:
@@ -52,55 +51,62 @@ def query(model, prompt, timeout=60):
         return {"ok": False, "error": str(e)[:100], "elapsed_s": round(time.time() - t0, 1)}
 
 
-# Warmup: 所有模型快速加载
-print("🔥 预热加载...")
-for m in MODELS:
-    print(f"   {m.split(':')[0]:<15}", end=" ", flush=True)
-    r = query(m, "hi", timeout=90)
-    print(f"{'✅' if r['ok'] else '❌'} {r['elapsed_s']:.1f}s")
+def run_benchmark():
+    """运行完整基准测试"""
+    # Warmup
+    print("🔥 预热加载...")
+    for m in MODELS:
+        print(f"   {m.split(':')[0]:<15}", end=" ", flush=True)
+        r = query(m, "hi", timeout=90)
+        print(f"{'✅' if r['ok'] else '❌'} {r['elapsed_s']:.1f}s")
 
-# Benchmark
-total = len(MODELS) * sum(len(v) for v in QUESTIONS.values())
-n = 0
-results = []
-print(f"\n🧪 基准: {len(MODELS)}模型 × {total//len(MODELS)}题 = {total}次")
+    # Benchmark
+    total = len(MODELS) * sum(len(v) for v in QUESTIONS.values())
+    n = 0
+    results = []
+    print(f"\n🧪 基准: {len(MODELS)}模型 × {total//len(MODELS)}题 = {total}次")
 
-for cat, qs in QUESTIONS.items():
-    for q in qs:
-        for model in MODELS:
-            n += 1
-            short = model.split(":")[0][:12]
-            print(f"  [{n:>2}/{total}] {short:<12} ← {cat:<11}", end=" ", flush=True)
-            r = query(model, q)
-            results.append({**r, "model": model, "category": cat, "question": q[:80]})
-            status = "✅" if r["ok"] else "❌"
-            print(f"{status} {r.get('elapsed_s',0):.1f}s {r.get('len',0):>3d}字")
+    for cat, qs in QUESTIONS.items():
+        for q in qs:
+            for model in MODELS:
+                n += 1
+                short = model.split(":")[0][:12]
+                print(f"  [{n:>2}/{total}] {short:<12} ← {cat:<11}", end=" ", flush=True)
+                r = query(model, q)
+                results.append({**r, "model": model, "category": cat, "question": q[:80]})
+                status = "✅" if r["ok"] else "❌"
+                print(f"{status} {r.get('elapsed_s',0):.1f}s {r.get('len',0):>3d}字")
 
-# Score
-by_model = {}
-for r in results:
-    m = r["model"]
-    by_model.setdefault(m, {"ok": 0, "fail": 0, "time": 0, "chars": 0})
-    by_model[m]["ok" if r["ok"] else "fail"] += 1
-    by_model[m]["time"] += r["elapsed_s"]
-    by_model[m]["chars"] += r.get("len", 0)
+    # Score
+    by_model = {}
+    for r in results:
+        m = r["model"]
+        by_model.setdefault(m, {"ok": 0, "fail": 0, "time": 0, "chars": 0})
+        by_model[m]["ok" if r["ok"] else "fail"] += 1
+        by_model[m]["time"] += r["elapsed_s"]
+        by_model[m]["chars"] += r.get("len", 0)
 
-print(f"\n{'='*60}")
-print(f"{'模型':<35} {'成功率':>6} {'延迟':>6} {'输出':>8}")
-print(f"{'-'*60}")
-for m, d in sorted(by_model.items(), key=lambda x: -x[1]["ok"]):
-    s = d["ok"] + d["fail"]
-    print(f"{m:<35} {d['ok']/s*100:>5.0f}% {d['time']/s:>5.1f}s {d['chars']:>7d}字")
+    print(f"\n{'='*60}")
+    print(f"{'模型':<35} {'成功率':>6} {'延迟':>6} {'输出':>8}")
+    print(f"{'-'*60}")
+    for m, d in sorted(by_model.items(), key=lambda x: -x[1]["ok"]):
+        s = d["ok"] + d["fail"]
+        print(f"{m:<35} {d['ok']/s*100:>5.0f}% {d['time']/s:>5.1f}s {d['chars']:>7d}字")
 
-# Save
-out = Path(__file__).parent.parent.parent / "kb" / "L3_EMPIRICAL" / f"benchmark_full_{int(time.time())%100000:05d}.json"
-out.parent.mkdir(parents=True, exist_ok=True)
-with open(out, 'w', encoding='utf-8') as f:
-    json.dump({
-        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"),
-        "models": MODELS,
-        "questions_total": total,
-        "results": results,
-        "scores": {m: {"ok": d["ok"], "fail": d["fail"], "avg_latency": round(d["time"]/(d["ok"]+d["fail"]), 1), "total_chars": d["chars"]} for m, d in by_model.items()}
-    }, f, ensure_ascii=False, indent=2)
-print(f"\n💾 结果: {out}")
+    # Save
+    out = Path(__file__).parent.parent.parent / "kb" / "L3_EMPIRICAL" / f"benchmark_full_{int(time.time())%100000:05d}.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with open(out, 'w', encoding='utf-8') as f:
+        json.dump({
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "models": MODELS,
+            "questions_total": total,
+            "results": results,
+            "scores": {m: {"ok": d["ok"], "fail": d["fail"], "avg_latency": round(d["time"]/(d["ok"]+d["fail"]), 1), "total_chars": d["chars"]} for m, d in by_model.items()}
+        }, f, ensure_ascii=False, indent=2)
+    print(f"\n💾 结果: {out}")
+    return results
+
+
+if __name__ == "__main__":
+    run_benchmark()

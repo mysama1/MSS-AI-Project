@@ -43,6 +43,7 @@ USAGE = """mssclaw — MSS AI Framework
   models      模型目录
   health     系统健康检查
   status     全系统状态面板
+  benchmark  Ollama基准测试 (5模型×11题)
   version    版本信息
 
 示例:
@@ -228,6 +229,12 @@ def cmd_health(args_rest):
 def cmd_version(args_rest):
     print(f"MSSclaw v{VERSION}")
     print(f"{117} tests | Sprints 0-{62} | GitHub: mysama1/MSS-AI-Project")
+
+
+def cmd_benchmark(args_rest):
+    """Ollama基准测试: 5模型×11题"""
+    from mssclaw.core.bench_lite import run_benchmark
+    run_benchmark()
 
 
 def cmd_absorb(args_rest):
@@ -427,6 +434,7 @@ def main():
         "status": cmd_status,
         "pipeline": cmd_pipeline,
         "experiment": lambda r: __import__('mssclaw.core.experiment_runner', fromlist=['main']).main(r),
+        "benchmark": cmd_benchmark,
         "version": cmd_version,
     }
 
