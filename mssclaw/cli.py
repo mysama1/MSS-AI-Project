@@ -546,6 +546,19 @@ def cmd_status(args_rest):
     print("╚══════════════════════════════════════════╝")
 
 
+def cmd_recall(args_rest):
+    """对话记录搜索 (mssclaw recall <query> [--sprint N] [--date YYYY-MM-DD] [--h-id Hxxx] [--index] [--stats])."""
+    import sys
+    from mssclaw.core.conv_search import main as recall_main
+    # Inject args so conv_search argparse can parse them
+    old_argv = sys.argv
+    sys.argv = ["mssclaw-recall"] + list(args_rest)
+    try:
+        recall_main()
+    finally:
+        sys.argv = old_argv
+
+
 def main():
     args = sys.argv[1:]
     if not args:
@@ -591,6 +604,7 @@ def main():
         "bench": cmd_bench,
         "doctor": cmd_doctor,
         "defer": cmd_defer,
+        "recall": cmd_recall,
         "version": cmd_version,
     }
 
