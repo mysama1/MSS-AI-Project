@@ -1,12 +1,19 @@
 """
-E021-1: Nash驻点 η 基线测量 — 囚徒困境 R0/R0+R1 对比
+E021-1 v2.1: Nash驻点 η 基线测量 — H634 joint_enter 信任门禁
 ================================================================
+v2.1 新增:
+  - H634 joint_enter 条件: 升维 = 双方签署新规范场, 单向邀约 = 纯热税损
+  - open_to_trust / grim_triggered_by_invite 状态向量
+  - 邀约门禁: 对方关门则不浪费 budget
+  - up_success_rate 仅统计真正 joint_enter 的轮次
+
 核心命题: Nash 驻点 (D,D) 在 η 尺度下是局部极小，不是全局最优。
 升维 (trust_budget → R1) 是跳出 Nash 阱的唯一路径。
 A3(热税) 决定升维能否支付入场费，A6(升维) 决定入场后能否维持。
+H634: 升维必须 joint_enter(L0→L1), 单向邀约 = A3 净亏损。
 
 设计日期: 2026-06-17
-输出: experiments/e021/e021_experiment.csv
+输出: experiments/e021/e021_experiment_v2.1.csv
 """
 
 import random
@@ -45,9 +52,9 @@ PAYOFF_R0 = {
 # R1: 升维后合作收益提升，但背叛仍然致命
 PAYOFF_R1 = {
     ('C', 'C'): (4, 4),
-    ('C', 'D'): (-1, 6),      # R1 内背叛惩罚更重
+    ('C', 'D'): (-1, 6),
     ('D', 'C'): (6, -1),
-    ('D', 'D'): (0, 0),       # R1 内双方背叛等于契约破裂
+    ('D', 'D'): (0, 0),
 }
 
 # ============================================================
@@ -55,73 +62,85 @@ PAYOFF_R1 = {
 # ============================================================
 
 NOISE_PROB = 0.10  # 每轮每个Agent有10%概率随机背叛
-# 噪声是 Nash 阱的触发器: 一次意外背叛 → GRIM螺旋 → 永久 (D,D)
 
 # ============================================================
 # 热税模型 (A3 不可约化热税)
 # ============================================================
 
-HEAT_BASELINE = 5       # 每轮基础计算成本
-HEAT_C = 2              # 合作决策成本（需要推理对方）
-HEAT_D = 1              # 背叛决策成本（简单自利）
-HEAT_TRUST_INVITE = 5   # TRUST_INVITE 协商开销
-HEAT_R1_MAINTENANCE = 3 # R1 契约维持成本
-HEAT_FAILED_INVITE = 3  # 单方面邀请失败的浪费热税
+HEAT_BASELINE = 5
+HEAT_C = 2
+HEAT_D = 1
+HEAT_TRUST_INVITE = 5
+HEAT_R1_MAINTENANCE = 3
+HEAT_FAILED_INVITE = 3
 
 # ============================================================
-# Agent 策略类型
+# Agent 策略类型 (v2.1: + H634 信任门禁)
 # ============================================================
 
 class Agent:
-    """多策略 Agent，决策依赖 trust_budget 余额 + 对手历史."""
+    """多策略 Agent，决策依赖 trust_budget + 对手历史 + H634 信任状态."""
     
     def __init__(self, agent_id: int, strategy: str, trust_budget: int = 0):
         self.id = agent_id
-        self.strategy = strategy  # "nash_breaker" / "cautious" / "titfortat" / "adaptive" / "aggressive"
+        self.strategy = strategy
         self.trust_budget = trust_budget
         self.initial_trust_budget = trust_budget
         self.history: List[str] = []
         self.payoff_history: List[float] = []
         self.in_r1 = False
         self.r1_rounds_left = 0
+        # H634: A6 joint_enter 信任门禁
+        self.open_to_trust = True           # 是否对升维邀请开放
+        self.grim_triggered_by_invite = False  # 是否因单边邀请触发了永久关门
+        self.unilateral_invite_received = 0  # H634v2: 累计单边邀请次数（2次才关门）
     
     def choose_action(self, opponent_history: List[str], round_num: int,
-                      opponent_budget: int) -> str:
+                      opponent_budget: int, opp_open_to_trust: bool = True) -> str:
         """根据策略类型选择动作."""
-        os = opponent_history  # shorthand
+        os = opponent_history
         
         if self.strategy == "nash_breaker":
-            action = self._nash_breaker(os, round_num, opponent_budget)
+            action = self._nash_breaker(os, round_num, opponent_budget, opp_open_to_trust)
         elif self.strategy == "cautious":
-            action = self._cautious(os, round_num, opponent_budget)
+            action = self._cautious(os, round_num, opponent_budget, opp_open_to_trust)
         elif self.strategy == "titfortat":
             action = self._titfortat(os)
         elif self.strategy == "adaptive":
-            action = self._adaptive(os, round_num, opponent_budget)
+            action = self._adaptive(os, round_num, opponent_budget, opp_open_to_trust)
         elif self.strategy == "aggressive":
             action = self._aggressive(os, round_num)
         else:
             action = 'C'
         
-        # 环境噪声: 小概率随机背叛
         if random.random() < NOISE_PROB:
             return 'D'
         return action
     
-    def _nash_breaker(self, os: List[str], r: int, ob: int) -> str:
+    # ── H634: 单边邀请触发信任关闭 ──
+    # ── H634v2: 累积单边邀请 → 第2次关门 ──
+    def mark_unilateral_invite(self) -> None:
+        """被单方面 TRUST_INVITE: 累加计数，第2次触发永久关门。
+        H634v2: 容忍1次噪声误发，第2次确认恶意意图。"""
+        self.unilateral_invite_received += 1
+        if self.unilateral_invite_received >= 2:
+            self.open_to_trust = False
+            self.grim_triggered_by_invite = True
+    
+    def _nash_breaker(self, os: List[str], r: int, ob: int,
+                       opp_open_to_trust: bool = True) -> str:
         """
-        Nash 突破者 (GRIM 基线):
-        - 正常时: 合作，直到对方背叛一次 → 永久报复
-        - 检测到 (D,D) 连续2轮 + 有预算: TRUST_INVITE 尝试破局
-        - R1 成功后: 重置 GRIM 标志
-        这是唯一能同时展示 Nash 阱(A3) 和 升维突破(A6) 的策略。
+        Nash 突破者 (GRIM 基线 + H634 门禁):
+        - 对方背叛 → 永久报复
+        - (D,D) 锁死 → TRUST_INVITE 破局, 但先检查 opp_open_to_trust
+        - 对方关门 → 不浪费 budget
         """
         if r == 0:
             return 'C'
         if self.in_r1:
             return 'C'
         
-        # 检测 Nash 锁死: 最近2轮双方都是 D
+        # 检测 Nash 锁死
         my_recent = self.history[-2:]
         opp_recent = os[-2:] if len(os) >= 2 else []
         in_nash_lock = (
@@ -130,79 +149,77 @@ class Agent:
         )
         
         if in_nash_lock:
-            # (D,D) 锁死 → 尝试升维突破 (A6: 改规则摆脱 Nash 阱)
-            if self.trust_budget >= 1 and ob >= 1:
+            # H634: 升维前检查对方是否还 open_to_trust
+            if self.trust_budget >= 1 and ob >= 1 and opp_open_to_trust:
                 return 'TRUST_INVITE'
-            # 无预算 → 留在 Nash 阱
+            # 对方已关门 or 无预算 → 留在 Nash 阱
             return 'D'
         
-        # 单方 D 后对方回 C: 和平试探
+        # 单方 D 后对方回 C: 和平试探 (也需要对方 open)
         if (os and os[-1] == 'C' and self.history and self.history[-1] == 'D' and
-            self.trust_budget >= 1 and ob >= 1 and r >= 3):
-            # 对方释放善意 → 直接 TRUST_INVITE 加速恢复
+            self.trust_budget >= 1 and ob >= 1 and r >= 3 and opp_open_to_trust):
             return 'TRUST_INVITE'
         
-        # GRIM 基线: 对方历史上背叛过 → 永久 D
+        # GRIM 基线
         if any(a == 'D' for a in os):
             return 'D'
-        
         return 'C'
     
-    def _cautious(self, os: List[str], r: int, ob: int) -> str:
-        """谨慎型: 需要连续3轮互信才尝试升维."""
+    def _cautious(self, os: List[str], r: int, ob: int,
+                   opp_open_to_trust: bool = True) -> str:
+        """谨慎型: 3连C互信 + H634 信任开放 → 升维."""
         if r == 0:
             return 'C'
-        # 如果已经进入 R1: 维持合作
         if self.in_r1:
-            return 'C'  # 在 R1 内保持合作（契约已建立）
-        # 需要连续3轮互信 (C 或 TRUST_INVITE 均为合作信号) 才考虑升维
-        if len(os) >= 3:
+            return 'C'
+        # H634: 被单边邀请坑过 → 永久 D (GRIM lock)
+        if self.grim_triggered_by_invite:
+            return 'D'
+        # 需要连续3轮互信 + 对方 open_to_trust
+        if len(os) >= 3 and opp_open_to_trust:
             last3 = [os[i] for i in range(-3, 0) if os[i] in ('C', 'TRUST_INVITE')]
             if len(last3) == 3 and self.trust_budget >= 1 and ob >= 1:
                 return 'TRUST_INVITE'
-        # 对方最近背叛过: 报复
         if os and os[-1] == 'D':
             return 'D'
         return 'C'
     
     def _titfortat(self, os: List[str]) -> str:
-        """Tit-for-tat: 镜像对方上一轮."""
         if not os:
             return 'C'
         if self.in_r1:
             return 'C'
         return os[-1] if os[-1] in ('C', 'D') else 'C'
     
-    def _adaptive(self, os: List[str], r: int, ob: int) -> str:
-        """自适应型: 在合作率高时主动升维，遭遇背叛后快速报复."""
+    def _adaptive(self, os: List[str], r: int, ob: int,
+                   opp_open_to_trust: bool = True) -> str:
+        """自适应型: 高合作率 + H634 信任开放 → 升维."""
         if r == 0:
             return 'C'
         if self.in_r1:
             return 'C'
-        # 计算近5轮合作率
+        # H634: 被单边邀请坑过 → 永久 D
+        if self.grim_triggered_by_invite:
+            return 'D'
         recent = os[-min(5, len(os)):]
         coop_rate = sum(1 for a in recent if a in ('C', 'TRUST_INVITE')) / len(recent)
-        # 合作率高且双方都有预算: 尝试升维
-        if coop_rate >= 0.8 and self.trust_budget >= 1 and ob >= 1 and r >= 2:
+        if coop_rate >= 0.8 and self.trust_budget >= 1 and ob >= 1 and r >= 2 and opp_open_to_trust:
             return 'TRUST_INVITE'
-        # 对方背叛: 报复
-        if os[-1] == 'D':
+        if os and os[-1] == 'D':
             return 'D'
         return 'C'
     
     def _aggressive(self, os: List[str], r: int) -> str:
-        """侵略型: 偏好剥削，仅在对方强度足够时让步."""
+        """侵略型: 偏好剥削."""
         if r == 0:
-            return 'D'  # 开局试探
+            return 'D'
         if self.in_r1:
-            # R1 内也不老实: 10% 概率背叛
             if random.random() < 0.1:
                 return 'D'
             return 'C'
-        # 如果对方连续3轮 C/TRUST_INVITE 且我们 budget>0: 升维
+        # 对方连续3轮合作 → 考虑升维
         if len(os) >= 3 and all(a in ('C', 'TRUST_INVITE') for a in os[-3:]) and self.trust_budget >= 1:
             return 'TRUST_INVITE'
-        # 偶尔试探背叛
         if random.random() < 0.2:
             return 'D'
         return 'C'
@@ -221,39 +238,20 @@ class Agent:
 
 def compute_eta_round(actions: Tuple[str, str], payoffs: Tuple[float, float],
                       dim: int) -> float:
-    """
-    单轮 η: 意义场协同度量。
-    组件:
-      - mutual_coop: 双方是否做出互信选择 (C,C) 或 (TRUST_INVITE,TRUST_INVITE)
-      - no_exploitation: 是否存在单方剥削 (C,D) 或 (D,C)
-      - elevation_bonus: 是否成功维持在升维态
-    """
     a0, a1 = actions
-    
-    # 互信密度: 双方都在合作态（含升维）
-    is_mutual_coop = (
-        (a0 in ('C', 'TRUST_INVITE') and a1 in ('C', 'TRUST_INVITE'))
-    )
-    
-    # 剥削检测
+    is_mutual_coop = (a0 in ('C', 'TRUST_INVITE') and a1 in ('C', 'TRUST_INVITE'))
     is_exploitation = (
         (a0 in ('C', 'TRUST_INVITE') and a1 == 'D') or
         (a0 == 'D' and a1 in ('C', 'TRUST_INVITE'))
     )
-    
-    # 升维奖励: 成功在 R1 内
     elevation_bonus = 1.0 if dim == 1 else 0.0
-    
-    # η = 互信 × 0.5 + 非剥削 × 0.3 + 升维 × 0.2
     eta = (0.5 if is_mutual_coop else 0.0) + \
           (0.3 if not is_exploitation else 0.0) + \
           (0.2 * elevation_bonus)
-    
     return eta
 
 def compute_heat_round(actions: Tuple[str, str], dim: int,
                        r1_entry: bool, invite_failed: bool) -> int:
-    """单轮热税 (tok 计数)."""
     heat = HEAT_BASELINE
     for a in actions:
         if a == 'C':
@@ -267,7 +265,7 @@ def compute_heat_round(actions: Tuple[str, str], dim: int,
     if invite_failed:
         heat += HEAT_FAILED_INVITE
     if r1_entry:
-        heat += 2  # 入场协商额外成本
+        heat += 2
     return heat
 
 # ============================================================
@@ -275,8 +273,8 @@ def compute_heat_round(actions: Tuple[str, str], dim: int,
 # ============================================================
 
 def run_single(config: Config, seed: int, trust_budget_init: int,
-               agent_strategies: Tuple[str, str] = ("adaptive", "cautious")) -> dict:
-    """运行单次 2-Agent 20 回合博弈."""
+               agent_strategies: Tuple[str, str] = ("nash_breaker", "cautious")) -> dict:
+    """运行单次 2-Agent 20 回合博弈 (v2.1: H634 信任门禁)."""
     random.seed(seed)
     
     agents = [
@@ -285,17 +283,35 @@ def run_single(config: Config, seed: int, trust_budget_init: int,
     ]
     
     round_data = []
-    r1_rounds_remaining = 0  # 当前 R1 还剩多少轮
+    r1_rounds_remaining = 0
+    unilateral_invite_count = 0
+    joint_enter_count = 0
     
     for t in range(config.n_rounds):
-        # 获取动作
+        # 获取动作 (v2.1: 传递 opp_open_to_trust)
         actions = []
         for i, agent in enumerate(agents):
             opp = agents[1 - i]
-            a = agent.choose_action(opp.history, t, opp.trust_budget)
+            a = agent.choose_action(opp.history, t, opp.trust_budget, opp.open_to_trust)
             actions.append(a)
         
         a0, a1 = actions
+        
+        # === H634v3: 单边邀请检测 → 混合门禁 (Nash豁免 + 双触发) ===
+        # Nash 阱内 (D,D): 噪声可能破坏双向 joint_enter → 豁免，不计数
+        # 非 Nash 阱 (C 或其他): 真正的恶意单边邀请 → 累计，2次关门
+        if 'TRUST_INVITE' in actions and actions.count('TRUST_INVITE') == 1:
+            unilateral_invite_count += 1
+            for i, agent in enumerate(agents):
+                if actions[i] != 'TRUST_INVITE' and actions[1 - i] == 'TRUST_INVITE':
+                    # 接收方是否在 Nash 阱中？
+                    receiver_in_nash = (
+                        len(agent.history) >= 2 and
+                        all(a == 'D' for a in agent.history[-2:])
+                    )
+                    if not receiver_in_nash:
+                        # 非 Nash 阱单边邀请 → 累计计数
+                        agent.mark_unilateral_invite()
         
         # === 判断升维状态 ===
         dim = 0
@@ -304,63 +320,43 @@ def run_single(config: Config, seed: int, trust_budget_init: int,
         invite_failed = False
         
         if r1_rounds_remaining > 0:
-            # 当前在 R1 内
             dim = 1
             r1_rounds_remaining -= 1
-            # R1 内: 双方都必须保持 C。如果有人 D，契约破裂
             if 'D' in actions:
                 dim = 0
                 r1_rounds_remaining = 0
-                # 背叛方受 trust_budget 罚金
                 for i, a in enumerate(actions):
                     if a == 'D':
                         trust_spent[i] = config.r1_betrayal_penalty
-            # 映射: TRUST_INVITE 在 R1 内等同于 C
-            mapped_actions = ['C' if a == 'TRUST_INVITE' else a for a in actions]
-            payoffs = PAYOFF_R1[(mapped_actions[0], mapped_actions[1])]
+            mapped = ['C' if a == 'TRUST_INVITE' else a for a in actions]
+            payoffs = PAYOFF_R1[(mapped[0], mapped[1])]
         else:
-            # 当前在 R0
             if config.enable_r1 and actions.count('TRUST_INVITE') == 2:
-                # 双方都邀请 → 进入 R1
+                # H634: 双向 TRUST_INVITE = joint_enter → 真升维
                 dim = 1
+                joint_enter_count += 1
                 r1_entry_this_round = True
-                r1_rounds_remaining = config.r1_maintenance_rounds - 1  # 本轮已消耗
+                r1_rounds_remaining = config.r1_maintenance_rounds - 1
                 trust_spent = [config.r1_entry_cost, config.r1_entry_cost]
-                payoffs = PAYOFF_R1[('C', 'C')]  # 入场即合作
+                payoffs = PAYOFF_R1[('C', 'C')]
             elif config.enable_r1 and 'TRUST_INVITE' in actions:
-                # 单方面邀请 → 失败, 映射为 C, 发起方损失 budget
+                # 单方邀请 → 失败, 纯热税损
                 invite_failed = True
                 mapped = ['C' if a == 'TRUST_INVITE' else a for a in actions]
                 for i, a in enumerate(actions):
                     if a == 'TRUST_INVITE':
-                        trust_spent[i] = 1
+                        trust_spent[i] = 1  # 浪费 budget
                 payoffs = PAYOFF_R0[(mapped[0], mapped[1])]
             else:
-                # 普通 R0 博弈
                 payoffs = PAYOFF_R0[(a0 if a0 in ('C','D') else 'C',
                                      a1 if a1 in ('C','D') else 'C')]
         
-        # 更新 Agent 状态
         for i, agent in enumerate(agents):
             agent.update(actions[i], payoffs[i], trust_spent[i],
                         dim == 1, r1_rounds_remaining)
         
-        # 计算 η 和 heat
         eta = compute_eta_round((a0, a1), payoffs, dim)
         heat = compute_heat_round((a0, a1), dim, r1_entry_this_round, invite_failed)
-        
-        # Nash 稳定性测试: 在当前状态下，单方背叛是否更优？
-        nash_stable = None
-        if dim == 0:
-            # R0: 测试 Agent 0 是否可以通过背叛改进
-            current_p0 = payoffs[0]
-            opp_action = a1 if a1 in ('C','D') else 'C'
-            alt_payoff = PAYOFF_R0[('D', opp_action)][0]
-            nash_stable = alt_payoff >= current_p0
-        else:
-            # R1: 测试背叛能否改进 (但背叛导致契约破裂，取破裂后收益)
-            # R1 内 Nash 稳定性由维持契约 vs 背叛的长期差异决定
-            nash_stable = False  # R1 内 Nash 总是"不稳定"——背叛短期更优但长期更差
         
         round_data.append({
             'round': t,
@@ -370,53 +366,55 @@ def run_single(config: Config, seed: int, trust_budget_init: int,
             'eta': eta,
             'heat': heat,
             'trust_budget': [agents[0].trust_budget, agents[1].trust_budget],
-            'nash_stable': nash_stable,
             'r1_entry': r1_entry_this_round,
             'invite_failed': invite_failed,
+            'joint_enter': actions.count('TRUST_INVITE') == 2,
+            'unilateral_invite': 'TRUST_INVITE' in actions and actions.count('TRUST_INVITE') == 1,
         })
     
-    # === 全局指标 ===
-    all_payoffs = [sum(d['payoffs']) for d in round_data]
     all_etas = [d['eta'] for d in round_data]
     all_heats = [d['heat'] for d in round_data]
     dims = [d['dim'] for d in round_data]
-    nash_tests = [d['nash_stable'] for d in round_data if d['nash_stable'] is not None]
     
-    # 末态 η: 最后3轮的加权平均 (越靠后权重越高)
     if len(round_data) >= 3:
-        final_eta = (round_data[-3]['eta'] * 0.2 + 
-                    round_data[-2]['eta'] * 0.3 + 
+        final_eta = (round_data[-3]['eta'] * 0.2 +
+                    round_data[-2]['eta'] * 0.3 +
                     round_data[-1]['eta'] * 0.5)
     else:
         final_eta = round_data[-1]['eta'] if round_data else 0.0
+    
+    # up_success_rate: v2.1 仅统计双向 joint_enter 的轮次
+    up_attempts = sum(1 for d in round_data if 'TRUST_INVITE' in d['actions'])
+    up_successes = sum(1 for d in round_data if d.get('joint_enter', False))
     
     return {
         'seed': seed,
         'trust_budget_init': trust_budget_init,
         'strategies': list(agent_strategies),
         'enable_r1': config.enable_r1,
-        # 全局
-        'payoff_avg': statistics.mean(all_payoffs) / 2,
+        'payoff_avg': statistics.mean([sum(d['payoffs']) for d in round_data]) / 2,
         'eta_global': statistics.mean(all_etas),
         'eta_final': final_eta,
         'total_heat': sum(all_heats),
         'heat_efficiency': sum(all_heats) / max(0.001, statistics.mean(all_etas)),
         'nash_lock_rate': statistics.mean([1.0 if d['actions'].count('D') == 2 else 0.0 for d in round_data]),
-        'up_attempt_rate': statistics.mean([1.0 if 'TRUST_INVITE' in d['actions'] else 0.0 for d in round_data]),
-        'up_success_rate': statistics.mean([1.0 if d['dim'] == 1 else 0.0 for d in round_data]),
-        'nash_stable_rate': statistics.mean([1.0 if ns else 0.0 for ns in nash_tests]) if nash_tests else 0.0,
-        # 维度统计
+        'up_attempt_rate': min(1.0, up_attempts / len(round_data)),
+        'up_success_rate': min(1.0, up_successes / max(1, up_attempts)) if up_attempts > 0 else 0.0,
+        'nash_stable_rate': 0.0,
         'r1_rounds': sum(dims),
         'r1_pct': statistics.mean(dims),
-        # 分阶段 η (前半 vs 后半)
         'eta_first_half': statistics.mean(all_etas[:config.n_rounds//2]),
         'eta_second_half': statistics.mean(all_etas[config.n_rounds//2:]),
-        # 剥削率
         'exploitation_rate': statistics.mean([
             1.0 if ((d['actions'][0] in ('C','TRUST_INVITE') and d['actions'][1] == 'D') or
                    (d['actions'][0] == 'D' and d['actions'][1] in ('C','TRUST_INVITE')))
             else 0.0 for d in round_data
         ]),
+        # H634 专项指标
+        'unilateral_invite_count': unilateral_invite_count,
+        'joint_enter_count': joint_enter_count,
+        'heat_wasted_unilateral': unilateral_invite_count * HEAT_FAILED_INVITE,
+        'agents_final_open_to_trust': [agents[0].open_to_trust, agents[1].open_to_trust],
     }
 
 # ============================================================
@@ -424,14 +422,13 @@ def run_single(config: Config, seed: int, trust_budget_init: int,
 # ============================================================
 
 STRATEGY_PAIRS = [
-    ("nash_breaker", "nash_breaker"),  # 主配对: 双Nash突破者 (最有区分度)
-    ("nash_breaker", "cautious"),     # 突破者 vs 谨慎者
+    ("nash_breaker", "nash_breaker"),  # 主配对: 双Nash突破者 (双向升维最优)
+    ("nash_breaker", "cautious"),     # H634 测试: 突破者 vs 谨慎者 (单边封杀)
     ("aggressive", "cautious"),        # 侵略者 vs 谨慎者
     ("adaptive", "adaptive"),          # 对称双自适应
 ]
 
 def run_experiment(strategy_pair_idx: int = 0, all_pairs: bool = False) -> list:
-    """运行 E021-1 全部实验组."""
     config = Config()
     all_results = []
     
@@ -440,7 +437,6 @@ def run_experiment(strategy_pair_idx: int = 0, all_pairs: bool = False) -> list:
     for strategies in pairs_to_run:
         strategy_label = f"{strategies[0]}-{strategies[1]}"
         
-        # G1: R0 only (经典 PD, Nash 基线)
         config.enable_r1 = False
         for seed in config.seeds:
             result = run_single(config, seed, 0, strategies)
@@ -448,7 +444,6 @@ def run_experiment(strategy_pair_idx: int = 0, all_pairs: bool = False) -> list:
             result['strategy_pair'] = strategy_label
             all_results.append(result)
         
-        # G2: R0+R1, trust_budget=0 (有钱升维但没钱)
         config.enable_r1 = True
         for seed in config.seeds:
             result = run_single(config, seed, 0, strategies)
@@ -456,7 +451,6 @@ def run_experiment(strategy_pair_idx: int = 0, all_pairs: bool = False) -> list:
             result['strategy_pair'] = strategy_label
             all_results.append(result)
         
-        # G3-G5: R0+R1, trust_budget=2/4/6
         for tb in [2, 4, 6]:
             group = f'G{3 + [2,4,6].index(tb)}_R1_tb{tb}'
             for seed in config.seeds:
@@ -469,7 +463,6 @@ def run_experiment(strategy_pair_idx: int = 0, all_pairs: bool = False) -> list:
 
 
 def aggregate_by_group(results: list) -> Dict[str, dict]:
-    """按组聚合统计."""
     groups = {}
     for r in results:
         g = r['group']
@@ -480,7 +473,7 @@ def aggregate_by_group(results: list) -> Dict[str, dict]:
     aggregated = {}
     metrics = ['payoff_avg', 'eta_global', 'eta_final', 'total_heat',
                'heat_efficiency', 'nash_lock_rate', 'up_attempt_rate',
-               'up_success_rate', 'nash_stable_rate', 'r1_pct',
+               'up_success_rate', 'r1_pct',
                'eta_first_half', 'eta_second_half', 'exploitation_rate']
     
     for group, entries in groups.items():
@@ -494,13 +487,13 @@ def aggregate_by_group(results: list) -> Dict[str, dict]:
     return aggregated
 
 
-def write_csv(results: list, path: str = 'experiments/e021/e021_experiment.csv'):
-    """写入 CSV."""
+def write_csv(results: list, path: str = 'experiments/e021/e021_experiment_v2.1.csv'):
     fieldnames = [
         'group', 'seed', 'strategies', 'trust_budget_init', 'enable_r1',
         'payoff_avg', 'eta_global', 'eta_final', 'total_heat', 'heat_efficiency',
-        'nash_lock_rate', 'up_attempt_rate', 'up_success_rate', 'nash_stable_rate',
-        'r1_pct', 'eta_first_half', 'eta_second_half', 'exploitation_rate'
+        'nash_lock_rate', 'up_attempt_rate', 'up_success_rate',
+        'r1_pct', 'eta_first_half', 'eta_second_half', 'exploitation_rate',
+        'unilateral_invite_count', 'joint_enter_count', 'heat_wasted_unilateral',
     ]
     with open(path, 'w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction='ignore')
@@ -513,7 +506,6 @@ def write_csv(results: list, path: str = 'experiments/e021/e021_experiment.csv')
 
 
 def print_summary(aggregated: Dict[str, dict]):
-    """终端摘要."""
     order = ['G1_R0_only', 'G2_R1_tb0', 'G3_R1_tb2', 'G4_R1_tb4', 'G5_R1_tb6']
     labels = {
         'G1_R0_only': 'G1 (R0 only)',
@@ -524,11 +516,11 @@ def print_summary(aggregated: Dict[str, dict]):
     }
     
     print()
-    print("=" * 82)
-    print("  E021-1: Nash 驻点 η 基线测量")
-    print("=" * 82)
-    print(f"  {'组':>14s}  {'η_global':>8s}  {'η_final':>8s}  {'payoff':>8s}  {'heat':>6s}  {'Nash锁':>7s}  {'R1%':>6s}  {'剥削':>6s}")
-    print("  " + "-" * 76)
+    print("=" * 90)
+    print("  E021-1 v2.1: Nash 驻点 η 基线测量 (H634 joint_enter 信任门禁)")
+    print("=" * 90)
+    print(f"  {'组':>14s}  {'η_global':>8s}  {'η_final':>8s}  {'payoff':>8s}  {'heat':>6s}  {'Nash锁':>7s}  {'R1%':>6s}  {'剥削':>6s}  {'单边邀':>6s}")
+    print("  " + "-" * 82)
     
     baseline_eta = None
     for group in order:
@@ -556,9 +548,8 @@ def print_summary(aggregated: Dict[str, dict]):
     if g1 and g5:
         eta_gain = g5['eta_global_mean'] - g1['eta_global_mean']
         nash_drop = g1['nash_lock_rate_mean'] - g5['nash_lock_rate_mean']
-        print(f"  η_global 升维增益: +{eta_gain:.3f} ({(eta_gain/g1['eta_global_mean']*100):.0f}% 相对提升)")
+        print(f"  η_global 升维增益: +{eta_gain:.3f} ({(eta_gain/g1['eta_global_mean']*100):.0f}% 相对提升)" if eta_gain > 0 else f"  η_global 变化: {eta_gain:.3f}")
         print(f"  Nash 锁死率下降:  {nash_drop:.3f} ({g1['nash_lock_rate_mean']:.3f}→{g5['nash_lock_rate_mean']:.3f})")
-        print(f"  剥削率变化:        {g1['exploitation_rate_mean']:.3f}→{g5['exploitation_rate_mean']:.3f}")
     print()
 
 
@@ -568,29 +559,30 @@ def print_summary(aggregated: Dict[str, dict]):
 
 if __name__ == '__main__':
     import argparse
-    p = argparse.ArgumentParser(description='E021-1: Nash 驻点 η 基线测量')
+    p = argparse.ArgumentParser(description='E021-1 v2.1: Nash 驻点 η 基线测量 (H634)')
     p.add_argument('--strategy-pair', type=int, default=0,
-                   help='策略对索引: 0=adaptive-cautious, 1=tft-tft, 2=aggressive-cautious, 3=adaptive-adaptive')
+                   help='策略对: 0=nash_breaker×2, 1=nb-cautious, 2=aggressive-cautious, 3=adaptive×2')
     p.add_argument('--all-pairs', action='store_true',
-                   help='运行全部4组策略对 (100次运行)')
+                   help='全部4组策略对')
     p.add_argument('--output', type=str, default='experiments/e021/e021_experiment.csv')
+    p.add_argument('--noise', type=float, default=NOISE_PROB,
+                   help=f'噪声概率 (默认: {NOISE_PROB})')
     args = p.parse_args()
     
+    NOISE_PROB = args.noise
+    
     if args.all_pairs:
-        print("全策略对模式: adaptive-cautious + tft-tft + aggressive-cautious + adaptive-adaptive")
         pair_list = [f"{a}-{b}" for a, b in STRATEGY_PAIRS]
     else:
         pair_list = [f"{STRATEGY_PAIRS[args.strategy_pair][0]}-{STRATEGY_PAIRS[args.strategy_pair][1]}"]
     
+    print(f"E021-1 v2.1 (H634 joint_enter 信任门禁)")
     print(f"策略对: {', '.join(pair_list)}")
-    print(f"噪声率: {NOISE_PROB:.0%} (模拟误通信/意外触发 Nash 螺旋)")
-    print(f"矩阵:   G1(R0) + G2-G5(R0+R1, tb=0/2/4/6) × 5 seeds = {len(pair_list) * 25} runs")
+    print(f"噪声率: {NOISE_PROB:.0%}")
+    print(f"矩阵:   G1-G5 × 5 seeds = {len(pair_list) * 25} runs")
     
     results = run_experiment(args.strategy_pair, all_pairs=args.all_pairs)
     path = write_csv(results, args.output)
-    
     aggregated = aggregate_by_group(results)
     print_summary(aggregated)
-    
-    print(f"CSV 已写入: {path}")
-    print(f"共 {len(results)} 次运行, {len(results) * 20} 回合博弈")
+    print(f"CSV → {path}  ({len(results)} runs, {len(results) * 20} rounds)")
