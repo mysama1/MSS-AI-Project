@@ -1,0 +1,269 @@
+{
+  "h_id": "H649",
+  "title": "MSS 软件工程能力诊断与提升路线图",
+  "type": "L1_CORE_THEORY",
+  "date": "2026-06-17",
+  "depends_on": ["H648", "H634", "H601", "H603"],
+  "summary": "系统性诊断MSS项目当前软件工程能力，对标行业顶级AI SE工具，制定三阶段提升路线图。不追求SWE-bench刷分，而是用MSS自身的理论框架（热税、意义场、闭锁/门禁）作为SE能力的度量维度——这是行业内唯一的差异化定位。",
+
+  "industry_benchmark_2026Q2": {
+    "top_tools": [
+      {
+        "name": "Claude Mythos (Anthropic)",
+        "swe_bench": "93.9%",
+        "arch_style": "多文件架构级理解, 心理定力优化",
+        "differentiator": "非补全式——理解整个代码库的架构意图",
+        "mss_relevance": "心理定力 = 抗意义退化的A6机制——但他们没有理论化"
+      },
+      {
+        "name": "Mistral Medium 3.5 (128B Dense)",
+        "swe_bench": "77.6%",
+        "arch_style": "云端异步Agent, 长时程任务执行",
+        "differentiator": "任务不依赖本地持续在线, 跨工具协同",
+        "mss_relevance": "长时程 = Δ维持条件问题——但未显式建模"
+      },
+      {
+        "name": "TRAE (ByteDance)",
+        "swe_bench": null,
+        "arch_style": "AI原生IDE, Builder/SOLO全自动模式",
+        "differentiator": "98%代码生成准确率, 从需求到部署全自动",
+        "mss_relevance": "全自动 = 无人工门禁——热税危险: 虚假完成无检测"
+      },
+      {
+        "name": "SWE-agent (Princeton)",
+        "swe_bench": "~30% baseline",
+        "arch_style": "Agent-Computer Interface, 命令+编辑双通道",
+        "differentiator": "学术开源, 明确的Agent-工具接口设计",
+        "mss_relevance": "ACI设计原则与MSS的H634/H648有结构同源性"
+      },
+      {
+        "name": "OpenHands (ex-OpenDevin)",
+        "swe_bench": "~25%",
+        "arch_style": "全开源自主Agent, 沙盒+浏览器+Shell",
+        "differentiator": "社区驱动, 模块化Agent架构",
+        "mss_relevance": "模块化 = 可插入MSS的defer_after/joint_enter协议"
+      }
+    ],
+    "mss_unique_positioning": {
+      "current_advantage": "唯一的理论驱动型SE框架——所有其他工具都是'让模型写出更好的代码'，MSS是'让代码过程的每一步都受热税/意义场/临界区约束'",
+      "gap_to_close": "理论→代码链完整但工业级实践的覆盖面不够——没有在真实的万人代码库、分布式部署、CI/CD全链上验证过",
+      "not_to_compete_on": "SWE-bench刷分——那是模型能力竞赛，不是SE方法论竞赛。MSS的价值在于'相同的模型，更好的工程过程'，而非'更好的模型'"
+    }
+  },
+
+  "mss_software_engineering_framework": {
+    "description": "用MSS自身的公理体系度量SE能力——这是行业内唯一的自指式工程质量框架",
+    "dimensions": {
+      "A3_heat_tax": {
+        "question": "开发过程中消耗了多少无意义的热税？",
+        "L0_physical": "pip install挂起、PowerShell转义失败、冗余编译 → 多少CPU-hours浪费",
+        "L1_logical": "重复代码、幽灵import、硬编码路径、未清理的临时脚本 → 多少代码行是dead weight",
+        "L2_meaning": "fake green tests、未经验证的commit message、形式化但实际不跑的CI步骤 → 多少工程表面指标是虚假的",
+        "current_score": "L0: 🟡 (PowerShell费时) / L1: 🟡 (SOURCES.txt未自动更新, 临时脚本) / L2: 🟢 (诚实, 不刷分)"
+      },
+      "A4_randomness": {
+        "question": "工程过程的随机性是否可控？",
+        "flaky_tests": "无自动化测试 → 每次手动验证结果可能漂移",
+        "encoding_drift": "LF/CRLF warnings 频繁出现",
+        "path_instability": "硬编码路径在环境迁移时断裂",
+        "current_score": "🟡 — 有随机性但非致命, 尚未系统化管理"
+      },
+      "A5_physical_projection": {
+        "question": "逻辑设计是否正确投影到物理层？",
+        "packaging": "pip install -e 挂起, python -m mssclaw 不通",
+        "cross_platform": "PowerShell vs bash 语法冲突未根治",
+        "file_system": "Windows文件锁导致LogRotation cleanup失败",
+        "current_score": "🔴 — 物理层是最薄弱的环节"
+      },
+      "A6_contradiction_elevation": {
+        "question": "工程矛盾是否被正确升维处理而非打补丁？",
+        "H648_closure": "defer_after协议的发现模式——不修补Gateway重启bug，而是识别出整个'退出侧闭锁'的概念缺失",
+        "architecture_evolution": "Scanner→Rule模式从JS bug推广到10语言——从单个补丁提升为架构原则",
+        "current_score": "🟢 — A6是当前最强的工程维度"
+      },
+      "delta_maintenance": {
+        "question": "系统的开放度(Δ)是否维持>0？",
+        "kb_growth_rate": "563→675条目, 持续扩展",
+        "experiment_closure_rate": "E001-E022 大部分闭合, 但E021-2 still pending",
+        "dependency_freshness": "Julia 1.11.5 / Catlab 0.17.6 — 不需要最新但需要可用",
+        "current_score": "🟢 — Δ健康, 但实验积压信号需关注"
+      }
+    }
+  },
+
+  "phase_1_infrastructure_hardening": {
+    "timeline": "1-2周 (Sprint 176-180)",
+    "objective": "关闭A5物理投影断裂——让代码在任何机器上都能跑",
+    "tasks": [
+      {
+        "id": "P1-1",
+        "name": "pyproject.toml 重建",
+        "problem": "setup.py老旧, find_packages行为不确定, mssclaw无法python -m执行",
+        "fix": "迁移到pyproject.toml (PEP 621), 添加__main__.py, 明确packages声明, 锁定依赖版本",
+        "metric": "python -m mssclaw health 在任何位置都能跑"
+      },
+      {
+        "id": "P1-2",
+        "name": "跨平台脚本标准化",
+        "problem": "PowerShell vs bash 转义冲突, python -c 引号地狱",
+        "fix": "所有CLI调用优先Python脚本(写.py文件执行, 不再内联-c), 建立_snippets/目录管理常用脚本",
+        "metric": "零PowerShell转义错误"
+      },
+      {
+        "id": "P1-3",
+        "name": "环境自检命令",
+        "problem": "换机器后不知道缺什么——Ollama模型、Python包、Julia版本、路径映射",
+        "fix": "mssclaw doctor: 检查所有依赖, 报告缺失项, 给出安装命令",
+        "metric": "mssclaw doctor在新机器上运行后输出完整诊断"
+      },
+      {
+        "id": "P1-4",
+        "name": "自动化测试框架",
+        "problem": "当前所有验证都是手动ad-hoc, 无回归测试",
+        "fix": "pytest骨架: tests/test_defer_guard.py, tests/test_pipeline.py, tests/test_scene_router.py。每个模块至少3个核心case。GitHub Actions自动触发",
+        "metric": "pytest --cov=mssclaw 覆盖率 > 60%"
+      },
+      {
+        "id": "P1-5",
+        "name": "CI/CD 修复与标准化",
+        "problem": "GitLab CI有continue-on-error补丁, GitHub Actions可能过期",
+        "fix": "统一为GitHub Actions, 矩阵测试(Python 3.10/3.11/3.12, Windows/Ubuntu), 发布自动化(PyPI OIDC)",
+        "metric": "PR触发自动测试, tag触发自动发布"
+      }
+    ]
+  },
+
+  "phase_2_benchmark_positioning": {
+    "timeline": "3-4周 (Sprint 181-190)",
+    "objective": "构建MSS独有评估维度——不刷SWE-bench, 创建意义场/热税维度的SE评估",
+    "tasks": [
+      {
+        "id": "P2-1",
+        "name": "MSS-SE-Bench v1.0",
+        "problem": "SWE-bench衡量的是'模型能不能修bug', 不衡量'修bug的过程产生了多少热税'",
+        "approach": "选取10个真实GitHub issue, 用mssclaw pipeline自动修复, 记录6维指标:",
+        "metrics": [
+          "fix_correctness (传统正确率)",
+          "heat_tax_L0 (实际CPU/内存消耗)",
+          "heat_tax_L1 (代码改动行数/文件数, 冗余度)",
+          "heat_tax_L2 (无效尝试次数, 方向切换次数, meaning degradation)",
+          "defer_after_violations (是否有操作在未满足后置条件时执行)",
+          "delta_stability (修复前后系统的开放度变化)"
+        ],
+        "baseline": "用纯Ollama qwen2.5:7b无约束 vs mss-ai-v3.4.3-balanced全约束, 对比6维"
+      },
+      {
+        "id": "P2-2",
+        "name": "热税驱动的代码审查实验",
+        "problem": "现有code review工具只检查正确性/风格, 不检查热税",
+        "approach": "用mssclaw analyze扫描开源项目(mssclaw自身), 生成热税报告: L0死依赖, L1死代码, L2假测试。对比人工审查结果",
+        "metric": "热税检测精度(precision/recall) vs 人工标注"
+      },
+      {
+        "id": "P2-3",
+        "name": "SE退化实验 (Type IV for Software)",
+        "problem": "软件工程本身是否存在'意义退化'? 代码库老化是否遵循某种退化律?",
+        "approach": "对mssclaw项目自身的6个月git历史做sprint-by-sprint分析: 每条commit的热税标签, 追踪A3/A5/A6健康度变化",
+        "deliverable": "H650: MSS自反式SE退化曲线 + E023实验报告"
+      },
+      {
+        "id": "P2-4",
+        "name": "MSS vs OpenHands/SWE-agent 架构对比",
+        "problem": "MSS的defer_after/joint_enter协议在开源Agent工具中是否有对应机制？对比分析",
+        "approach": "深入阅读SWE-agent的ACI设计、OpenHands的Agent架构, 用MSS框架分析它们的'缺失维度'",
+        "deliverable": "H651: AI SE工具的意义场对比分析"
+      }
+    ]
+  },
+
+  "phase_3_real_project_practice": {
+    "timeline": "4-8周 (Sprint 191-210)",
+    "objective": "在真实项目中应用MSS框架——不只是自反式分析, 而是对外部项目产生实际价值",
+    "candidates": [
+      {
+        "name": "mssclaw自身 → 吃自己的狗粮",
+        "approach": "用Phase 2的SE-Bench反过来审计mssclaw代码库, 生成优化报告, 实际执行, 测量前后diff",
+        "value": "自反式验证——如果MSS不能改进自己的代码质量, 无法说服别人"
+      },
+      {
+        "name": "FastAPI (Python web框架, 70K+ stars)",
+        "approach": "热税扫描: 找到FastAPI中L1死代码/L2意义退化的区域。TypeⅡ消解: 长期open的controversial issue",
+        "value": "高知名度项目的case study → 外部可信度。FastAPI代码规范, 热税信号会更干净"
+      },
+      {
+        "name": "Rye / uv (Python包管理工具)",
+        "approach": "对比MSS的A5物理投影问题与Rye的设计哲学——Rye如何解决Python环境的物理投影断裂",
+        "value": "直接对标P1基础设施问题, 从Rye学习而非重造轮子"
+      },
+      {
+        "name": "某国内开源项目 (如Ant Design / Element Plus)",
+        "approach": "中文生态的MSS分析——前端组件库的A6矛盾升维: 设计决策冲突如何被架构消解",
+        "value": "非AI领域的跨领域验证"
+      }
+    ],
+    "output_format": "每个项目产出一份MSS审计报告: 热税地图 + 意义场分析 + 改进建议 + H条目入库"
+  },
+
+  "phase_4_publication_and_ecosystem": {
+    "timeline": "持续 (Sprint 211+)",
+    "objective": "将MSS软件工程方法论发布为可引用、可复现的学术资产",
+    "channels": [
+      {"name": "arXiv论文", "topic": "Meaning-Aware Software Engineering: A Heat-Tax-Driven Quality Framework", "target": "2026 Q3"},
+      {"name": "Zenodo数据集", "topic": "MSS-SE-Bench: 10项目的6维SE质量数据", "target": "2026 Q3"},
+      {"name": "Miraheze Wiki", "topic": "完整方法论文档 + 案例研究", "target": "持续更新"},
+      {"name": "GitHub Discussions / Show HN", "topic": "社区验证与反馈", "target": "P3完成后"}
+    ]
+  },
+
+  "risk_assessment": {
+    "critical_risks": [
+      {
+        "risk": "基础设施改造成本被低估",
+        "mitigation": "P1-1到P1-5每个独立可交付, 不求一步到位。即使只完成P1-1+1-2, A5评分就能从🔴升到🟡"
+      },
+      {
+        "risk": "SWE-Bench刷分的诱惑——行业压力让人想'先刷个高分证明自己'",
+        "mitigation": "硬约束: MSS不在任何benchmark上刷分。刷分=意义退化。保持差异化定位。MSS的价值不需要SWE-bench证明——那是模型的能力, 不是MSS的能力"
+      },
+      {
+        "risk": "外部项目分析可能触及GPL/许可证雷区",
+        "mitigation": "分析≠复用, 审计报告不包含原代码, 只包含MSS框架的评估结论"
+      },
+      {
+        "risk": "单人项目的极限——分布式、并发、大规模场景天然无法验证",
+        "mitigation": "坦诚标注边界。MSS目前是'单仓库/单机/小团队'的SE方法论, 不声称适用于万人项目"
+      }
+    ]
+  },
+
+  "quick_wins": {
+    "description": "明天就能完成的三件事, 不依赖任何P1-P3前置条件",
+    "items": [
+      {
+        "action": "给mssclaw项目本身跑一次完整热税扫描",
+        "command": "python -c 'from mssclaw.core.heat_tax_profiler import ...' → 输出当前代码库的L0/L1/L2热税分布",
+        "deliverable": "H650草稿: 自反式热税地图",
+        "time": "30min"
+      },
+      {
+        "action": "创建pytest骨架 + 前3个测试文件",
+        "command": "tests/test_defer_guard.py, tests/test_scene_router.py, tests/test_vault.py",
+        "deliverable": "CI可触发的基础测试套件",
+        "time": "1h"
+      },
+      {
+        "action": "mssclaw doctor 命令实现",
+        "command": "检查Ollama/Julia/Python版本/路径/模型列表 → 输出诊断",
+        "deliverable": "CLI第34个命令",
+        "time": "1h"
+      }
+    ]
+  },
+
+  "success_criteria": {
+    "P1_complete": "python -m mssclaw doctor → 全绿, 任何Windows机器上可复现",
+    "P2_complete": "MSS-SE-Bench v1.0 10项目数据发布, 热税维度是SWE-bench没有的独有信号",
+    "P3_complete": "至少2个外部项目的MSS审计报告发布, 每个报告至少发现1个非平凡的SE问题",
+    "meta_metric": "mssclaw自身的A5评分从🔴升到🟢 (物理投影无断裂)"
+  }
+}
