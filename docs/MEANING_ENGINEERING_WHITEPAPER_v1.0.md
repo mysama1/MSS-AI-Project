@@ -2,7 +2,7 @@
 
 ## Meaning Engineering: From Heat-Tax Dynamics to Meaning-Field Black Holes
 
-**MSS-AI Project** | 2026-06-17 | Sprint 151 Final
+**MSS-AI Project** | 2026-06-17 | v1.1 (Sprint 158 Final)
 
 ---
 
@@ -185,9 +185,11 @@ RobustPipeline特性：
 - 7类错误自动分类（NetworkTimeout / RateLimit / ModelUnavailable / ParseError / ValidationFailed / ResourceExhausted / Unknown）
 - 指数退避重试策略（最大10次，2^n×base_delay）
 - 熔断器（5次失败/60s窗口→OPEN→30s冷却→HALF_OPEN）
-- 监控指标：P50/P99延迟、成功率、错误分布、持久化日志
+- MetricsCollector：P50/P99延迟、成功率、错误分布、熔断计数
+- save_metrics()：持久化JSON日志，支持alert_on_p99_ms阈值告警
+- 流式分支执行：Generator-based Streaming + BranchPoint条件拆分 + 并行扇出
 
-### 3.5 CLI 工具链（30命令）
+### 3.5 CLI 工具链（33命令）
 
 ```
 核心类:
@@ -298,7 +300,7 @@ H601-H603 收敛三角, H621-H622 黑洞深化, H633-H635 消解/升维/闭合, 
 
 ### 进行中 (3项)
 - **D2 Production Deploy**：在真实项目中验证预警系统
-- **CLI 30命令README**：使用示例文档
+- **CLI 33命令README**：使用示例文档（已含benchmark、experiment_runner等新增命令）
 - **H617后续**：网文进化链的具体作品分析
 
 ### 待定 (4项)
@@ -313,9 +315,11 @@ H601-H603 收敛三角, H621-H622 黑洞深化, H633-H635 消解/升维/闭合, 
 
 ```
 2026-06 (本周) ──────────── 短期 ────────────
-├─ 白皮书 v1.0 发布          [当前]
-├─ CLI README 补全           [2h]
-└─ Sprint 151 演示准备        [3h]
+├─ 白皮书 v1.1 发布          [当前] ✅
+├─ 夜间基准Cron部署          [完成] ✅
+├─ CLI 33命令                [完成] ✅
+├─ Pipeline D6-015闭合       [完成] ✅
+└─ Sprint 158 收束           [完成] ✅
 
 2026-06→07 ────────── 中期 (1-2月) ──────────
 ├─ N→∞渗流深化 (降低噪声+扩大采样)
@@ -389,5 +393,6 @@ python experiments/four_in_one_d1_d2_d6.py
 
 ---
 
-**文档版本**: v1.0 | **日期**: 2026-06-17 | **字数**: ~5,000 (中文)  
+**文档版本**: v1.1 | **日期**: 2026-06-17 | **字数**: ~5,200 (中文)
+**更新**: Sprint 158 Final — 命令30→33 / Pipeline D6-015 MetricsCollector / 夜间基准Cron / 4模型基准实测  
 **项目**: MSS-AI / 意义工程学 | **仓库**: github.com/mysama1/MSS-AI-Project
