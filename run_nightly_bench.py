@@ -1,7 +1,23 @@
 """MSS Nightly Benchmark — 4模型×11题, 对比昨日, 告警"""
-from mssclaw.core.bench_lite import query
-import json, time, sys
+import requests, json, time, sys
 from pathlib import Path
+
+OLLAMA_URL = "http://localhost:11434/api/generate"
+
+def query(model, prompt, timeout=60):
+    t0 = time.time()
+    payload = {"model": model, "prompt": prompt, "stream": False}
+    if "qwen3.5:4b" not in model:
+        payload["options"] = {"num_predict": 128}
+    try:
+        r = requests.post(OLLAMA_URL, json=payload, timeout=timeout)
+        elapsed = time.time() - t0
+        if r.status_code == 200:
+            resp = r.json().get("response", "")
+            return {"ok": True, "response": resp[:400], "len": len(resp), "elapsed_s": round(elapsed, 1)}
+        return {"ok": False, "error": f"HTTP {r.status_code}", "elapsed_s": round(elapsed, 1)}
+    except Exception as e:
+        return {"ok": False, "error": str(e)[:100], "elapsed_s": round(time.time() - t0, 1)}
 
 MODELS = ["qwen2.5:0.5b", "phi3:mini", "qwen2.5:7b", "mss-ai-v3.4.3-balanced:latest"]
 QUESTIONS = {
