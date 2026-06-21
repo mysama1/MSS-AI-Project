@@ -1,0 +1,99 @@
+{
+  "h_id": "H697",
+  "title": "锚定物三域同构：物理/社媒/叙事的统一意义场账本",
+  "type": "core_theory",
+  "layer": "L1_CORE_THEORY",
+  "version": "v1.0",
+  "created": "2026-06-18",
+  "source": "External AI evaluation. Applies the (Φ,A,w,R) field identity from H695 to three domains. Isomorphism is honest ONLY when the same ledger can be written across domains — otherwise it's a three-part parallelism, not a theory.",
+  "field_identity_minimum": {
+    "phi": "Φ = phase/state set — distinguishable ways of being: positions, tags, labels, narrative positions, identities",
+    "A": "A = admissible/anchor set — which Φ are allowed, referrable, repeatedly sampleable",
+    "w": "w = weight/maintenance cost — what it costs to keep Φ in A: energy, attention, reputation, sanction budget",
+    "R": "R = update/coupling rule — how new events/observations change the distribution: local update + propagation on graph",
+    "core_claim": "Anchor ≡ the thing that stabilizes A and pays/produces w. Change the anchor → change A → change field character. This is operational, not metaphorical — each element must be measurable in its domain"
+  },
+  "three_regimes": {
+    "regime_P_physical": {
+      "anchor": "物质锚: 质量/电荷/守恒量 (引力/电磁/守恒)",
+      "A_definition": "A_P = {trajectories satisfying energy/angular-momentum/boundary conditions}",
+      "A_what_is_anchored": "轨道/盘面/接触不穿透/能量守恒集合",
+      "w_cost": "耗散预算: 碰撞阻尼/潮汐加热/辐射 — 热税H_tax",
+      "R_update": "∇φ几何约束 — 引力扰动传播",
+      "gate_execution": "物理定律: 不遵守→弹出轨道/碰撞/撕裂",
+      "falsification": "观测到违背能量/角动量守恒的干净长轨 → field definition collapses",
+      "hardness": "最硬: 不靠'大家同意', 守恒量撑住A",
+      "mu_cond_reading": "μ = 多大比例质点在冷凝相/共同轨道foliation。可显化=可测=可预测",
+      "checkable_tag": "[CHECKABLE: via SPARC/ephemeris/VLBI/occultation/lensing/lab metrology]"
+    },
+    "regime_S_social_media": {
+      "anchor": "注意力/排名锚: feed algorithm + 互动计量",
+      "A_definition": "A_S(k) = top-k( rank(post | signal, engagement, meta) )",
+      "A_what_is_anchored": "可见性: 谁出现在feed里 + relevance(ranking signal)",
+      "w_cost": "注意力花费+协调编排成本: engagement(likes/replies/reposts/shares)作为权重",
+      "R_update": "不是∇φ, 是rank+threshold+loop: top-k过滤 + cold-start/recs/影子信号",
+      "gate_execution": "降权/影禁/塌缩至噪声: 不是撕裂你, 是撤消显化",
+      "falsification": "组织化刷量可短暂搬A → 证明A_S是可买的稳定性。逆向工程rank信号(因为rank可probe)",
+      "hardness": "次于P: A由算法+集体互动维持→ 有可降解性、可买性、可逆向工程性",
+      "mu_cond_reading": "μ = 凝聚度 = 集群可重复性: 同一叙事-标签集群能否稳定占据top-k而不被稀释. 场性质=算法+crowd的耦合不动点(eigenmode of attention graph)",
+      "checkable_tag": "[CHECKABLE: via A/B experiments, burst-probing, shadow-metrics, rank-feature correlation]"
+    },
+    "regime_N_narrative": {
+      "anchor": "制度/权威/神话-合法性锚: 不是'观点', 是what counts as sayable/legible/credible",
+      "A_definition": "A_N = {claims reducible to authorized credential chain}",
+      "A_what_is_anchored": "可说的/可读的/可信的集合 + 谁授权citation",
+      "w_cost": "制裁预算+引证修复: 信誉loss/exclusion/forced-re-label",
+      "R_update": "不是rank, 是sanction-budget+认证链: 引述谁算凭证 / 偏离的cost / 消化反常进标准叙事",
+      "gate_execution": "cancel/excomm/archive-war/reframe-absorb(消化反常进标准叙事)",
+      "falsification": "最危险 — '锚=权威'容易把A变成immune(低阶误读借口). 防免疫唯一机械办法: 要求可追溯凭证链",
+      "hardness": "最弱: 只有在你强制凭证链时才是field, 否则是ecosystem of claims(≠field)",
+      "mu_cond_reading": "μ = 不是'多少人信', 而是制度化可再现性: 同一宣称在不同语境是否被稳定还原到同一权威节点",
+      "checkable_tag": "[CHECKABLE: only if claim ← snippet ← source ← (trust, date, method). FAIL this → N is not a field, it is a claim ecosystem with no external teeth]"
+    }
+  },
+  "immunization_warning": {
+    "danger": "If regime N refuses credential-chain traceability and instead labels all counter-evidence 'low-order projection error', then Anchor(N) is not an anchor — it is a self-sealing loop",
+    "remedy": "[PLACEHOLDER] tag until credential chain proven. This directly enforces H695's anti-poetry gate"
+  },
+  "cross_domain_isomorphism": {
+    "where_honest": [
+      "p(φ) supported on A vs tail (分布集中在锚区 vs 低显化尾)",
+      "cost(exit) > cost(stay-in) (退出成本 > 留在锚区内成本)",
+      "repair mechanism pulling back to A (阻尼/rank-bump/正统重写)",
+      "tail = A^c = low-manifest: visible only via proxy/absence/noise (暗物质尾/noise-in-feed/heretic-but-not-erased)"
+    ],
+    "where_not_honest": [
+      "P vs S vs N diverge on anchor verifiability:",
+      "  P: ✅ 仪器/星历 — independent verification",
+      "  S: ⚠️ 算法黑箱/AB测试 — conditionally verifiable",
+      "  N: ❌ 权威宣称循环 — verification depends on same authority being verified",
+      "P vs S vs N diverge on falsification path:",
+      "  P: 直接 — 观测冲突",
+      "  S: 可测 — A/B/probe/burst",
+      "  N: 常模糊 — 胜者写解释"
+    ]
+  },
+  "operational_next_step": {
+    "credential_chain_for_N": "MSS's only path to regime N without becoming poetry: everywhere code/entries mention 'authority/可信/来源', expand into claim ← snippet ← source ← (trust, date, method). This is the gear that makes H697 a real cross-domain field theory rather than a classification table",
+    "current_gap": "No credential chain infrastructure exists in MSS codebase. vault/claim-registry/nonsense-filter deny-reason currently lack source-trust-method binding"
+  },
+  "cross_references": [
+    "H695 MSS不替代K3 — [CHECKABLE]/[PLACEHOLDER] tagging gate that N regime must obey",
+    "H693 μ_cond统一形式化 — the formalism being extended to social/narrative",
+    "H694 摩擦转方向 — physical anchor exemplar",
+    "H688 共面性 — gravitational anchor in action",
+    "H652 EIA翻译层 — credential chain might be EIA's operational implementation",
+    "H653 η分裂 — what happens when narrative field has no anchor teeth"
+  ],
+  "_source": "External AI evaluation (2026-06-18). Three-regime field ledger: (Φ,A,w,R) applied to physical/social-media/narrative anchors. The anti-poetry gate for social-domain MSS.",
+  "code_ref": "heat_tax",
+  "scheme": "meta",
+  "depends_on": [
+    "A3"
+  ],
+  "see_also": ["H695"],
+  "_audit": {
+    "action": "bootstrap_inverse_fix",
+    "reason": "H695(L4)→H697(L1) violates layer contract. Moved to see_also per DEPENDENCY_CONTRACT {(1,2),(2,3),(2,4)}."
+  }
+}

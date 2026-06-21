@@ -1,0 +1,38 @@
+{
+  "h_id": "H131",
+  "title": "热税公理编码形式化: A3的具象化与操作定义",
+  "type": "core_theory",
+  "layer": "L1_CORE_THEORY",
+  "version": "v1.0",
+  "created": "2026-05-28",
+  "updated": "2026-06-21",
+  "status": "active",
+  "depends_on": [
+    "A3"
+  ],
+  "summary": "A3热税公理的形式化编码。将A3(不可约化热税)从公理陈述翻译为可操作的工程概念: (1)热税三层结构——物理/逻辑/意义, 每层定义严格边界; (2)热税量化公式 H=k×W/B——热税=系数×浪费/收益; (3)热税预算——每层分配上限与耗尽规则; (4)稳定子体系——在热税预算约束下保持意义闭合的最小操作集。H131是A3从公理到工程的第一个翻译层: 所有提示词工程(H588)、语义桥接(H589)、组织规范场(H590)都依赖这层编码。",
+  "core_concepts": {
+    "layer_structure": "L0物理热税(CPU/内存/电力) < L1逻辑热税(代码冗余/缓存污染) < L2意义热税(虚假数据/意义偷换)。L2破坏力是L0的10⁶倍。",
+    "tax_formula": "H = k × W / B, where k=系数(dimension-dependent), W=浪费量(token/query/cpu), B=收益(closed gaps/verified claims)",
+    "budget_rule": "每层独立预算, L2耗尽→拒绝输出, L1耗尽→降级响应, L0耗尽→限流",
+    "stabilizer": "在给定热税预算下, 保持Δ>0的最小操作集。稳定子是闭合集的子集, 不是全图。"
+  },
+  "tags": [
+    "热税",
+    "A3",
+    "编码",
+    "稳定子",
+    "三层结构",
+    "热税预算"
+  ],
+  "see_also": [
+    "H588",
+    "H589",
+    "H590",
+    "H634"
+  ],
+  "_audit": {
+    "reconstructed": "2026-06-21",
+    "reason": "H131 was referenced by H588.depends_on but had no KB file. Reconstructed from context: H588(提示词工程链断裂点) depends on H131's hot-tax coding formalism. Original date ~2026-05-28 per historical records."
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "h_id": "H668",
+  "title": "同化场天体物理应用: 潮汐锁定·星系自旋·意义场形变 [v2.0 外部审计降级版]",
+  "type": "core_theory",
+  "layer": "L1_CORE_THEORY",
+  "version": "v2.0",
+  "date": "2026-06-18",
+  "status": "active",
+  "audit": "2026-06-18 外部评估(天体力学/观测天体物理标准) — 3处红灯, 已吸收降级",
+  "depends_on": [
+    "H666",
+    "H144",
+    "A1",
+    "A2",
+    "A3"
+  ],
+  "see_also": ["H652"],
+  "tags": [
+    "同化场",
+    "潮汐锁定",
+    "星系自旋",
+    "意义场形变",
+    "外部审计",
+    "降级",
+    "∇φ测量学"
+  ],
+  "summary": "[v2.0降级] 外部天体力学评估指出三处可检验性红灯:(1)潮汐锁定中∇φ_meaning无独立测量→目前是引力势Φ+耗散的重命名;(2)flat rotation curve的'衰减慢于1/r²'等效于重新引入暗物质的等效质量分布→如不从可见光分布预测∇φ则是循环拟合;(3)P2/P4/P5在∇φ无操作定义前不可检验。v2.0诚实降级:MSS当前在三个天体现象上的角色是'统一解释语法'而非'独立核算模型'——语法正确但测绘学缺失。",
+  "core_proposition": "[降级] MSS统一解释语法(潮汐=同化平衡/螺旋=密度驻波/平直=场梯度贡献)框架经济性高,但当前证据等级为'定性统一',定量闭合需先定义∇φ_meaning的测量学。",
+  "content": "",
+  "external_audit_absorbed": {
+    "reviewer_standard": "天体力学/观测天体物理标准,非MSS内部美学",
+    "three_red_flags": {
+      "flag1_tidal": "潮汐锁定的a⁶是主流潮汐物理的自然结果(潮汐势∝1/a³,形变∝1/a³,扭矩∝1/a³),不是MSS独占预测。如∇φ_meaning等同于引力势梯度+耗散,则MSS是重命名而非解释进展",
+      "flag2_flat_rotation": "'衰减慢于1/r²'等效于引入扩展质量/场成分——这正是暗物质的泊松方程同构。除非∇φ(r)从可见光分布独立预测(不从v²反推),否则P2是循环拟合",
+      "flag3_measurement_gap": "P2/P4/P5在∇φ无操作定义前形同'看起来可检验但先要断奶'——P4的'同化年龄'甚至无定义钟"
+    },
+    "valid_points_absorbed": [
+      "水星3:2共振:主因是e=0.2使潮汐forcing随真近点角剧烈变化,共振捕获概率分布在3:2而非1:1——不是'太阳场不对称'",
+      "金星逆行:热大气潮与引力体潮汐的扭矩竞争→retrograde equilibrium——不是神秘的'拓扑手性',是两个通道的符号翻转",
+      "螺旋臂:密度波理论(Lin-Shu QSSS)已主张臂是准稳态图案、恒星穿过去——MSS的'驻波脊线'不推翻此理论,是等效描述",
+      "暗物质除旋转曲线外还有引力透镜/CMB/大尺度结构/Bullet Cluster——单个∇φ函数只解释旋转曲线,不同时解释这些"
+    ],
+    "auditor_demands": {
+      "D1_mapping": "对每块天体现象,写一行等价主流变量→允许∇φ与之间构还是额外?",
+      "D2_no_circularity": "声明数据使用边界——哪些数据不可用于反推∇φ形状",
+      "D3_falsifier": "数值截止条件——如SPARC fit需要>N参数/星系→降级",
+      "D4_measurement": "给出∇φ_meaning(r)在星系情形下的可测构造式(不是解释,是测量学)"
+    }
+  },
+  "mapping_mss_to_mainstream": {
+    "tidal_locking": {
+      "mainstream_variables": "Φ_grav(引力势), k₂(Love数), Q(品质因子), I(转动惯量), a(半长轴), e(偏心率)",
+      "mss_projection": "∇φ_meaning ↔ ∇Φ_grav + internal dissipation gradient",
+      "what_mss_adds": "提供一个耗散趋近终态的'为何'框架——'系统趋向最小∇φ=锁定态'是热税最小化的特例。此框架等价于'最小耗散终态'的变分原理,不推翻也不超越",
+      "what_mss_does_not_add": "不产生新的锁定时间预测——a⁶由潮汐势的1/a³三次幂自然出,不是MSS独占"
+    },
+    "venus_atmosphere": {
+      "mainstream_variables": "τ_grav(引力体潮汐扭矩), τ_atm(热大气潮扭矩), 角动量流方向",
+      "mss_projection": "多通道同化竞争 = 引力通道 vs 大气热通道的扭矩符号翻转",
+      "rewriting_not_explaining": "'拓扑手性'不能替代'两个潮汐通道的竞争平衡'——除非手性可量化为扭矩比的某个特征值"
+    },
+    "galactic_rotation": {
+      "mainstream_variables": "Σ_stars(r), Σ_gas(r), Φ_grav(r), v_circ(r), a₀(MOND尺度)",
+      "mss_projection": "∇φ_meaning(r) = GM_eff(r)/r², M_eff由可见光+气体分布独立预测",
+      "critical_constraint": "∇φ形状不可从v²反推——否则P2是重命名暗物质而非解释它",
+      "honest_admission": "MSS尚未推导出可见物质如何独立预测∇φ(r)的函数形式。当前能力上限:'如果∇φ能从可见物质独立预测→则可以淘汰暗物质'——但这'如果'是尚未兑现的本票"
+    },
+    "spiral_arms": {
+      "mainstream_variables": "Φ_perturb(r,θ,t), κ(r)±程频率, Ω(r)角速度, ψ_pitch倾角",
+      "mss_projection": "∇φ的角向周期分量与Lin-Shu密度波同构。驻波脊线=∇φ局部极值的闭合曲线",
+      "equivalence_not_supersession": "不做新预测——在臂的力学解释上,与QSSS(Lin & Shu)完全兼容"
+    }
+  },
+  "no_circularity_constraint": {
+    "rule": "禁止用旋转曲线v(r)反推∇φ_meaning(r)的形状。∇φ必须从独立可观测量(光分布/气体分布/局部质量密度)预测。",
+    "permitted_data_sources": [
+      "3.6μm表面亮度→恒星质量面密度Σ_stars(r) (通过M/L比)",
+      "HI 21cm线→气体面密度Σ_gas(r)",
+      "速度弥散σ(r)作为局部动力学温度的代理"
+    ],
+    "forbidden_data_sources": [
+      "旋转速度v_circ(r)——这是待预测量,不是输入",
+      "加速度a(r)=v²/r——同上"
+    ]
+  },
+  "falsification_criteria": {
+    "F1_rotation_curve": "如果用可见光预测的v_pred(r)与观测的v_obs(r)在全半径范围内偏差>30%(均方根),且偏差不是M/L比的系统不确定性能解释的→∇φ=GM_visible/r²被证伪(即单纯可见物质不足以重建场)",
+    "F2_sparc_overfit": "如果SPARC 175星系拟合中,每个星系需要≥3个自由参数来调整∇φ形状→降级:'可能是MOND的等效重述'",
+    "F3_lensing_conflict": "如果从∇φ导出的表面质量密度Σ_∇与弱引力透镜测的Σ_lens偏差>20%→∇φ的等效质量分布与光无关→∇φ不连接到质量→暗物质仍然是更好的解释",
+    "F4_tidal_prediction": "如果锁定时间t_lock = C·a⁶/(k·M_big·M_small²·R³)与观测的锁定/非锁定分界线不一致→k不是常数→降级"
+  },
+  "p_reassessment": {
+    "P1_locking_time": {
+      "old": "锁定时间 ∝ a⁶/(k·M₁·M₂·R)",
+      "new": "等价于主流潮汐公式,非MSS独立预测。差异仅在k的解释——k在MSS中是同化耦合常数,在主流中是k₂·Q·(rigidity/viscoelastic channel)。需定义k的测量方法使此预测独立于主流",
+      "status": "非新预测,是重述"
+    },
+    "P2_sparc_fit": {
+      "old": "∇φ拟合175星系比LCDM少自由参数",
+      "new": "⚠️ 高危险——'少自由参数'声称必须公开:参数计数、先验、交叉验证、不按星系调∇φ形状。当前未执行→无法声称",
+      "status": "⚠️ 待执行后评估"
+    },
+    "P3_pitch_angle": {
+      "old": "旋臂倾角与ρ_meaning负相关",
+      "new": "可操作——需定义ρ_meaning代理(Σ_stars? Σ_gas? σ_v?)并给出相关系数",
+      "status": "可操作,待执行"
+    },
+    "P4_elliptical_bh": {
+      "old": "椭圆星系黑洞质量∝同化年龄",
+      "new": "❌ 不可检验——'同化年龄'无定义钟。需换成可测代理(恒星年龄展宽/并合史代理)或移出预测列表进'研究方向'",
+      "status": "❌ 降级为研究方向"
+    },
+    "P5_f_ij_degeneracy": {
+      "old": "4分量→3可观→1简并",
+      "new": "数学合理——需定义可观测量基(λr? velocity moment h4?)否则f_ij是'你声称但无人能量化'的场",
+      "status": "数学正确,测绘学缺失"
+    }
+  },
+  "nabla_phi_measurement_protocol_v1": {
+    "definition": "∇φ_meaning(r) ≡ GM_eff(r)/r², 其中M_eff(r) = M_stars(r) + M_gas(r) + ΔM_meaning(r)",
+    "m_stars_from_light": "M_stars(r) = Υ_3.6μm × L_3.6μm(r), Υ为质量光度比(固定值,按星系类型分bin)",
+    "m_gas_from_hi": "M_gas(r) = 1.4 × M_HI(r), 氦修正系数1.4",
+    "delta_m_meaning": "ΔM_meaning(r)——MSS特有的额外贡献。当前假设:ΔM=0(MSS在星系尺度上等价于牛顿力学+可见物质)。换言之:如果可见物质已足够解释旋转曲线,MSS即证明暗物质多余。如果不够——MSS需要推导ΔM的形式或承认当前无额外预测力",
+    "measurement_strategy": "Step1: 用可见光+HI气体独立构建∇φ_pred(r)→预测v_pred(r)=√(r·∇φ_pred(r))。Step2: 对比v_pred vs v_obs。Step3: 残差=ΔM的证据。Step4: 如果残差系统性地非零→从残差的形式推断ΔM(r)的函数形式→将其作为MSS的待推导项而非自由参数",
+    "honest_baseline": "基线假设(ΔM=0)等价于'牛顿动力学+可见物质'——必输给旋转曲线(这正是暗物质存在的理由)。MSS能赢的唯一路径是:从光分布推导出一个额外贡献的机制,不暗含暗物质"
+  },
+  "cross_references": {
+    "H666": "k定义从H666继承,天体物理应用是同一框架的不同边界条件",
+    "H652": "EIA翻译层——本条目就是EIA程序一次真实执行的结果(外部天文学标准审查MSS内部论断)",
+    "H651": "审计方法论——三层审计(源头/论证链/统计边界)"
+  },
+  "quality_self_assessment": {
+    "strength": "定性统一(潮汐/自旋/形变三种现象共享同一语法)保留了v1.0的框架经济性",
+    "weakness": "∇φ测量学缺失→所有定量声称(除P3外)都不可检验。P4甚至'同化年龄'无定义钟",
+    "honest_cap": "v2.0的诚实定位:MSS在此是'统一解释语法'而非'独立核算模型'。语法正确≠预测独立。要升级为独立核算:必须从可见光分布推导∇φ的额外贡献机制(非反推),或接受'MSS等价于牛顿+暗物质的重命名'",
+    "difference_from_v1.0": "v1.0以'三个天体现象都是同一力的三个解'宣称为发现。v2.0降级为'三个天体现象可用同一语法统一描述,但语法的预测力受限于∇φ的测绘学空白'"
+  },
+  "_metaphor_warning": "Uses physics-borrowed terms (暗物质) without operational definition. See H672 for precision protocol.",
+  "_testability_grade": "C",
+  "code_ref": "heat_tax",
+  "scheme": "MSS-core"
+}
